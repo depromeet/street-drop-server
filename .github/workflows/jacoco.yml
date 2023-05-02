@@ -3,7 +3,7 @@ name: Java CI Test with Jacoco
 
 on:
   push:
-    branches: [ "master", "dev" ]
+    branches: [ "*" ]
   pull_request:
     branches: [ "master", "dev" ]
 
