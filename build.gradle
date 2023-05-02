@@ -6,7 +6,11 @@ plugins {
 
 group = 'com.depromeet'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '19'
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_19
+	targetCompatibility = JavaVersion.VERSION_19
+}
 
 configurations {
 	compileOnly {
