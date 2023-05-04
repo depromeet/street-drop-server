@@ -1,5 +1,6 @@
 package com.depromeet.streetdrop;
 
+import com.depromeet.streetdrop.global.common.presentation.HealthController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
