@@ -17,22 +17,18 @@ public class GlobalExceptionHandler {
 			final BusinessException e,
 			final HttpServletRequest request
 	) {
-		log.error("BusinessException: {}", e.getErrorCode());
-		log.error("Request url {}", request.getRequestURL());
-
+		log.error("BusinessException: {} {}", e.getErrorCode(), request.getRequestURL());
 		return ResponseEntity
 				.status(e.getErrorCode().getStatus().value())
 				.body(new ErrorResponseDto(e.getErrorCode()));
 	}
 
 	@ExceptionHandler(NotFoundException.class)
-	protected ResponseEntity<ErrorResponseDto> handleMemberNotFoundException(
+	protected ResponseEntity<ErrorResponseDto> handleNotFoundException(
 			final NotFoundException e,
 			final HttpServletRequest request) {
 
-		log.error("MemberNotFoundException: {}", e.getErrorCode());
-		log.error("Request url {}", request.getRequestURL());
-
+		log.error("MemberNotFoundException: {} {}", e.getErrorCode(), request.getRequestURL());
 		return ResponseEntity
 				.status(e.getErrorCode().getStatus().value())
 				.body(new ErrorResponseDto(e.getErrorCode()));
