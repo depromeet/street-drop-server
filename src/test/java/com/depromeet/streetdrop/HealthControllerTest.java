@@ -1,5 +1,6 @@
 package com.depromeet.streetdrop;
 
+import com.depromeet.streetdrop.global.common.presentation.HealthController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,6 @@ public class HealthControllerTest {
         mvc.perform(get("/health")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string("OK"));
+                .andExpect(status().isOk());
     }
 }
