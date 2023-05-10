@@ -2,10 +2,10 @@ package com.depromeet.streetdrop.global.common.presentation;
 
 import com.depromeet.streetdrop.global.error.dto.ErrorCode;
 import com.depromeet.streetdrop.global.error.exception.common.NotFoundException;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class HealthController {
 
     @GetMapping("/health")
