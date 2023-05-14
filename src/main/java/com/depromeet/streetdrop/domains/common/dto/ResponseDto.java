@@ -1,4 +1,4 @@
-package com.depromeet.streetdrop.domain.common.dto;
+package com.depromeet.streetdrop.domains.common.dto;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

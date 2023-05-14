@@ -1,4 +1,4 @@
-package com.depromeet.streetdrop.domain.common;
+package com.depromeet.streetdrop.domains.common;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

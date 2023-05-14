@@ -1,4 +1,4 @@
-package com.depromeet.streetdrop.domain.common.dto;
+package com.depromeet.streetdrop.domains.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.springframework.data.domain.Page;
