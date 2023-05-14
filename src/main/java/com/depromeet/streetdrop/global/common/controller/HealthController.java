@@ -1,4 +1,4 @@
-package com.depromeet.streetdrop.global.common.presentation;
+package com.depromeet.streetdrop.global.common.controller;
 
 import com.depromeet.streetdrop.global.error.dto.ErrorCode;
 import com.depromeet.streetdrop.global.error.exception.common.NotFoundException;
