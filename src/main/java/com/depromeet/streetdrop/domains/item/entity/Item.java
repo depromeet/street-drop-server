@@ -1,12 +1,11 @@
 package com.depromeet.streetdrop.domains.item.entity;
 
+import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
 import com.depromeet.streetdrop.domains.itemLocation.entity.ItemLocation;
 import com.depromeet.streetdrop.domains.music.album.entity.AlbumCover;
-import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
 import com.depromeet.streetdrop.domains.music.song.entity.Song;
 import com.depromeet.streetdrop.domains.user.entity.User;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,28 +17,27 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Entity
 public class Item extends BaseTimeEntity {
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "item_id")
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "item_id")
+    private Long id;
 
-	@Column(length = 500)
-	private String content;
+    @Column(length = 500)
+    private String content;
 
-	@OneToOne(fetch = LAZY)
-	@JoinColumn(name = "item_location_id")
-	private ItemLocation itemLocation;
+    @OneToOne(fetch = LAZY, mappedBy = "item")
+    private ItemLocation itemLocation;
 
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "user_id")
-	private User user;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "song_id")
-	private Song song;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "song_id")
+    private Song song;
 
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "album_cover_id")
-	private AlbumCover albumCover;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "album_cover_id")
+    private AlbumCover albumCover;
 
 }
