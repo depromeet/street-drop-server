@@ -1,6 +1,6 @@
 package com.depromeet.streetdrop.apis.area.village.controller;
 
-import com.depromeet.streetdrop.apis.area.village.dto.response.VillageItemsCountResponseDto;
+import com.depromeet.streetdrop.domains.area.village.dto.response.VillageItemsCountResponseDto;
 import com.depromeet.streetdrop.domains.area.village.service.VillageItemService;
 import com.depromeet.streetdrop.domains.common.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;

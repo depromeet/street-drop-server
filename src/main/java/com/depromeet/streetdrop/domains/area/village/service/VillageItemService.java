@@ -1,7 +1,7 @@
 package com.depromeet.streetdrop.domains.area.village.service;
 
 import com.depromeet.streetdrop.domains.area.village.repository.VillageAreaRepository;
-import com.depromeet.streetdrop.apis.area.village.dto.response.VillageItemsCountResponseDto;
+import com.depromeet.streetdrop.domains.area.village.dto.response.VillageItemsCountResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
