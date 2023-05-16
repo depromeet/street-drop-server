@@ -1,4 +1,4 @@
-package com.depromeet.streetdrop.apis.area.village.dto.response;
+package com.depromeet.streetdrop.domains.area.village.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
