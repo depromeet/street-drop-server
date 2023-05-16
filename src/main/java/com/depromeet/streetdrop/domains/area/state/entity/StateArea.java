@@ -21,10 +21,10 @@ public class StateArea {
     private Long id;
 
     @Column(name = "state_name", nullable = false)
-    private String cityName;
+    private String stateName;
 
     @Column(name = "state_code", nullable = false)
-    private int cityCode;
+    private int stateCode;
 
     @Column(name = "version", nullable = false)
     private int version;
