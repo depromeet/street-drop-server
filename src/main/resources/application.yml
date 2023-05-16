@@ -4,7 +4,10 @@ management:
       exposure:
         include: prometheus
 spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     properties:
-      hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+      hibernate.dialect: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.MySQLDialect

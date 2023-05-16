@@ -6,7 +6,7 @@ import com.depromeet.streetdrop.domains.item.entity.Item;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.geo.Point;
+import org.locationtech.jts.geom.Point;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -24,7 +24,7 @@ public class ItemLocation extends BaseTimeEntity {
 	@Column(nullable = true)
 	private String name;
 
-	@Column(columnDefinition = "GEOMETRY")
+	@Column(columnDefinition = "Point")
 	private Point point;
 
 	@OneToOne(fetch = LAZY)
