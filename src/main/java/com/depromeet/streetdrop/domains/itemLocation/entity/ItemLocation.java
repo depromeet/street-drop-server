@@ -1,5 +1,6 @@
 package com.depromeet.streetdrop.domains.itemLocation.entity;
 
+import com.depromeet.streetdrop.domains.area.village.entity.VillageArea;
 import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
 import com.depromeet.streetdrop.domains.item.entity.Item;
 import jakarta.persistence.*;
@@ -27,7 +28,11 @@ public class ItemLocation extends BaseTimeEntity {
 	private Point point;
 
 	@OneToOne(fetch = LAZY)
-	@JoinColumn(name = "item_id")
+	@JoinColumn(name = "item_id", nullable = false)
 	private Item item;
+
+	@ManyToOne(fetch = LAZY)
+	@JoinColumn(name = "village_id")
+	private VillageArea villageArea;
 
 }

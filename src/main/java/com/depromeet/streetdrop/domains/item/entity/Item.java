@@ -6,7 +6,6 @@ import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
 import com.depromeet.streetdrop.domains.music.song.entity.Song;
 import com.depromeet.streetdrop.domains.user.entity.User;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,8 +25,7 @@ public class Item extends BaseTimeEntity {
 	@Column(length = 500)
 	private String content;
 
-	@OneToOne(fetch = LAZY)
-	@JoinColumn(name = "item_location_id")
+	@OneToOne(fetch = LAZY, mappedBy = "item")
 	private ItemLocation itemLocation;
 
 	@ManyToOne(fetch = LAZY)
