@@ -21,13 +21,13 @@ public class CityArea {
     @Column(name = "city_id")
     private Long id;
 
-    @Column(name = "city_name", nullable = false)
+    @Column(nullable = false)
     private String cityName;
 
-    @Column(name = "city_code", nullable = false)
+    @Column(nullable = false)
     private int cityCode;
 
-    @Column(name = "version", nullable = false)
+    @Column(nullable = false)
     private int version;
 
     @ManyToOne(fetch = LAZY)
@@ -35,6 +35,6 @@ public class CityArea {
     private StateArea stateArea;
 
     @OneToMany(mappedBy = "cityArea")
-    private List<VillageArea> villageAreas;
+     private List<VillageArea> villageAreas;
 
 }

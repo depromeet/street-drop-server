@@ -19,19 +19,19 @@ public class VillageArea {
     @Column(name = "village_id")
     private Long id;
 
-    @Column(name = "village_name", nullable = false)
+    @Column(nullable = false)
     private String villageName;
 
-    @Column(name = "village_code", nullable = false)
+    @Column(nullable = false)
     private int villageCode;
 
-    @Column(name = "version", nullable = false)
+    @Column(nullable = false)
     private int version;
 
-    @Column(name = "village_polygon", nullable = false, columnDefinition = "MultiPolygon")
+    @Column(nullable = false, columnDefinition = "MultiPolygon")
     private MultiPolygon villagePolygon;
 
-    @Column(name = "village_center_point", columnDefinition = "Point")
+    @Column(columnDefinition = "Point")
     private Point villageCenterPoint;
 
     @ManyToOne(fetch = LAZY)

@@ -20,13 +20,13 @@ public class StateArea {
     @Column(name = "state_id")
     private Long id;
 
-    @Column(name = "state_name", nullable = false)
+    @Column(nullable = false)
     private String stateName;
 
-    @Column(name = "state_code", nullable = false)
+    @Column(nullable = false)
     private int stateCode;
 
-    @Column(name = "version", nullable = false)
+    @Column(nullable = false)
     private int version;
 
     @OneToMany(mappedBy = "stateArea", fetch = LAZY)
