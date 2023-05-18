@@ -3,6 +3,7 @@ package com.depromeet.streetdrop.domains.music.song.entity;
 import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
 import com.depromeet.streetdrop.domains.item.entity.Item;
 import com.depromeet.streetdrop.domains.music.album.entity.Album;
+import com.depromeet.streetdrop.domains.music.genre.entity.SongGenre;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,9 @@ public class Song extends BaseTimeEntity {
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "album_id")
 	private Album album;
+
+	@OneToMany(mappedBy = "song")
+	private List<SongGenre> genres = new ArrayList<>();
 
 	@OneToMany(mappedBy = "song")
 	private List<Item> items = new ArrayList<>();

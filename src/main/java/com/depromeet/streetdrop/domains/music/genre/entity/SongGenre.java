@@ -1,0 +1,30 @@
+package com.depromeet.streetdrop.domains.music.genre.entity;
+
+import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
+import com.depromeet.streetdrop.domains.music.song.entity.Song;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
+
+@Getter
+@NoArgsConstructor
+@Entity
+public class SongGenre extends BaseTimeEntity {
+
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "song_genre_id")
+    private Long id;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "song_id")
+    private Song song;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "genre_id")
+    private Genre genre;
+
+}
