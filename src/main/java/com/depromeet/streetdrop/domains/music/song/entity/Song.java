@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -41,7 +40,7 @@ public class Song extends BaseTimeEntity {
 	public List<Genre> getGenres() {
 		return genres.stream()
 				.map(SongGenre::getGenre)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 }

@@ -4,7 +4,6 @@ import com.depromeet.streetdrop.domains.item.entity.Item;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public record MusicResponseDto(
         @Schema(description = "음악 제목", example = "Dynamite")
@@ -27,7 +26,7 @@ public record MusicResponseDto(
                 item.getSong().getGenres()
                         .stream()
                         .map(genre -> genre.getName())
-                        .collect(Collectors.toList())
+                        .toList()
         );
     }
 }

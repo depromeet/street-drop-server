@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -22,7 +21,7 @@ public class ItemService {
         List<Item> items = itemRepository.findAll(longitude, latitude, RELATIVE_DISTANCE);
         var response = items.stream()
                 .map(ItemDetailResponseDto::new)
-                .collect(Collectors.toList());
+                .toList();
         return response;  // TODO: paging 반영
     }
     
