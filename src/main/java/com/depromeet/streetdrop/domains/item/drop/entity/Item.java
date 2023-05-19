@@ -1,4 +1,4 @@
-package com.depromeet.streetdrop.domains.item.entity;
+package com.depromeet.streetdrop.domains.item.drop.entity;
 
 import com.depromeet.streetdrop.domains.itemLocation.entity.ItemLocation;
 import com.depromeet.streetdrop.domains.music.album.entity.AlbumCover;
@@ -26,19 +26,27 @@ public class Item extends BaseTimeEntity {
 	@Column(length = 500)
 	private String content;
 
-	@OneToOne(fetch = LAZY, mappedBy = "item")
+	@OneToOne(fetch = LAZY, mappedBy = "item", cascade = CascadeType.ALL)
 	private ItemLocation itemLocation;
 
-	@ManyToOne(fetch = LAZY)
+	@ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@ManyToOne(fetch = LAZY)
+	@ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "song_id")
 	private Song song;
 
-	@ManyToOne(fetch = LAZY)
+	@ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "album_cover_id")
 	private AlbumCover albumCover;
 
+	@Builder
+	public Item(String content, ItemLocation itemLocation, User user, Song song, AlbumCover albumCover) {
+		this.content = content;
+		this.itemLocation = itemLocation;
+		this.user = user;
+		this.song = song;
+		this.albumCover = albumCover;
+	}
 }

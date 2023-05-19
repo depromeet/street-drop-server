@@ -1,9 +1,9 @@
 package com.depromeet.streetdrop.domains.music.artist.entity;
 
 import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
-import com.depromeet.streetdrop.domains.item.entity.Item;
 import com.depromeet.streetdrop.domains.music.album.entity.Album;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +22,12 @@ public class Artist extends BaseTimeEntity {
 
 	private String name;
 
-	@OneToMany(mappedBy = "artist")
+	@OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
 	private List<Album> albums = new ArrayList<>();
 
+	@Builder
+	public Artist(String name, List<Album> albums) {
+		this.name = name;
+		this.albums = albums;
+	}
 }

@@ -19,11 +19,11 @@ public class SongGenre extends BaseTimeEntity {
     @Column(name = "song_genre_id")
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "song_id")
     private Song song;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "genre_id")
     private Genre genre;
 

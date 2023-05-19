@@ -4,6 +4,7 @@ import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
 import com.depromeet.streetdrop.domains.music.artist.entity.Artist;
 import com.depromeet.streetdrop.domains.music.song.entity.Song;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,15 +27,22 @@ public class Album extends BaseTimeEntity {
 
 	private String name;
 
-	@OneToOne
+	@OneToOne(fetch = LAZY, cascade = ALL)
 	@JoinColumn(name = "album_cover_id")
 	private AlbumCover albumCover;
 
 	@OneToMany(mappedBy = "album", fetch = LAZY, cascade = ALL, orphanRemoval = true)
 	private List<Song> songs = new ArrayList<>();
 
-	@ManyToOne(fetch = LAZY)
+	@ManyToOne(fetch = LAZY, cascade = ALL)
 	@JoinColumn(name = "artist_id")
 	private Artist artist;
 
+	@Builder
+	public Album(String name, AlbumCover albumCover, List<Song> songs, Artist artist) {
+		this.name = name;
+		this.albumCover = albumCover;
+		this.songs = songs;
+		this.artist = artist;
+	}
 }

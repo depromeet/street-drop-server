@@ -1,16 +1,15 @@
 package com.depromeet.streetdrop.domains.user.entity;
 
 import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
-import com.depromeet.streetdrop.domains.item.entity.Item;
-import com.depromeet.streetdrop.domains.music.song.entity.Song;
+import com.depromeet.streetdrop.domains.item.drop.entity.Item;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Getter
@@ -27,7 +26,12 @@ public class User extends BaseTimeEntity {
 	@Column(length = 20)
 	private String nickname;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Item> items = new ArrayList<>();
 
+	@Builder
+	public User(String nickname, List<Item> items) {
+		this.nickname = nickname;
+		this.items = items;
+	}
 }
