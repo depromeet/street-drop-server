@@ -1,7 +1,6 @@
 package com.depromeet.streetdrop.apis.item.controller;
 
 import com.depromeet.streetdrop.domains.common.dto.PageResponseDto;
-import com.depromeet.streetdrop.domains.common.dto.ResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.ItemDetailResponseDto;
 import com.depromeet.streetdrop.domains.item.service.ItemService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,8 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/items")
