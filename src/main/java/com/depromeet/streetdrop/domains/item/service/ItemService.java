@@ -1,13 +1,14 @@
 package com.depromeet.streetdrop.domains.item.service;
 
+import com.depromeet.streetdrop.domains.common.dto.PageResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.ItemDetailResponseDto;
-import com.depromeet.streetdrop.domains.item.entity.Item;
 import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -17,12 +18,13 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     @Transactional(readOnly = true)
-    public List<ItemDetailResponseDto> findAll(Double longitude, Double latitude) {
-        List<Item> items = itemRepository.findAll(longitude, latitude, RELATIVE_DISTANCE);
-        var response = items.stream()
-                .map(ItemDetailResponseDto::new)
-                .toList();
-        return response;  // TODO: paging 반영
+    public Page<ItemDetailResponseDto> findAll(Double longitude, Double latitude, Pageable pageable) {
+        var items = itemRepository.findAll(longitude, latitude, RELATIVE_DISTANCE, pageable);
+        var response = new PageImpl<>(
+                items.stream().map(ItemDetailResponseDto::new).toList(),
+                pageable,
+                items.getTotalElements());
+        return response;
     }
     
 }
