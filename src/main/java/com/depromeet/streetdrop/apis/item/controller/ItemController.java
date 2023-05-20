@@ -24,7 +24,7 @@ public class ItemController {
             @RequestParam Double longitude, @RequestParam Double latitude,
             @PageableDefault(size = 20) Pageable pageable
     ) {
-        var response = itemService.findAll(longitude, latitude, pageable);
+        var response = itemService.getNearItemDetail(longitude, latitude, pageable);
         return PageResponseDto.ok(response);
     }
 

@@ -18,8 +18,8 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     @Transactional(readOnly = true)
-    public Page<ItemDetailResponseDto> findAll(Double longitude, Double latitude, Pageable pageable) {
-        var items = itemRepository.findAll(longitude, latitude, RELATIVE_DISTANCE, pageable);
+    public Page<ItemDetailResponseDto> getNearItemDetail(Double longitude, Double latitude, Pageable pageable) {
+        var items = itemRepository.getNearItemDetail(longitude, latitude, RELATIVE_DISTANCE, pageable);
         var response = new PageImpl<>(
                 items.stream().map(ItemDetailResponseDto::new).toList(),
                 pageable,

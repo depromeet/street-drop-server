@@ -18,7 +18,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             ") < :distance",
             countQuery = "select count(*) from item i natural join item_location il"
             )
-    Page<Item> findAll(
+    Page<Item> getNearItemDetail(
             @Param(value = "longitude") Double longitude,
             @Param(value = "latitude") Double latitude,
             @Param(value = "distance") Double distance,
