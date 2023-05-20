@@ -14,7 +14,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemLocationRepository itemLocationRepository;
-    private final GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
+    private final static int WGS84_SRID = 4326;
+    private final GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), WGS84_SRID);
 
     public PoiResponseDto findNearItemsPoints(NearItemRequestDto nearItemRequestDto) {
         Point point = gf.createPoint(new Coordinate(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude()));
