@@ -1,4 +1,4 @@
-package com.depromeet.streetdrop.apis.item;
+package com.depromeet.streetdrop.apis.item.controller;
 
 import com.depromeet.streetdrop.domains.common.dto.ResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
@@ -22,7 +22,7 @@ public class ItemController {
     private final ItemService itemService;
 
     @Operation(summary = "주변 아이템 조회 - POI")
-    @GetMapping
+    @GetMapping("/points")
     public ResponseEntity<PoiResponseDto> getNearItemPoints(@Valid NearItemRequestDto nearItemRequestDto) {
         var response = itemService.getNearItemPoints(nearItemRequestDto);
         return ResponseDto.ok(response);

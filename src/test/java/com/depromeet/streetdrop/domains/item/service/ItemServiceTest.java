@@ -43,7 +43,7 @@ public class ItemServiceTest {
             @DisplayName("특정 지역 주변의 아이템 조회 - 조회 아이템이 없는 경우")
             @Test
             void getNearItemPointsTestSuccess1() {
-                NearItemRequestDto nearItemRequestDto = new NearItemRequestDto(127.123, 37.123, 1000);
+                NearItemRequestDto nearItemRequestDto = new NearItemRequestDto(127.123, 37.123, 1000.0);
                 when(itemLocationRepository.findNearItemLocationsByDistance(any(Point.class), any(Double.class))).thenReturn(List.of());
 
                 var result = itemService.getNearItemPoints(nearItemRequestDto);
@@ -54,7 +54,7 @@ public class ItemServiceTest {
             @DisplayName("특정 지역 주변의 아이템 조회 - 조회 아이템이 2개 있는 경우")
             @Test
             void getNearItemPointsTestSuccess2() {
-                NearItemRequestDto nearItemRequestDto = new NearItemRequestDto(127.123, 37.123, 1000);
+                NearItemRequestDto nearItemRequestDto = new NearItemRequestDto(127.123, 37.123, 1000.0);
 
                 List<ItemPoint> itemPoints = List.of(
                         new ItemPoint(gf.createPoint(new Coordinate(127.123, 37.123)), 1L, "/image1.jpg"),

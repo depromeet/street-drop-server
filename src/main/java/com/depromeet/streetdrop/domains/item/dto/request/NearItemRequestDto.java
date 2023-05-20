@@ -19,7 +19,7 @@ import org.springframework.validation.annotation.Validated;
 @ParameterObject
 public class NearItemRequestDto {
 
-    private final static int DEFAULT_DISTANCE = 500;
+    private final static Double DEFAULT_DISTANCE = 500.0;
 
     @Schema(description = "경도", example = "127.123456")
     @IsLongitude
@@ -32,6 +32,6 @@ public class NearItemRequestDto {
     private Double latitude;
 
     @Schema(description = "거리 - (단위 - m)", example = "1000")
-    private int distance = DEFAULT_DISTANCE;
+    private Double distance = DEFAULT_DISTANCE;
 
 }

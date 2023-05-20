@@ -1,6 +1,6 @@
 package com.depromeet.streetdrop.api.item.controller;
 
-import com.depromeet.streetdrop.apis.item.ItemController;
+import com.depromeet.streetdrop.apis.item.controller.ItemController;
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.streetdrop.domains.item.service.ItemService;
@@ -60,7 +60,7 @@ public class ItemControllerTest {
                 given(itemService.getNearItemPoints(any(NearItemRequestDto.class))).willReturn(poiResponseDto);
 
                 var response = mvc.perform(
-                        get("/items")
+                        get("/items/points")
                                 .param("latitude", String.valueOf(latitude))
                                 .param("longitude", String.valueOf(longitude))
                 );
@@ -85,7 +85,7 @@ public class ItemControllerTest {
                 given(itemService.getNearItemPoints(any(NearItemRequestDto.class))).willReturn(poiResponseDto);
 
                 var response = mvc.perform(
-                        get("/items")
+                        get("/items/points")
                                 .param("latitude", String.valueOf(latitude))
                                 .param("longitude", String.valueOf(longitude))
                 );
@@ -105,7 +105,7 @@ public class ItemControllerTest {
                 given(itemService.getNearItemPoints(any(NearItemRequestDto.class))).willReturn(poiResponseDto);
 
                 var response = mvc.perform(
-                        get("/items")
+                        get("/items/points")
                                 .param("latitude", String.valueOf(latitude))
                                 .param("longitude", String.valueOf(longitude))
                                 .param("distance", String.valueOf(1000))
@@ -134,7 +134,7 @@ public class ItemControllerTest {
                 nearItemRequestDto.setLongitude(127.123456);
 
                 var response = mvc.perform(
-                        get("/items")
+                        get("/items/points")
                                 .param("longitude", String.valueOf(nearItemRequestDto.getLongitude()))
                 );
 
@@ -153,7 +153,7 @@ public class ItemControllerTest {
 
 
                 var response = mvc.perform(
-                        get("/items")
+                        get("/items/points")
                                 .param("latitude", String.valueOf(nearItemRequestDto.getLatitude()))
                                 .param("longitude", String.valueOf(nearItemRequestDto.getLongitude()))
                 );
@@ -171,7 +171,7 @@ public class ItemControllerTest {
                 nearItemRequestDto.setLatitude(37.123456);
 
                 var response = mvc.perform(
-                        get("/items")
+                        get("/items/points")
                                 .param("latitude", String.valueOf(nearItemRequestDto.getLatitude()))
                 );
 
@@ -189,7 +189,7 @@ public class ItemControllerTest {
                 nearItemRequestDto.setLongitude(1000.0);
 
                 var response = mvc.perform(
-                        get("/items")
+                        get("/items/points")
                                 .param("latitude", String.valueOf(nearItemRequestDto.getLatitude()))
                                 .param("longitude", String.valueOf(nearItemRequestDto.getLongitude()))
                 );
