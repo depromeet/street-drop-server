@@ -38,6 +38,7 @@ public class ItemController {
 		itemService.register(requestDto);
 		return ResponseDto.created();
 	}
+
     @Operation(summary = "주변 아이템 상세 조회")
     @GetMapping
     public ResponseEntity<List<ItemDetailResponseDto>> findNearItems(
@@ -46,5 +47,4 @@ public class ItemController {
         var response = itemService.findNearItems(nearItemRequestDto);
         return ResponseEntity.ok(response);
     }
-
 }

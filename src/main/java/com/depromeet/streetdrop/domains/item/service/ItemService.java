@@ -2,6 +2,7 @@ package com.depromeet.streetdrop.domains.item.service;
 
 import com.depromeet.streetdrop.domains.item.dto.request.ItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
+import com.depromeet.streetdrop.domains.item.dto.response.ItemDetailResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.streetdrop.domains.item.entity.Item;
 import com.depromeet.streetdrop.domains.item.repository.ItemLocationRepository;
@@ -20,6 +21,8 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -63,6 +66,7 @@ public class ItemService {
 
 		return itemRepository.save(item);
 	}
+
     @Transactional(readOnly = true)
     public List<ItemDetailResponseDto> findNearItems(NearItemRequestDto nearItemRequestDto) {
         Point point = gf.createPoint(new Coordinate(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude()));
