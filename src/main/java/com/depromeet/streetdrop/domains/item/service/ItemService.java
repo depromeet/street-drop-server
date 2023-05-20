@@ -4,6 +4,7 @@ import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.response.ItemDetailResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.streetdrop.domains.item.repository.ItemLocationRepository;
+import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -19,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemLocationRepository itemLocationRepository;
+    private final ItemRepository itemRepository;
     private final static int WGS84_SRID = 4326;
     private final GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), WGS84_SRID);
 
