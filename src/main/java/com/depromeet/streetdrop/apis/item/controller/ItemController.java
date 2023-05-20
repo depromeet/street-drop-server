@@ -1,7 +1,7 @@
 package com.depromeet.streetdrop.apis.item.controller;
 
 import com.depromeet.streetdrop.domains.common.dto.ResponseDto;
-import com.depromeet.streetdrop.domains.item.dto.ItemRequestDto;
+import com.depromeet.streetdrop.domains.item.dto.request.ItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.streetdrop.domains.item.service.ItemService;

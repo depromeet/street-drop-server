@@ -1,7 +1,10 @@
 package com.depromeet.streetdrop.domains.item.service;
 
-import com.depromeet.streetdrop.domains.item.dto.ItemRequestDto;
+import com.depromeet.streetdrop.domains.item.dto.request.ItemRequestDto;
+import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
+import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.streetdrop.domains.item.entity.Item;
+import com.depromeet.streetdrop.domains.item.repository.ItemLocationRepository;
 import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
 import com.depromeet.streetdrop.domains.itemLocation.entity.ItemLocation;
 import com.depromeet.streetdrop.domains.music.album.entity.AlbumCover;
@@ -21,10 +24,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class ItemService {
-	public static final String TEST_USER = "User1";
 	private final AlbumService albumService;
 	private final ItemRepository itemRepository;
 	private final ItemLocationRepository itemLocationRepository;
+
+	public static final String TEST_USER = "User1";
 	private final static int WGS84_SRID = 4326;
 	private final GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), WGS84_SRID);
 

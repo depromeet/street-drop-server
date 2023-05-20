@@ -1,6 +1,5 @@
 package com.depromeet.streetdrop.domains.music.album.service;
 
-import com.depromeet.streetdrop.domains.item.dto.ItemRequestDto;
 import com.depromeet.streetdrop.domains.music.album.entity.Album;
 import com.depromeet.streetdrop.domains.music.album.repository.AlbumRepository;
 import com.depromeet.streetdrop.domains.music.artist.entity.Artist;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service

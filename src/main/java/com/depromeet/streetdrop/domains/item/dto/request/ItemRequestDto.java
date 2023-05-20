@@ -1,4 +1,4 @@
-package com.depromeet.streetdrop.domains.item.dto;
+package com.depromeet.streetdrop.domains.item.dto.request;
 
 import lombok.Builder;
 import lombok.Data;
