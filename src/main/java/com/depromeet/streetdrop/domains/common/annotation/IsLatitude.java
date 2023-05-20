@@ -14,7 +14,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target(FIELD)
 @Retention(RUNTIME)
 @Constraint(validatedBy = LatitudeValidator.class)
-@Documented
 public @interface IsLatitude {
 
     String message() default "Not valid latitude, must be between -90 and 90";
