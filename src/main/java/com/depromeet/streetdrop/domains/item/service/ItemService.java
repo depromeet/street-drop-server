@@ -41,8 +41,8 @@ public class ItemService {
 
 	@Transactional
 	public Item register(Long memberId, ItemRequestDto requestDto) {
-		Double lat = Double.parseDouble(requestDto.getLatitude());
-		Double lon = Double.parseDouble(requestDto.getLongitude());
+		Double lat = requestDto.getLatitude();
+		Double lon = requestDto.getLongitude();
 		Point point = GeomUtil.createPoint(lat, lon);
 
 		var itemLocation = ItemLocation.builder()
