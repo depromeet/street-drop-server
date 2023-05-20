@@ -4,8 +4,8 @@ import com.depromeet.streetdrop.domains.item.dto.ItemRequestDto;
 import com.depromeet.streetdrop.domains.item.entity.Item;
 import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
 import com.depromeet.streetdrop.domains.itemLocation.entity.ItemLocation;
-import com.depromeet.streetdrop.domains.music.album.entity.Album;
 import com.depromeet.streetdrop.domains.music.album.entity.AlbumCover;
+import com.depromeet.streetdrop.domains.music.album.service.AlbumService;
 import com.depromeet.streetdrop.domains.music.artist.entity.Artist;
 import com.depromeet.streetdrop.domains.music.song.entity.Song;
 import com.depromeet.streetdrop.domains.user.entity.User;
@@ -15,12 +15,11 @@ import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-
 @RequiredArgsConstructor
 @Service
 public class ItemService {
 	public static final String TEST_USER = "User1";
+	private final AlbumService albumService;
 	private final ItemRepository itemRepository;
 
 	@Transactional
@@ -43,11 +42,7 @@ public class ItemService {
 				.name(requestDto.getArtiest())
 				.build();
 
-		var album = Album.builder()
-				.name(requestDto.getAlbumName())
-				.songs(new ArrayList<Song>())
-				.artist(artist)
-				.build();
+		var album = albumService.getAlbum(requestDto.getAlbumName(), artist);
 
 		var albumCover = AlbumCover.builder()
 				.albumImage(requestDto.getAlbumImage())
