@@ -13,7 +13,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Validated
-@RequiredArgsConstructor
 //@ParameterObject
 public class ItemRequestDto {
 
