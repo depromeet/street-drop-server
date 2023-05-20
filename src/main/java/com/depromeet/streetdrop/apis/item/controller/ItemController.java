@@ -3,6 +3,7 @@ package com.depromeet.streetdrop.apis.item.controller;
 import com.depromeet.streetdrop.domains.common.dto.ResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.request.ItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
+import com.depromeet.streetdrop.domains.item.dto.response.ItemDetailResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.streetdrop.domains.item.service.ItemService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/items")
@@ -34,4 +38,13 @@ public class ItemController {
 		itemService.register(requestDto);
 		return ResponseDto.created();
 	}
+    @Operation(summary = "주변 아이템 상세 조회")
+    @GetMapping
+    public ResponseEntity<List<ItemDetailResponseDto>> findNearItems(
+            @Valid NearItemRequestDto nearItemRequestDto
+    ) {
+        var response = itemService.findNearItems(nearItemRequestDto);
+        return ResponseEntity.ok(response);
+    }
+
 }

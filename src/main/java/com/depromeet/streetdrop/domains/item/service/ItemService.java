@@ -63,4 +63,14 @@ public class ItemService {
 
 		return itemRepository.save(item);
 	}
+    @Transactional(readOnly = true)
+    public List<ItemDetailResponseDto> findNearItems(NearItemRequestDto nearItemRequestDto) {
+        Point point = gf.createPoint(new Coordinate(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude()));
+        var items = itemRepository.findNearItemsByDistance(point, nearItemRequestDto.getDistance());
+        var response = items.stream()
+                .map(ItemDetailResponseDto::new)
+                .toList();
+        return response;
+    }
+
 }

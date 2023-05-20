@@ -44,4 +44,10 @@ public class Song extends BaseTimeEntity {
 		this.genres = genres;
 		this.items = items;
 	}
+	public List<Genre> getGenres() {
+		return genres.stream()
+				.map(SongGenre::getGenre)
+				.toList();
+	}
+
 }

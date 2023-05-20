@@ -1,4 +1,4 @@
-package com.depromeet.streetdrop.api.area.village.controller;
+package com.depromeet.streetdrop.apis.area.village.controller;
 
 import com.depromeet.streetdrop.domains.area.village.service.VillageItemService;
 import com.depromeet.streetdrop.apis.area.village.controller.VillageItemController;
