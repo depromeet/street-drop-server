@@ -20,11 +20,11 @@ public class ItemController {
 
     @Operation(summary = "다중 아이템 상세 조회")
     @GetMapping
-    public ResponseEntity<PageResponseDto<ItemDetailResponseDto>> getItems(
+    public ResponseEntity<PageResponseDto<ItemDetailResponseDto>> findNearItems(
             @RequestParam Double longitude, @RequestParam Double latitude,
             @PageableDefault(size = 20) Pageable pageable
     ) {
-        var response = itemService.getNearItemDetail(longitude, latitude, pageable);
+        var response = itemService.findNearItems(longitude, latitude, pageable);
         return PageResponseDto.ok(response);
     }
 

@@ -1,6 +1,5 @@
 package com.depromeet.streetdrop.domains.item.service;
 
-import com.depromeet.streetdrop.domains.common.dto.PageResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.ItemDetailResponseDto;
 import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +17,8 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     @Transactional(readOnly = true)
-    public Page<ItemDetailResponseDto> getNearItemDetail(Double longitude, Double latitude, Pageable pageable) {
-        var items = itemRepository.getNearItemDetail(longitude, latitude, RELATIVE_DISTANCE, pageable);
+    public Page<ItemDetailResponseDto> findNearItems(Double longitude, Double latitude, Pageable pageable) {
+        var items = itemRepository.findNearItems(longitude, latitude, RELATIVE_DISTANCE, pageable);
         var response = new PageImpl<>(
                 items.stream().map(ItemDetailResponseDto::new).toList(),
                 pageable,
