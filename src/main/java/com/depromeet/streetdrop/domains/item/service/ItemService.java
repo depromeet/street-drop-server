@@ -6,15 +6,13 @@ import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.streetdrop.domains.item.entity.Item;
 import com.depromeet.streetdrop.domains.item.repository.ItemLocationRepository;
 import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
-import com.depromeet.streetdrop.domains.itemLocation.entity.ItemLocation;
-import com.depromeet.streetdrop.domains.music.album.entity.AlbumCover;
+import com.depromeet.streetdrop.domains.itemLocation.service.ItemLocationService;
 import com.depromeet.streetdrop.domains.music.album.service.AlbumCoverService;
 import com.depromeet.streetdrop.domains.music.album.service.AlbumService;
-import com.depromeet.streetdrop.domains.music.artist.entity.Artist;
-import com.depromeet.streetdrop.domains.music.song.entity.Song;
+import com.depromeet.streetdrop.domains.music.artist.service.ArtistService;
 import com.depromeet.streetdrop.domains.music.song.service.SongService;
 import com.depromeet.streetdrop.domains.user.entity.User;
-import com.depromeet.streetdrop.global.common.util.GeomUtil;
+import com.depromeet.streetdrop.domains.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -26,7 +24,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class ItemService {
+	private final ItemLocationService itemLocationService;
+	private final UserService userService;
 	private final AlbumService albumService;
+	private final ArtistService artistService;
 	private final SongService songService;
 	private final AlbumCoverService albumCoverService;
 	private final ItemRepository itemRepository;
@@ -44,7 +45,22 @@ public class ItemService {
 	}
 
 	@Transactional
-	public Item create(Item item) {
+	public Item register(ItemRequestDto requestDto) {
+		var location = itemLocationService.create(requestDto);
+		var user = userService.getOrCreateUser(TEST_USER);
+		var artist = artistService.getOrCreateArtist(requestDto.getArtiest());
+		var album = albumService.getOrCreateAlbum(requestDto.getAlbumName(), artist);
+		var albumCover = albumCoverService.getOrCreateAlbumCover(album, requestDto.getAlbumImage(), requestDto.getAlbumImage());
+		var song = songService.getOrCreateSong(requestDto.getTitle(), album);
+
+		var item = Item.builder()
+				.user(user)
+				.itemLocation(location)
+				.albumCover(albumCover)
+				.song(song)
+				.content(requestDto.getContent())
+				.build();
+
 		return itemRepository.save(item);
 	}
 }
