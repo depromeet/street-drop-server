@@ -2,7 +2,8 @@ package com.depromeet.streetdrop.domains.item.service;
 
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.response.ItemDetailResponseDto;
-import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
+import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
+import com.depromeet.streetdrop.domains.item.repository.ItemLocationRepository;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -13,11 +14,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@RequiredArgsConstructor
+
 @Service
+@RequiredArgsConstructor
 public class ItemService {
-    private final ItemRepository itemRepository;
-    private final GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
+    private final ItemLocationRepository itemLocationRepository;
+    private final static int WGS84_SRID = 4326;
+    private final GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), WGS84_SRID);
+
+    public PoiResponseDto findNearItemsPoints(NearItemRequestDto nearItemRequestDto) {
+        Point point = gf.createPoint(new Coordinate(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude()));
+        var poiDtoList = itemLocationRepository.findNearItemsPointsByDistance(point, nearItemRequestDto.getDistance())
+                .stream().map(PoiResponseDto.PoiDto::fromItemPoint).toList();
+        return new PoiResponseDto(poiDtoList);
+    }
 
     @Transactional(readOnly = true)
     public List<ItemDetailResponseDto> findNearItems(NearItemRequestDto nearItemRequestDto) {
@@ -28,5 +38,5 @@ public class ItemService {
                 .toList();
         return response;
     }
-    
+
 }

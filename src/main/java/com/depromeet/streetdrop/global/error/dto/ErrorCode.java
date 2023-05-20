@@ -25,7 +25,12 @@ public enum ErrorCode {
 	/*
 	 * 500 INTERNAL_SERVER_ERROR: 내부 서버 오류
 	 */
-	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "C-0003", "Internal Server Error");
+	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "C-0003", "Internal Server Error"),
+
+	/*
+	 * 400 BAD_REQUEST: 요청 인자가 유효하지 않음
+	 */
+	METHOD_ARGUMENT_NOT_VALID(HttpStatus.BAD_REQUEST, "C-0004", "Method Argument Not Valid");
 
 	private final HttpStatus status;
 	private final String code;
