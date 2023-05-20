@@ -1,6 +1,5 @@
-package com.depromeet.streetdrop.domains.item.drop.dto;
+package com.depromeet.streetdrop.domains.item.dto;
 
-import com.depromeet.streetdrop.domains.item.drop.entity.Item;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +8,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class ItemDropRequestDto {
+public class ItemRequestDto {
 	private String latitude;
 	private String longitude;
 	private String address;
@@ -21,9 +20,9 @@ public class ItemDropRequestDto {
 	private String content;
 
 	@Builder
-	public ItemDropRequestDto(String latitude, String longitude, String address, String title,
-	                          String artiest, String albumName, String albumImage,
-	                          List<String> genre, String content) {
+	public ItemRequestDto(String latitude, String longitude, String address, String title,
+	                      String artiest, String albumName, String albumImage,
+	                      List<String> genre, String content) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.address = address;

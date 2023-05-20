@@ -1,7 +1,7 @@
 package com.depromeet.streetdrop.domains.music.song.entity;
 
 import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
-import com.depromeet.streetdrop.domains.item.drop.entity.Item;
+import com.depromeet.streetdrop.domains.item.entity.Item;
 import com.depromeet.streetdrop.domains.music.album.entity.Album;
 import com.depromeet.streetdrop.domains.music.genre.entity.SongGenre;
 import jakarta.persistence.*;

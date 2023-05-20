@@ -1,4 +1,4 @@
-package com.depromeet.streetdrop.domains.item.drop.entity;
+package com.depromeet.streetdrop.domains.item.entity;
 
 import com.depromeet.streetdrop.domains.itemLocation.entity.ItemLocation;
 import com.depromeet.streetdrop.domains.music.album.entity.AlbumCover;

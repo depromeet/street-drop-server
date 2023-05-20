@@ -1,8 +1,8 @@
-package com.depromeet.streetdrop.domains.item.drop.service;
+package com.depromeet.streetdrop.domains.item.service;
 
-import com.depromeet.streetdrop.domains.item.drop.dto.ItemDropRequestDto;
-import com.depromeet.streetdrop.domains.item.drop.entity.Item;
-import com.depromeet.streetdrop.domains.item.drop.repository.ItemDropRepository;
+import com.depromeet.streetdrop.domains.item.dto.ItemRequestDto;
+import com.depromeet.streetdrop.domains.item.entity.Item;
+import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
 import com.depromeet.streetdrop.domains.itemLocation.entity.ItemLocation;
 import com.depromeet.streetdrop.domains.music.album.entity.Album;
 import com.depromeet.streetdrop.domains.music.album.entity.AlbumCover;
@@ -19,12 +19,12 @@ import java.util.ArrayList;
 
 @RequiredArgsConstructor
 @Service
-public class ItemDropService {
+public class ItemService {
 	public static final String TEST_USER = "User1";
-	private final ItemDropRepository itemDropRepository;
+	private final ItemRepository itemRepository;
 
 	@Transactional
-	public Item register(Long memberId, ItemDropRequestDto requestDto) {
+	public Item register(Long memberId, ItemRequestDto requestDto) {
 		Double lat = Double.parseDouble(requestDto.getLatitude());
 		Double lon = Double.parseDouble(requestDto.getLongitude());
 		Point point = GeomUtil.createPoint(lat, lon);
@@ -67,6 +67,6 @@ public class ItemDropService {
 				.content(requestDto.getContent())
 				.build();
 
-		return itemDropRepository.save(item);
+		return itemRepository.save(item);
 	}
 }
