@@ -4,9 +4,7 @@ import com.depromeet.streetdrop.domains.common.annotation.IsLatitude;
 import com.depromeet.streetdrop.domains.common.annotation.IsLongitude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 
@@ -15,7 +13,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Validated
-@ParameterObject
+//@RequiredArgsConstructor
+//@ParameterObject
 public class ItemRequestDto {
 
 	@Schema(description = "경도", example = "127.123456")
@@ -31,13 +30,13 @@ public class ItemRequestDto {
 	@Schema(description = "주소", example = "서울시 강남구 강남동")
 	private String address;
 
-	@Schema(description = "노래제목")
+	@Schema(description = "노래제목", example = "하입보이")
 	private String title;
 
-	@Schema(description = "아티스트명")
+	@Schema(description = "아티스트명",  example = "New jeans")
 	private String artiest;
 
-	@Schema(description = "앨범명")
+	@Schema(description = "앨범명", example = "1st EP New jeans")
 	private String albumName;
 
 	@Schema(description = "앨범 커버 이미지")
@@ -46,7 +45,7 @@ public class ItemRequestDto {
 	@Schema(description = "장르")
 	private List<String> genre;
 
-	@Schema(description = "콘텐츠")
+	@Schema(description = "콘텐츠", example = "블라블라")
 	private String content;
 
 	@Builder

@@ -8,9 +8,11 @@ import com.depromeet.streetdrop.domains.item.repository.ItemLocationRepository;
 import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
 import com.depromeet.streetdrop.domains.itemLocation.entity.ItemLocation;
 import com.depromeet.streetdrop.domains.music.album.entity.AlbumCover;
+import com.depromeet.streetdrop.domains.music.album.service.AlbumCoverService;
 import com.depromeet.streetdrop.domains.music.album.service.AlbumService;
 import com.depromeet.streetdrop.domains.music.artist.entity.Artist;
 import com.depromeet.streetdrop.domains.music.song.entity.Song;
+import com.depromeet.streetdrop.domains.music.song.service.SongService;
 import com.depromeet.streetdrop.domains.user.entity.User;
 import com.depromeet.streetdrop.global.common.util.GeomUtil;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ItemService {
 	private final AlbumService albumService;
+	private final SongService songService;
+	private final AlbumCoverService albumCoverService;
 	private final ItemRepository itemRepository;
 	private final ItemLocationRepository itemLocationRepository;
 
@@ -40,45 +44,7 @@ public class ItemService {
 	}
 
 	@Transactional
-	public Item register(Long memberId, ItemRequestDto requestDto) {
-		Double lat = requestDto.getLatitude();
-		Double lon = requestDto.getLongitude();
-		Point point = GeomUtil.createPoint(lat, lon);
-
-		var itemLocation = ItemLocation.builder()
-				.name(requestDto.getAddress())
-				.point(point)
-				.build();
-
-		// TODO: 로그인 연동 후 유저 정보를 받아오도록 수정 필요
-		var user = User.builder()
-				.nickname(TEST_USER)
-				.build();
-
-		var artist = Artist.builder()
-				.name(requestDto.getArtiest())
-				.build();
-
-		var album = albumService.getAlbum(requestDto.getAlbumName(), artist);
-
-		var albumCover = AlbumCover.builder()
-				.albumImage(requestDto.getAlbumImage())
-				.albumThumbnail(requestDto.getAlbumImage())
-				.build();
-
-		var song = Song.builder()
-				.name(requestDto.getTitle())
-				.album(album)
-				.build();
-
-		var item = Item.builder()
-				.user(user)
-				.itemLocation(itemLocation)
-				.albumCover(albumCover)
-				.song(song)
-				.content(requestDto.getContent())
-				.build();
-
+	public Item create(Item item) {
 		return itemRepository.save(item);
 	}
 }

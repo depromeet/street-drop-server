@@ -16,9 +16,9 @@ public class AlbumService {
 	private final AlbumRepository albumRepository;
 
 	@Transactional(readOnly = true)
-	public Album getAlbum(String albumName, Artist artist) {
-		return albumRepository.findAlbumByName(albumName).orElse(
-				Album.builder()
+	public Album getOrCreateAlbum(String albumName, Artist artist) {
+		return albumRepository.findAlbumByName(albumName)
+				.orElseGet(() -> Album.builder()
 						.name(albumName)
 						.songs(new ArrayList<Song>())
 						.artist(artist)

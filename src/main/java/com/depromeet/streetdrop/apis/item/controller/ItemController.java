@@ -4,6 +4,7 @@ import com.depromeet.streetdrop.domains.common.dto.ResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.request.ItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
+import com.depromeet.streetdrop.domains.item.facade.ItemFacade;
 import com.depromeet.streetdrop.domains.item.service.ItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Tag(name = "Items", description = "Item API")
 public class ItemController {
-
+	private final ItemFacade itemFacade;
     private final ItemService itemService;
 
     @Operation(summary = "주변 아이템 조회 - POI")
@@ -29,12 +30,11 @@ public class ItemController {
     }
 
 	@Operation(summary = "드랍 아이템 등록")
-	@PostMapping("/")
+	@PostMapping("")
 	public ResponseEntity<Void> create(@RequestBody ItemRequestDto requestDto) {
-		// TODO: 로그인 적용 후 MEMBER ID 변경 필요
 		Long memberId = Long.valueOf(RandomStringUtils.random(15, false, true));
-		itemService.register(memberId, requestDto);
-		return ResponseDto.noContent();
+		itemFacade.register(requestDto);
+		return ResponseDto.created();
 	}
 
 }
