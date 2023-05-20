@@ -25,7 +25,7 @@ public record ItemDetailResponseDto(
         @Schema(description = "사용자 코멘트", example = "이 노래 좋아요")
         String content,
 
-        @Schema(description = "생성시간", example = "")
+        @Schema(description = "생성시간", example = "yyyy-MM-dd HH:mm:ss")
         @JsonFormat(
                 shape = JsonFormat.Shape.STRING,
                 pattern = "yyyy-MM-dd HH:mm:ss",
