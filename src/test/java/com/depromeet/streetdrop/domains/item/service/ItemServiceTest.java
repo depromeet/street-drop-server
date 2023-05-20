@@ -1,6 +1,6 @@
 package com.depromeet.streetdrop.domains.item.service;
 
-import com.depromeet.streetdrop.domains.item.dao.ItemPoint;
+import com.depromeet.streetdrop.domains.item.dao.ItemPointDao;
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.streetdrop.domains.item.repository.ItemLocationRepository;
@@ -56,11 +56,11 @@ public class ItemServiceTest {
             void getNearItemPointsTestSuccess2() {
                 NearItemRequestDto nearItemRequestDto = new NearItemRequestDto(127.123, 37.123, 1000.0);
 
-                List<ItemPoint> itemPoints = List.of(
-                        new ItemPoint(gf.createPoint(new Coordinate(127.123, 37.123)), 1L, "/image1.jpg"),
-                        new ItemPoint(gf.createPoint(new Coordinate(127.133, 37.323)), 2L, "/image2.jpg")
+                List<ItemPointDao> itemPointDaos = List.of(
+                        new ItemPointDao(gf.createPoint(new Coordinate(127.123, 37.123)), 1L, "/image1.jpg"),
+                        new ItemPointDao(gf.createPoint(new Coordinate(127.133, 37.323)), 2L, "/image2.jpg")
                 );
-                when(itemLocationRepository.findNearItemsPointsByDistance(any(Point.class), any(Double.class))).thenReturn(itemPoints);
+                when(itemLocationRepository.findNearItemsPointsByDistance(any(Point.class), any(Double.class))).thenReturn(itemPointDaos);
 
                 var result = itemService.findNearItemsPoints(nearItemRequestDto);
 

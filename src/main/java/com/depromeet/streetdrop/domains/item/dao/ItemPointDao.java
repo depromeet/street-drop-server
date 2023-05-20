@@ -6,7 +6,7 @@ import org.locationtech.jts.geom.Point;
 
 @NoArgsConstructor
 @Getter
-public class ItemPoint {
+public class ItemPointDao {
 
     private Point point;
 
@@ -14,7 +14,7 @@ public class ItemPoint {
 
     private String albumThumbnail;
 
-    public ItemPoint(Point point, Long id, String albumThumbnail) {
+    public ItemPointDao(Point point, Long id, String albumThumbnail) {
         this.point = point;
         this.id = id;
         this.albumThumbnail = albumThumbnail;

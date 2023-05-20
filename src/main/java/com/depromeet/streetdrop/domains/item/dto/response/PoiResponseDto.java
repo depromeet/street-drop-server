@@ -1,6 +1,6 @@
 package com.depromeet.streetdrop.domains.item.dto.response;
 
-import com.depromeet.streetdrop.domains.item.dao.ItemPoint;
+import com.depromeet.streetdrop.domains.item.dao.ItemPointDao;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 
@@ -18,12 +18,12 @@ public record PoiResponseDto(List<PoiDto> poi) {
             double latitude,
             @Schema(description = "경도", example = "127.123456")
             double longitude) {
-        public static PoiDto fromItemPoint(ItemPoint itemPoint) {
+        public static PoiDto fromItemPoint(ItemPointDao itemPointDao) {
             return PoiDto.builder()
-                    .itemId(itemPoint.getId())
-                    .albumCover(itemPoint.getAlbumThumbnail())
-                    .latitude(itemPoint.getPoint().getY())
-                    .longitude(itemPoint.getPoint().getX())
+                    .itemId(itemPointDao.getId())
+                    .albumCover(itemPointDao.getAlbumThumbnail())
+                    .latitude(itemPointDao.getPoint().getY())
+                    .longitude(itemPointDao.getPoint().getX())
                     .build();
         }
     }
