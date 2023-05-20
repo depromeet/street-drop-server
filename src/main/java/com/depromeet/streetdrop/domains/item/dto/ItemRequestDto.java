@@ -3,11 +3,13 @@ package com.depromeet.streetdrop.domains.item.dto;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
 @Data
 @NoArgsConstructor
+@Validated
 public class ItemRequestDto {
 	private String latitude;
 	private String longitude;
