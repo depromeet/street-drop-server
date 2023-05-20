@@ -32,7 +32,7 @@ public class ItemController {
         return ResponseDto.ok(response);
     }
 
-    @Operation(summary = "다중 아이템 상세 조회")
+    @Operation(summary = "주변 아이템 상세 조회")
     @GetMapping
     public ResponseEntity<List<ItemDetailResponseDto>> findNearItems(
             @Valid NearItemRequestDto nearItemRequestDto
