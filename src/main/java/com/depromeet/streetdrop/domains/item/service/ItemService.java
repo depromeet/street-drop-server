@@ -11,16 +11,29 @@ import com.depromeet.streetdrop.domains.music.song.entity.Song;
 import com.depromeet.streetdrop.domains.user.entity.User;
 import com.depromeet.streetdrop.global.common.util.GeomUtil;
 import lombok.RequiredArgsConstructor;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class ItemService {
 	public static final String TEST_USER = "User1";
 	private final AlbumService albumService;
 	private final ItemRepository itemRepository;
+	private final ItemLocationRepository itemLocationRepository;
+	private final static int WGS84_SRID = 4326;
+	private final GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), WGS84_SRID);
+
+	public PoiResponseDto findNearItemsPoints(NearItemRequestDto nearItemRequestDto) {
+		Point point = gf.createPoint(new Coordinate(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude()));
+		var poiDtoList = itemLocationRepository.findNearItemsPointsByDistance(point, nearItemRequestDto.getDistance())
+				.stream().map(PoiResponseDto.PoiDto::fromItemPoint).toList();
+		return new PoiResponseDto(poiDtoList);
+	}
 
 	@Transactional
 	public Item register(Long memberId, ItemRequestDto requestDto) {
