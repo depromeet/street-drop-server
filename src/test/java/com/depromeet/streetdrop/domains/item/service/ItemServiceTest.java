@@ -44,9 +44,9 @@ public class ItemServiceTest {
             @Test
             void getNearItemPointsTestSuccess1() {
                 NearItemRequestDto nearItemRequestDto = new NearItemRequestDto(127.123, 37.123, 1000.0);
-                when(itemLocationRepository.findNearItemLocationsByDistance(any(Point.class), any(Double.class))).thenReturn(List.of());
+                when(itemLocationRepository.findNearItemsPointsByDistance(any(Point.class), any(Double.class))).thenReturn(List.of());
 
-                var result = itemService.getNearItemPoints(nearItemRequestDto);
+                var result = itemService.findNearItemsPoints(nearItemRequestDto);
 
                 assertThat(result).isEqualTo(new PoiResponseDto(List.of()));
             }
@@ -60,9 +60,9 @@ public class ItemServiceTest {
                         new ItemPoint(gf.createPoint(new Coordinate(127.123, 37.123)), 1L, "/image1.jpg"),
                         new ItemPoint(gf.createPoint(new Coordinate(127.133, 37.323)), 2L, "/image2.jpg")
                 );
-                when(itemLocationRepository.findNearItemLocationsByDistance(any(Point.class), any(Double.class))).thenReturn(itemPoints);
+                when(itemLocationRepository.findNearItemsPointsByDistance(any(Point.class), any(Double.class))).thenReturn(itemPoints);
 
-                var result = itemService.getNearItemPoints(nearItemRequestDto);
+                var result = itemService.findNearItemsPoints(nearItemRequestDto);
 
                 assertThat(result).isEqualTo(
                         new PoiResponseDto(

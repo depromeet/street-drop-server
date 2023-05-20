@@ -57,7 +57,7 @@ public class ItemControllerTest {
                 PoiResponseDto.PoiDto poiResponseDto2 = new PoiResponseDto.PoiDto(2L, "/karina2.jpg", 37.123436, 127.123466);
                 PoiResponseDto poiResponseDto = new PoiResponseDto(List.of(poiResponseDto1, poiResponseDto2));
 
-                given(itemService.getNearItemPoints(any(NearItemRequestDto.class))).willReturn(poiResponseDto);
+                given(itemService.findNearItemsPoints(any(NearItemRequestDto.class))).willReturn(poiResponseDto);
 
                 var response = mvc.perform(
                         get("/items/points")
@@ -82,7 +82,7 @@ public class ItemControllerTest {
             @Test
             void getNearItemPointsTest2() throws Exception {
                 PoiResponseDto poiResponseDto = new PoiResponseDto(List.of());
-                given(itemService.getNearItemPoints(any(NearItemRequestDto.class))).willReturn(poiResponseDto);
+                given(itemService.findNearItemsPoints(any(NearItemRequestDto.class))).willReturn(poiResponseDto);
 
                 var response = mvc.perform(
                         get("/items/points")
@@ -102,7 +102,7 @@ public class ItemControllerTest {
                 PoiResponseDto.PoiDto poiResponseDto1 = new PoiResponseDto.PoiDto(1L, "/butter1.jpg", 37.123454, 127.123456);
                 PoiResponseDto poiResponseDto = new PoiResponseDto(List.of(poiResponseDto1));
 
-                given(itemService.getNearItemPoints(any(NearItemRequestDto.class))).willReturn(poiResponseDto);
+                given(itemService.findNearItemsPoints(any(NearItemRequestDto.class))).willReturn(poiResponseDto);
 
                 var response = mvc.perform(
                         get("/items/points")

@@ -16,9 +16,9 @@ public class ItemService {
     private final ItemLocationRepository itemLocationRepository;
     private final GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
 
-    public PoiResponseDto getNearItemPoints(NearItemRequestDto nearItemRequestDto) {
+    public PoiResponseDto findNearItemsPoints(NearItemRequestDto nearItemRequestDto) {
         Point point = gf.createPoint(new Coordinate(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude()));
-        var poiDtoList = itemLocationRepository.findNearItemLocationsByDistance(point, nearItemRequestDto.getDistance())
+        var poiDtoList = itemLocationRepository.findNearItemsPointsByDistance(point, nearItemRequestDto.getDistance())
                 .stream().map(PoiResponseDto.PoiDto::fromItemPoint).toList();
         return new PoiResponseDto(poiDtoList);
     }
