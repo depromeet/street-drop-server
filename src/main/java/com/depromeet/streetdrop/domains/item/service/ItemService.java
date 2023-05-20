@@ -1,10 +1,19 @@
 package com.depromeet.streetdrop.domains.item.service;
 
+import com.depromeet.streetdrop.domains.item.dto.request.ItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.response.ItemDetailResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
+import com.depromeet.streetdrop.domains.item.entity.Item;
 import com.depromeet.streetdrop.domains.item.repository.ItemLocationRepository;
 import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
+import com.depromeet.streetdrop.domains.itemLocation.service.ItemLocationService;
+import com.depromeet.streetdrop.domains.music.album.service.AlbumCoverService;
+import com.depromeet.streetdrop.domains.music.album.service.AlbumService;
+import com.depromeet.streetdrop.domains.music.artist.service.ArtistService;
+import com.depromeet.streetdrop.domains.music.song.service.SongService;
+import com.depromeet.streetdrop.domains.user.entity.User;
+import com.depromeet.streetdrop.domains.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -15,21 +24,48 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 @Service
 @RequiredArgsConstructor
 public class ItemService {
-    private final ItemLocationRepository itemLocationRepository;
-    private final ItemRepository itemRepository;
-    private final static int WGS84_SRID = 4326;
-    private final GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), WGS84_SRID);
+	private final ItemLocationService itemLocationService;
+	private final UserService userService;
+	private final AlbumService albumService;
+	private final ArtistService artistService;
+	private final SongService songService;
+	private final AlbumCoverService albumCoverService;
+	private final ItemRepository itemRepository;
+	private final ItemLocationRepository itemLocationRepository;
 
-    public PoiResponseDto findNearItemsPoints(NearItemRequestDto nearItemRequestDto) {
-        Point point = gf.createPoint(new Coordinate(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude()));
-        var poiDtoList = itemLocationRepository.findNearItemsPointsByDistance(point, nearItemRequestDto.getDistance())
-                .stream().map(PoiResponseDto.PoiDto::fromItemPoint).toList();
-        return new PoiResponseDto(poiDtoList);
-    }
+	public static final String TEST_USER = "User1";
+	private final static int WGS84_SRID = 4326;
+	private final GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), WGS84_SRID);
+
+	public PoiResponseDto findNearItemsPoints(NearItemRequestDto nearItemRequestDto) {
+		Point point = gf.createPoint(new Coordinate(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude()));
+		var poiDtoList = itemLocationRepository.findNearItemsPointsByDistance(point, nearItemRequestDto.getDistance())
+				.stream().map(PoiResponseDto.PoiDto::fromItemPoint).toList();
+		return new PoiResponseDto(poiDtoList);
+	}
+
+	@Transactional
+	public Item register(ItemRequestDto requestDto) {
+		var location = itemLocationService.create(requestDto);
+		var user = userService.getOrCreateUser(TEST_USER);
+		var artist = artistService.getOrCreateArtist(requestDto.getArtiest());
+		var album = albumService.getOrCreateAlbum(requestDto.getAlbumName(), artist);
+		var albumCover = albumCoverService.getOrCreateAlbumCover(album, requestDto.getAlbumImage(), requestDto.getAlbumImage());
+		var song = songService.getOrCreateSong(requestDto.getTitle(), album);
+
+		var item = Item.builder()
+				.user(user)
+				.itemLocation(location)
+				.albumCover(albumCover)
+				.song(song)
+				.content(requestDto.getContent())
+				.build();
+
+		return itemRepository.save(item);
+	}
 
     @Transactional(readOnly = true)
     public List<ItemDetailResponseDto> findNearItems(NearItemRequestDto nearItemRequestDto) {

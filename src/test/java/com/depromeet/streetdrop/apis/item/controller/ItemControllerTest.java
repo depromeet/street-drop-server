@@ -1,4 +1,4 @@
-package com.depromeet.streetdrop.api.item.controller;
+package com.depromeet.streetdrop.apis.item.controller;
 
 import com.depromeet.streetdrop.apis.item.controller.ItemController;
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;

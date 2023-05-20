@@ -10,10 +10,10 @@ public record ResponseDto<T>(T date) implements Serializable {
 		return ResponseEntity.ok(data);
 	}
 
-	public static <T> ResponseEntity<T> created(T data) {
+	public static <T> ResponseEntity<T> created() {
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
-				.body(data);
+				.build();
 	}
 
 	public static ResponseEntity<Void> noContent() {

@@ -1,6 +1,7 @@
 package com.depromeet.streetdrop.apis.item.controller;
 
 import com.depromeet.streetdrop.domains.common.dto.ResponseDto;
+import com.depromeet.streetdrop.domains.item.dto.request.ItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.response.ItemDetailResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
@@ -9,10 +10,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,7 +22,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Items", description = "Item API")
 public class ItemController {
-
     private final ItemService itemService;
 
     @Operation(summary = "주변 아이템 조회 - POI")
@@ -32,6 +31,14 @@ public class ItemController {
         return ResponseDto.ok(response);
     }
 
+	@Operation(summary = "드랍 아이템 등록")
+	@PostMapping("/")
+	public ResponseEntity<Void> create(@RequestBody ItemRequestDto requestDto) {
+		Long memberId = Long.valueOf(RandomStringUtils.random(15, false, true));
+		itemService.register(requestDto);
+		return ResponseDto.created();
+	}
+
     @Operation(summary = "주변 아이템 상세 조회")
     @GetMapping
     public ResponseEntity<List<ItemDetailResponseDto>> findNearItems(
@@ -40,5 +47,4 @@ public class ItemController {
         var response = itemService.findNearItems(nearItemRequestDto);
         return ResponseEntity.ok(response);
     }
-
 }

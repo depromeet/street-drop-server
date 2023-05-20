@@ -30,6 +30,7 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.hibernate:hibernate-spatial:6.2.2.Final'
+    implementation 'org.locationtech.jts:jts-core'
 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
