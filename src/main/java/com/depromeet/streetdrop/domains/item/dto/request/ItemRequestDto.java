@@ -11,40 +11,42 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Validated
+@RequiredArgsConstructor
 //@ParameterObject
 public class ItemRequestDto {
 
 	@Schema(description = "경도", example = "127.123456")
 	@IsLongitude
 	@NotNull(message = "Longitude is required")
-	private final Double latitude;
+	private Double latitude;
 
 	@Schema(description = "위도", example = "37.123456")
 	@IsLatitude
 	@NotNull(message= "Latitude is required")
-	private final Double longitude;
+	private Double longitude;
 
 	@Schema(description = "주소", example = "서울시 강남구 강남동")
-	private final String address;
+	private String address;
 
 	@Schema(description = "노래제목", example = "하입보이")
-	private final String title;
+	private String title;
 
 	@Schema(description = "아티스트명",  example = "New jeans")
-	private final String artiest;
+	private String artiest;
 
 	@Schema(description = "앨범명", example = "1st EP New jeans")
-	private final String albumName;
+	private String albumName;
 
 	@Schema(description = "앨범 커버 이미지")
-	private final String albumImage;
+	private String albumImage;
 
 	@Schema(description = "장르")
-	private final List<String> genre;
+	private List<String> genre;
 
 	@Schema(description = "콘텐츠", example = "블라블라")
-	private final String content;
+	private String content;
 
 	@Builder
 	public ItemRequestDto(Double latitude, Double longitude, String address, String title,
