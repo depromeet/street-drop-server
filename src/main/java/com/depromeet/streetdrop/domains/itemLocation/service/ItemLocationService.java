@@ -1,6 +1,7 @@
 package com.depromeet.streetdrop.domains.itemLocation.service;
 
 import com.depromeet.streetdrop.domains.item.dto.request.ItemRequestDto;
+import com.depromeet.streetdrop.domains.itemLocation.dto.request.LocationDto;
 import com.depromeet.streetdrop.domains.itemLocation.entity.ItemLocation;
 import com.depromeet.streetdrop.global.common.util.GeomUtil;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +12,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ItemLocationService {
 	public ItemLocation create(ItemRequestDto requestDto) {
-		Double lat = requestDto.getLatitude();
-		Double lon = requestDto.getLongitude();
+		LocationDto locationDto = requestDto.getLocation();
+		Double lat = locationDto.getLatitude();
+		Double lon = locationDto.getLongitude();
 		Point point = GeomUtil.createPoint(lat, lon);
 
 		return ItemLocation.builder()
-				.name(requestDto.getAddress())
+				.name(locationDto.getAddress())
 				.point(point)
 				.build();
 	}

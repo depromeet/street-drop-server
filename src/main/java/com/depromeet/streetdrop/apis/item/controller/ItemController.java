@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,8 +33,7 @@ public class ItemController {
 	@Operation(summary = "드랍 아이템 등록")
 	@PostMapping
 	public ResponseEntity<Void> create(@RequestBody ItemRequestDto requestDto) {
-		Long memberId = Long.valueOf(RandomStringUtils.random(15, false, true));
-		itemService.register(requestDto);
+		itemService.create(requestDto);
 		return ResponseDto.created();
 	}
 

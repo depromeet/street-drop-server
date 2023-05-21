@@ -8,11 +8,7 @@ import com.depromeet.streetdrop.domains.item.entity.Item;
 import com.depromeet.streetdrop.domains.item.repository.ItemLocationRepository;
 import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
 import com.depromeet.streetdrop.domains.itemLocation.service.ItemLocationService;
-import com.depromeet.streetdrop.domains.music.album.service.AlbumCoverService;
-import com.depromeet.streetdrop.domains.music.album.service.AlbumService;
-import com.depromeet.streetdrop.domains.music.artist.service.ArtistService;
-import com.depromeet.streetdrop.domains.music.song.service.SongService;
-import com.depromeet.streetdrop.domains.user.entity.User;
+import com.depromeet.streetdrop.domains.music.service.MusicService;
 import com.depromeet.streetdrop.domains.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
@@ -29,10 +25,7 @@ import java.util.List;
 public class ItemService {
 	private final ItemLocationService itemLocationService;
 	private final UserService userService;
-	private final AlbumService albumService;
-	private final ArtistService artistService;
-	private final SongService songService;
-	private final AlbumCoverService albumCoverService;
+	private final MusicService musicService;
 	private final ItemRepository itemRepository;
 	private final ItemLocationRepository itemLocationRepository;
 
@@ -48,13 +41,13 @@ public class ItemService {
 	}
 
 	@Transactional
-	public Item register(ItemRequestDto requestDto) {
-		var location = itemLocationService.create(requestDto);
+	public Item create(ItemRequestDto requestDto) {
 		var user = userService.getOrCreateUser(TEST_USER);
-		var artist = artistService.getOrCreateArtist(requestDto.getArtiest());
-		var album = albumService.getOrCreateAlbum(requestDto.getAlbumName(), artist);
-		var albumCover = albumCoverService.getOrCreateAlbumCover(album, requestDto.getAlbumImage(), requestDto.getAlbumImage());
-		var song = songService.getOrCreateSong(requestDto.getTitle(), album);
+		var location = itemLocationService.create(requestDto);
+		var artist = musicService.getOrCreateArtist(requestDto.getMusic());
+		var album = musicService.getOrCreateAlbum(requestDto.getMusic(), artist);
+		var albumCover = musicService.getOrCreateAlbumCover(requestDto.getMusic(), album);
+		var song = musicService.getOrCreateSong(requestDto.getMusic(), album);
 
 		var item = Item.builder()
 				.user(user)
@@ -63,7 +56,6 @@ public class ItemService {
 				.song(song)
 				.content(requestDto.getContent())
 				.build();
-
 		return itemRepository.save(item);
 	}
 
