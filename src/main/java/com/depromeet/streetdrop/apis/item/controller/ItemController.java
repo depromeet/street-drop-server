@@ -32,7 +32,7 @@ public class ItemController {
     }
 
 	@Operation(summary = "드랍 아이템 등록")
-	@PostMapping("/")
+	@PostMapping
 	public ResponseEntity<Void> create(@RequestBody ItemRequestDto requestDto) {
 		Long memberId = Long.valueOf(RandomStringUtils.random(15, false, true));
 		itemService.register(requestDto);
