@@ -19,6 +19,9 @@ public record ItemResponseDto(
 		@Schema(description = "사용자 위치", example = "성동구 성수1가 1동")
 		LocationResponseDto location,
 
+		@Schema(description = "음악 정보")
+		MusicResponseDto music,
+
 		@Schema(description = "사용자 코멘트", example = "이 노래 좋아요")
 		String content,
 
@@ -35,6 +38,7 @@ public record ItemResponseDto(
 				item.getId(),
 				new UserResponseDto(item.getUser()),
 				new LocationResponseDto(item.getItemLocation().getName()),
+				new MusicResponseDto(item),
 				item.getContent(),
 				item.getCreatedAt()
 		);
