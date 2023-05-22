@@ -21,6 +21,6 @@ public class MusicDto {
 	@Schema(description = "앨범 커버 이미지", example = "https://www.youtube.com/watch?v=YGieI3KoeZk")
 	private String albumImage;
 
-	@Schema(description = "장르", example = "K-pop")
+	@Schema(description = "장르")
 	private List<String> genre;
 }

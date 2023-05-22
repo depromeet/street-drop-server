@@ -3,6 +3,7 @@ package com.depromeet.streetdrop.domains.music.genre.entity;
 import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
 import com.depromeet.streetdrop.domains.music.song.entity.Song;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,4 +28,9 @@ public class SongGenre extends BaseTimeEntity {
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
+    @Builder
+    public SongGenre(Song song, Genre genre) {
+        this.song = song;
+        this.genre = genre;
+    }
 }

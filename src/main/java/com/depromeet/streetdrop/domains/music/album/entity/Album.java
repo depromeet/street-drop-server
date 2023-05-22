@@ -45,4 +45,8 @@ public class Album extends BaseTimeEntity {
 		this.songs = songs;
 		this.artist = artist;
 	}
+
+	public void updateAlbumCover(AlbumCover albumCover) {
+		this.albumCover = albumCover;
+	}
 }

@@ -58,10 +58,12 @@ public class ItemService {
 				.content(requestDto.getContent())
 				.build();
 		var savedItem = itemRepository.save(item);
+		musicService.updateAlbumByAlbumCover(album, albumCover);
+		itemLocationService.updateLocationByItemId(location, savedItem);
 		return new ItemResponseDto(savedItem);
 	}
 
-    @Transactional(readOnly = true)
+	@Transactional(readOnly = true)
     public List<ItemDetailResponseDto> findNearItems(NearItemRequestDto nearItemRequestDto) {
         Point point = gf.createPoint(new Coordinate(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude()));
         var items = itemRepository.findNearItemsByDistance(point, nearItemRequestDto.getDistance());

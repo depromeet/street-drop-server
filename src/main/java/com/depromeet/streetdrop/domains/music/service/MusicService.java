@@ -7,11 +7,15 @@ import com.depromeet.streetdrop.domains.music.album.repository.AlbumRepository;
 import com.depromeet.streetdrop.domains.music.artist.entity.Artist;
 import com.depromeet.streetdrop.domains.music.artist.repository.ArtistRepository;
 import com.depromeet.streetdrop.domains.music.dto.request.MusicDto;
+import com.depromeet.streetdrop.domains.music.genre.repository.SongGenreRepository;
 import com.depromeet.streetdrop.domains.music.song.entity.Song;
 import com.depromeet.streetdrop.domains.music.song.repository.SongRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -20,6 +24,7 @@ public class MusicService {
 	private final SongRepository songRepository;
 	private final AlbumRepository albumRepository;
 	private final AlbumCoverRepository albumCoverRepository;
+	private final SongGenreRepository songGenreRepository;
 
 	@Transactional(readOnly = true)
 	public Song getOrCreateSong(MusicDto musicDto, Album album) {
@@ -28,6 +33,7 @@ public class MusicService {
 				.orElseGet(() -> Song.builder()
 						.name(title)
 						.album(album)
+						.genres(new ArrayList<>())
 						.build()
 				);
 	}
@@ -59,5 +65,9 @@ public class MusicService {
 						.albumImage(musicDto.getAlbumImage())
 						.album(album)
 						.build());
+	}
+
+	public void updateAlbumByAlbumCover(Album album, AlbumCover albumCover) {
+		album.updateAlbumCover(albumCover);
 	}
 }
