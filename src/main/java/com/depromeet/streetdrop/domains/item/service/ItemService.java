@@ -3,6 +3,7 @@ package com.depromeet.streetdrop.domains.item.service;
 import com.depromeet.streetdrop.domains.item.dto.request.ItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.response.ItemDetailResponseDto;
+import com.depromeet.streetdrop.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.streetdrop.domains.item.entity.Item;
 import com.depromeet.streetdrop.domains.item.repository.ItemLocationRepository;
@@ -41,7 +42,7 @@ public class ItemService {
 	}
 
 	@Transactional
-	public Item create(ItemRequestDto requestDto) {
+	public ItemResponseDto create(ItemRequestDto requestDto) {
 		var user = userService.getOrCreateUser(TEST_USER);
 		var location = itemLocationService.create(requestDto);
 		var artist = musicService.getOrCreateArtist(requestDto.getMusic());
@@ -56,7 +57,8 @@ public class ItemService {
 				.song(song)
 				.content(requestDto.getContent())
 				.build();
-		return itemRepository.save(item);
+		var savedItem = itemRepository.save(item);
+		return new ItemResponseDto(savedItem);
 	}
 
     @Transactional(readOnly = true)
