@@ -25,6 +25,7 @@ public class LocationDto {
 	private Double longitude;
 
 	@Schema(description = "주소", example = "서울시 강남구 강남동")
+	@NotNull(message = "Address is required")
 	private String address;
 
 	@Builder
