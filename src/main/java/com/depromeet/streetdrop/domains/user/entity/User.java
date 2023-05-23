@@ -26,12 +26,16 @@ public class User extends BaseTimeEntity {
 	@Column(length = 20)
 	private String nickname;
 
+	@Column(length = 100)
+	private String idfv;
+
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Item> items = new ArrayList<>();
 
 	@Builder
-	public User(String nickname, List<Item> items) {
+	public User(String nickname, List<Item> items, String idfv) {
 		this.nickname = nickname;
 		this.items = items;
+		this.idfv = idfv;
 	}
 }
