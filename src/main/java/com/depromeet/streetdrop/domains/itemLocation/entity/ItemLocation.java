@@ -37,9 +37,10 @@ public class ItemLocation extends BaseTimeEntity {
 	private VillageArea villageArea;
 
 	@Builder
-	public ItemLocation(String name, Point point) {
+	public ItemLocation(String name, Point point, VillageArea villageArea) {
 		this.name = name;
 		this.point = point;
+		this.villageArea = villageArea;
 	}
 
 	public void updateItem(Item item) {
