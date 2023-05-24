@@ -3,16 +3,13 @@ package com.depromeet.streetdrop.domains.item.service;
 import com.depromeet.streetdrop.domains.item.dto.request.ItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.response.ItemDetailResponseDto;
+import com.depromeet.streetdrop.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.streetdrop.domains.item.entity.Item;
 import com.depromeet.streetdrop.domains.item.repository.ItemLocationRepository;
 import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
 import com.depromeet.streetdrop.domains.itemLocation.service.ItemLocationService;
-import com.depromeet.streetdrop.domains.music.album.service.AlbumCoverService;
-import com.depromeet.streetdrop.domains.music.album.service.AlbumService;
-import com.depromeet.streetdrop.domains.music.artist.service.ArtistService;
-import com.depromeet.streetdrop.domains.music.song.service.SongService;
-import com.depromeet.streetdrop.domains.user.entity.User;
+import com.depromeet.streetdrop.domains.music.service.MusicService;
 import com.depromeet.streetdrop.domains.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
@@ -29,10 +26,7 @@ import java.util.List;
 public class ItemService {
 	private final ItemLocationService itemLocationService;
 	private final UserService userService;
-	private final AlbumService albumService;
-	private final ArtistService artistService;
-	private final SongService songService;
-	private final AlbumCoverService albumCoverService;
+	private final MusicService musicService;
 	private final ItemRepository itemRepository;
 	private final ItemLocationRepository itemLocationRepository;
 
@@ -48,26 +42,27 @@ public class ItemService {
 	}
 
 	@Transactional
-	public Item register(ItemRequestDto requestDto) {
-		var location = itemLocationService.create(requestDto);
+	public ItemResponseDto create(ItemRequestDto itemRequestDto) {
 		var user = userService.getOrCreateUser(TEST_USER);
-		var artist = artistService.getOrCreateArtist(requestDto.getArtiest());
-		var album = albumService.getOrCreateAlbum(requestDto.getAlbumName(), artist);
-		var albumCover = albumCoverService.getOrCreateAlbumCover(album, requestDto.getAlbumImage(), requestDto.getAlbumImage());
-		var song = songService.getOrCreateSong(requestDto.getTitle(), album);
+		var itemLocation = itemLocationService.create(itemRequestDto);
+		var musicDto = musicService.getOrCreateMusic(itemRequestDto.getMusic());
 
 		var item = Item.builder()
 				.user(user)
-				.itemLocation(location)
-				.albumCover(albumCover)
-				.song(song)
-				.content(requestDto.getContent())
+				.itemLocation(itemLocation)
+				.albumCover(musicDto.albumCover())
+				.song(musicDto.song())
+				.content(itemRequestDto.getContent())
 				.build();
 
-		return itemRepository.save(item);
+		var savedItem = itemRepository.save(item);
+		musicService.updateAlbum(musicDto.album(), musicDto.albumCover());
+		itemLocationService.updateItemLocation(itemLocation, savedItem);
+
+		return new ItemResponseDto(savedItem);
 	}
 
-    @Transactional(readOnly = true)
+	@Transactional(readOnly = true)
     public List<ItemDetailResponseDto> findNearItems(NearItemRequestDto nearItemRequestDto) {
         Point point = gf.createPoint(new Coordinate(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude()));
         var items = itemRepository.findNearItemsByDistance(point, nearItemRequestDto.getDistance());

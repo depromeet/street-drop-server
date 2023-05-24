@@ -41,4 +41,8 @@ public class ItemLocation extends BaseTimeEntity {
 		this.name = name;
 		this.point = point;
 	}
+
+	public void updateItem(Item item) {
+		this.item = item;
+	}
 }

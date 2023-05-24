@@ -1,23 +1,35 @@
 package com.depromeet.streetdrop.domains.itemLocation.service;
 
 import com.depromeet.streetdrop.domains.item.dto.request.ItemRequestDto;
+import com.depromeet.streetdrop.domains.item.entity.Item;
+import com.depromeet.streetdrop.domains.itemLocation.dto.request.LocationRequestDto;
 import com.depromeet.streetdrop.domains.itemLocation.entity.ItemLocation;
-import com.depromeet.streetdrop.global.common.util.GeomUtil;
 import lombok.RequiredArgsConstructor;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
 public class ItemLocationService {
+	private final static int WGS84_SRID = 4326;
+	private final GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), WGS84_SRID);
+
 	public ItemLocation create(ItemRequestDto requestDto) {
-		Double lat = requestDto.getLatitude();
-		Double lon = requestDto.getLongitude();
-		Point point = GeomUtil.createPoint(lat, lon);
+		LocationRequestDto locationRequestDto = requestDto.getLocation();
+		Double lat = locationRequestDto.getLatitude();
+		Double lon = locationRequestDto.getLongitude();
+		Point point = gf.createPoint(new Coordinate(lat, lon));
 
 		return ItemLocation.builder()
-				.name(requestDto.getAddress())
+				.name(locationRequestDto.getAddress())
 				.point(point)
 				.build();
+	}
+
+	public void updateItemLocation(ItemLocation location, Item item) {
+		location.updateItem(item);
 	}
 }
