@@ -42,24 +42,24 @@ public class ItemService {
 	}
 
 	@Transactional
-	public ItemResponseDto create(ItemRequestDto requestDto) {
+	public ItemResponseDto create(ItemRequestDto itemRequestDto) {
 		var user = userService.getOrCreateUser(TEST_USER);
-		var location = itemLocationService.create(requestDto);
-		var artist = musicService.getOrCreateArtist(requestDto.getMusic());
-		var album = musicService.getOrCreateAlbum(requestDto.getMusic(), artist);
-		var albumCover = musicService.getOrCreateAlbumCover(requestDto.getMusic(), album);
-		var song = musicService.getOrCreateSong(requestDto.getMusic(), album);
+		var itemLocation = itemLocationService.create(itemRequestDto);
+		var artist = musicService.getOrCreateArtist(itemRequestDto.getMusic());
+		var album = musicService.getOrCreateAlbum(itemRequestDto.getMusic(), artist);
+		var albumCover = musicService.getOrCreateAlbumCover(itemRequestDto.getMusic(), album);
+		var song = musicService.getOrCreateSong(itemRequestDto.getMusic(), album);
 
 		var item = Item.builder()
 				.user(user)
-				.itemLocation(location)
+				.itemLocation(itemLocation)
 				.albumCover(albumCover)
 				.song(song)
-				.content(requestDto.getContent())
+				.content(itemRequestDto.getContent())
 				.build();
 		var savedItem = itemRepository.save(item);
-		musicService.updateAlbumByAlbumCover(album, albumCover);
-		itemLocationService.updateLocationByItemId(location, savedItem);
+		musicService.updateAlbum(album, albumCover);
+		itemLocationService.updateItemLocation(itemLocation, savedItem);
 		return new ItemResponseDto(savedItem);
 	}
 

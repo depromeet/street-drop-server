@@ -2,7 +2,7 @@ package com.depromeet.streetdrop.domains.itemLocation.service;
 
 import com.depromeet.streetdrop.domains.item.dto.request.ItemRequestDto;
 import com.depromeet.streetdrop.domains.item.entity.Item;
-import com.depromeet.streetdrop.domains.itemLocation.dto.request.LocationDto;
+import com.depromeet.streetdrop.domains.itemLocation.dto.request.LocationRequestDto;
 import com.depromeet.streetdrop.domains.itemLocation.entity.ItemLocation;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
@@ -18,18 +18,18 @@ public class ItemLocationService {
 	private final GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), WGS84_SRID);
 
 	public ItemLocation create(ItemRequestDto requestDto) {
-		LocationDto locationDto = requestDto.getLocation();
-		Double lat = locationDto.getLatitude();
-		Double lon = locationDto.getLongitude();
+		LocationRequestDto locationRequestDto = requestDto.getLocation();
+		Double lat = locationRequestDto.getLatitude();
+		Double lon = locationRequestDto.getLongitude();
 		Point point = gf.createPoint(new Coordinate(lat, lon));
 
 		return ItemLocation.builder()
-				.name(locationDto.getAddress())
+				.name(locationRequestDto.getAddress())
 				.point(point)
 				.build();
 	}
 
-	public void updateLocationByItemId(ItemLocation location, Item item) {
+	public void updateItemLocation(ItemLocation location, Item item) {
 		location.updateItem(item);
 	}
 }

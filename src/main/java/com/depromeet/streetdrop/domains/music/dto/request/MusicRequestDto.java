@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class MusicDto {
+public class MusicRequestDto {
 	@Schema(description = "노래제목", example = "하입보이")
 	private String title;
 

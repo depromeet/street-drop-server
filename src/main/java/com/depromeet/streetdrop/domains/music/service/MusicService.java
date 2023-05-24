@@ -6,7 +6,7 @@ import com.depromeet.streetdrop.domains.music.album.repository.AlbumCoverReposit
 import com.depromeet.streetdrop.domains.music.album.repository.AlbumRepository;
 import com.depromeet.streetdrop.domains.music.artist.entity.Artist;
 import com.depromeet.streetdrop.domains.music.artist.repository.ArtistRepository;
-import com.depromeet.streetdrop.domains.music.dto.request.MusicDto;
+import com.depromeet.streetdrop.domains.music.dto.request.MusicRequestDto;
 import com.depromeet.streetdrop.domains.music.genre.repository.SongGenreRepository;
 import com.depromeet.streetdrop.domains.music.song.entity.Song;
 import com.depromeet.streetdrop.domains.music.song.repository.SongRepository;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -27,8 +26,8 @@ public class MusicService {
 	private final SongGenreRepository songGenreRepository;
 
 	@Transactional(readOnly = true)
-	public Song getOrCreateSong(MusicDto musicDto, Album album) {
-		String title = musicDto.getTitle();
+	public Song getOrCreateSong(MusicRequestDto musicRequestDto, Album album) {
+		String title = musicRequestDto.getTitle();
 		return songRepository.findSongByName(title)
 				.orElseGet(() -> Song.builder()
 						.name(title)
@@ -39,8 +38,8 @@ public class MusicService {
 	}
 
 	@Transactional(readOnly = true)
-	public Artist getOrCreateArtist(MusicDto musicDto) {
-		String artist = musicDto.getArtist();
+	public Artist getOrCreateArtist(MusicRequestDto musicRequestDto) {
+		String artist = musicRequestDto.getArtist();
 		return artistRepository.findArtistByName(artist)
 				.orElseGet(() -> Artist.builder()
 						.name(artist)
@@ -49,25 +48,25 @@ public class MusicService {
 	}
 
 	@Transactional(readOnly = true)
-	public Album getOrCreateAlbum(MusicDto musicDto, Artist artist) {
-		return albumRepository.findAlbumByName(musicDto.getAlbumName())
+	public Album getOrCreateAlbum(MusicRequestDto musicRequestDto, Artist artist) {
+		return albumRepository.findAlbumByName(musicRequestDto.getAlbumName())
 				.orElseGet(() -> Album.builder()
-						.name(musicDto.getAlbumName())
+						.name(musicRequestDto.getAlbumName())
 						.artist(artist)
 						.build());
 	}
 
 	@Transactional(readOnly = true)
-	public AlbumCover getOrCreateAlbumCover(MusicDto musicDto, Album album) {
-		return albumCoverRepository.findAlbumCoverByAlbumImage(musicDto.getAlbumImage())
+	public AlbumCover getOrCreateAlbumCover(MusicRequestDto musicRequestDto, Album album) {
+		return albumCoverRepository.findAlbumCoverByAlbumImage(musicRequestDto.getAlbumImage())
 				.orElseGet(() -> AlbumCover.builder()
-						.albumThumbnail(musicDto.getAlbumImage())
-						.albumImage(musicDto.getAlbumImage())
+						.albumThumbnail(musicRequestDto.getAlbumImage())
+						.albumImage(musicRequestDto.getAlbumImage())
 						.album(album)
 						.build());
 	}
 
-	public void updateAlbumByAlbumCover(Album album, AlbumCover albumCover) {
+	public void updateAlbum(Album album, AlbumCover albumCover) {
 		album.updateAlbumCover(albumCover);
 	}
 }
