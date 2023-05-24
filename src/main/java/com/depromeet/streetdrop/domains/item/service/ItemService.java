@@ -45,21 +45,20 @@ public class ItemService {
 	public ItemResponseDto create(ItemRequestDto itemRequestDto) {
 		var user = userService.getOrCreateUser(TEST_USER);
 		var itemLocation = itemLocationService.create(itemRequestDto);
-		var artist = musicService.getOrCreateArtist(itemRequestDto.getMusic());
-		var album = musicService.getOrCreateAlbum(itemRequestDto.getMusic(), artist);
-		var albumCover = musicService.getOrCreateAlbumCover(itemRequestDto.getMusic(), album);
-		var song = musicService.getOrCreateSong(itemRequestDto.getMusic(), album);
+		var musicDto = musicService.getOrCreateMusic(itemRequestDto.getMusic());
 
 		var item = Item.builder()
 				.user(user)
 				.itemLocation(itemLocation)
-				.albumCover(albumCover)
-				.song(song)
+				.albumCover(musicDto.albumCover())
+				.song(musicDto.song())
 				.content(itemRequestDto.getContent())
 				.build();
+
 		var savedItem = itemRepository.save(item);
-		musicService.updateAlbum(album, albumCover);
+		musicService.updateAlbum(musicDto.album(), musicDto.albumCover());
 		itemLocationService.updateItemLocation(itemLocation, savedItem);
+
 		return new ItemResponseDto(savedItem);
 	}
 

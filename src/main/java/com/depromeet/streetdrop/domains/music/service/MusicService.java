@@ -6,6 +6,7 @@ import com.depromeet.streetdrop.domains.music.album.repository.AlbumCoverReposit
 import com.depromeet.streetdrop.domains.music.album.repository.AlbumRepository;
 import com.depromeet.streetdrop.domains.music.artist.entity.Artist;
 import com.depromeet.streetdrop.domains.music.artist.repository.ArtistRepository;
+import com.depromeet.streetdrop.domains.music.dto.MusicDto;
 import com.depromeet.streetdrop.domains.music.dto.request.MusicRequestDto;
 import com.depromeet.streetdrop.domains.music.genre.repository.SongGenreRepository;
 import com.depromeet.streetdrop.domains.music.song.entity.Song;
@@ -24,6 +25,15 @@ public class MusicService {
 	private final AlbumRepository albumRepository;
 	private final AlbumCoverRepository albumCoverRepository;
 	private final SongGenreRepository songGenreRepository;
+
+	@Transactional
+	public MusicDto getOrCreateMusic(MusicRequestDto musicRequestDto) {
+		var artist = getOrCreateArtist(musicRequestDto);
+		var album = getOrCreateAlbum(musicRequestDto, artist);
+		var albumCover = getOrCreateAlbumCover(musicRequestDto, album);
+		var song = getOrCreateSong(musicRequestDto, album);
+		return new MusicDto(artist, album, albumCover, song);
+	}
 
 	@Transactional(readOnly = true)
 	public Song getOrCreateSong(MusicRequestDto musicRequestDto, Album album) {
