@@ -33,7 +33,7 @@ public class ItemController {
 
 	@Operation(summary = "아이템 드랍 - 등록")
 	@PostMapping
-	public ResponseEntity<ItemResponseDto> create(@RequestBody ItemRequestDto itemRequestDto) {
+	public ResponseEntity<ItemResponseDto> create(@Valid @RequestBody ItemRequestDto itemRequestDto) {
 		var response = itemService.create(itemRequestDto);
 		return ResponseDto.created(response);
 	}

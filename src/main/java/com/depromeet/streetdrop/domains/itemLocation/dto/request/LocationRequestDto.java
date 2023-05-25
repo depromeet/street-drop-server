@@ -6,9 +6,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 
 @Getter
 @NoArgsConstructor
+@Validated
 public class LocationRequestDto {
 
 	@Schema(description = "위도", example = "37.123456")

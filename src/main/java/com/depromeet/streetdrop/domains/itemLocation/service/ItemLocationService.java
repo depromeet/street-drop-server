@@ -24,9 +24,8 @@ public class ItemLocationService {
 		LocationRequestDto locationRequestDto = requestDto.getLocation();
 		Double lat = locationRequestDto.getLatitude();
 		Double lon = locationRequestDto.getLongitude();
-		Point point = gf.createPoint(new Coordinate(lat, lon));
-		Point villagePoint = gf.createPoint(new Coordinate(lon, lat));
-		VillageArea villageArea = villageAreaService.getVillageByLocationPoint(villagePoint);
+		Point point = gf.createPoint(new Coordinate(lon, lat));
+		VillageArea villageArea = villageAreaService.getVillageByLocationPoint(point);
 
 		return ItemLocation.builder()
 				.name(locationRequestDto.getAddress())
