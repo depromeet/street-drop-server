@@ -260,7 +260,7 @@ public class ItemControllerTest {
             void findNearItemsTestSuccess2() throws Exception {
                 ItemDetailResponseDto itemDetailResponseDto = new ItemDetailResponseDto(
                         1L,
-                        new UserResponseDto("nickname1", "/profile.jpg", "youtubemusic"),
+                        new UserResponseDto("nickname", "/profile.jpg", "youtubemusic"),
                         new LocationResponseDto("성동구 성수1가 1동"),
                         new MusicResponseDto("title", "artist", "/albumImage.jpg", List.of("genre")),
                         "사용자 코멘트",
@@ -268,7 +268,7 @@ public class ItemControllerTest {
                 );
                 ItemDetailResponseDto itemDetailResponseDto2 = new ItemDetailResponseDto(
                         1L,
-                        new UserResponseDto("nickname2", "/profile2.jpg", "youtubemusic"),
+                        new UserResponseDto("nickname", "/profile.jpg", "youtubemusic"),
                         new LocationResponseDto("성동구 성수1가 1동"),
                         new MusicResponseDto("title", "artist", "/albumImage.jpg", List.of("genre")),
                         "사용자 코멘트",
