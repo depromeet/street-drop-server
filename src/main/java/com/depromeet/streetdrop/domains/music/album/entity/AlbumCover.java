@@ -18,16 +18,12 @@ public class AlbumCover extends BaseTimeEntity {
 	@Column(name = "album_cover_id")
 	private Long id;
 
-	@OneToOne(mappedBy = "albumCover", cascade = ALL)
-	private Album album;
-
 	private String albumImage;
 
 	private String albumThumbnail;
 
 	@Builder
-	public AlbumCover(Album album, String albumImage, String albumThumbnail) {
-		this.album = album;
+	public AlbumCover(String albumImage, String albumThumbnail) {
 		this.albumImage = albumImage;
 		this.albumThumbnail = albumThumbnail;
 	}
