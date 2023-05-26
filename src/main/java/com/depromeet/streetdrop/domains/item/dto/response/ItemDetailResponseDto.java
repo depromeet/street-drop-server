@@ -1,7 +1,6 @@
 package com.depromeet.streetdrop.domains.item.dto.response;
 
 import com.depromeet.streetdrop.domains.item.entity.Item;
-import com.depromeet.streetdrop.domains.itemLocation.dto.response.LocationResponseDto;
 import com.depromeet.streetdrop.domains.music.dto.response.MusicResponseDto;
 import com.depromeet.streetdrop.domains.user.dto.response.UserResponseDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -17,7 +16,7 @@ public record ItemDetailResponseDto(
         UserResponseDto user,
 
         @Schema(description = "사용자 위치", example = "성동구 성수1가 1동")
-        LocationResponseDto location,
+        ItemLocationResponseDto location,
 
         @Schema(description = "음악 정보")
         MusicResponseDto music,
@@ -38,7 +37,7 @@ public record ItemDetailResponseDto(
                 this(
                         item.getId(),
                         new UserResponseDto(item.getUser()),
-                        new LocationResponseDto(item.getItemLocation().getName()),
+                        new ItemLocationResponseDto(item.getItemLocation().getName()),
                         new MusicResponseDto(item),
                         item.getContent(),
                         item.getCreatedAt()
