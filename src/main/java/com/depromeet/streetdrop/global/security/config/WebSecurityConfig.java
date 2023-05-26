@@ -6,6 +6,7 @@ import com.depromeet.streetdrop.global.security.provider.IdfvUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -25,9 +26,10 @@ public class WebSecurityConfig {
         http
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().cors()
-                .and().csrf().disable().authorizeHttpRequests()
-                .requestMatchers( "/users/me").authenticated().and()
+                .and().csrf().disable()
                 .authorizeHttpRequests()
+                .requestMatchers("/users/me").authenticated()
+                .requestMatchers(HttpMethod.POST, "/items").authenticated()
                 .anyRequest().permitAll().and()
                 .anonymous().and()
                 .formLogin().disable()

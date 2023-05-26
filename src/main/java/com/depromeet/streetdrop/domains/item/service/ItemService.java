@@ -10,7 +10,7 @@ import com.depromeet.streetdrop.domains.item.repository.ItemLocationRepository;
 import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
 import com.depromeet.streetdrop.domains.itemLocation.service.ItemLocationService;
 import com.depromeet.streetdrop.domains.music.service.MusicService;
-import com.depromeet.streetdrop.domains.user.service.UserService;
+import com.depromeet.streetdrop.domains.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -25,12 +25,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemService {
 	private final ItemLocationService itemLocationService;
-	private final UserService userService;
 	private final MusicService musicService;
 	private final ItemRepository itemRepository;
 	private final ItemLocationRepository itemLocationRepository;
 
-	public static final String TEST_USER = "User1";
 	private final static int WGS84_SRID = 4326;
 	private final GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), WGS84_SRID);
 
@@ -42,8 +40,7 @@ public class ItemService {
 	}
 
 	@Transactional
-	public ItemResponseDto create(ItemRequestDto itemRequestDto) {
-		var user = userService.getOrCreateUser(TEST_USER);
+	public ItemResponseDto create(User user, ItemRequestDto itemRequestDto) {
 		var itemLocation = itemLocationService.create(itemRequestDto);
 		var musicDto = musicService.getOrCreateMusic(itemRequestDto.getMusic());
 
