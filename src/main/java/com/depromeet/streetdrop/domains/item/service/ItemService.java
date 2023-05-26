@@ -2,7 +2,7 @@ package com.depromeet.streetdrop.domains.item.service;
 
 import com.depromeet.streetdrop.domains.item.dto.request.ItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
-import com.depromeet.streetdrop.domains.item.dto.response.ItemDetailResponseDto;
+import com.depromeet.streetdrop.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.streetdrop.domains.item.entity.Item;
@@ -63,13 +63,13 @@ public class ItemService {
 	}
 
 	@Transactional(readOnly = true)
-    public List<ItemDetailResponseDto> findNearItems(NearItemRequestDto nearItemRequestDto) {
+    public ItemsResponseDto findNearItems(NearItemRequestDto nearItemRequestDto) {
         Point point = gf.createPoint(new Coordinate(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude()));
         var items = itemRepository.findNearItemsByDistance(point, nearItemRequestDto.getDistance());
-        var response = items.stream()
-                .map(ItemDetailResponseDto::new)
+        var itemDetailDtoList = items.stream()
+                .map(ItemsResponseDto.ItemDetailDto::new)
                 .toList();
-        return response;
+        return new ItemsResponseDto(itemDetailDtoList);
     }
 
 }

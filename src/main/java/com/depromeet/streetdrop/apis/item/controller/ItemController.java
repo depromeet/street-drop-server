@@ -3,7 +3,7 @@ package com.depromeet.streetdrop.apis.item.controller;
 import com.depromeet.streetdrop.domains.common.dto.ResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.request.ItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
-import com.depromeet.streetdrop.domains.item.dto.response.ItemDetailResponseDto;
+import com.depromeet.streetdrop.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.streetdrop.domains.item.service.ItemService;
@@ -13,9 +13,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 
 @RestController
 @RequestMapping("/items")
@@ -40,7 +37,7 @@ public class ItemController {
 
     @Operation(summary = "주변 아이템 상세 조회")
     @GetMapping
-    public ResponseEntity<List<ItemDetailResponseDto>> findNearItems(
+    public ResponseEntity<ItemsResponseDto> findNearItems(
             @Valid NearItemRequestDto nearItemRequestDto
     ) {
         var response = itemService.findNearItems(nearItemRequestDto);
