@@ -7,6 +7,8 @@ import com.depromeet.streetdrop.domains.item.dto.response.ItemDetailResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.streetdrop.domains.item.service.ItemService;
+import com.depromeet.streetdrop.domains.user.entity.User;
+import com.depromeet.streetdrop.global.annotation.ReqUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -33,8 +35,10 @@ public class ItemController {
 
 	@Operation(summary = "아이템 드랍 - 등록")
 	@PostMapping
-	public ResponseEntity<ItemResponseDto> create(@Valid @RequestBody ItemRequestDto itemRequestDto) {
-		var response = itemService.create(itemRequestDto);
+	public ResponseEntity<ItemResponseDto> create(
+            @ReqUser User user,
+            @Valid @RequestBody ItemRequestDto itemRequestDto) {
+		var response = itemService.create(user, itemRequestDto);
 		return ResponseDto.created(response);
 	}
 
