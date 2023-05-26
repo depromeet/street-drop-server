@@ -28,7 +28,7 @@ public class Item extends BaseTimeEntity {
 	@OneToOne(fetch = LAZY, mappedBy = "item", cascade = CascadeType.ALL)
 	private ItemLocation itemLocation;
 
-	@ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 
