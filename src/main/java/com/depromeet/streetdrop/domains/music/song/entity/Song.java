@@ -9,7 +9,6 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,5 +49,9 @@ public class Song extends BaseTimeEntity {
 		return genres.stream()
 				.map(SongGenre::getGenre)
 				.toList();
+	}
+
+	public void updateSongGenre(List<SongGenre> genres) {
+		this.genres = genres;
 	}
 }

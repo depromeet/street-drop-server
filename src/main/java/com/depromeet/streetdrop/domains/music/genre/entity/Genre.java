@@ -2,6 +2,7 @@ package com.depromeet.streetdrop.domains.music.genre.entity;
 
 import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,4 +20,8 @@ public class Genre extends BaseTimeEntity {
 
     private String name;
 
+	@Builder
+	public Genre(String name) {
+		this.name = name;
+	}
 }

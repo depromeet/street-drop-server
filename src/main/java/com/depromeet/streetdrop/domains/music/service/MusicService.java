@@ -8,6 +8,10 @@ import com.depromeet.streetdrop.domains.music.artist.entity.Artist;
 import com.depromeet.streetdrop.domains.music.artist.repository.ArtistRepository;
 import com.depromeet.streetdrop.domains.music.dto.MusicDto;
 import com.depromeet.streetdrop.domains.music.dto.request.MusicRequestDto;
+import com.depromeet.streetdrop.domains.music.genre.GenreService;
+import com.depromeet.streetdrop.domains.music.genre.entity.Genre;
+import com.depromeet.streetdrop.domains.music.genre.entity.SongGenre;
+import com.depromeet.streetdrop.domains.music.genre.repository.GenreRepository;
 import com.depromeet.streetdrop.domains.music.genre.repository.SongGenreRepository;
 import com.depromeet.streetdrop.domains.music.song.entity.Song;
 import com.depromeet.streetdrop.domains.music.song.repository.SongRepository;
@@ -16,15 +20,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class MusicService {
+	private final GenreService genreService;
 	private final ArtistRepository artistRepository;
 	private final SongRepository songRepository;
 	private final AlbumRepository albumRepository;
 	private final AlbumCoverRepository albumCoverRepository;
-	private final SongGenreRepository songGenreRepository;
+
 
 	@Transactional
 	public MusicDto getOrCreateMusic(MusicRequestDto musicRequestDto) {
@@ -32,6 +38,8 @@ public class MusicService {
 		var album = getOrCreateAlbum(musicRequestDto, artist);
 		var albumCover = getOrCreateAlbumCover(musicRequestDto, album);
 		var song = getOrCreateSong(musicRequestDto, album);
+		var songGenreList = genreService.getSongGenres(musicRequestDto, song);
+		song.updateSongGenre(songGenreList);
 		return new MusicDto(artist, album, albumCover, song);
 	}
 
