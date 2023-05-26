@@ -31,7 +31,10 @@ public class UserService {
         if (user.isPresent()) {
             return user.get();
         } else {
-            User newUser = User.builder().nickname(generateDefaultNickname()).idfv(idfv).build();
+            User newUser = User.builder()
+                    .nickname(generateDefaultNickname())
+                    .idfv(idfv)
+                    .build();
             return userRepository.save(newUser);
         }
     }
