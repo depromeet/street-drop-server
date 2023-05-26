@@ -1,8 +1,15 @@
 package com.depromeet.streetdrop.apis.item.controller;
 
+import com.depromeet.streetdrop.domains.item.dto.request.ItemRequestDto;
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
+import com.depromeet.streetdrop.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.streetdrop.domains.item.service.ItemService;
+import com.depromeet.streetdrop.domains.itemLocation.dto.request.LocationRequestDto;
+import com.depromeet.streetdrop.domains.itemLocation.dto.response.LocationResponseDto;
+import com.depromeet.streetdrop.domains.music.dto.request.MusicRequestDto;
+import com.depromeet.streetdrop.domains.user.dto.response.UserResponseDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -12,13 +19,18 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,10 +42,41 @@ public class ItemControllerTest {
     @Autowired
     MockMvc mvc;
 
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @MockBean
     ItemService itemService;
 
+    @DisplayName("[POST] 아이템 드랍 저장")
+    @Nested
+    class CreateItemDropTest {
+        @Nested
+        @DisplayName("성공")
+        class Success {
+            @DisplayName("아이템 드랍 저장 성공")
+            @Test
+            void createTest() throws Exception {
+                List<String> genres = new ArrayList<>();
+                genres.add("K-pop");
+
+                MusicRequestDto music = new MusicRequestDto("Love Dive", "IVE", "1st EP IVE", "https://www.youtube.com/watch?v=YGieI3KoeZk", genres);
+                LocationRequestDto location = new LocationRequestDto(37.123456, 127.123456, "서울시 성수동 성수 1가");
+                ItemRequestDto itemRequest = new ItemRequestDto(location, music, "블라블라");
+
+                UserResponseDto userResponse = new UserResponseDto("User1", "https://s3.orbi.kr/data/file/united/35546557a06831597f6e7851cb6c86e9.jpg", "youtubemusic");
+                LocationResponseDto locationResponse = new LocationResponseDto("서울시 성수동 성수 1가");
+                ItemResponseDto itemResponse = new ItemResponseDto(1L, userResponse, locationResponse, LocalDateTime.now());
+
+                given(itemService.create(any(ItemRequestDto.class))).willReturn(itemResponse);
+                mvc.perform(
+                        post("/items")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(itemRequest)))
+                        .andExpect(status().isCreated());
+            }
+        }
+    }
 
     @DisplayName("[GET] 내 주변 드랍 아이템 poi 조회")
     @Nested
