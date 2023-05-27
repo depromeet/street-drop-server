@@ -1,8 +1,7 @@
 package com.depromeet.streetdrop.domains.item.entity;
 
-import com.depromeet.streetdrop.domains.itemLocation.entity.ItemLocation;
-import com.depromeet.streetdrop.domains.music.album.entity.AlbumCover;
 import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
+import com.depromeet.streetdrop.domains.music.album.entity.AlbumCover;
 import com.depromeet.streetdrop.domains.music.song.entity.Song;
 import com.depromeet.streetdrop.domains.user.entity.User;
 import jakarta.persistence.*;
@@ -29,24 +28,28 @@ public class Item extends BaseTimeEntity {
 	@OneToOne(fetch = LAZY, mappedBy = "item", cascade = CascadeType.ALL)
 	private ItemLocation itemLocation;
 
-	@ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "song_id")
 	private Song song;
 
-	@ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+
+	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "album_cover_id")
 	private AlbumCover albumCover;
 
 	@Builder
-	public Item(String content, ItemLocation itemLocation, User user, Song song, AlbumCover albumCover) {
+	public Item(String content, User user, Song song, AlbumCover albumCover) {
 		this.content = content;
-		this.itemLocation = itemLocation;
 		this.user = user;
-		this.song = song;
+		this.song= song;
 		this.albumCover = albumCover;
+	}
+
+	public void setItemLocation(ItemLocation itemLocation) {
+		this.itemLocation = itemLocation;
 	}
 }

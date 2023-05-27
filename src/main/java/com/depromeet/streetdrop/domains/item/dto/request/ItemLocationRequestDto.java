@@ -1,4 +1,4 @@
-package com.depromeet.streetdrop.domains.itemLocation.dto.request;
+package com.depromeet.streetdrop.domains.item.dto.request;
 
 import com.depromeet.streetdrop.domains.common.annotation.IsLatitude;
 import com.depromeet.streetdrop.domains.common.annotation.IsLongitude;
@@ -6,10 +6,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 
 @Getter
 @NoArgsConstructor
-public class LocationRequestDto {
+@Validated
+public class ItemLocationRequestDto {
 
 	@Schema(description = "위도", example = "37.123456")
 	@IsLatitude
