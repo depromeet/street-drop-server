@@ -42,8 +42,9 @@ public class Item extends BaseTimeEntity {
 	private AlbumCover albumCover;
 
 	@Builder
-	public Item(String content, User user, Song song, AlbumCover albumCover) {
+	public Item(String content, ItemLocation itemLocation, User user, Song song, AlbumCover albumCover) {
 		this.content = content;
+		this.itemLocation = itemLocation;
 		this.user = user;
 		this.song= song;
 		this.albumCover = albumCover;
