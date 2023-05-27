@@ -2,12 +2,12 @@ package com.depromeet.streetdrop.domains.item.service;
 
 import com.depromeet.streetdrop.domains.item.dao.ItemPointDao;
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
-import com.depromeet.streetdrop.domains.item.dto.response.ItemDetailResponseDto;
+import com.depromeet.streetdrop.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.streetdrop.domains.item.entity.Item;
+import com.depromeet.streetdrop.domains.item.entity.ItemLocation;
 import com.depromeet.streetdrop.domains.item.repository.ItemLocationRepository;
 import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
-import com.depromeet.streetdrop.domains.itemLocation.entity.ItemLocation;
 import com.depromeet.streetdrop.domains.music.album.entity.Album;
 import com.depromeet.streetdrop.domains.music.album.entity.AlbumCover;
 import com.depromeet.streetdrop.domains.music.artist.entity.Artist;
@@ -105,7 +105,7 @@ public class ItemServiceTest {
                 when(itemRepository.findNearItemsByDistance(any(Point.class), any(Double.class))).thenReturn(List.of());
 
                 var result = itemService.findNearItems(nearItemRequestDto);
-                var expected = List.of();
+                var expected = new ItemsResponseDto(List.of());
 
                 assertThat(result).isEqualTo(expected);
             }
@@ -165,9 +165,11 @@ public class ItemServiceTest {
                 when(itemRepository.findNearItemsByDistance(any(Point.class), any(Double.class))).thenReturn(List.of(item1, item2));
 
                 var result = itemService.findNearItems(nearItemRequestDto);
-                var expected = List.of(
-                        new ItemDetailResponseDto(item1),
-                        new ItemDetailResponseDto(item2)
+                var expected = new ItemsResponseDto(
+                        List.of(
+                            new ItemsResponseDto.ItemDetailDto(item1),
+                            new ItemsResponseDto.ItemDetailDto(item2)
+                        )
                 );
                 assertThat(result).isEqualTo(expected);
             }

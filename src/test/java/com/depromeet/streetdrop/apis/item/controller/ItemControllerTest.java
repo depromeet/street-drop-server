@@ -1,10 +1,10 @@
 package com.depromeet.streetdrop.apis.item.controller;
 
 import com.depromeet.streetdrop.domains.item.dto.request.NearItemRequestDto;
-import com.depromeet.streetdrop.domains.item.dto.response.ItemDetailResponseDto;
+import com.depromeet.streetdrop.domains.item.dto.response.ItemLocationResponseDto;
+import com.depromeet.streetdrop.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.streetdrop.domains.item.service.ItemService;
-import com.depromeet.streetdrop.domains.itemLocation.dto.response.LocationResponseDto;
 import com.depromeet.streetdrop.domains.music.dto.response.MusicResponseDto;
 import com.depromeet.streetdrop.domains.user.dto.response.UserResponseDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -224,16 +224,21 @@ public class ItemControllerTest {
             @DisplayName("특정 지역 주변의 아이템 상세 조회 성공 - 1개 조회 성공, 거리 조회 X")
             @Test
             void findNearItemsTestSuccess1() throws Exception {
-                ItemDetailResponseDto itemDetailResponseDto = new ItemDetailResponseDto(
-                        1L,
-                        new UserResponseDto("nickname", "/profile.jpg", "youtubemusic"),
-                        new LocationResponseDto("성동구 성수1가 1동"),
-                        new MusicResponseDto("title", "artist", "/albumImage.jpg", List.of("genre")),
-                        "사용자 코멘트",
-                        LocalDateTime.of(2023, 5, 26, 12, 0)
+                ItemsResponseDto itemsResponseDto = new ItemsResponseDto(
+                        List.of(
+                                new ItemsResponseDto.ItemDetailDto(
+                                        1L,
+                                        new UserResponseDto("nickname", "/profile.jpg", "youtubemusic"),
+                                        new ItemLocationResponseDto("성동구 성수1가 1동"),
+                                        new MusicResponseDto("title", "artist", "/albumImage.jpg", List.of("genre")),
+                                        "사용자 코멘트",
+                                        LocalDateTime.of(2023, 5, 26, 12, 0)
+                                )
+                        )
+
                 );
 
-                given(itemService.findNearItems(any(NearItemRequestDto.class))).willReturn(List.of(itemDetailResponseDto));
+                given(itemService.findNearItems(any(NearItemRequestDto.class))).willReturn(itemsResponseDto);
 
                 var response = mvc.perform(
                         get("/items")
@@ -242,41 +247,38 @@ public class ItemControllerTest {
                 );
 
                 response.andExpect(status().isOk())
-                        .andExpect(jsonPath("$[0].itemId").value(1L))
-                        .andExpect(jsonPath("$[0].user.nickname").value("nickname"))
-                        .andExpect(jsonPath("$[0].user.profileImage").value("/profile.jpg"))
-                        .andExpect(jsonPath("$[0].user.musicApp").value("youtubemusic"))
-                        .andExpect(jsonPath("$[0].location.address").value("성동구 성수1가 1동"))
-                        .andExpect(jsonPath("$[0].music.title").value("title"))
-                        .andExpect(jsonPath("$[0].music.artist").value("artist"))
-                        .andExpect(jsonPath("$[0].music.albumImage").value("/albumImage.jpg"))
-                        .andExpect(jsonPath("$[0].music.genre[0]").value("genre"))
-                        .andExpect(jsonPath("$[0].content").value("사용자 코멘트"))
-                        .andExpect(jsonPath("$[0].createdAt").value("2023-05-26 12:00:00"));
+                        .andExpect(jsonPath("$.items[0].itemId").value(1L))
+                        .andExpect(jsonPath("$.items[0].user.nickname").value("nickname"))
+                        .andExpect(jsonPath("$.items[0].user.profileImage").value("/profile.jpg"))
+                        .andExpect(jsonPath("$.items[0].user.musicApp").value("youtubemusic"))
+                        .andExpect(jsonPath("$.items[0].location.address").value("성동구 성수1가 1동"))
+                        .andExpect(jsonPath("$.items[0].music.title").value("title"))
+                        .andExpect(jsonPath("$.items[0].music.artist").value("artist"))
+                        .andExpect(jsonPath("$.items[0].music.albumImage").value("/albumImage.jpg"))
+                        .andExpect(jsonPath("$.items[0].music.genre[0]").value("genre"))
+                        .andExpect(jsonPath("$.items[0].content").value("사용자 코멘트"))
+                        .andExpect(jsonPath("$.items[0].createdAt").value("2023-05-26 12:00:00"));
 
             }
 
             @DisplayName("특정 지역 주변의 아이템 상세 조회 성공 - 1개 조회 성공, 범위 지정")
             @Test
             void findNearItemsTestSuccess2() throws Exception {
-                ItemDetailResponseDto itemDetailResponseDto = new ItemDetailResponseDto(
-                        1L,
-                        new UserResponseDto("nickname", "/profile.jpg", "youtubemusic"),
-                        new LocationResponseDto("성동구 성수1가 1동"),
-                        new MusicResponseDto("title", "artist", "/albumImage.jpg", List.of("genre")),
-                        "사용자 코멘트",
-                        LocalDateTime.of(2023, 5, 26, 12, 0)
-                );
-                ItemDetailResponseDto itemDetailResponseDto2 = new ItemDetailResponseDto(
-                        1L,
-                        new UserResponseDto("nickname", "/profile.jpg", "youtubemusic"),
-                        new LocationResponseDto("성동구 성수1가 1동"),
-                        new MusicResponseDto("title", "artist", "/albumImage.jpg", List.of("genre")),
-                        "사용자 코멘트",
-                        LocalDateTime.of(2023, 5, 26, 12, 0)
+                ItemsResponseDto itemsResponseDto = new ItemsResponseDto(
+                        List.of(
+                                new ItemsResponseDto.ItemDetailDto(
+                                        1L,
+                                        new UserResponseDto("nickname", "/profile.jpg", "youtubemusic"),
+                                        new ItemLocationResponseDto("성동구 성수1가 1동"),
+                                        new MusicResponseDto("title", "artist", "/albumImage.jpg", List.of("genre")),
+                                        "사용자 코멘트",
+                                        LocalDateTime.of(2023, 5, 26, 12, 0)
+                                )
+                        )
+
                 );
 
-                given(itemService.findNearItems(any(NearItemRequestDto.class))).willReturn(List.of(itemDetailResponseDto));
+                given(itemService.findNearItems(any(NearItemRequestDto.class))).willReturn(itemsResponseDto);
 
                 var response = mvc.perform(
                         get("/items")
@@ -286,17 +288,17 @@ public class ItemControllerTest {
                 );
 
                 response.andExpect(status().isOk())
-                        .andExpect(jsonPath("$[0].itemId").value(1L))
-                        .andExpect(jsonPath("$[0].user.nickname").value("nickname"))
-                        .andExpect(jsonPath("$[0].user.profileImage").value("/profile.jpg"))
-                        .andExpect(jsonPath("$[0].user.musicApp").value("youtubemusic"))
-                        .andExpect(jsonPath("$[0].location.address").value("성동구 성수1가 1동"))
-                        .andExpect(jsonPath("$[0].music.title").value("title"))
-                        .andExpect(jsonPath("$[0].music.artist").value("artist"))
-                        .andExpect(jsonPath("$[0].music.albumImage").value("/albumImage.jpg"))
-                        .andExpect(jsonPath("$[0].music.genre[0]").value("genre"))
-                        .andExpect(jsonPath("$[0].content").value("사용자 코멘트"))
-                        .andExpect(jsonPath("$[0].createdAt").value("2023-05-26 12:00:00"));
+                        .andExpect(jsonPath("$.items[0].itemId").value(1L))
+                        .andExpect(jsonPath("$.items[0].user.nickname").value("nickname"))
+                        .andExpect(jsonPath("$.items[0].user.profileImage").value("/profile.jpg"))
+                        .andExpect(jsonPath("$.items[0].user.musicApp").value("youtubemusic"))
+                        .andExpect(jsonPath("$.items[0].location.address").value("성동구 성수1가 1동"))
+                        .andExpect(jsonPath("$.items[0].music.title").value("title"))
+                        .andExpect(jsonPath("$.items[0].music.artist").value("artist"))
+                        .andExpect(jsonPath("$.items[0].music.albumImage").value("/albumImage.jpg"))
+                        .andExpect(jsonPath("$.items[0].music.genre[0]").value("genre"))
+                        .andExpect(jsonPath("$.items[0].content").value("사용자 코멘트"))
+                        .andExpect(jsonPath("$.items[0].createdAt").value("2023-05-26 12:00:00"));
 
             }
 
