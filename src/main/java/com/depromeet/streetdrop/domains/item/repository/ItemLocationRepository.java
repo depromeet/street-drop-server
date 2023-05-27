@@ -1,7 +1,7 @@
 package com.depromeet.streetdrop.domains.item.repository;
 
 import com.depromeet.streetdrop.domains.item.dao.ItemPointDao;
-import com.depromeet.streetdrop.domains.itemLocation.entity.ItemLocation;
+import com.depromeet.streetdrop.domains.item.entity.ItemLocation;
 import org.locationtech.jts.geom.Point;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

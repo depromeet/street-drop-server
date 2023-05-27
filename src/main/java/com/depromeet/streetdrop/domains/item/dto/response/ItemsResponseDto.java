@@ -1,16 +1,16 @@
 package com.depromeet.streetdrop.domains.item.dto.response;
 
 import com.depromeet.streetdrop.domains.item.entity.Item;
-import com.depromeet.streetdrop.domains.itemLocation.dto.response.LocationResponseDto;
 import com.depromeet.streetdrop.domains.music.dto.response.MusicResponseDto;
 import com.depromeet.streetdrop.domains.user.dto.response.UserResponseDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 public record ItemsResponseDto(List<ItemDetailDto> items) {
-        public record ItemDetailDto (
+        public record ItemDetailDto(
                 @Schema(description = "동별 드랍 아이템 개수", example = "1")
                 Long itemId,
 
@@ -18,7 +18,7 @@ public record ItemsResponseDto(List<ItemDetailDto> items) {
                 UserResponseDto user,
 
                 @Schema(description = "사용자 위치", example = "성동구 성수1가 1동")
-                LocationResponseDto location,
+                ItemLocationResponseDto location,
 
                 @Schema(description = "음악 정보")
                 MusicResponseDto music,
@@ -33,12 +33,12 @@ public record ItemsResponseDto(List<ItemDetailDto> items) {
                         locale = "Asia/Seoul"
                 )
                 LocalDateTime createdAt
-                ) {
+        ) {
                 public ItemDetailDto(Item item) {
                         this(
                                 item.getId(),
                                 new UserResponseDto(item.getUser()),
-                                new LocationResponseDto(item.getItemLocation().getName()),
+                                new ItemLocationResponseDto(item.getItemLocation().getName()),
                                 new MusicResponseDto(item),
                                 item.getContent(),
                                 item.getCreatedAt()

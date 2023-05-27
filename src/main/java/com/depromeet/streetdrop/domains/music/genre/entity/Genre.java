@@ -20,8 +20,8 @@ public class Genre extends BaseTimeEntity {
 
     private String name;
 
-	@Builder
-	public Genre(String name) {
-		this.name = name;
-	}
+    @Builder
+    public Genre(String name) {
+        this.name = name;
+    }
 }

@@ -34,15 +34,11 @@ public class Song extends BaseTimeEntity {
 	@OneToMany(mappedBy = "song")
 	private List<SongGenre> genres = new ArrayList<>();
 
-	@OneToMany(mappedBy = "song", cascade = CascadeType.ALL)
-	private List<Item> items = new ArrayList<>();
-
 	@Builder
-	public Song(String name, Album album, List<SongGenre> genres, List<Item> items) {
+	public Song(String name, Album album, List<SongGenre> genres) {
 		this.name = name;
 		this.album = album;
 		this.genres = genres;
-		this.items = items;
 	}
 
 	public List<Genre> getGenres() {

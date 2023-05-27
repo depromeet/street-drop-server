@@ -1,6 +1,5 @@
 package com.depromeet.streetdrop.domains.item.dto.request;
 
-import com.depromeet.streetdrop.domains.itemLocation.dto.request.LocationRequestDto;
 import com.depromeet.streetdrop.domains.music.dto.request.MusicRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
@@ -17,7 +16,7 @@ public class ItemRequestDto {
 
 	@Schema(description = "위치 정보")
 	@Valid
-	private LocationRequestDto location;
+	private ItemLocationRequestDto location;
 
 	@Schema(description = "음악 정보")
 	@Valid
