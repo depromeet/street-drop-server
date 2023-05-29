@@ -40,12 +40,11 @@ public class IdfvAuthenticationFilterTest {
     private FilterChain filterChain;
 
     @BeforeEach
-    public void setup() throws Exception {
+    public void setup() {
         request = Mockito.mock(HttpServletRequest.class);
         response = Mockito.mock(HttpServletResponse.class);
         filterChain = Mockito.mock(FilterChain.class);
         idfvUserDetailsService = Mockito.mock(IdfvUserDetailsService.class);
-
     }
 
     @Test
