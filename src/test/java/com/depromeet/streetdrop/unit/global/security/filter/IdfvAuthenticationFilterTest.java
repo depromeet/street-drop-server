@@ -40,12 +40,12 @@ public class IdfvAuthenticationFilterTest {
     private FilterChain filterChain;
 
     @BeforeEach
-    public void setup() {
+    public void setup() throws Exception {
         request = Mockito.mock(HttpServletRequest.class);
         response = Mockito.mock(HttpServletResponse.class);
         filterChain = Mockito.mock(FilterChain.class);
         idfvUserDetailsService = Mockito.mock(IdfvUserDetailsService.class);
-        idfvAuthenticationFilter = new IdfvAuthenticationFilter(idfvUserDetailsService);
+
     }
 
     @Test
@@ -56,7 +56,12 @@ public class IdfvAuthenticationFilterTest {
         when(request.getHeader("x-sdp-idfv")).thenReturn(idfv);
         when(idfvUserDetailsService.loadUserByUsername(idfv)).thenReturn(userDetails);
 
-        idfvAuthenticationFilter.doFilterInternal(request, response, filterChain);
+        idfvAuthenticationFilter = new IdfvAuthenticationFilter(idfvUserDetailsService) {
+            public IdfvAuthenticationFilter callDoFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws Exception {
+                doFilterInternal(request, response, filterChain);
+                return this;
+            }
+        }.callDoFilterInternal(request, response, filterChain);
 
         verify(idfvUserDetailsService).loadUserByUsername(idfv);
         verify(filterChain).doFilter(request, response);
@@ -72,7 +77,12 @@ public class IdfvAuthenticationFilterTest {
     public void testDoFilterInternal_WithOutValidIdfv() throws Exception {
         when(request.getHeader("x-sdp-idfv")).thenReturn(null);
 
-        idfvAuthenticationFilter.doFilterInternal(request, response, filterChain);
+        idfvAuthenticationFilter = new IdfvAuthenticationFilter(idfvUserDetailsService) {
+            public IdfvAuthenticationFilter callDoFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws Exception {
+                doFilterInternal(request, response, filterChain);
+                return this;
+            }
+        }.callDoFilterInternal(request, response, filterChain);
 
         verify(filterChain).doFilter(request, response);
         verifyNoInteractions(idfvUserDetailsService);
