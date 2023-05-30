@@ -1,7 +1,6 @@
 package com.depromeet.streetdrop.domains.music.song.entity;
 
 import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
-import com.depromeet.streetdrop.domains.item.entity.Item;
 import com.depromeet.streetdrop.domains.music.album.entity.Album;
 import com.depromeet.streetdrop.domains.music.genre.entity.Genre;
 import com.depromeet.streetdrop.domains.music.genre.entity.SongGenre;
@@ -45,9 +44,5 @@ public class Song extends BaseTimeEntity {
 		return genres.stream()
 				.map(SongGenre::getGenre)
 				.toList();
-	}
-
-	public void updateSongGenre(List<SongGenre> genres) {
-		this.genres = genres;
 	}
 }
