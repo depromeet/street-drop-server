@@ -6,6 +6,8 @@ import com.depromeet.streetdrop.domains.music.album.repository.AlbumRepository;
 import com.depromeet.streetdrop.domains.music.artist.entity.Artist;
 import com.depromeet.streetdrop.domains.music.artist.repository.ArtistRepository;
 import com.depromeet.streetdrop.domains.music.dto.request.MusicRequestDto;
+import com.depromeet.streetdrop.domains.music.genre.service.GenreService;
+import com.depromeet.streetdrop.domains.music.genre.entity.SongGenre;
 import com.depromeet.streetdrop.domains.music.genre.repository.SongGenreRepository;
 import com.depromeet.streetdrop.domains.music.song.entity.Song;
 import com.depromeet.streetdrop.domains.music.song.repository.SongRepository;
@@ -13,12 +15,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class MusicService {
+	private final GenreService genreService;
 	private final ArtistRepository artistRepository;
 	private final SongRepository songRepository;
 	private final AlbumRepository albumRepository;
@@ -30,23 +33,23 @@ public class MusicService {
 		String artistName = musicRequestDto.getArtist();
 		String albumName = musicRequestDto.getAlbumName();
 		String albumImage = musicRequestDto.getAlbumImage();
+		List<SongGenre> songGenres = genreService.createSongGenres(musicRequestDto.getGenre());
 
 		Optional<Artist> artist = findArtist(artistName);
 		if (artist.isEmpty()) {
 			Artist newArtist = createArtist(artistName);
 			Album newAlbum = createAlbum(newArtist, albumName, albumImage);
-			return createSong(songTitle, newAlbum);
+			return createSong(songTitle, newAlbum, songGenres);
 		}
 
 		Optional<Album> album = findAlbum(albumName, albumImage, artist.get());
 		if (album.isEmpty()) {
 			Album newAlbum = createAlbum(artist.get(), albumName, albumImage);
-			return createSong(musicRequestDto.getTitle(), newAlbum);
+			return createSong(songTitle, newAlbum, songGenres);
 		}
 
 		Optional<Song> song = findSong(songTitle, album.get());
-		return song.orElseGet(() -> createSong(songTitle, album.get()));
-
+		return song.orElseGet(() -> createSong(songTitle, album.get(), songGenres));
 	}
 
 	@Transactional(readOnly = true)
@@ -91,15 +94,21 @@ public class MusicService {
 
 
 	@Transactional
-	public Song createSong(String songName, Album album) {
-		Song song = Song.builder()
+	public Song createSong(String songName, Album album, List<SongGenre> genres) {
+		Song newSong = Song.builder()
 				.name(songName)
 				.album(album)
-				.genres(new ArrayList<>())
+				.genres(genres)
 				.build();
 
-		return songRepository.save(song);
+		Song song = songRepository.save(newSong);
+		updateSongGenre(genres, song);
+		return song;
 	}
 
-
+	private void updateSongGenre(List<SongGenre> songGenres, Song song) {
+		for (SongGenre songGenre : songGenres) {
+			songGenre.updateSong(song);
+		}
+	}
 }
