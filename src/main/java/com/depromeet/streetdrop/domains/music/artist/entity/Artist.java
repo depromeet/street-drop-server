@@ -23,11 +23,10 @@ public class Artist extends BaseTimeEntity {
 	private String name;
 
 	@OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
-	private List<Album> albums = new ArrayList<>();
+	private List<Album> albums;
 
 	@Builder
-	public Artist(String name, List<Album> albums) {
+	public Artist(String name) {
 		this.name = name;
-		this.albums = albums;
 	}
 }

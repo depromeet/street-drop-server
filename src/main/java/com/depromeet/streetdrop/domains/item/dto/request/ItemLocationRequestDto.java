@@ -1,4 +1,4 @@
-package com.depromeet.streetdrop.domains.itemLocation.dto.request;
+package com.depromeet.streetdrop.domains.item.dto.request;
 
 import com.depromeet.streetdrop.domains.common.annotation.IsLatitude;
 import com.depromeet.streetdrop.domains.common.annotation.IsLongitude;
@@ -13,7 +13,7 @@ import org.springframework.validation.annotation.Validated;
 @NoArgsConstructor
 @AllArgsConstructor
 @Validated
-public class LocationRequestDto {
+public class ItemLocationRequestDto {
 
 	@Schema(description = "위도", example = "37.123456")
 	@IsLatitude

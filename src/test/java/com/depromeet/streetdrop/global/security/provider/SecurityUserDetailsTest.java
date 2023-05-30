@@ -15,7 +15,7 @@ public class SecurityUserDetailsTest {
     @Test
     @DisplayName("SecurityUserDetails 테스트")
     void testSecurityUserDetailsTest() {
-        User user = new User("nickname", null, "idfv");
+        User user = new User("nickname", "idfv");
         SecurityUserDetails securityUserDetails = new SecurityUserDetails(user);
         assertThat(securityUserDetails.getAuthorities()).isNull();
         assertThat(securityUserDetails.getPassword()).isNull();

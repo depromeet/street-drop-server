@@ -1,4 +1,4 @@
-package com.depromeet.streetdrop.domains.itemLocation.entity;
+package com.depromeet.streetdrop.domains.item.entity;
 
 import com.depromeet.streetdrop.domains.area.village.entity.VillageArea;
 import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
@@ -37,13 +37,11 @@ public class ItemLocation extends BaseTimeEntity {
 	private VillageArea villageArea;
 
 	@Builder
-	public ItemLocation(String name, Point point, VillageArea villageArea) {
+	public ItemLocation(String name, Point point, Item item, VillageArea villageArea) {
 		this.name = name;
 		this.point = point;
+		this.item = item;
 		this.villageArea = villageArea;
 	}
 
-	public void updateItem(Item item) {
-		this.item = item;
-	}
 }

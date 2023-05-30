@@ -20,11 +20,11 @@ public class SongGenre extends BaseTimeEntity {
     @Column(name = "song_genre_id")
     private Long id;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "song_id")
     private Song song;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
@@ -33,4 +33,8 @@ public class SongGenre extends BaseTimeEntity {
         this.song = song;
         this.genre = genre;
     }
+
+	public void updateSong(Song song) {
+        this.song = song;
+	}
 }
