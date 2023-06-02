@@ -4,11 +4,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class MusicRequestDto {
 	@Schema(description = "노래제목", example = "하입보이")
 	@NotNull(message = "Title is required")
