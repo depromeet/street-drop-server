@@ -1,5 +1,6 @@
 package com.depromeet.streetdrop.domains.common.dto;
 
+import com.depromeet.streetdrop.domains.item.dto.response.ItemLikeResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -19,6 +20,12 @@ public record ResponseDto<T>(T date) implements Serializable {
 	public static ResponseEntity<Void> noContent() {
 		return ResponseEntity
 				.status(HttpStatus.NO_CONTENT)
+				.build();
+	}
+
+	public static ResponseEntity<Void> notFound() {
+		return ResponseEntity
+				.status(HttpStatus.NOT_FOUND)
 				.build();
 	}
 }
