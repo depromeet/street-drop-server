@@ -4,12 +4,14 @@ import com.depromeet.streetdrop.domains.common.annotation.IsLatitude;
 import com.depromeet.streetdrop.domains.common.annotation.IsLongitude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Validated
 public class ItemLocationRequestDto {
 
