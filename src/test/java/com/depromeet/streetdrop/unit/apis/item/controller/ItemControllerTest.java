@@ -8,6 +8,7 @@ import com.depromeet.streetdrop.domains.item.dto.response.ItemLocationResponseDt
 import com.depromeet.streetdrop.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.streetdrop.domains.item.dto.response.PoiResponseDto;
+import com.depromeet.streetdrop.domains.item.service.ItemLikeService;
 import com.depromeet.streetdrop.domains.item.service.ItemService;
 import com.depromeet.streetdrop.domains.music.dto.request.MusicRequestDto;
 import com.depromeet.streetdrop.domains.music.dto.response.MusicResponseDto;
@@ -50,6 +51,9 @@ public class ItemControllerTest {
 
     @MockBean
     ItemService itemService;
+
+    @MockBean
+    ItemLikeService itemLikeService;
 
     @DisplayName("[POST] 아이템 드랍 저장")
     @Nested
@@ -218,7 +222,7 @@ public class ItemControllerTest {
         private ItemResponseDto createValidItemResponseDto() {
             UserResponseDto userResponse = new UserResponseDto("User1", "https://s3.orbi.kr/data/file/united/35546557a06831597f6e7851cb6c86e9.jpg", "youtubemusic");
             ItemLocationResponseDto locationResponse = new ItemLocationResponseDto("서울시 성수동 성수 1가");
-            ItemResponseDto itemResponseDto = new ItemResponseDto(1L, userResponse, locationResponse, LocalDateTime.now());
+            ItemResponseDto itemResponseDto = new ItemResponseDto(1L, userResponse, locationResponse, LocalDateTime.now(), 1);
             return itemResponseDto;
         }
     }
