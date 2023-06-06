@@ -8,16 +8,18 @@ import com.depromeet.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.domains.item.service.ItemService;
 import com.depromeet.domains.music.dto.response.MusicResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -26,10 +28,10 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ContextConfiguration(classes = ItemController.class)
 @WebMvcTest(controllers = {ItemController.class}, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 @Import(ItemController.class)
 @DisplayName("[API][Controller] ItemController 테스트")
@@ -38,8 +40,184 @@ public class ItemControllerTest {
     @Autowired
     MockMvc mvc;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @MockBean
     ItemService itemService;
+
+    @DisplayName("[POST] 아이템 드랍 저장")
+    @Nested
+    class CreateItemDropTest {
+        @Mock
+        private User mockUser;
+
+        @Nested
+        @DisplayName("성공")
+        class Success {
+            @DisplayName("아이템 드랍 성공")
+            @Test
+            void createItem_ValidRequest_ReturnsCreated() throws Exception {
+                MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", "IVE", "1st EP IVE", "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
+                ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 127.123456, "서울시 성수동 성수 1가");
+                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
+                ItemResponseDto itemResponseDto = createValidItemResponseDto();
+
+                given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
+
+                var response = mvc.perform(
+                        post("/items")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(itemRequestDto)));
+                response.andExpect(status().isCreated());
+            }
+        }
+
+        @Nested
+        @DisplayName("아이템 드랍 실패")
+        class Fail {
+            @DisplayName("음악 유효성 검사 실패 - 음악 제목이 없는 경우")
+            @Test
+            void createItem_InvalidMusicTitle_ReturnsBadRequest() throws Exception {
+                MusicRequestDto musicRequestDto = new MusicRequestDto(null, "IVE", "1st EP IVE", "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
+                ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 127.123456, "서울시 성수동 성수 1가");
+                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
+                ItemResponseDto itemResponseDto = createValidItemResponseDto();
+
+                given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
+
+                var response = mvc.perform(
+                        post("/items")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(itemRequestDto)));
+
+                response.andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("$.message").value("Title is required"));
+            }
+
+            @DisplayName("음악 유효성 검사 실패 - 아티스트가 없는 경우")
+            @Test
+            void createItem_InvalidMusicArtist_ReturnsBadRequest() throws Exception {
+                MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", null, "1st EP IVE", "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
+                ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 127.123456, "서울시 성수동 성수 1가");
+                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
+                ItemResponseDto itemResponseDto = createValidItemResponseDto();
+
+                given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
+
+                var response = mvc.perform(
+                        post("/items")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(itemRequestDto)));
+
+                response.andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("$.message").value("Artist is required"));
+            }
+
+            @DisplayName("음악 유효성 검사 실패 - 앨범명이 없는 경우")
+            @Test
+            void createItem_InvalidMusicAlbum_ReturnsBadRequest() throws Exception {
+                MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", "IVE", null, "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
+                ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 127.123456, "서울시 성수동 성수 1가");
+                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
+                ItemResponseDto itemResponseDto = createValidItemResponseDto();
+
+                given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
+
+                var response = mvc.perform(
+                        post("/items")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(itemRequestDto)));
+
+                response.andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("$.message").value("Album name is required"));
+            }
+
+            @DisplayName("음악 유효성 검사 실패 - 앨범 커버 이미지가 없는 경우")
+            @Test
+            void createItem_InvalidAlbumCover_ReturnsBadRequest() throws Exception {
+                MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", "IVE", "아이브 정규1집", null, List.of("K-POP", "HipHop"));
+                ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 127.123456, "서울시 성수동 성수 1가");
+                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
+                ItemResponseDto itemResponseDto = createValidItemResponseDto();
+
+                given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
+
+                var response = mvc.perform(
+                        post("/items")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(itemRequestDto)));
+
+                response.andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("$.message").value("Album image is required"));
+            }
+
+            @DisplayName("위치 유효성 검사 실패 - latitude 값이 범위에 맞지 않는 경우")
+            @Test
+            void createItem_InvalidLatitudeRequest_ReturnsBadRequest() throws Exception {
+                MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", "IVE", "1st EP IVE", "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
+                ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(100000000.0, 127.123456, "서울시 성수동 성수 1가");
+                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
+                ItemResponseDto itemResponseDto = createValidItemResponseDto();
+
+                given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
+
+                var response = mvc.perform(
+                        post("/items")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(itemRequestDto)));
+
+                response.andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("$.message").value("Not valid latitude, must be between -90 and 90"));
+            }
+
+            @DisplayName("위치 유효성 검사 실패 - longitude 값이 범위에 맞지 않는 경우")
+            @Test
+            void createItem_InvalidLogitudeRequest_ReturnsBadRequest() throws Exception {
+                MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", "IVE", "1st EP IVE", "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
+                ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 100000000.0, "서울시 성수동 성수 1가");
+                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
+                ItemResponseDto itemResponseDto = createValidItemResponseDto();
+
+                given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
+
+                var response = mvc.perform(
+                        post("/items")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(itemRequestDto)));
+
+                response.andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("$.message").value("Not valid longitude, must be between -180 and 180"));
+            }
+
+            @DisplayName("위치 유효성 검사 실패 - 주소명이 없는 경우")
+            @Test
+            void createItem_InvalidAddressRequest_ReturnsBadRequest() throws Exception {
+                MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", "IVE", "1st EP IVE", "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
+                ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 127.123456, null);
+                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
+                ItemResponseDto itemResponseDto = createValidItemResponseDto();
+
+                given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
+
+                var response = mvc.perform(
+                        post("/items")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(itemRequestDto)));
+
+                response.andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("$.message").value("Address is required"));
+            }
+        }
+
+        private ItemResponseDto createValidItemResponseDto() {
+            UserResponseDto userResponse = new UserResponseDto("User1", "https://s3.orbi.kr/data/file/united/35546557a06831597f6e7851cb6c86e9.jpg", "youtubemusic");
+            ItemLocationResponseDto locationResponse = new ItemLocationResponseDto("서울시 성수동 성수 1가");
+            ItemResponseDto itemResponseDto = new ItemResponseDto(1L, userResponse, locationResponse, LocalDateTime.now());
+            return itemResponseDto;
+        }
+    }
+
 
     @DisplayName("[GET] 내 주변 드랍 아이템 poi 조회")
     @Nested
