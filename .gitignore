@@ -37,7 +37,7 @@ out/
 .vscode/
 
 ### Secrets ###
-src/main/resources/application-dev*.yml
+backend/**/src/main/resources/application-dev*.yml
 src/main/resources/data.sql
 src/**/resources/schema.sql
 
