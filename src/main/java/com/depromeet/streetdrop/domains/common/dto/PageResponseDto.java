@@ -13,6 +13,7 @@ public record PageResponseDto<T>(
 		int page,
 		int size,
 		int totalPage,
+		long totalElements,
 		boolean firstPage,
 		boolean lastPage
 ) implements Serializable {
@@ -22,6 +23,7 @@ public record PageResponseDto<T>(
 				page.getNumber(),
 				page.getSize(),
 				page.getTotalPages(),
+				page.getTotalElements(),
 				page.isFirst(),
 				page.isLast()
 		);
