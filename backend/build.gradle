@@ -40,37 +40,37 @@ subprojects {
         annotationProcessor 'org.projectlombok:lombok'
         testImplementation 'junit:junit:4.13.1'
     }
+}
 
-    jacocoTestReport {
-        reports {
-            html.required.set(true)
-            xml.required.set(true)
-            csv.required.set(false)
-        }
-        def QueryDslDomains = []
-        for (qPattern in '**/QA'..'**/QZ') {
-            QueryDslDomains.add(qPattern + '*')
-        }
-        afterEvaluate {
-            classDirectories.setFrom(
-                    files(classDirectories.files.collect {
-                        fileTree(dir: it, excludes: [
-                                "**/*Application*",
-                                "**/*Config*",
-                                "**/*Dto*",
-                                "**/*Request*",
-                                "**/*Response*",
-                                "**/*Interceptor*",
-                                "**/*Exception*"
-                        ] + QueryDslDomains)
-                    })
-            )
-        }
-        finalizedBy jacocoTestCoverageVerification
+jacocoTestReport {
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+        csv.required.set(false)
     }
+    def QueryDslDomains = []
+    for (qPattern in '**/QA'..'**/QZ') {
+        QueryDslDomains.add(qPattern + '*')
+    }
+    afterEvaluate {
+        classDirectories.setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it, excludes: [
+                            "**/*Application*",
+                            "**/*Config*",
+                            "**/*Dto*",
+                            "**/*Request*",
+                            "**/*Response*",
+                            "**/*Interceptor*",
+                            "**/*Exception*"
+                    ] + QueryDslDomains)
+                })
+        )
+    }
+    finalizedBy jacocoTestCoverageVerification
+}
 
-    tasks.named('test') {
-        useJUnitPlatform()
-        finalizedBy jacocoTestReport
-    }
+tasks.named('test') {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
