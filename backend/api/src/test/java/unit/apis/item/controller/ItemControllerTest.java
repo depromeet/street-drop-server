@@ -1,13 +1,18 @@
 package unit.apis.item.controller;
 
 import com.depromeet.apis.item.controller.ItemController;
+import com.depromeet.domains.item.dto.request.ItemLocationRequestDto;
+import com.depromeet.domains.item.dto.request.ItemRequestDto;
 import com.depromeet.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.domains.item.dto.response.ItemLocationResponseDto;
+import com.depromeet.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.domains.item.service.ItemService;
+import com.depromeet.domains.music.dto.request.MusicRequestDto;
 import com.depromeet.domains.music.dto.response.MusicResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
+import com.depromeet.domains.user.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,6 +25,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -32,6 +38,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
+@ContextConfiguration(classes = HealthController.class)
 @WebMvcTest(controllers = {ItemController.class}, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 @Import(ItemController.class)
 @DisplayName("[API][Controller] ItemController 테스트")
