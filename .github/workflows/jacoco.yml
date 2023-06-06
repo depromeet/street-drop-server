@@ -1,4 +1,3 @@
-
 name: Java CI Test with Jacoco
 
 on:
@@ -29,6 +28,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Setup Gradle
+        working-directory: ./backend
         uses: gradle/gradle-build-action@v2
         with:
           arguments: build test -Pprofile=test
