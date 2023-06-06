@@ -1,7 +1,7 @@
 package com.depromeet.domains.item.dto.request;
 
-import com.depromeet.common.annotation.IsLatitude;
-import com.depromeet.common.annotation.IsLongitude;
+import com.depromeet.domains.area.annotation.IsLatitude;
+import com.depromeet.domains.area.annotation.IsLongitude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
-package com.depromeet.common.annotation;
+package com.depromeet.domains.area.annotation;
 
-import com.depromeet.common.validator.LatitudeValidator;
+import com.depromeet.domains.area.annotation.validator.LatitudeValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

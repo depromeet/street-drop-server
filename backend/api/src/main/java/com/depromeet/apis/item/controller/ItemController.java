@@ -1,6 +1,6 @@
 package com.depromeet.apis.item.controller;
 
-import com.depromeet.common.annotation.ReqUser;
+import com.depromeet.domains.user.annotation.ReqUser;
 import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.domains.item.dto.request.ItemRequestDto;
 import com.depromeet.domains.item.dto.request.NearItemRequestDto;
