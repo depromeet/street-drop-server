@@ -28,9 +28,9 @@ jobs:
         run: chmod +x gradlew
 
       - name: Setup Gradle
-        working-directory: ./backend
         uses: gradle/gradle-build-action@v2
         with:
+          working-directory: ./backend
           arguments: build test -Pprofile=test
           cache-read-only: ${{ github.ref != 'refs/heads/master' && github.ref != 'refs/heads/dev' }}
 
