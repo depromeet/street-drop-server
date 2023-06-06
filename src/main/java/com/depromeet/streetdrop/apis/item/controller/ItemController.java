@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Items", description = "Item API")
 public class ItemController {
     private final ItemService itemService;
-	private final ItemLikeService itemLikeService;
 
     @Operation(summary = "주변 아이템 조회 - POI")
     @GetMapping("/points")
@@ -51,33 +50,4 @@ public class ItemController {
         var response = itemService.findNearItems(nearItemRequestDto);
         return ResponseEntity.ok(response);
     }
-
-	@Operation(summary = "아이템 좋아요")
-	@PostMapping("/{itemId}/likes")
-	public ResponseEntity<ItemLikeResponseDto> likeItem(
-			@PathVariable Long itemId,
-			@ReqUser User user
-	) {
-		try {
-			var response = itemLikeService.likeItem(itemId, user);
-			return ResponseDto.ok(response);
-		} catch (NotFoundException e) {
-			return ResponseEntity.notFound().build();
-		}
-	}
-
-	@Operation(summary = "아이템 좋아요 취소")
-	@DeleteMapping("/{itemId}/unlikes")
-	public ResponseEntity<Void> unlikeItem(
-			@PathVariable Long itemId,
-			@ReqUser User user
-	) {
-		try {
-			itemLikeService.unlikeItem(itemId, user);
-			return ResponseDto.noContent();
-		} catch (NotFoundException e) {
-			return ResponseEntity.notFound().build();
-		}
-	}
-
 }
