@@ -14,8 +14,9 @@ import com.depromeet.streetdrop.domains.item.dto.request.ItemLocationRequestDto;
 import com.depromeet.streetdrop.domains.item.entity.ItemLocation;
 import com.depromeet.streetdrop.domains.music.service.MusicService;
 import com.depromeet.streetdrop.domains.user.entity.User;
-import com.depromeet.streetdrop.domains.user.service.UserService;
 import com.depromeet.streetdrop.global.common.util.GeomUtil;
+import com.depromeet.streetdrop.global.error.dto.ErrorCode;
+import com.depromeet.streetdrop.global.error.exception.common.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -24,7 +25,6 @@ import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -82,4 +82,9 @@ public class ItemService {
         return new ItemsResponseDto(itemDetailDtoList);
     }
 
+	@Transactional(readOnly = true)
+	public Item getItem(Long itemId) {
+		return itemRepository.findById(itemId)
+				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND));
+	}
 }

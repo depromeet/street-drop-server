@@ -24,20 +24,21 @@ public class ItemLikeController {
 	@Operation(summary = "아이템 좋아요")
 	@PostMapping("/{itemId}/likes")
 	public ResponseEntity<ItemLikeResponseDto> likeItem(
-			@PathVariable Long itemId,
-			@ReqUser User user
+			@ReqUser User user,
+			@PathVariable Long itemId
 	) {
-		var response = itemLikeService.likeItem(itemId, user);
+		var response = itemLikeService.likeItem(user, itemId);
 		return ResponseDto.ok(response);
 	}
 
 	@Operation(summary = "아이템 좋아요 취소")
 	@PostMapping("/{itemId}/unlikes")
 	public ResponseEntity<Void> unlikeItem(
-			@PathVariable Long itemId,
-			@ReqUser User user
+			@ReqUser User user,
+			@PathVariable Long itemId
+
 	) {
-		itemLikeService.unlikeItem(itemId, user);
+		itemLikeService.unlikeItem(user, itemId);
 		return ResponseDto.noContent();
 	}
 }
