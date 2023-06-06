@@ -35,12 +35,6 @@ jobs:
           arguments: build
           cache-read-only: ${{ github.ref != 'refs/heads/master' && github.ref != 'refs/heads/dev' }}
 
-      - name: Upload Jacoco Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: jacoco-report
-          path: ./build/reports/tests/test/index.html
-
       - name: Upload test coverage
         id: jacoco
         uses: codecov/codecov-action@v3
