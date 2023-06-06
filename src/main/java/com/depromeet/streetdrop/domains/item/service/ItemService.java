@@ -84,7 +84,8 @@ public class ItemService {
 
 	@Transactional(readOnly = true)
 	public Item getItem(Long itemId) {
+		var itemIds = String.valueOf(itemId);
 		return itemRepository.findById(itemId)
-				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND));
+				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, itemIds));
 	}
 }

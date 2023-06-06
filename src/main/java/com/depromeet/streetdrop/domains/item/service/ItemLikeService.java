@@ -6,7 +6,8 @@ import com.depromeet.streetdrop.domains.item.entity.ItemLike;
 import com.depromeet.streetdrop.domains.item.repository.ItemLikeRepository;
 import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
 import com.depromeet.streetdrop.domains.user.entity.User;
-import com.depromeet.streetdrop.global.error.exception.item.AlreadyItemLikedException;
+import com.depromeet.streetdrop.global.error.dto.ErrorCode;
+import com.depromeet.streetdrop.global.error.exception.common.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,13 +35,10 @@ public class ItemLikeService {
 	}
 
 	private void checkUserAlreadyLike(User user, Item item) {
-		if (existItemLike(user, item)) {
-			throw new AlreadyItemLikedException();
+		boolean alreadyLiked = itemLikeRepository.existsByUserIdAndItemId(user.getId(), item.getId());
+		if (alreadyLiked) {
+			throw new BusinessException(ErrorCode.ALREADY_ITEM_LIKED_ERROR);
 		}
-	}
-
-	private boolean existItemLike(User user, Item item) {
-		return itemLikeRepository.existsByUserIdAndItemId(user.getId(), item.getId());
 	}
 
 	@Transactional
