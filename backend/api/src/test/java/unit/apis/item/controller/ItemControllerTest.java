@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@ContextConfiguration(classes = HealthController.class)
+@ContextConfiguration(classes = ItemController.class)
 @WebMvcTest(controllers = {ItemController.class}, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 @Import(ItemController.class)
 @DisplayName("[API][Controller] ItemController 테스트")
