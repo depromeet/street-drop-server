@@ -1,6 +1,7 @@
 package unit.apis.item.controller;
 
 import com.depromeet.apis.item.controller.ItemController;
+import com.depromeet.common.error.GlobalExceptionHandler;
 import com.depromeet.domains.item.dto.request.ItemLocationRequestDto;
 import com.depromeet.domains.item.dto.request.ItemRequestDto;
 import com.depromeet.domains.item.dto.request.NearItemRequestDto;
@@ -41,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ContextConfiguration(classes = ItemController.class)
 @WebMvcTest(controllers = {ItemController.class}, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
-@Import(ItemController.class)
+@Import({ItemController.class, GlobalExceptionHandler.class})
 @DisplayName("[API][Controller] ItemController 테스트")
 public class ItemControllerTest {
 
