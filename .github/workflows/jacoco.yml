@@ -25,7 +25,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
-        working-directory: ./backend
+        working-directory: ./backend/streetdrop-api
         run: chmod +x gradlew
 
       - name: Setup Gradle
