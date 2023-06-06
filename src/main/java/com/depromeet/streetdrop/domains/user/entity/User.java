@@ -3,6 +3,7 @@ package com.depromeet.streetdrop.domains.user.entity;
 import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
 import com.depromeet.streetdrop.domains.item.entity.Item;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class User extends BaseTimeEntity {
 	private Long id;
 
 	@Column(length = 20)
+	@Size(min = 1, max = 20, message = "nickname must be at least 20 characters long")
 	private String nickname;
 
 	@Column(length = 100)
