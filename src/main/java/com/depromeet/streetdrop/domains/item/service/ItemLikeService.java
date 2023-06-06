@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ItemLikeService {
@@ -28,19 +30,24 @@ public class ItemLikeService {
 				.user(user)
 				.build();
 		itemLikeRepository.save(itemLike);
-		return new ItemLikeResponseDto(itemLike);
+		return new ItemLikeResponseDto(user, itemLike);
 	}
 
 	private void checkUserAlreadyLike(User user, Item item) {
-		if (item.getLikes().stream().anyMatch(like -> like.getUser().getId().equals(user.getId()))) {
+		if (existItemLike(user, item)) {
 			throw new AlreadyItemLikedException();
 		}
 	}
 
+	private boolean existItemLike(User user, Item item) {
+		return itemLikeRepository.existsByUserIdAndItemId(user.getId(), item.getId());
+	}
+
 	@Transactional
 	public void unlikeItem(User user, Long itemId) {
-		ItemLike itemLike = itemLikeRepository.findByItemIdAndUser(itemId, user);
-		if (itemLike != null) {
+		Optional<ItemLike> itemLikeOptional = itemLikeRepository.findByItemIdAndUser(itemId, user);
+		if (itemLikeOptional.isPresent()) {
+			var itemLike = itemLikeOptional.get();
 			itemLikeRepository.delete(itemLike);
 		}
 	}

@@ -2,6 +2,7 @@ package com.depromeet.streetdrop.domains.item.dto.response;
 
 import com.depromeet.streetdrop.domains.item.entity.ItemLike;
 import com.depromeet.streetdrop.domains.user.dto.response.UserResponseDto;
+import com.depromeet.streetdrop.domains.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -14,23 +15,14 @@ public record ItemLikeResponseDto (
 		@Schema(description = "사용자 정보")
 		UserResponseDto user,
 
-		@Schema(description = "아이템 정보")
-		ItemResponseDto item,
-
-		@Schema(description = "생성시간", example = "yyyy-MM-dd HH:mm:ss")
-		@JsonFormat(
-				shape = JsonFormat.Shape.STRING,
-				pattern = "yyyy-MM-dd HH:mm:ss",
-				locale = "Asia/Seoul"
-		)
-		LocalDateTime createdAt
+		@Schema(description = "아이템 좋아요 개수")
+		int itemLikeCount
 ) {
-	public ItemLikeResponseDto(ItemLike itemLike) {
+	public ItemLikeResponseDto(User user, ItemLike itemLike) {
 		this(
 				itemLike.getId(),
-				new UserResponseDto(itemLike.getUser()),
-				new ItemResponseDto(itemLike.getItem()),
-				itemLike.getCreatedAt()
+				new UserResponseDto(user),
+				itemLike.getItem().getItemLikeCount()
 		);
 	}
 }
