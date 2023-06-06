@@ -30,7 +30,9 @@ public enum ErrorCode {
 	/*
 	 * 400 BAD_REQUEST: 요청 인자가 유효하지 않음
 	 */
-	METHOD_ARGUMENT_NOT_VALID(HttpStatus.BAD_REQUEST, "C-0004", "Method Argument Not Valid");
+	METHOD_ARGUMENT_NOT_VALID(HttpStatus.BAD_REQUEST, "C-0004", "Method Argument Not Valid"),
+
+	ALREADY_ITEM_LIKED_ERROR(HttpStatus.CONFLICT, "C-0005", "User Already Item liked");
 
 	private final HttpStatus status;
 	private final String code;

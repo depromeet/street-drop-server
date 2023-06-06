@@ -6,6 +6,7 @@ import com.depromeet.streetdrop.domains.item.entity.ItemLike;
 import com.depromeet.streetdrop.domains.item.repository.ItemLikeRepository;
 import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
 import com.depromeet.streetdrop.domains.user.entity.User;
+import com.depromeet.streetdrop.global.error.exception.item.AlreadyItemLikedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +33,7 @@ public class ItemLikeService {
 
 	private void checkUserAlreadyLike(User user, Item item) {
 		if (item.getLikes().stream().anyMatch(like -> like.getUser().getId().equals(user.getId()))) {
-			throw new IllegalArgumentException("User has already liked the item");
+			throw new AlreadyItemLikedException();
 		}
 	}
 
