@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
 
-class StreetDropAdminApplicationTests {
+class StreetDropAdminServerApplicationTests {
 
     @Test
     void contextLoads() {
