@@ -46,4 +46,4 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: true
-          files: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
+          files: ${{ github.workspace }}/backend/build/reports/jacoco/test/jacocoTestReport.xml
