@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -36,10 +38,12 @@ public class Item extends BaseTimeEntity {
 	@JoinColumn(name = "song_id")
 	private Song song;
 
-
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "album_cover_id")
 	private AlbumCover albumCover;
+
+	@OneToMany(mappedBy = "item")
+	private List<ItemLike> likes;
 
 	@Builder
 	public Item(String content, ItemLocation itemLocation, User user, Song song, AlbumCover albumCover) {
@@ -52,5 +56,9 @@ public class Item extends BaseTimeEntity {
 
 	public void setItemLocation(ItemLocation itemLocation) {
 		this.itemLocation = itemLocation;
+	}
+
+	public int getItemLikeCount() {
+		return likes != null ? likes.size() : 0;
 	}
 }

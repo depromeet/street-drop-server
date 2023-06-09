@@ -32,7 +32,10 @@ public record ItemsResponseDto(List<ItemDetailDto> items) {
                         pattern = "yyyy-MM-dd HH:mm:ss",
                         locale = "Asia/Seoul"
                 )
-                LocalDateTime createdAt
+                LocalDateTime createdAt,
+
+                @Schema(description = "아이템 좋아요 개수", example = "100")
+                int itemLikeCount
         ) {
                 public ItemDetailDto(Item item) {
                         this(
@@ -41,7 +44,8 @@ public record ItemsResponseDto(List<ItemDetailDto> items) {
                                 new ItemLocationResponseDto(item.getItemLocation().getName()),
                                 new MusicResponseDto(item),
                                 item.getContent(),
-                                item.getCreatedAt()
+                                item.getCreatedAt(),
+                                item.getItemLikeCount()
                         );
                 }
         }

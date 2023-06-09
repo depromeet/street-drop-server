@@ -1,5 +1,6 @@
 package com.depromeet.streetdrop.domains.common.dto;
 
+import com.depromeet.streetdrop.domains.item.dto.response.ItemLikeResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
