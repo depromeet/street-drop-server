@@ -43,10 +43,7 @@ public class ItemLikeService {
 
 	@Transactional
 	public void unlikeItem(User user, Long itemId) {
-		Optional<ItemLike> itemLikeOptional = itemLikeRepository.findByItemIdAndUser(itemId, user);
-		if (itemLikeOptional.isPresent()) {
-			var itemLike = itemLikeOptional.get();
-			itemLikeRepository.delete(itemLike);
-		}
+		itemLikeRepository.findByItemIdAndUser(itemId, user)
+				.ifPresent(itemLikeRepository::delete);
 	}
 }

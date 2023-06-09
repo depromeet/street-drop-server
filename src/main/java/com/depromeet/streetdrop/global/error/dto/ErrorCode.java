@@ -32,6 +32,9 @@ public enum ErrorCode {
 	 */
 	METHOD_ARGUMENT_NOT_VALID(HttpStatus.BAD_REQUEST, "C-0004", "Method Argument Not Valid"),
 
+	/*
+	 * ALREADY_ITEM_LIKED_ERROR: 이미 좋아요한 아이템
+	 */
 	ALREADY_ITEM_LIKED_ERROR(HttpStatus.CONFLICT, "C-0005", "User Already Item liked");
 
 	private final HttpStatus status;
