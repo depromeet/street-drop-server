@@ -35,7 +35,9 @@ public enum ErrorCode {
 	/*
 	 * ALREADY_ITEM_LIKED_ERROR: 이미 좋아요한 아이템
 	 */
-	ALREADY_ITEM_LIKED_ERROR(HttpStatus.CONFLICT, "C-0005", "User Already Item liked");
+	ALREADY_ITEM_LIKED_ERROR(HttpStatus.CONFLICT, "C-0005", "User Already Item liked"),
+
+	ITEM_NOT_LIKED_ERROR(HttpStatus.BAD_REQUEST, "C-0006", "Item Not liked");
 
 	private final HttpStatus status;
 	private final String code;
