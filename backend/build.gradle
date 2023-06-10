@@ -54,25 +54,18 @@ jacocoTestReport {
         QueryDslDomains.add(qPattern + '*')
     }
     afterEvaluate {
-        classDirectories.setFrom(files([
-                project(':streetdrop-admin'),
-                project(':streetdrop-api'),
-                project(':streetdrop-batch'),
-                project(':streetdrop-core'),
-                project(':streetdrop-search')
-        ].collect {
-            it.fileTree(dir: it.fileTree(dir: "${it.buildDir}/classes/java/main",
-                    excludes: [
-                        "**/*Application*",
-                        "**/*Config*",
-                        "**/*Dto*",
-                        "**/*Request*",
-                        "**/*Response*",
-                        "**/*Interceptor*",
-                        "**/*Exception*"
-                ] + QueryDslDomains)
-            )
-            })
+        classDirectories.setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it, excludes: [
+                            "**/*Application*",
+                            "**/*Config*",
+                            "**/*Dto*",
+                            "**/*Request*",
+                            "**/*Response*",
+                            "**/*Interceptor*",
+                            "**/*Exception*"
+                    ] + QueryDslDomains)
+                })
         )
     }
     finalizedBy jacocoTestCoverageVerification
