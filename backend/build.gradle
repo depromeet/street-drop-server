@@ -60,15 +60,17 @@ jacocoTestReport {
                 project(':streetdrop-core'),
                 project(':streetdrop-search')
         ].collect {
-            fileTree(dir: it, excludes: [
-                    "**/*Application*",
-                    "**/*Config*",
-                    "**/*Dto*",
-                    "**/*Request*",
-                    "**/*Response*",
-                    "**/*Interceptor*",
-                    "**/*Exception*"
-            ] + QueryDslDomains)
+            it.fileTree(dir: it.fileTree(dir: "${it.buildDir}/classes/java/main",
+                    excludes: [
+                        "**/*Application*",
+                        "**/*Config*",
+                        "**/*Dto*",
+                        "**/*Request*",
+                        "**/*Response*",
+                        "**/*Interceptor*",
+                        "**/*Exception*"
+                ] + QueryDslDomains)
+            )
             })
         )
     }
