@@ -3,9 +3,12 @@ package com.depromeet.streetdrop.domains.user.service;
 import com.depromeet.streetdrop.domains.user.dto.response.UserResponseDto;
 import com.depromeet.streetdrop.domains.user.entity.User;
 import com.depromeet.streetdrop.domains.user.repository.UserRepository;
+import com.depromeet.streetdrop.global.error.dto.ErrorCode;
+import com.depromeet.streetdrop.global.error.exception.common.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,4 +67,16 @@ public class UserService {
         return preName.get((int) (Math.random() * preName.size()))
                 + " " + postName.get((int) (Math.random() * postName.size()));
     }
+
+	@Transactional(readOnly = true)
+	public User findOneById(Long id) {
+		return userRepository.findById(id)
+				.orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+	}
+
+	@Transactional
+	public UserResponseDto updateProfileImage(User user, String profileImageUrl) {
+		var userInfo = findOneById(user.getId()).updateProfileImgae(profileImageUrl);
+		return new UserResponseDto(userInfo);
+	}
 }

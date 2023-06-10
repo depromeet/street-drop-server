@@ -37,7 +37,20 @@ public enum ErrorCode {
 	 */
 	ALREADY_ITEM_LIKED_ERROR(HttpStatus.CONFLICT, "C-0005", "User Already Item liked"),
 
-	ITEM_NOT_LIKED_ERROR(HttpStatus.BAD_REQUEST, "C-0006", "Item Not liked");
+	/*
+	 * ITEM_NOT_LIKED_ERROR: 좋아요하지 않은 아이템을 좋아요 취소 누르는 경우
+	 */
+	ITEM_NOT_LIKED_ERROR(HttpStatus.BAD_REQUEST, "C-0006", "Item Not liked"),
+
+	/*
+	 * USER_NOT_FOUND: 유저를 찾을 수 없음
+	 */
+	USER_NOT_FOUND(HttpStatus.BAD_REQUEST,"C-007", "User Not Found"),
+
+	/*
+	 * FILE_UPLOAD_INVALID: 파일 업로드 실패
+	 */
+	FILE_UPLOAD_INVALID(HttpStatus.INTERNAL_SERVER_ERROR, "C-008", "File Upload Invalid");
 
 	private final HttpStatus status;
 	private final String code;

@@ -29,6 +29,9 @@ public class User extends BaseTimeEntity {
 	@Column(length = 100)
 	private String idfv;
 
+	@Column(name = "profile_img")
+	private String profileImage;
+
 	@OneToMany(mappedBy = "user")
 	private List<Item> items;
 
@@ -36,5 +39,10 @@ public class User extends BaseTimeEntity {
 	public User(String nickname, String idfv) {
 		this.nickname = nickname;
 		this.idfv = idfv;
+	}
+
+	public User updateProfileImgae(String profileImageUrl) {
+		this.profileImage = profileImageUrl;
+		return this;
 	}
 }
