@@ -1,5 +1,7 @@
 package com.depromeet.domains.item.service;
 
+import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.item.repository.ItemLocationRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.area.village.entity.VillageArea;

@@ -1,12 +1,8 @@
-package com.depromeet.streetdrop.domains.item.dto.response;
-
-import com.depromeet.streetdrop.domains.item.entity.ItemLike;
-import com.depromeet.streetdrop.domains.user.dto.response.UserResponseDto;
-import com.depromeet.streetdrop.domains.user.entity.User;
-import com.fasterxml.jackson.annotation.JsonFormat;
+package com.depromeet.domains.item.dto.response;
+import com.depromeet.domains.item.entity.ItemLike;
+import com.depromeet.domains.user.dto.response.UserResponseDto;
+import com.depromeet.domains.user.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-import java.time.LocalDateTime;
 
 public record ItemLikeResponseDto (
 		@Schema(description = "아이템 좋아요 아이디",example = "1")

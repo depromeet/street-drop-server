@@ -9,6 +9,7 @@ import com.depromeet.domains.item.dto.response.ItemLocationResponseDto;
 import com.depromeet.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.domains.item.dto.response.PoiResponseDto;
+import com.depromeet.domains.item.service.ItemLikeService;
 import com.depromeet.domains.item.service.ItemService;
 import com.depromeet.domains.music.dto.request.MusicRequestDto;
 import com.depromeet.domains.music.dto.response.MusicResponseDto;
@@ -26,6 +27,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -38,8 +40,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ContextConfiguration(classes = ItemController.class)
 @WebMvcTest(controllers = {ItemController.class}, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
-@Import(ItemController.class)
+@Import({ItemController.class, GlobalExceptionHandler.class})
 @DisplayName("[API][Controller] ItemController 테스트")
 public class ItemControllerTest {
 

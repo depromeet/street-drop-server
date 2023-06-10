@@ -1,24 +1,20 @@
-package com.depromeet.streetdrop.domains.item.service;
+package com.depromeet.domains.item.service;
 
-import com.depromeet.streetdrop.domains.item.dto.response.ItemLikeResponseDto;
-import com.depromeet.streetdrop.domains.item.entity.Item;
-import com.depromeet.streetdrop.domains.item.entity.ItemLike;
-import com.depromeet.streetdrop.domains.item.repository.ItemLikeRepository;
-import com.depromeet.streetdrop.domains.item.repository.ItemRepository;
-import com.depromeet.streetdrop.domains.user.entity.User;
-import com.depromeet.streetdrop.global.error.dto.ErrorCode;
-import com.depromeet.streetdrop.global.error.exception.common.BusinessException;
+import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.common.error.exception.common.BusinessException;
+import com.depromeet.domains.item.dto.response.ItemLikeResponseDto;
+import com.depromeet.domains.item.entity.Item;
+import com.depromeet.domains.item.entity.ItemLike;
+import com.depromeet.domains.item.repository.ItemLikeRepository;
+import com.depromeet.domains.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ItemLikeService {
 	private final ItemService itemService;
-	private final ItemRepository itemRepository;
 	private final ItemLikeRepository itemLikeRepository;
 
 	@Transactional

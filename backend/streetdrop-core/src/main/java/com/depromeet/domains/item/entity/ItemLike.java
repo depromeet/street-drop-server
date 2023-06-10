@@ -1,7 +1,7 @@
-package com.depromeet.z.domains.item.entity;
+package com.depromeet.domains.item.entity;
 
-import com.depromeet.streetdrop.domains.common.BaseTimeEntity;
-import com.depromeet.streetdrop.domains.user.entity.User;
+import com.depromeet.common.entity.BaseTimeEntity;
+import com.depromeet.domains.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

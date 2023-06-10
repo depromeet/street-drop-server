@@ -1,7 +1,7 @@
-package com.depromeet.streetdrop.domains.item.repository;
+package com.depromeet.domains.item.repository;
 
-import com.depromeet.streetdrop.domains.item.entity.ItemLike;
-import com.depromeet.streetdrop.domains.user.entity.User;
+import com.depromeet.domains.item.entity.ItemLike;
+import com.depromeet.domains.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

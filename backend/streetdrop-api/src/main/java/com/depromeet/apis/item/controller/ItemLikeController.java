@@ -1,10 +1,10 @@
-package com.depromeet.streetdrop.apis.item.controller;
+package com.depromeet.apis.item.controller;
 
-import com.depromeet.streetdrop.domains.common.dto.ResponseDto;
-import com.depromeet.streetdrop.domains.item.dto.response.ItemLikeResponseDto;
-import com.depromeet.streetdrop.domains.item.service.ItemLikeService;
-import com.depromeet.streetdrop.domains.user.entity.User;
-import com.depromeet.streetdrop.global.annotation.ReqUser;
+import com.depromeet.common.dto.ResponseDto;
+import com.depromeet.domains.item.dto.response.ItemLikeResponseDto;
+import com.depromeet.domains.item.service.ItemLikeService;
+import com.depromeet.domains.user.annotation.ReqUser;
+import com.depromeet.domains.user.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

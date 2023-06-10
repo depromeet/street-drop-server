@@ -1,15 +1,15 @@
-package com.depromeet.streetdrop.unit.domains.item.service;
+package unit.domains.item.service;
 
-import com.depromeet.streetdrop.domains.item.dto.response.ItemLikeResponseDto;
-import com.depromeet.streetdrop.domains.item.entity.Item;
-import com.depromeet.streetdrop.domains.item.entity.ItemLike;
-import com.depromeet.streetdrop.domains.item.repository.ItemLikeRepository;
-import com.depromeet.streetdrop.domains.item.service.ItemLikeService;
-import com.depromeet.streetdrop.domains.item.service.ItemService;
-import com.depromeet.streetdrop.domains.user.entity.User;
-import com.depromeet.streetdrop.global.error.dto.ErrorCode;
-import com.depromeet.streetdrop.global.error.exception.common.BusinessException;
-import com.depromeet.streetdrop.global.error.exception.common.NotFoundException;
+import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.common.error.exception.common.BusinessException;
+import com.depromeet.common.error.exception.common.NotFoundException;
+import com.depromeet.domains.item.dto.response.ItemLikeResponseDto;
+import com.depromeet.domains.item.entity.Item;
+import com.depromeet.domains.item.entity.ItemLike;
+import com.depromeet.domains.item.repository.ItemLikeRepository;
+import com.depromeet.domains.item.service.ItemLikeService;
+import com.depromeet.domains.item.service.ItemService;
+import com.depromeet.domains.user.entity.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
