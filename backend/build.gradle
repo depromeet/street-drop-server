@@ -47,6 +47,7 @@ jacocoTestReport {
         html.required.set(true)
         xml.required.set(true)
         csv.required.set(false)
+        xml.destination file("${buildDir}/reports/jacoco.xml")
     }
     def QueryDslDomains = []
     for (qPattern in '**/QA'..'**/QZ') {
