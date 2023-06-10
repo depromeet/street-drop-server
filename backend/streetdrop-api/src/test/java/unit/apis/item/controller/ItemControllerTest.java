@@ -26,7 +26,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -34,15 +33,13 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-@ContextConfiguration(classes = ItemController.class)
 @WebMvcTest(controllers = {ItemController.class}, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
-@Import({ItemController.class, GlobalExceptionHandler.class})
+@Import(ItemController.class)
 @DisplayName("[API][Controller] ItemController 테스트")
 public class ItemControllerTest {
 
@@ -54,6 +51,9 @@ public class ItemControllerTest {
 
     @MockBean
     ItemService itemService;
+
+    @MockBean
+    ItemLikeService itemLikeService;
 
     @DisplayName("[POST] 아이템 드랍 저장")
     @Nested
@@ -222,11 +222,10 @@ public class ItemControllerTest {
         private ItemResponseDto createValidItemResponseDto() {
             UserResponseDto userResponse = new UserResponseDto("User1", "https://s3.orbi.kr/data/file/united/35546557a06831597f6e7851cb6c86e9.jpg", "youtubemusic");
             ItemLocationResponseDto locationResponse = new ItemLocationResponseDto("서울시 성수동 성수 1가");
-            ItemResponseDto itemResponseDto = new ItemResponseDto(1L, userResponse, locationResponse, LocalDateTime.now());
+            ItemResponseDto itemResponseDto = new ItemResponseDto(1L, userResponse, locationResponse, LocalDateTime.now(), 1);
             return itemResponseDto;
         }
     }
-
 
     @DisplayName("[GET] 내 주변 드랍 아이템 poi 조회")
     @Nested
@@ -422,7 +421,8 @@ public class ItemControllerTest {
                                         new ItemLocationResponseDto("성동구 성수1가 1동"),
                                         new MusicResponseDto("title", "artist", "/albumImage.jpg", List.of("genre")),
                                         "사용자 코멘트",
-                                        LocalDateTime.of(2023, 5, 26, 12, 0)
+                                        LocalDateTime.of(2023, 5, 26, 12, 0),
+                                        1
                                 )
                         )
 
@@ -462,7 +462,8 @@ public class ItemControllerTest {
                                         new ItemLocationResponseDto("성동구 성수1가 1동"),
                                         new MusicResponseDto("title", "artist", "/albumImage.jpg", List.of("genre")),
                                         "사용자 코멘트",
-                                        LocalDateTime.of(2023, 5, 26, 12, 0)
+                                        LocalDateTime.of(2023, 5, 26, 12, 0),
+                                        1
                                 )
                         )
 

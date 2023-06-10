@@ -23,6 +23,8 @@ import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ItemService {
@@ -79,4 +81,9 @@ public class ItemService {
         return new ItemsResponseDto(itemDetailDtoList);
     }
 
+	@Transactional(readOnly = true)
+	public Item getItem(Long itemId) {
+		return itemRepository.findById(itemId)
+				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, String.valueOf(itemId)));
+	}
 }

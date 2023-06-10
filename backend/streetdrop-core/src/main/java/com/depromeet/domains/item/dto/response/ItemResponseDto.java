@@ -23,14 +23,18 @@ public record ItemResponseDto(
 				pattern = "yyyy-MM-dd HH:mm:ss",
 				locale = "Asia/Seoul"
 		)
-		LocalDateTime createdAt
+		LocalDateTime createdAt,
+
+		@Schema(description = "아이템 좋아요 개수", example = "1")
+		int itemLikeCount
 ) {
 	public ItemResponseDto(Item item) {
 		this(
 				item.getId(),
 				new UserResponseDto(item.getUser()),
 				new ItemLocationResponseDto(item.getItemLocation().getName()),
-				item.getCreatedAt()
+				item.getCreatedAt(),
+				item.getItemLikeCount()
 		);
 	}
 }
