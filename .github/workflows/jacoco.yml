@@ -1,4 +1,3 @@
-
 name: Java CI Test with Jacoco
 
 on:
@@ -25,23 +24,22 @@ jobs:
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
+        working-directory: ./backend
         run: chmod +x gradlew
+
+      - run: gradle init
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: build test -Pprofile=test
+          arguments: build
           cache-read-only: ${{ github.ref != 'refs/heads/master' && github.ref != 'refs/heads/dev' }}
-
-      - name: Upload Jacoco Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: jacoco-report
-          path: ./build/reports/tests/test/index.html
 
       - name: Upload test coverage
         id: jacoco
         uses: codecov/codecov-action@v3
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
-          files: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
+steps:
+  - continue-on-error: true

@@ -1,7 +1,7 @@
 HELP.md
-.gradle
+backend/.gradle
 build/
-!gradle/wrapper/gradle-wrapper.jar
+!backend/gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
@@ -18,7 +18,7 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-.idea
+*.idea
 *.iws
 *.iml
 *.ipr
@@ -37,7 +37,7 @@ out/
 .vscode/
 
 ### Secrets ###
-src/main/resources/application-dev*.yml
+backend/**/src/main/resources/application-dev*.yml
 src/main/resources/data.sql
 src/**/resources/schema.sql
 
