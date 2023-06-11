@@ -100,7 +100,7 @@ public class ItemServiceTest {
         class Success {
             @DisplayName("특정 지역 주변의 아이템 상세 조회 - 조회 아이템이 없는 경우")
             @Test
-            void findNearItemsTestSuccess1() {
+            void itemNotExist() {
                 NearItemRequestDto nearItemRequestDto = new NearItemRequestDto(127.123, 37.123, 1000.0);
 
                 when(itemRepository.findNearItemsByDistance(any(Point.class), any(Double.class))).thenReturn(List.of());
@@ -113,7 +113,7 @@ public class ItemServiceTest {
 
             @DisplayName("특정 지역 주변의 아이템 상세 조회 - 조회 아이템이 2개 있는 경우")
             @Test
-            void findNearItemsTestSuccess2() {
+            void itemsExist() {
                 ItemLocation itemLocation1 = ItemLocation.builder()
                         .name("Location1")
                         .point(GeomUtil.createPoint(37.123, 127.123))

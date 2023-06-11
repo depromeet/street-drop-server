@@ -425,6 +425,7 @@ public class ItemControllerTest {
                                         new MusicResponseDto("title", "artist", "/albumImage.jpg", List.of("genre")),
                                         "사용자 코멘트",
                                         LocalDateTime.of(2023, 5, 26, 12, 0),
+                                        false,
                                         1
                                 )
                         )
@@ -466,6 +467,7 @@ public class ItemControllerTest {
                                         new MusicResponseDto("title", "artist", "/albumImage.jpg", List.of("genre")),
                                         "사용자 코멘트",
                                         LocalDateTime.of(2023, 5, 26, 12, 0),
+                                        false,
                                         1
                                 )
                         )
