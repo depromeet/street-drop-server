@@ -11,7 +11,7 @@ services:
     image: yunyoung18190/streetdrop-api:latest
     container_name: streetdrop-api
     build:
-      context: ./backend/streetdrop-api
+      context: ./backend
       dockerfile: Dockerfile
     expose:
       - 8080
