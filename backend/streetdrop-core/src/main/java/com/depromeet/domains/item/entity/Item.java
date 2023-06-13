@@ -24,7 +24,7 @@ public class Item extends BaseTimeEntity {
 	@Column(name = "item_id")
 	private Long id;
 
-	@Column(length = 500)
+	@Column(length = 500, nullable = false)
 	private String content;
 
 	@OneToOne(fetch = LAZY, mappedBy = "item", cascade = CascadeType.ALL)
