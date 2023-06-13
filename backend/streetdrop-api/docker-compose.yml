@@ -7,11 +7,11 @@ services:
     ports:
       - "6379:6379"
 
-  street-drop-server-api:
+  streetdrop-api:
     image: street-drop-server-api
     container_name: street-drop-server-api
     build:
-      context: /streetdrop-api
+      context: .
       dockerfile: Dockerfile
     expose:
       - 8080
