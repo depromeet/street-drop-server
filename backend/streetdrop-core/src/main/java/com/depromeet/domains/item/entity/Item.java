@@ -63,8 +63,7 @@ public class Item extends BaseTimeEntity {
 	}
 
 	public boolean isLiked(User user) {
-		return likes != null ?
-				likes.stream().anyMatch(like -> like.isLiked(user)) : false;
+		return likes != null && likes.stream().anyMatch(like -> like.isLiked(user));
 	}
 
 }
