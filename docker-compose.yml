@@ -8,10 +8,10 @@ services:
       - "6379:6379"
 
   streetdrop-api:
-    image: yunyoung18190/street-drop-server-api:latest
+    image: yunyoung18190/streetdrop-api:latest
     ports:
       - 8080:8080
-    container_name: street-drop-server-api
+    container_name: streetdrop-api
     depends_on:
       - redis
 
