@@ -3,6 +3,7 @@ package com.depromeet.domains.item.dto.request;
 import com.depromeet.domains.music.dto.request.MusicRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,5 +24,6 @@ public class ItemRequestDto {
 	private MusicRequestDto music;
 
 	@Schema(description = "콘텐츠", example = "블라블라")
+	@NotNull(message = "Content is required")
 	private String content;
 }
