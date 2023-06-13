@@ -55,7 +55,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          ws-region: ap-northeast-2
+        aws-region: ap-northeast-2
 
     # Add github ip to AWS
     - name: Add GitHub IP to AWS
