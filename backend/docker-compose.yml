@@ -1,0 +1,22 @@
+version: '3'
+services:
+  redis:
+    image: redis
+    container_name: redis
+    hostname: redis
+    ports:
+      - "6379:6379"
+
+  streetdrop-api-server:
+    image: streetdrop-api-server
+    container_name: streetdrop-api-server
+    build:
+      context: './streetdrop-api'
+      dockerfile: Dockerfile
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    depends_on:
+      - redis
+
