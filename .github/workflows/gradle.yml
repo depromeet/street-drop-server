@@ -45,6 +45,7 @@ jobs:
         registry: docker.io
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
     # GET GitHub IP
     - name: Get Github IP
       id: ip
