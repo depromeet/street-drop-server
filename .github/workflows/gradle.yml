@@ -30,7 +30,7 @@ jobs:
       uses: gradle/gradle-build-action@v2
 
     - name: Execute Gradle build
-      uses: ./backend/gradlew build
+      uses: ${GITHUB_WORKSPACE}/backend/gradlew build
 
     - name: Login To DockerHub
       uses: docker/login-action@v1
