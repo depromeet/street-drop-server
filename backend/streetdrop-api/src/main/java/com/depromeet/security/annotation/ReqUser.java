@@ -1,4 +1,5 @@
-package com.depromeet.domains.user.annotation;
+package com.depromeet.security.annotation;
+
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
