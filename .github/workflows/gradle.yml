@@ -44,6 +44,46 @@ jobs:
         push: true
         tags: street-drop-api:prod
         build-args: STAGE=prod
-      
+
+      # GET GitHub IP
+      - name: Get Github IP
+        id: ip
+        uses: haythem/public-ip@v1.2
+
+      # Configure AWS Credentials - AWS 접근 권한 취득(IAM)
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      # Add github ip to AWS
+      - name: Add GitHub IP to AWS
+        run: |
+          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+
+      # AWS EC2 Server Connect & Docker 명령어 실행
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_EC2_HOST }}
+          username: ${{ secrets.AWS_EC2_USERNAME }}
+          password: ${{ secrets.EC2_PASSWORD }}
+          port: ${{ secrets.EC2_SSH_PORT }}
+          timeout: 60s
+          # 도커 작업
+          script: |
+            cd street-drop-server/
+            sudo rm concal.log
+            sudo docker rm - f $(docker ps -qa)
+            docker pull street-drop-api:prod
+            docker run -d --name street-drop-api -p 8080:8080 street-drop-api:prod
+
+      # REMOVE Github IP FROM security group
+      - name: Remove IP FROM security group
+        run: |
+        aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+
       
     
