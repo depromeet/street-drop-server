@@ -1,5 +1,5 @@
 FROM amazoncorretto:19
-ARG JAR_FILE=./backend/streetdrop-api/build/libs/*.jar
+ARG JAR_FILE=backend/streetdrop-api/build/libs/streetdrop-api.jar
 COPY ${JAR_FILE} app.jar
 
 ARG PROFILE=prod
