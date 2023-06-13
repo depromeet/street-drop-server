@@ -4,8 +4,11 @@ import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.dto.ErrorResponseDto;
 import com.depromeet.common.error.exception.common.BusinessException;
 import com.depromeet.common.error.exception.common.NotFoundException;
+import com.depromeet.common.error.handler.ErrorEvent;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,7 +16,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 @Slf4j
+@RequiredArgsConstructor
 public class GlobalExceptionHandler {
+
+	private final ApplicationEventPublisher eventPublisher;
+
 	@ExceptionHandler(BusinessException.class)
 	protected ResponseEntity<ErrorResponseDto> handleBusinessException(
 			final BusinessException e,
