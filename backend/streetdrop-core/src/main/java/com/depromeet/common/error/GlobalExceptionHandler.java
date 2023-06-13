@@ -48,9 +48,22 @@ public class GlobalExceptionHandler {
                 .error(ErrorCode.METHOD_ARGUMENT_NOT_VALID.getStatus().name())
                 .message(e.getAllErrors().get(0).getDefaultMessage()).build();
 
-        return ResponseEntity
-                .status(ErrorCode.METHOD_ARGUMENT_NOT_VALID.getStatus().value())
-                .body(errorResponseDto);
-    }
+		return ResponseEntity
+				.status(ErrorCode.METHOD_ARGUMENT_NOT_VALID.getStatus().value())
+				.body(errorResponseDto);
+	}
+
+	@ExceptionHandler(Exception.class)
+	protected ResponseEntity<ErrorResponseDto> handleInternalException(
+			final Exception e,
+			final HttpServletRequest request
+	) {
+		log.error("Exception: {} {}", e.getMessage(), request.getRequestURL());
+		eventPublisher.publishEvent(new ErrorEvent(ErrorCode.INTERNAL_SERVER_ERROR, request, e));
+		return ResponseEntity
+				.status(ErrorCode.INTERNAL_SERVER_ERROR.getStatus().value())
+				.body(new ErrorResponseDto(ErrorCode.INTERNAL_SERVER_ERROR));
+	}
+
 }
 
