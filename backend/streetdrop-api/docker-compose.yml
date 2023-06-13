@@ -11,7 +11,7 @@ services:
     image: street-drop-server-api
     container_name: street-drop-server-api
     build:
-      context: './backend/streetdrop-api'
+      context: ''
       dockerfile: Dockerfile
     expose:
       - 8080
