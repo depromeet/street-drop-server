@@ -8,15 +8,10 @@ services:
       - "6379:6379"
 
   streetdrop-api:
-    image: street-drop-server-api
-    container_name: street-drop-server-api
-    build:
-      context: .
-      dockerfile: Dockerfile
-    expose:
-      - 8080
+    image: yunyoung18190/street-drop-server-api:latest
     ports:
       - 8080:8080
+    container_name: street-drop-server-api
     depends_on:
       - redis
 
