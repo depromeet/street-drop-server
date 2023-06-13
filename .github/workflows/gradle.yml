@@ -28,9 +28,9 @@ jobs:
 
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
-      working-directory: ./backend
-      with:
-        arguments: streetdrop-api:build
+
+    - name: Execute Gradle build
+      uses: ./gradlew build
 
     - name: Login To DockerHub
       uses: docker/login-action@v1
