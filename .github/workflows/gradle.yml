@@ -7,7 +7,6 @@ on:
     
 jobs:
   deploy:
-
     runs-on: ubuntu-latest
   
     steps:
@@ -21,7 +20,6 @@ jobs:
         distribution: 'temurin'
 
     - name: Grant execute permission for gradlew
-      working-directory: ./backend
       run: chmod +x gradlew
 
     - run: gradle init
@@ -46,6 +44,7 @@ jobs:
         registry: docker.io
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
     # GET GitHub IP
     - name: Get Github IP
       id: ip

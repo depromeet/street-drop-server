@@ -9,9 +9,13 @@ services:
 
   streetdrop-api:
     image: yunyoung18190/streetdrop-api:latest
+    container_name: streetdrop-api
+    build:
+      context: ./streetdrop-api
+      dockerfile: Dockerfile
+    expose:
+      - 8080
     ports:
       - 8080:8080
-    container_name: streetdrop-api
     depends_on:
       - redis
-
