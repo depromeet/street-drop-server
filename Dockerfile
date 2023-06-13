@@ -1,6 +1,6 @@
 FROM amazoncorretto:19
-WORKDIR /street-drop-server/backend/street-drop-api
-COPY backend/street-drop-api/build/libs/*.jar app.jar
+ARG JAR_FILE=./backend/streetdrop-api/build/libs/streetdrop-api-0.0.1-SNAPSHOT.jar
+COPY ${JAR_FILE} app.jar
 
 ARG PROFILE=prod
 ENV PROFILE=${PROFILE}
