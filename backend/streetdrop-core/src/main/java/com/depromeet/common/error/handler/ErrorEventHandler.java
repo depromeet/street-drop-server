@@ -4,9 +4,11 @@ import com.depromeet.common.monitoring.MonitoringProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 
 import static com.depromeet.common.error.dto.ErrorCode.INTERNAL_SERVER_ERROR;
 
+@Component
 @RequiredArgsConstructor
 public class ErrorEventHandler {
 
