@@ -30,4 +30,9 @@ public class ItemLike extends BaseTimeEntity {
 		this.item = item;
 		this.user = user;
 	}
+
+	public boolean isLiked(User user) {
+		return user.equals(user);
+	}
+
 }

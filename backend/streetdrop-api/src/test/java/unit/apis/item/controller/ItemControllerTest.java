@@ -220,6 +220,25 @@ public class ItemControllerTest {
                 response.andExpect(status().isBadRequest())
                         .andExpect(jsonPath("$.message").value("Address is required"));
             }
+
+            @DisplayName("컨텐츠 유효성 검사 실패 - 컨텐츠가 없는 경우")
+            @Test
+            void createItem_InvalidContentRequest_ReturnsBadRequest() throws Exception {
+                MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", "IVE", "1st EP IVE", "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
+                ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 127.123456, "서울시 성수동 성수 1가");
+                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, null);
+                ItemResponseDto itemResponseDto = createValidItemResponseDto();
+
+                given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
+
+                var response = mvc.perform(
+                        post("/items")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(itemRequestDto)));
+
+                response.andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("$.message").value("Content is required"));
+            }
         }
 
         private ItemResponseDto createValidItemResponseDto() {
@@ -425,6 +444,7 @@ public class ItemControllerTest {
                                         new MusicResponseDto("title", "artist", "/albumImage.jpg", List.of("genre")),
                                         "사용자 코멘트",
                                         LocalDateTime.of(2023, 5, 26, 12, 0),
+                                        false,
                                         1
                                 )
                         )
@@ -466,6 +486,7 @@ public class ItemControllerTest {
                                         new MusicResponseDto("title", "artist", "/albumImage.jpg", List.of("genre")),
                                         "사용자 코멘트",
                                         LocalDateTime.of(2023, 5, 26, 12, 0),
+                                        false,
                                         1
                                 )
                         )

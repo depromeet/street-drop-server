@@ -24,7 +24,7 @@ public class Item extends BaseTimeEntity {
 	@Column(name = "item_id")
 	private Long id;
 
-	@Column(length = 500)
+	@Column(length = 500, nullable = false)
 	private String content;
 
 	@OneToOne(fetch = LAZY, mappedBy = "item", cascade = CascadeType.ALL)
@@ -61,4 +61,9 @@ public class Item extends BaseTimeEntity {
 	public int getItemLikeCount() {
 		return likes != null ? likes.size() : 0;
 	}
+
+	public boolean isLiked(User user) {
+		return likes != null && likes.stream().anyMatch(like -> like.isLiked(user));
+	}
+
 }
