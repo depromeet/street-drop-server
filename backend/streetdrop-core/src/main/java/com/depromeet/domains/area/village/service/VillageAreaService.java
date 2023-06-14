@@ -1,7 +1,9 @@
 package com.depromeet.domains.area.village.service;
 
-import com.depromeet.domains.area.village.repository.VillageAreaRepository;
+import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.common.error.exception.common.BusinessException;
 import com.depromeet.domains.area.village.entity.VillageArea;
+import com.depromeet.domains.area.village.repository.VillageAreaRepository;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ public class VillageAreaService {
 
     @Transactional(readOnly = true)
     public VillageArea getVillageByLocationPoint(Point point) {
-        return villageAreaRepository.findVillageByLocationPoint(point);
+        return villageAreaRepository.findVillageByLocationPoint(point).orElseThrow(
+                () -> new BusinessException(ErrorCode.NOT_SUPPORT_LOCATION)
+        );
     }
 }
