@@ -39,7 +39,7 @@ public class VillageItemServiceTest {
 
                 var result = villageItemService.countItemsByVillage(villageName);
 
-                var response = new VillageItemsCountResponseDto(1);
+                var response = new VillageItemsCountResponseDto(1, villageName);
                 assertThat(result).isEqualTo(response);
             }
         }
