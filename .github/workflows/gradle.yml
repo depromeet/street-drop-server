@@ -33,7 +33,7 @@ jobs:
 
     # Docker Image Build
     - name: docker image build
-      run: docker build -f /backend/streetdrop-api/Dockerfile . -t yunyoung18190/street-drop-server-api
+      run: docker build -f backend/streetdrop-api/Dockerfile -t yunyoung18190/street-drop-server-api
 
     - name: Login To DockerHub
       uses: docker/login-action@v2
