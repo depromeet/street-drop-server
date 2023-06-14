@@ -42,7 +42,7 @@ public class VillageItemControllerTest {
             void VillageItemCountTest() throws Exception {
 
                 var VillageName = "종로구 사직동";
-                var villageItemCountResponseDto = new VillageItemsCountResponseDto(1);
+                var villageItemCountResponseDto = new VillageItemsCountResponseDto(1, "종로구 사직동");
                 given(villageItemService.countItemsByVillage(VillageName)).willReturn(villageItemCountResponseDto);
                 var response = mvc.perform(
                         get("/villages/items/count")

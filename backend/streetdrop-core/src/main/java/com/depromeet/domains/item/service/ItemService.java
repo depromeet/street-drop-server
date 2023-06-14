@@ -2,6 +2,7 @@ package com.depromeet.domains.item.service;
 
 import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.exception.common.NotFoundException;
+import com.depromeet.domains.item.dto.request.NearItemPointRequestDto;
 import com.depromeet.domains.item.repository.ItemLocationRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.area.village.entity.VillageArea;
@@ -38,9 +39,9 @@ public class ItemService {
 	private final static int WGS84_SRID = 4326;
 	private final GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), WGS84_SRID);
 
-	public PoiResponseDto findNearItemsPoints(NearItemRequestDto nearItemRequestDto) {
-		Point point = gf.createPoint(new Coordinate(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude()));
-		var poiDtoList = itemLocationRepository.findNearItemsPointsByDistance(point, nearItemRequestDto.getDistance())
+	public PoiResponseDto findNearItemsPoints(NearItemPointRequestDto nearItemPointRequestDto) {
+		Point point = gf.createPoint(new Coordinate(nearItemPointRequestDto.getLongitude(), nearItemPointRequestDto.getLatitude()));
+		var poiDtoList = itemLocationRepository.findNearItemsPointsByDistance(point, nearItemPointRequestDto.getDistance(), nearItemPointRequestDto.getInnerDistance())
 				.stream().map(PoiResponseDto.PoiDto::fromItemPoint).toList();
 		return new PoiResponseDto(poiDtoList);
 	}

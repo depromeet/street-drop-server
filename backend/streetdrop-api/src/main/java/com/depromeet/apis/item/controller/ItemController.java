@@ -1,13 +1,14 @@
 package com.depromeet.apis.item.controller;
 
-import com.depromeet.domains.user.annotation.ReqUser;
 import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.domains.item.dto.request.ItemRequestDto;
+import com.depromeet.domains.item.dto.request.NearItemPointRequestDto;
 import com.depromeet.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.domains.item.service.ItemService;
+import com.depromeet.domains.user.annotation.ReqUser;
 import com.depromeet.domains.user.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,8 +26,8 @@ public class ItemController {
 
     @Operation(summary = "주변 아이템 조회 - POI")
     @GetMapping("/points")
-    public ResponseEntity<PoiResponseDto> findNearItemsPoints(@Valid NearItemRequestDto nearItemRequestDto) {
-        var response = itemService.findNearItemsPoints(nearItemRequestDto);
+    public ResponseEntity<PoiResponseDto> findNearItemsPoints(@Valid NearItemPointRequestDto nearItemPointRequestDto) {
+        var response = itemService.findNearItemsPoints(nearItemPointRequestDto);
         return ResponseDto.ok(response);
     }
 

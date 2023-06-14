@@ -14,9 +14,12 @@ public class ItemPointDao {
 
     private String albumThumbnail;
 
-    public ItemPointDao(Point point, Long id, String albumThumbnail) {
+    private Boolean isInnerDistance;
+
+    public ItemPointDao(Point point, Long id, String albumThumbnail, boolean isInnerDistance) {
         this.point = point;
         this.id = id;
         this.albumThumbnail = albumThumbnail;
+        this.isInnerDistance = isInnerDistance;
     }
 }
