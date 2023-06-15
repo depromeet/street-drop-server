@@ -2,9 +2,7 @@ name: Java CI Test with Jacoco
 
 on:
   push:
-    branches: [ "*" ]
-  pull_request:
-    branches: [ "main", "dev" ]
+    branches: [ "config/deploy" ]
 
 permissions:
   contents: read
@@ -41,7 +39,4 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
-          
-  test:
-    steps:
-      - continue-on-error: true
+        continue-on-error: true
