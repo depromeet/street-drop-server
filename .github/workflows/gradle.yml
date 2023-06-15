@@ -20,20 +20,18 @@ jobs:
         distribution: 'temurin'
 
     - name: Grant execute permission for gradlew
-      working-directory: ./backend
+      working-directory: ./backend/street-drop-api
       run: chmod +x gradlew
-
-    - run: gradle init
 
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
 
     - name: Execute Gradle build
-      run: ${{ github.workspace }}/backend/gradlew build
+      run: ./backend/street-drop-api/gradlew build
 
     # Docker Image Build
     - name: docker image build
-      run: docker build -t yunyoung18190/street-drop-server-api .
+      run: docker build -t yunyoung18190/street-drop-server-api ./backend/street-drop-api
 
     - name: Login To DockerHub
       uses: docker/login-action@v2
