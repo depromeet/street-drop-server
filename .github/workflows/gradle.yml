@@ -27,7 +27,7 @@ jobs:
       uses: gradle/gradle-build-action@v2
 
     - name: Execute Gradle build
-      run: ./backend/street-drop-api/gradlew build
+      run: ./backend/gradlew build
 
     # Docker Image Build
     - name: docker image build
