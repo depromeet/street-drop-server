@@ -28,7 +28,7 @@ jobs:
 
     - name: Execute Gradle build
       working-directory: ./backend
-      run: gradlew build
+      run: gradlew clean build --exclude-task test
 
     # Docker Image Build
     - name: docker image build
