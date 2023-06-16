@@ -34,6 +34,9 @@ public record ItemsResponseDto(List<ItemDetailDto> items) {
                 )
                 LocalDateTime createdAt,
 
+                @Schema(description = "아이템 좋아요 여부", example = "true")
+                boolean isLiked,
+
                 @Schema(description = "아이템 좋아요 개수", example = "100")
                 int itemLikeCount
         ) {
@@ -45,6 +48,7 @@ public record ItemsResponseDto(List<ItemDetailDto> items) {
                                 new MusicResponseDto(item),
                                 item.getContent(),
                                 item.getCreatedAt(),
+                                item.isLiked(item.getUser()),
                                 item.getItemLikeCount()
                         );
                 }

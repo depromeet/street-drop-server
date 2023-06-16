@@ -17,13 +17,17 @@ public record PoiResponseDto(List<PoiDto> poi) {
             @Schema(description = "위도", example = "37.123456")
             double latitude,
             @Schema(description = "경도", example = "127.123456")
-            double longitude) {
+            double longitude,
+            @Schema(description = "내부 좌표 속하는지 여부", example = "true")
+            boolean isInnerDistance
+    ) {
         public static PoiDto fromItemPoint(ItemPointDao itemPointDao) {
             return builder()
                     .itemId(itemPointDao.getId())
                     .albumCover(itemPointDao.getAlbumThumbnail())
                     .latitude(itemPointDao.getPoint().getY())
                     .longitude(itemPointDao.getPoint().getX())
+                    .isInnerDistance(itemPointDao.getIsInnerDistance())
                     .build();
         }
     }

@@ -1,6 +1,8 @@
 package unit.domains.item.service;
 
+import com.depromeet.common.util.GeomUtil;
 import com.depromeet.domains.item.dao.ItemPointDao;
+import com.depromeet.domains.item.dto.request.NearItemPointRequestDto;
 import com.depromeet.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.domains.item.dto.response.PoiResponseDto;
@@ -16,7 +18,6 @@ import com.depromeet.domains.music.genre.entity.Genre;
 import com.depromeet.domains.music.genre.entity.SongGenre;
 import com.depromeet.domains.music.song.entity.Song;
 import com.depromeet.domains.user.entity.User;
-import com.depromeet.common.util.GeomUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -59,8 +60,8 @@ public class ItemServiceTest {
             @DisplayName("특정 지역 주변의 아이템 조회 - 조회 아이템이 없는 경우")
             @Test
             void getNearItemPointsTestSuccess1() {
-                NearItemRequestDto nearItemRequestDto = new NearItemRequestDto(127.123, 37.123, 1000.0);
-                when(itemLocationRepository.findNearItemsPointsByDistance(any(Point.class), any(Double.class))).thenReturn(List.of());
+                NearItemPointRequestDto nearItemRequestDto = new NearItemPointRequestDto(127.123, 37.123, 1000.0, 1000.0);
+                when(itemLocationRepository.findNearItemsPointsByDistance(any(Point.class), any(Double.class), any(Double.class))).thenReturn(List.of());
 
                 var result = itemService.findNearItemsPoints(nearItemRequestDto);
 
@@ -70,21 +71,21 @@ public class ItemServiceTest {
             @DisplayName("특정 지역 주변의 아이템 조회 - 조회 아이템이 2개 있는 경우")
             @Test
             void getNearItemPointsTestSuccess2() {
-                NearItemRequestDto nearItemRequestDto = new NearItemRequestDto(127.123, 37.123, 1000.0);
+                NearItemPointRequestDto nearItemPointRequestDto = new NearItemPointRequestDto(127.123, 37.123, 1000.0, 1000.0);
 
                 List<ItemPointDao> itemPointDaos = List.of(
-                        new ItemPointDao(gf.createPoint(new Coordinate(127.123, 37.123)), 1L, "/image1.jpg"),
-                        new ItemPointDao(gf.createPoint(new Coordinate(127.133, 37.323)), 2L, "/image2.jpg")
+                        new ItemPointDao(gf.createPoint(new Coordinate(127.123, 37.123)), 1L, "/image1.jpg", false),
+                        new ItemPointDao(gf.createPoint(new Coordinate(127.133, 37.323)), 2L, "/image2.jpg", false)
                 );
-                when(itemLocationRepository.findNearItemsPointsByDistance(any(Point.class), any(Double.class))).thenReturn(itemPointDaos);
+                when(itemLocationRepository.findNearItemsPointsByDistance(any(Point.class), any(Double.class), any(Double.class))).thenReturn(itemPointDaos);
 
-                var result = itemService.findNearItemsPoints(nearItemRequestDto);
+                var result = itemService.findNearItemsPoints(nearItemPointRequestDto);
 
                 assertThat(result).isEqualTo(
                         new PoiResponseDto(
                                 List.of(
-                                        new PoiResponseDto.PoiDto(1L, "/image1.jpg", 37.123, 127.123),
-                                        new PoiResponseDto.PoiDto(2L, "/image2.jpg", 37.323, 127.133)
+                                        new PoiResponseDto.PoiDto(1L, "/image1.jpg", 37.123, 127.123, false),
+                                        new PoiResponseDto.PoiDto(2L, "/image2.jpg", 37.323, 127.133, false)
                                 )
                         )
                 );
