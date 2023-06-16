@@ -70,8 +70,8 @@ jobs:
         script: |
           cd street-drop-server/
           sudo docker rm - f $(docker ps -qa)
-          docker pull yunyoung18190/street-drop-api-server:latest
-          docker run -d --name latest -p 8080:8080 latest
+          sudo docker pull yunyoung18190/street-drop-api-server:latest
+          sudo docker run -d --name latest -p 8080:8080 latest
 
       # REMOVE Github IP FROM security group
     - name: Remove IP FROM security group
