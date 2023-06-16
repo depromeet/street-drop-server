@@ -1,6 +1,6 @@
 package com.depromeet.apis.user.controller;
 
-import com.depromeet.domains.user.annotation.ReqUser;
+import com.depromeet.security.annotation.ReqUser;
 import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.domains.user.entity.User;
