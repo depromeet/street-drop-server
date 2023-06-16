@@ -1,3 +1,7 @@
 FROM amazoncorretto:19
-COPY backend/streetdrop-api/build/libs/streetdrop-api-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT ["java", "-Djava.security.edg=file:/dev/./urandom", "-jar", "/app.jar"]
+ARG JAR_FILE=backend/streetdrop-api/build/libs/streetdrop-api-0.0.1-SNAPSHOT.jar
+COPY ${JAR_FILE} app.jar
+
+ARG PROFILE=dev
+ENV PROFILE=${PROFILE}
+ENTRYPOINT ["java","-Dspring.profiles.active=${PROFILE}", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
