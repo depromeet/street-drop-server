@@ -71,7 +71,7 @@ jobs:
           cd street-drop-server/
           sudo docker rm - f $(docker ps -qa)
           sudo docker pull yunyoung18190/street-drop-api-server:latest
-          sudo docker run -d yunyoung18190/street-drop-api-server:latest --name street-drop-api -p 8080:8080 street-drop-api
+          sudo docker run -d yunyoung18190/street-drop-api-server:latest --name street-drop-api -p 8080:8080 street-drop-api --env-file ./.env
 
       # REMOVE Github IP FROM security group
     - name: Remove IP FROM security group
