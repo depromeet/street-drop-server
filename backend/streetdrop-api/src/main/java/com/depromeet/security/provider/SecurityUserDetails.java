@@ -1,6 +1,6 @@
 package com.depromeet.security.provider;
 
-import com.depromeet.domains.user.entity.User;
+import com.depromeet.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;

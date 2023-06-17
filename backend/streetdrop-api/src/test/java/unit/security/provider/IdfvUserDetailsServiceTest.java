@@ -1,7 +1,7 @@
 package unit.security.provider;
 
-import com.depromeet.domains.user.entity.User;
-import com.depromeet.domains.user.service.UserService;
+import com.depromeet.user.User;
+import com.depromeet.user.service.UserService;
 import com.depromeet.security.provider.IdfvUserDetailsService;
 import com.depromeet.security.provider.SecurityUserDetails;
 import org.junit.jupiter.api.DisplayName;
