@@ -21,15 +21,15 @@ public class SlackService {
     private String token;
     @Async
     public void sendMessage(List<LayoutBlock> blocks, String channel) {
-        try {
-            MethodsClient methods = Slack.getInstance().methods(token);
-            ChatPostMessageRequest req = ChatPostMessageRequest.builder()
-                    .channel(channel)
-                    .blocks(blocks)
-                    .build();
-            methods.chatPostMessage(req);
-        } catch (IOException | SlackApiException e) {
-            log.error("Failed to send a Slack message: {}", e.getMessage());
-        }
+//        try {
+//            MethodsClient methods = Slack.getInstance().methods(token);
+//            ChatPostMessageRequest req = ChatPostMessageRequest.builder()
+//                    .channel(channel)
+//                    .blocks(blocks)
+//                    .build();
+//            methods.chatPostMessage(req);
+//        } catch (IOException | SlackApiException e) {
+//            log.error("Failed to send a Slack message: {}", e.getMessage());
+//        }
     }
 }

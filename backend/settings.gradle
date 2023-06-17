@@ -3,7 +3,8 @@ include (
         'streetdrop-admin',
         'streetdrop-api',
         'streetdrop-batch',
-        'streetdrop-core',
+        'streetdrop-common',
+        'streetdrop-domain',
         'streetdrop-search',
         'streetdrop-admin:streetdrop-admin-server',
 )
