@@ -12,21 +12,17 @@ repositories {
 dependencies {
     implementation project(':streetdrop-domain')
     implementation project(':streetdrop-common')
-
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.hibernate:hibernate-spatial:6.2.2.Final'
     implementation 'org.locationtech.jts:jts-core'
-
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
     implementation 'io.micrometer:micrometer-core'
-
     implementation "com.slack.api:bolt:1.29.2"
     implementation "com.slack.api:bolt-servlet:1.29.2"
     implementation "com.slack.api:bolt-jetty:1.29.2"
