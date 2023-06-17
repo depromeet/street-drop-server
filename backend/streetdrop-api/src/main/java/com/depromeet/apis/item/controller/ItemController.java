@@ -9,7 +9,6 @@ import com.depromeet.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.domains.item.service.ItemService;
-import com.depromeet.domains.user.annotation.ReqUser;
 import com.depromeet.domains.user.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
