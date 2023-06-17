@@ -1,6 +1,6 @@
 package unit.security.provider;
 
-import com.depromeet.domains.user.entity.User;
+import com.depromeet.user.User;
 import com.depromeet.security.provider.SecurityUserDetails;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

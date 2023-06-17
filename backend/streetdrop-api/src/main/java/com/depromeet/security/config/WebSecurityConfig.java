@@ -1,6 +1,6 @@
 package com.depromeet.security.config;
 
-import com.depromeet.domains.user.service.UserService;
+import com.depromeet.user.service.UserService;
 import com.depromeet.security.filter.IdfvAuthenticationFilter;
 import com.depromeet.security.provider.IdfvUserDetailsService;
 import lombok.RequiredArgsConstructor;

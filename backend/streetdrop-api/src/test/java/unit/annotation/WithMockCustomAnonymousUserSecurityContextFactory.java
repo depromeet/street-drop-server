@@ -1,6 +1,6 @@
 package unit.annotation;
 
-import com.depromeet.domains.user.entity.User;
+import com.depromeet.user.User;
 import com.depromeet.security.provider.SecurityUserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;

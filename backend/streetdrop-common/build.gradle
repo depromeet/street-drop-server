@@ -6,4 +6,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.hibernate:hibernate-spatial:6.2.2.Final'
+    implementation 'org.locationtech.jts:jts-core'
 }
