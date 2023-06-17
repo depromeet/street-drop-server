@@ -32,7 +32,7 @@ public class ItemService {
 	private final VillageAreaService villageAreaService;
 
 	public PoiResponseDto findNearItemsPoints(NearItemPointRequestDto nearItemPointRequestDto) {
-		Point point = GeomUtil.createPoint(nearItemPointRequestDto.getLatitude(), nearItemPointRequestDto.getLongitude());
+		Point point = GeomUtil.createPoint(nearItemPointRequestDto.getLongitude(), nearItemPointRequestDto.getLatitude());
 		var poiDtoList = itemLocationRepository.findNearItemsPointsByDistance(point, nearItemPointRequestDto.getDistance(), nearItemPointRequestDto.getInnerDistance())
 				.stream().map(PoiResponseDto.PoiDto::fromItemPoint).toList();
 		return new PoiResponseDto(poiDtoList);
@@ -68,7 +68,7 @@ public class ItemService {
 
 	@Transactional(readOnly = true)
     public ItemsResponseDto findNearItems(NearItemRequestDto nearItemRequestDto) {
-        Point point = GeomUtil.createPoint(nearItemRequestDto.getLatitude(), nearItemRequestDto.getLongitude());
+        Point point = GeomUtil.createPoint(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude());
         var items = itemRepository.findNearItemsByDistance(point, nearItemRequestDto.getDistance());
         var itemDetailDtoList = items.stream()
                 .map(ItemsResponseDto.ItemDetailDto::new)

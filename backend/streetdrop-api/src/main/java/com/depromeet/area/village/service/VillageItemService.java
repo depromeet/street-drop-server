@@ -23,7 +23,7 @@ public class VillageItemService {
     }
 
     public VillageItemsCountResponseDto countItemsInVillageByLocation(VillageItemsRequestDto villageItemsRequestDto) {
-        Point point  = GeomUtil.createPoint(villageItemsRequestDto.getLatitude(), villageItemsRequestDto.getLongitude());
+        Point point  = GeomUtil.createPoint(villageItemsRequestDto.getLongitude(), villageItemsRequestDto.getLatitude());
         VillageArea villageArea = villageAreaRepository.findVillageByLocationPoint(point).orElseThrow(
                 () -> new BusinessException(ErrorCode.NOT_SUPPORT_LOCATION)
         );
