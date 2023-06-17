@@ -50,7 +50,7 @@ public class ItemService {
 				.build();
 
 		ItemLocationRequestDto locationRequestDto = itemRequestDto.getLocation();
-		Point point  = GeomUtil.createPoint(locationRequestDto.getLongitude(), locationRequestDto.getLatitude());
+		Point point = GeomUtil.createPoint(locationRequestDto.getLatitude(), locationRequestDto.getLongitude());
 		VillageArea villageArea = villageAreaService.getVillageByLocationPoint(point);
 
 		ItemLocation itemLocation = ItemLocation.builder()
