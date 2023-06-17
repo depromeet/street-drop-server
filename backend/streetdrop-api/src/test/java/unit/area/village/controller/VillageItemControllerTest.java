@@ -1,11 +1,9 @@
 package unit.area.village.controller;
 
 import com.depromeet.area.village.controller.VillageItemController;
-import com.depromeet.area.village.dto.request.VillageItemsRequestDto;
 import com.depromeet.area.village.dto.response.VillageItemsCountResponseDto;
 import com.depromeet.area.village.service.VillageItemService;
 import com.depromeet.common.error.GlobalExceptionHandler;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,7 +15,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -41,29 +38,21 @@ public class VillageItemControllerTest {
         @Nested
         @DisplayName("성공")
         class Success {
-            double latitude;
-            double longitude;
-
-            @BeforeEach
-            void setUp() {
-                latitude = 37.123456;
-                longitude = 127.123456;
-            }
             @DisplayName("지역별 드랍 아이템 개수 조회")
             @Test
             void VillageItemCountTest() throws Exception {
 
-                var villageItemsCountResponseDto = new VillageItemsCountResponseDto(1, "종로구 사직동");
-                given(villageItemService.countItemsInVillageByLocation(any(VillageItemsRequestDto.class))).willReturn(villageItemsCountResponseDto);
+                var VillageName = "종로구 사직동";
+                var villageItemCountResponseDto = new VillageItemsCountResponseDto(1, "종로구 사직동");
+                given(villageItemService.countItemsByVillage(VillageName)).willReturn(villageItemCountResponseDto);
                 var response = mvc.perform(
                         get("/villages/items/count")
-                                .param("latitude", String.valueOf(latitude))
-                                .param("longitude", String.valueOf(longitude))
+                                .param("name", VillageName)
                 );
 
                 response.andExpect(status().isOk())
-                        .andExpect(jsonPath("$.numberOfDroppedMusic").value(1))
-                        .andExpect(jsonPath("$.villageName").value("종로구 사직동"));
+                        .andExpect(jsonPath("$.numberOfDroppedMusic").value(1));
+
             }
         }
     }
