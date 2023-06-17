@@ -3,7 +3,7 @@ package com.depromeet.apis.item.controller;
 import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.domains.item.dto.response.ItemLikeResponseDto;
 import com.depromeet.domains.item.service.ItemLikeService;
-import com.depromeet.domains.user.annotation.ReqUser;
+import com.depromeet.security.annotation.ReqUser;
 import com.depromeet.domains.user.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

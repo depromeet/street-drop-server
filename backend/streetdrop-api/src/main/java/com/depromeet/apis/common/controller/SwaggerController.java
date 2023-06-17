@@ -1,4 +1,4 @@
-package com.depromeet.common.controller;
+package com.depromeet.apis.common.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

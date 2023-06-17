@@ -4,6 +4,7 @@ import com.depromeet.apis.item.controller.ItemController;
 import com.depromeet.common.error.GlobalExceptionHandler;
 import com.depromeet.domains.item.dto.request.ItemLocationRequestDto;
 import com.depromeet.domains.item.dto.request.ItemRequestDto;
+import com.depromeet.domains.item.dto.request.NearItemPointRequestDto;
 import com.depromeet.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.domains.item.dto.response.ItemLocationResponseDto;
 import com.depromeet.domains.item.dto.response.ItemResponseDto;
@@ -35,8 +36,8 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -267,11 +268,11 @@ public class ItemControllerTest {
             @DisplayName("지역별 드랍 아이템 개수 조회 성공 - 2개 조회 성공, 거리 조회 X")
             @Test
             void getNearItemPointsTest() throws Exception {
-                PoiResponseDto.PoiDto poiResponseDto1 = new PoiResponseDto.PoiDto(1L, "/butter1.jpg", 37.123454, 127.123456);
-                PoiResponseDto.PoiDto poiResponseDto2 = new PoiResponseDto.PoiDto(2L, "/karina2.jpg", 37.123436, 127.123466);
+                PoiResponseDto.PoiDto poiResponseDto1 = new PoiResponseDto.PoiDto(1L, "/butter1.jpg", 37.123454, 127.123456, false);
+                PoiResponseDto.PoiDto poiResponseDto2 = new PoiResponseDto.PoiDto(2L, "/karina2.jpg", 37.123436, 127.123466, false);
                 PoiResponseDto poiResponseDto = new PoiResponseDto(List.of(poiResponseDto1, poiResponseDto2));
 
-                given(itemService.findNearItemsPoints(any(NearItemRequestDto.class))).willReturn(poiResponseDto);
+                given(itemService.findNearItemsPoints(any(NearItemPointRequestDto.class))).willReturn(poiResponseDto);
 
                 var response = mvc.perform(
                         get("/items/points")
@@ -285,10 +286,12 @@ public class ItemControllerTest {
                         .andExpect(jsonPath("$.poi[0].albumCover").value("/butter1.jpg"))
                         .andExpect(jsonPath("$.poi[0].latitude").value(37.123454))
                         .andExpect(jsonPath("$.poi[0].longitude").value(127.123456))
+                        .andExpect(jsonPath("$.poi[0].isInnerDistance").value(false))
                         .andExpect(jsonPath("$.poi[1].itemId").value(2L))
                         .andExpect(jsonPath("$.poi[1].albumCover").value("/karina2.jpg"))
                         .andExpect(jsonPath("$.poi[1].latitude").value(37.123436))
-                        .andExpect(jsonPath("$.poi[1].longitude").value(127.123466));
+                        .andExpect(jsonPath("$.poi[1].longitude").value(127.123466))
+                        .andExpect(jsonPath("$.poi[1].isInnerDistance").value(false));
 
             }
 
@@ -296,7 +299,7 @@ public class ItemControllerTest {
             @Test
             void getNearItemPointsTest2() throws Exception {
                 PoiResponseDto poiResponseDto = new PoiResponseDto(List.of());
-                given(itemService.findNearItemsPoints(any(NearItemRequestDto.class))).willReturn(poiResponseDto);
+                given(itemService.findNearItemsPoints(any(NearItemPointRequestDto.class))).willReturn(poiResponseDto);
 
                 var response = mvc.perform(
                         get("/items/points")
@@ -313,10 +316,10 @@ public class ItemControllerTest {
             @DisplayName("지역별 드랍 아이템 개수 조회 성공 - 1개 조회 성공, 범위 지정")
             @Test
             void getNearItemPointsTest3() throws Exception {
-                PoiResponseDto.PoiDto poiResponseDto1 = new PoiResponseDto.PoiDto(1L, "/butter1.jpg", 37.123454, 127.123456);
+                PoiResponseDto.PoiDto poiResponseDto1 = new PoiResponseDto.PoiDto(1L, "/butter1.jpg", 37.123454, 127.123456, true);
                 PoiResponseDto poiResponseDto = new PoiResponseDto(List.of(poiResponseDto1));
 
-                given(itemService.findNearItemsPoints(any(NearItemRequestDto.class))).willReturn(poiResponseDto);
+                given(itemService.findNearItemsPoints(any(NearItemPointRequestDto.class))).willReturn(poiResponseDto);
 
                 var response = mvc.perform(
                         get("/items/points")
@@ -330,7 +333,8 @@ public class ItemControllerTest {
                         .andExpect(jsonPath("$.poi[0].itemId").value(1L))
                         .andExpect(jsonPath("$.poi[0].albumCover").value("/butter1.jpg"))
                         .andExpect(jsonPath("$.poi[0].latitude").value(37.123454))
-                        .andExpect(jsonPath("$.poi[0].longitude").value(127.123456));
+                        .andExpect(jsonPath("$.poi[0].longitude").value(127.123456))
+                        .andExpect(jsonPath("$.poi[0].isInnerDistance").value(true));
 
             }
 
