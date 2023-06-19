@@ -18,8 +18,8 @@ spring:
 swagger:
   server-url: ${SWAGGER_SERVER_URL}
 slack:
-  token:
-    monitoring-channel: error
+  token: ${slack.token}
+  monitoring-channel: error
 cloud:
   aws:
     credentials:
