@@ -1,4 +1,3 @@
-# STREET-DROP CI/CD
 name: Street Drop Server CI/CD
 
 on:
@@ -53,12 +52,10 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-northeast-2
 
-    # Add github ip to AWS
     - name: Add GitHub IP to AWS
       run: |
         aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
 
-    # AWS EC2 Server Connect & Docker 명령어 실행
     - name: Deploy
       uses: appleboy/ssh-action@master
       with:
@@ -71,10 +68,11 @@ jobs:
           cd street-drop-server/
           sudo docker rm - f $(docker ps -qa)
           sudo docker pull yunyoung18190/street-drop-api-server:latest
-          sudo docker run -d yunyoung18190/street-drop-api-server:latest 
-          --name street-drop-api -p 8080:8080 street-drop-api 
-          --env-file ./street-drop-server/.env
-      # REMOVE Github IP FROM security group
+          docker stop $(docker ps -a -q)
+          docker-compose -f ~/app/docker-compose.yml up -d
+          sudo docker logs -f streetdrop-api &< concal.log &
+          docker image prune -f
+
     - name: Remove IP FROM security group
       run: |
         aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
