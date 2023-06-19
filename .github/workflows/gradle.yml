@@ -38,14 +38,12 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-    - name: Set up secrets
+    - name: Docker Image Build
       env:
         DB_HOST: ${{ secrets.DB_HOST }}
         DB_NAME: ${{ secrets.DB_NAME }}
         DB_USERNAME: ${{ secrets.DB_USERNAME }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-
-    - name: Docker Image Build
       run: docker build \
         --build-arg DB_HOST=$DB_HOST \
         --build-arg DB_NAME=$DB_NAME \
@@ -89,7 +87,7 @@ jobs:
             -e DB_HOST=$DB_HOSTS \
             -e DB_NAME=$DB_NAME \
             -e DB_USERNAME=$DB_USERNAME \
-            -e DB_PASSWORD=$DB_PASSWORD
+            -e DB_PASSWORD=$DB_PASSWORD \
             -d yunyoung18190/street-drop-api-server:latest
 
     - name: Remove IP FROM security group
