@@ -59,6 +59,7 @@ jobs:
     - name: Set up environment variable
       id: envfile
       run: |
+        cd street-drop-server/
         echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
         echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
         echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
@@ -81,7 +82,6 @@ jobs:
             --name street-drop-api \
             -p 8080:8080 street-drop-api \
             --env-file .env
-          
 
     - name: Remove IP FROM security group
       run: |
