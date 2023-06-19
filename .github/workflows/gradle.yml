@@ -56,6 +56,14 @@ jobs:
       run: |
         aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
 
+    - name Set up environment variable
+      id: envfile
+      run: |
+        echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+        echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
+        echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+
     - name: Deploy
       uses: appleboy/ssh-action@master
       with:
@@ -64,11 +72,6 @@ jobs:
         password: ${{ secrets.EC2_PASSWORD }}
         port: ${{ secrets.EC2_SSH_PORT }}
         timeout: 60s
-        env:
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         script: |
           cd street-drop-server/
           sudo docker rm - f $(docker ps -qa)
@@ -76,10 +79,7 @@ jobs:
           sudo docker run -d yunyoung18190/street-drop-api-server:latest \
             --name street-drop-api \
             -p 8080:8080 street-drop-api \
-            -e "DB_HOST=${DB_HOST}" \
-            -e "DB_NAME=${DB_NAME}" \
-            -e "DB_USERNAME=${DB_USERNAME}" \
-            -e "DB_PASSWORD=${DB_PASSWORD}"
+            --env-file ../.env
           
 
     - name: Remove IP FROM security group
