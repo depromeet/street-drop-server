@@ -2,12 +2,19 @@ version: '3'
 
 services:
   street-drop-api-server:
-    image: yunyoung18190/street-drop-api-server:latest
     container_name: street-drop-api-server
-    build:
-      context: .
-      dockerfile: Dockerfile
-    expose:
-      - 8080
+    build: .
+    image: yunyoung18190/street-drop-api-server:latest
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - SWAGGER_SERVER_URL=${SWAGGER_SERVER_URL}
+      - AWS_ACCESS_KEY=${AWS_ACCESS_KEY}
+      - AWS_SECRET_KEY=${AWS_SECRET_KEY}
+      - AWS_BUCKET_NAME=${AWS_BUCKET_NAME}
+      - AWS_REGION=${AWS_REGION}
     ports:
-      - 8080:8080
+      - 80:8080
+    restart: always
