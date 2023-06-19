@@ -1,11 +1,11 @@
 version: '3'
 
 services:
-  streetdrop-api:
+  street-drop-api-server:
     image: yunyoung18190/street-drop-api-server:latest
-    container_name: streetdrop-api
+    container_name: street-drop-api-server
     build:
-      context: '/street-drop-server
+      context: .
       dockerfile: Dockerfile
     expose:
       - 8080
