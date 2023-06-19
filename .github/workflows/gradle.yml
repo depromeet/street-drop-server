@@ -70,7 +70,6 @@ jobs:
           sudo docker pull yunyoung18190/street-drop-api-server:latest
           docker stop $(docker ps -a -q)
           docker-compose up -d
-          docker image prune -f
 
     - name: Remove IP FROM security group
       run: |

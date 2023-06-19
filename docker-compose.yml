@@ -3,7 +3,6 @@ version: '3'
 services:
   street-drop-api-server:
     container_name: street-drop-api-server
-    build: .
     image: yunyoung18190/street-drop-api-server:latest
     environment:
       - DB_HOST=${DB_HOST}
