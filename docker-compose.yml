@@ -4,6 +4,9 @@ services:
   street-drop-api-server:
     container_name: street-drop-api-server
     image: yunyoung18190/street-drop-api-server:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
