@@ -6,7 +6,7 @@ endpoints:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DB_URL}
+    url: jdbc:mysql://${DB_HOST}:3306/${DB_NAME}?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     hikari:

@@ -71,7 +71,8 @@ jobs:
           sudo docker run -d yunyoung18190/street-drop-api-server:latest \
             --name street-drop-api \
             -p 8080:8080 street-drop-api \
-            -e "DB_URL=${{ secrets.DB_URL }}" \
+            -e "DB_HOST=${{ secrets.DB_HOST }}" \
+            -e "DB_NAME=${{ secrets.DB_NAME }}" \
             -e "DB_USERNAME=${{ secrets.DB_USERNAME }}" \
             -e "DB_PASSWORD=${{ secrets.DB_PASSWORD }}"
           
