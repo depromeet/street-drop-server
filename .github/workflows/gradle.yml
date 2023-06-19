@@ -36,17 +36,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
     - name: Docker Image Build
-      env:
-        DB_HOST: ${{ secrets.DB_HOST }}
-        DB_NAME: ${{ secrets.DB_NAME }}
-        DB_USERNAME: ${{ secrets.DB_USERNAME }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      run: docker build \
-        --build-arg DB_HOST=$DB_HOST \
-        --build-arg DB_NAME=$DB_NAME \
-        --build-arg DB_USERNAME=$DB_USERNAME \
-        --build-arg DB_PASSWORD=$DB_PASSWORD \
-        -t yunyoung18190/street-drop-api-server .
+      run: docker build -t yunyoung18190/street-drop-api-server .
 
     - name: DockerHub Push
       run: docker push yunyoung18190/street-drop-api-server
@@ -79,7 +69,8 @@ jobs:
           sudo docker rm - f $(docker ps -qa)
           sudo docker pull yunyoung18190/street-drop-api-server:latest
           docker stop $(docker ps -a -q)
-          docker-compose -f ~/app/docker-compose.yml up -d
+          docker-compose up -d
+          docker image prune -f
 
     - name: Remove IP FROM security group
       run: |
