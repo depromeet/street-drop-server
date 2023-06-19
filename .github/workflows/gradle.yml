@@ -68,10 +68,7 @@ jobs:
           cd street-drop-server/
           sudo docker rm - f $(docker ps -qa)
           sudo docker pull yunyoung18190/street-drop-api-server:latest
-          docker stop $(docker ps -a -q)
-          docker-compose -f ~/app/docker-compose.yml up -d
-          sudo docker logs -f streetdrop-api &< concal.log &
-          docker image prune -f
+          sudo docker run -d yunyoung18190/street-drop-api-server:latest --name street-drop-api -p 8080:8080 street-drop-api -env DB_URL=${{ DB_URL }} DB_USERNAME=${{ DB_USERNAME }} DB_PASSWORD=${{ DB_PASSWORD }}
 
     - name: Remove IP FROM security group
       run: |
