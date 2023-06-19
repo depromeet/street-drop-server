@@ -56,16 +56,6 @@ jobs:
       run: |
         aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
 
-    - name: Set up environment variable
-      id: envfile
-      run: |
-        cd street-drop-server/
-        echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
-        echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
-        echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
-        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-        cat .env
-
     - name: Deploy
       uses: appleboy/ssh-action@master
       with:
@@ -75,13 +65,15 @@ jobs:
         port: ${{ secrets.EC2_SSH_PORT }}
         timeout: 60s
         script: |
+          DB_HOST=${{ secrets.DB_HOST }}
+          echo "DB_HOST: $DB_HOST"
           cd street-drop-server/
           sudo docker rm - f $(docker ps -qa)
           sudo docker pull yunyoung18190/street-drop-api-server:latest
           sudo docker run -d yunyoung18190/street-drop-api-server:latest \
             --name street-drop-api \
             -p 8080:8080 street-drop-api \
-            --env-file .env
+            -e "DB_HOST=$DB_HOST"
 
     - name: Remove IP FROM security group
       run: |
