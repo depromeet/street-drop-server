@@ -29,9 +29,6 @@ jobs:
       working-directory: ./backend
       run: ./gradlew clean build --exclude-task test
 
-    - name: Set up Docker environment
-      uses: docker/setup-docker@v1
-
     - name: Login To DockerHub
       uses: docker/login-action@v2
       with:
