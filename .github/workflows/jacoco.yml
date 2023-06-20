@@ -30,6 +30,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
+          gradle-version: 7.6.1
           arguments: build test
           cache-read-only: ${{ github.ref != 'refs/heads/master' && github.ref != 'refs/heads/dev' }}
 
