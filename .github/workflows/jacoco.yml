@@ -23,6 +23,10 @@ jobs:
           java-version: '19'
           distribution: 'temurin'
 
+      - name: init with Gradle
+        uses: gradle/gradle-build-action@v2
+      - run: gradle init
+
       - name: Grant execute permission for gradlew
         working-directory: ./backend
         run: chmod +x gradlew
