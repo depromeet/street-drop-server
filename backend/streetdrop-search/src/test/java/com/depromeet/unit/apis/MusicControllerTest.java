@@ -51,7 +51,7 @@ public class MusicControllerTest {
         class Fail {
             @DisplayName("키워드가 없는 경우")
             @Test
-            void SearchMusicTest() throws Exception {
+            void SearchMusicTest_WhenKeywordNotExist() throws Exception {
                 var response = mvc.perform(
                         get("/music")
                 );
@@ -60,7 +60,7 @@ public class MusicControllerTest {
 
             @DisplayName("키워드가 빈 문자열인 경우")
             @Test
-            void SearchMusicTest2() throws Exception {
+            void SearchMusicTest_WhenKeywordEmptyString() throws Exception {
                 var response = mvc.perform(
                         get("/music")
                                 .param("keyword", "")
