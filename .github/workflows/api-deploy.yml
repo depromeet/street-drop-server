@@ -2,7 +2,7 @@ name: Street Drop CI/CD
 
 on:
   push:
-    branches: [ "config/api-deploy" ]
+    branches: [ "main" ]
 
 jobs:
   deploy:
