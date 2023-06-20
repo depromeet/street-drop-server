@@ -1,4 +1,5 @@
 FROM amazoncorretto:19
+
 ARG JAR_FILE=backend/streetdrop-api/build/libs/streetdrop-api-0.0.1-SNAPSHOT.jar
 ARG PROFILE=prod
 ARG DB_URL
@@ -8,6 +9,7 @@ ARG SWAGGER_SERVER_URL
 ARG AWS_ACCESS_KEY
 ARG AWS_SECRET_KEY
 ARG SLACK_TOKEN
+ARG DOCKER_REPO
 
 COPY ${JAR_FILE} app.jar
 
@@ -21,5 +23,7 @@ ENV AWS_SECRET_KEY=${AWS_SECRET_KEY}
 ENV AWS_BUCKET_NAME=${AWS_BUCKET_NAME}
 ENV AWS_REGION=${AWS_REGION}
 ENV SLACK_TOKEN=${SLACK_TOKEN}
+ENV DOCKER_REPO=${DOCKER_REPO}
 
-ENTRYPOINT ["java","-Dspring.profiles.active=${PROFILE}", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${PROFILE}", "-Djava.security.egd=file:/dev/./urandom", "/app.jar"]

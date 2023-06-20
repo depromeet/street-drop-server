@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout Repository
       uses: actions/checkout@v3
 
     - name: Set up JDK 19
@@ -38,7 +38,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v4.0.0
       with:
-        context: .
+        context: ./backend/streetdrop-aip
         file: ./Dockerfile
         push: true
         build-args: |
@@ -52,7 +52,7 @@ jobs:
           AWS_REGION=${{ secrets.AWS_REGION }}
           SLACK_TOEKN=${{ secrets.SLACK_TOKEN }}
         tags: |
-          yunyoung18190/street-drop-api-server:latest
+          ${{ secrets.DOCKER_REPO }}/street-drop-api-server:latest
 
     - name: Get Github IP
       id: ip
@@ -80,8 +80,9 @@ jobs:
         script: |
           cd street-drop-server/
           sudo docker rm - f $(docker ps -qa)
-          sudo docker pull yunyoung18190/street-drop-api-server:latest
-          sudo docker run -d yunyoung18190/street-drop-api-server:latest \
+          sudo docker pull ${{ secrets.DOCKER_REPO }}/street-drop-api-server:latest
+          sudo docker stop $(sudo docker ps -aq)
+          sudo docker run -d ${{ secrets.DOCKER_REPO }}/street-drop-api-server:latest \
             --name street-drop-api \
             -p 8080:8080 street-drop-api \
 

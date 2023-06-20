@@ -6,7 +6,7 @@ services:
     image: yunyoung18190/street-drop-api-server:latest
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: backend/streetdrop-api/Dockerfile
     environment:
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
