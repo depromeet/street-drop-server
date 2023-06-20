@@ -39,7 +39,7 @@ jobs:
       uses: docker/build-push-action@v4.0.0
       with:
         context: ./backend/streetdrop-aip
-        file: ./Dockerfile
+        file: ./backend/street-drop-api/Dockerfile
         push: true
         build-args: |
           DB_URL=${{ secrets.DB_URL }} 
