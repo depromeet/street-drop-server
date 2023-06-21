@@ -13,6 +13,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./backend
 
     steps:
       - uses: actions/checkout@v3
@@ -28,14 +32,13 @@ jobs:
       - run: gradle init
 
       - name: Grant execute permission for gradlew
-        working-directory: ./backend
         run: chmod +x gradlew
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 7.6.1
-          arguments: build
+          arguments: build test
           cache-read-only: ${{ github.ref != 'refs/heads/master' && github.ref != 'refs/heads/dev' }}
 
       - name: Publish Unit Test Results
