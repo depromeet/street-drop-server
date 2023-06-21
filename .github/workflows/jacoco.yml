@@ -27,9 +27,15 @@ jobs:
           java-version: '19'
           distribution: 'temurin'
 
-      - name: init with Gradle
-        uses: gradle/gradle-build-action@v2
-      - run: gradle init
+      - name: Gradle Caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -39,7 +45,6 @@ jobs:
         with:
           gradle-version: 7.6.1
           arguments: build test
-          cache-read-only: ${{ github.ref != 'refs/heads/master' && github.ref != 'refs/heads/dev' }}
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
