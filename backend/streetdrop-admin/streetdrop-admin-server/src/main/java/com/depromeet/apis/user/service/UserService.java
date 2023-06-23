@@ -20,14 +20,14 @@ public class UserService {
 	private final UserRepository userRepository;
 
 	@Transactional(readOnly = true)
-	public Page<UserAllResponseDto> searchAllUsers(Pageable pageable) {
+	public UserAllResponseDto searchAllUsers(Pageable pageable) {
 		Page<User> user = userRepository.findAll(pageable);
-		var userResponseList = user.getContent()
+		var userResponseDtoList = user.getContent()
 				.stream()
 				.map(UserAllResponseDto.UserResponseDto::new)
 				.toList();
-		List<UserAllResponseDto> userAllResponseDtoList = new ArrayList<>();
-		userAllResponseDtoList.add(new UserAllResponseDto(userResponseList));
-		return new PageImpl<>(userAllResponseDtoList, pageable, user.getTotalElements());
+		var userAllResponseDtoList = new ArrayList<>();
+		userAllResponseDtoList.add(new UserAllResponseDto(userResponseDtoList));
+		return new UserAllResponseDto(userResponseDtoList);
 	}
 }

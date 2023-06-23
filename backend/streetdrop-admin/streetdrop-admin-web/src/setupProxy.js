@@ -1,4 +1,4 @@
-const {createProxyMiddleware} = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function (app) {
     app.use('/search', createProxyMiddleware({
@@ -14,6 +14,15 @@ module.exports = function (app) {
         changeOrigin: true,
         pathRewrite: {
             '^/api': ''
+        }
+    }));
+
+    // TODO: Localhost CORS 해결용. 추후 Street Drop Admin Server로 변경 필요
+    app.use('/test', createProxyMiddleware({
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        pathRewrite: {
+            '^/test': ''
         }
     }));
 }
