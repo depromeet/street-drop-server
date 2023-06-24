@@ -1,8 +1,10 @@
 import React, {useState} from "react";
-import {Button, Empty, Input, message, Table, Tag} from 'antd';
+import {Badge, Button, Drawer, Empty, Input, message, Space, Table, Tag} from 'antd';
 import axios from "axios";
 import {useNavigate} from 'react-router-dom';
 import BasicLayout from "../../layout/BasicLayout";
+import {ShoppingCartOutlined} from '@ant-design/icons';
+import DropCartView from "./DropCartView";
 
 
 const {Search} = Input;
@@ -13,18 +15,39 @@ function SearchDropMusic() {
     const [search, setSearch] = useState("");
     const [songs, setSongs] = useState([]);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-    const [selectedSong, setSelectedSong] = useState(null);
+    const [selectedSongList, setSelectedSongList] = useState([]);
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     const onChange = (e) => {
         setSearch(e.target.value)
     }
 
-    const onClickDrop = () => {
+    /*
+    * Function for Single Drop Music
+    */
+    const onClickSingleDrop = () => {
         if (selectedRowKeys.length > 0) {
-            console.log('선택한 음악 정보:', selectedSong);
-            navigate('/drop-music/details', {state: {selectedSong}});
+            setSelectedSongList([...selectedSongList, songs[selectedRowKeys[0] - 1]]);
+            if (selectedSongList.length > 0) {
+                // 마지막 요소 선택
+                navigate('/drop-music/details', {state: {selectedSong: selectedSongList[selectedSongList.length - 1]}});
+            }
         }
     };
+
+
+    /*
+    * Function for Drop Music To Cart
+    */
+    const onClickDropToCart = () => {
+        if (selectedRowKeys.length > 0) {
+            messageApi.open({
+                type: 'success',
+                content: "장바구니에 추가되었습니다.",
+            })
+            setSelectedSongList([...selectedSongList, songs[selectedRowKeys[0] - 1]]);
+        }
+    }
 
 
     const onClickSearch = () => {
@@ -32,7 +55,6 @@ function SearchDropMusic() {
     }
 
     const columns = [
-
         {
             title: '앨범 이미지',
             dataIndex: 'albumThumbnailImage',
@@ -59,6 +81,10 @@ function SearchDropMusic() {
         }
     ]
 
+
+    /*
+     * Get Data From Search Server
+     */
     const fetchData = () => {
         setSongs([]);
         axios.get('/search/music', {
@@ -86,12 +112,10 @@ function SearchDropMusic() {
                     content: "음악 검색에 실패했습니다. 다시 시도해주세요.",
                 });
             });
-
     }
+
     const onSelectChange = (newSelectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
-        setSelectedSong(songs[newSelectedRowKeys - 1]);
     };
 
     const rowSelection = {
@@ -109,18 +133,65 @@ function SearchDropMusic() {
                 {contextHolder}
                 <h1 style={{marginBottom: '5px'}}>Drop Music Admin</h1>
                 <p style={{color: 'gray'}}>스트릿 드랍 아이템 관리자 페이지입니다. 드랍 아이템을 추가하거나 삭제할 수 있습니다.</p>
+                <div style={{
+                    float: 'right',
+                }}>
+                    <Badge count={selectedSongList.length}
+                           showZero={true}
+                           size={"small"}
+                           offset={[-10, 10]}
+                           style={{
+                               backgroundColor: '#1777ff',
+                               fontSize: '6px',
+                           }}
+                    >
+                        <Button
+                            type="text"
+                            icon={<ShoppingCartOutlined/>}
+                            style={{
+                                fontSize: '24px',
+                                width: 70,
+                                height: 50,
+                                display: 'inline-block',
+                                float: 'right'
+                            }}
+                            onClick={() => setDrawerOpen(true)}
+                        />
+                    </Badge>
+                </div>
+
+
                 <h3 style={{marginTop: '20px', marginBottom: '10px'}}>음악 검색</h3>
                 <Search placeholder="Music" value={search} onChange={onChange} onSearch={onClickSearch} enterButton/>
                 {songs.length > 0 ? (
                     <div>
-                        <Button type="primary" size='default' disabled={!hasSelected} onClick={onClickDrop}
-                                style={{marginTop: '20px', marginBottom: '10px', float: 'right'}}>드랍하기</Button>
+                        <Space style={{marginTop: '20px', marginBottom: '10px', float: 'right'}}>
+                            <Button size='default' disabled={!hasSelected} onClick={onClickDropToCart}>
+                                장바구니 담기</Button>
+                            <Button type="primary" size='default' disabled={!hasSelected}
+                                    onClick={onClickSingleDrop}>드랍하기</Button>
+                        </Space>
                         <Table rowSelection={{type: "radio", ...rowSelection}} columns={columns} dataSource={songs}/>
                     </div>
                 ) : (
                     <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} style={{marginTop: '100px'}}/>
                 )
                 }
+                <Drawer
+                    title="드랍음악 카트"
+                    placement="right"
+                    width={500}
+                    onClose={() => setDrawerOpen(false)}
+                    open={drawerOpen}
+                    extra={
+                        <Space>
+                            <Button onClick={() => setSelectedSongList([])}>지우기</Button>
+                            <Button type="primary" onClick={console.log("clicked")}>모두 드랍하기</Button>
+                        </Space>
+                    }
+                >
+                    <DropCartView songs={selectedSongList}/>
+                </Drawer>
             </BasicLayout>
         </div>
 

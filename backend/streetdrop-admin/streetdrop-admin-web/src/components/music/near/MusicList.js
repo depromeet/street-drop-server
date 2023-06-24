@@ -10,6 +10,7 @@ function MusicList() {
     const [items, setItems] = useState([]);
     const [latitude, setLatitude] = useState(37.566826);
     const [longitude, setLongitude] = useState(126.9786567);
+    const [content, setContent] = useState(<div>test</div>);
 
     const fetchPoiData = () => {
         setPoi([]);
@@ -28,6 +29,7 @@ function MusicList() {
             .catch((error) => {
                 console.log(error);
             });
+
         axios.get('/api/items',
             {
                 params: {
@@ -47,6 +49,11 @@ function MusicList() {
     }
 
     const columns = [
+        {
+            key: 'id',
+            title: 'ID',
+            dataIndex: 'itemId',
+        },
         {
             title: '앨범 이미지',
             dataIndex: 'music.albumImage',
@@ -77,6 +84,19 @@ function MusicList() {
         },
 
     ]
+
+
+    const setPopoverContent = (item) => {
+        setContent(
+            <div>
+                <p>Id : {item.itemId}</p>
+                <p>노래 가수: {item.music.title}</p>
+                <p>장르: {item.music.artist}</p>
+                <p>유저: {item.user.nickname}</p>
+                <p>내용: {item.content}</p>
+            </div>
+        )
+    }
     return (
         <>
             <BasicLayout>
@@ -101,6 +121,7 @@ function MusicList() {
                     }}
                 >
                     {poi.map((position, index) => (
+
                         <MapMarker
                             key={`${position.id}`}
                             position={
@@ -109,7 +130,15 @@ function MusicList() {
                                     lng: position.longitude
                                 }
                             }
-                        />
+                            image={{
+                                src: "/image/poi.png",
+                                size: {
+                                    width: 60,
+                                    height: 60
+                                }
+                            }}
+                        >
+                        </MapMarker>
                     ))}
                 </Map>
                 <Table columns={columns} dataSource={items}
