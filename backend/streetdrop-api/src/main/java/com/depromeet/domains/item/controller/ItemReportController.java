@@ -1,7 +1,7 @@
-package com.depromeet.item.controller;
+package com.depromeet.domains.item.controller;
 
 import com.depromeet.common.dto.ResponseDto;
-import com.depromeet.item.service.ItemReportService;
+import com.depromeet.domains.item.service.ItemReportService;
 import com.depromeet.security.annotation.ReqUser;
 import com.depromeet.user.User;
 import io.swagger.v3.oas.annotations.Operation;

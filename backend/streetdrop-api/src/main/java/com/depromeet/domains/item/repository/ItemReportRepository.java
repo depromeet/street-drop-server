@@ -1,4 +1,4 @@
-package com.depromeet.item.repository;
+package com.depromeet.domains.item.repository;
 
 import com.depromeet.item.ItemReport;
 import org.springframework.data.jpa.repository.JpaRepository;

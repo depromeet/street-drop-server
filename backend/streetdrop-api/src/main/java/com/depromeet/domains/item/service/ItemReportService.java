@@ -1,13 +1,10 @@
-package com.depromeet.item.service;
+package com.depromeet.domains.item.service;
 
 import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.exception.common.BusinessException;
+import com.depromeet.domains.item.repository.ItemReportRepository;
 import com.depromeet.item.Item;
-import com.depromeet.item.ItemLike;
 import com.depromeet.item.ItemReport;
-import com.depromeet.item.dto.response.ItemLikeResponseDto;
-import com.depromeet.item.repository.ItemReportRepository;
-import com.depromeet.slack.SlackService;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
