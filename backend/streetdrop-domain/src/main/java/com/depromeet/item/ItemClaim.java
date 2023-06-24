@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity
-public class ItemReport extends BaseTimeEntity {
+public class ItemClaim extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "item_report_id")
+    @Column(name = "item_claim_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,7 +26,7 @@ public class ItemReport extends BaseTimeEntity {
     private User user;
 
     @Builder
-    public ItemReport(Item item, User user) {
+    public ItemClaim(Item item, User user) {
         this.item = item;
         this.user = user;
     }
