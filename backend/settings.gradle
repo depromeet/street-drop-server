@@ -7,5 +7,6 @@ include (
         'streetdrop-domain',
         'streetdrop-search',
         'streetdrop-admin:streetdrop-admin-server',
+        'streetdrop-notification',
 )
 findProject(':streetdrop-admin:streetdrop-admin-server')?.name = 'streetdrop-admin-server'
