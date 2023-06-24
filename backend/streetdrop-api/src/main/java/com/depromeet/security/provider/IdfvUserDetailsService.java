@@ -1,7 +1,7 @@
 package com.depromeet.security.provider;
 
 import com.depromeet.user.User;
-import com.depromeet.user.service.UserService;
+import com.depromeet.domains.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
