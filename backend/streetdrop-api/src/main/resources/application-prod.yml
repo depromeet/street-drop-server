@@ -1,8 +1,3 @@
-management:
-  endpoints:
-    web:
-      exposure:
-        include: prometheus
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -14,7 +9,7 @@ spring:
       maximum-pool-size: 20
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
 swagger:
   server-url: ${SWAGGER_SERVER_URL}
 slack:
@@ -32,7 +27,3 @@ cloud:
         static: ${AWS_REGION}
       stack:
         auto: false
-logging:
-  level:
-    root: INFO
-    org.springframework.web: INFO
