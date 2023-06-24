@@ -5,6 +5,7 @@ import com.depromeet.common.error.exception.common.BusinessException;
 import com.depromeet.domains.item.repository.ItemClaimRepository;
 import com.depromeet.item.Item;
 import com.depromeet.item.ItemClaim;
+import com.depromeet.report.SlackItemClaimService;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ItemClaimService {
     private final ItemClaimRepository itemClaimRepository;
     private final ItemService itemService;
+    private final SlackItemClaimService slackItemClaimService;
 
     @Transactional
     public void claimItem(User user, Long itemId) {
@@ -25,7 +27,9 @@ public class ItemClaimService {
                 .item(item)
                 .user(user)
                 .build();
-        itemClaimRepository.save(itemClaim);
+
+        var saved = itemClaimRepository.save(itemClaim);
+        slackItemClaimService.sendReport(saved);
     }
 
     private void checkUserAlreadyReport(User user, Item item) {
