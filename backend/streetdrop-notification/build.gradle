@@ -1,0 +1,17 @@
+plugins {
+    id 'java'
+}
+
+group 'com.depromeet'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+test {
+    useJUnitPlatform()
+}
