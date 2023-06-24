@@ -1,11 +1,11 @@
 import React from 'react';
 import {Layout} from 'antd';
 import SearchDropMusic from './components/music/drop/SearchDropMusic';
-import DropMusicInMap from './components/music/drop/DropMusicInMap';
+import DropSingleMusic from './components/music/drop/DropSingleMusic';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
-import DropMusicSuccess from './components/music/drop/DropMusicSuccess';
-import DropMusicFail from './components/music/drop/DropMusicFail';
+import DropMusicSuccess from './components/music/drop/result/DropMusicSuccess';
+import DropMusicFail from './components/music/drop/result/DropMusicFail';
 import Login from './pages/Login';
 import MusicRecommend from './components/music/recommend/MusicRecommend';
 import MusicList from './components/music/near/MusicList';
@@ -19,7 +19,7 @@ const App = () => {
                     <Route exact path="/login" element={<Login/>}/>
                     <Route exact path="/" element={<Dashboard/>}/>
                     <Route path="/drop-music" element={<SearchDropMusic/>}/>
-                    <Route path="/drop-music/details" element={<DropMusicInMap/>}/>
+                    <Route path="/drop-music/details" element={<DropSingleMusic/>}/>
                     <Route path='/drop-music/result/success' element={<DropMusicSuccess/>}/>
                     <Route path='/drop-music/result/fail' element={<DropMusicFail/>}/>
                     <Route path='/music/recommend' element={<MusicRecommend/>}/>
