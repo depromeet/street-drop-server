@@ -33,7 +33,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/users/me").authenticated()
                 .requestMatchers(POST, "/items").authenticated()
                 .requestMatchers("/items/*/likes", "/items/*/unlikes").authenticated()
-                .requestMatchers(POST, "items/*/report").authenticated()
+                .requestMatchers(POST, "items/*/claim").authenticated()
                 .anyRequest().permitAll().and()
                 .anonymous().and()
                 .formLogin().disable()
