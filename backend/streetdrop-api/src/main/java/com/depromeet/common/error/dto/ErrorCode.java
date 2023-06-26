@@ -2,6 +2,7 @@ package com.depromeet.common.error.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
 import org.springframework.http.HttpStatus;
 
 @Getter
@@ -39,7 +40,9 @@ public enum ErrorCode {
 
 	ITEM_NOT_LIKED_ERROR(HttpStatus.BAD_REQUEST, "C-0006", "Item Not liked"),
 
-	NOT_SUPPORT_LOCATION(HttpStatus.BAD_REQUEST, "C-0007", "Not Support Location");
+	NOT_SUPPORT_LOCATION(HttpStatus.BAD_REQUEST, "C-0007", "Not Support Location"),
+
+	INVALID_USER_EXCEPTION(HttpStatus.FORBIDDEN, "C-0008", "Invalid User");
 
 	private final HttpStatus status;
 	private final String code;

@@ -40,6 +40,16 @@ public class ItemController {
 		return ResponseDto.created(response);
 	}
 
+	@Operation(summary = "드랍 아이템 삭제")
+	@DeleteMapping("/{itemId}")
+	public ResponseEntity<Void> delete(
+			@ReqUser User user,
+			@PathVariable(value = "itemId") Long itemId
+	) {
+		itemService.delete(user, itemId);
+		return ResponseDto.noContent();
+	}
+
     @Operation(summary = "주변 아이템 상세 조회")
     @GetMapping
     public ResponseEntity<ItemsResponseDto> findNearItems(

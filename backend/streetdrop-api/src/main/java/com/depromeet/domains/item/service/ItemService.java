@@ -1,6 +1,7 @@
 package com.depromeet.domains.item.service;
 
 import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.common.error.exception.common.InvalidUserException;
 import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.village.service.VillageAreaService;
 import com.depromeet.area.village.VillageArea;
@@ -80,5 +81,16 @@ public class ItemService {
 	public Item getItem(Long itemId) {
 		return itemRepository.findById(itemId)
 				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, String.valueOf(itemId)));
+	}
+
+	@Transactional
+	public void delete(User user, Long itemId) {
+		var item = itemRepository.findById(itemId)
+				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, String.valueOf(itemId)));
+		var userId = item.getUser().getId();
+		if (!userId.equals(user.getId())) {
+			throw new InvalidUserException(ErrorCode.INVALID_USER_EXCEPTION, user.getNickname());
+		}
+		itemRepository.deleteById(itemId);
 	}
 }
