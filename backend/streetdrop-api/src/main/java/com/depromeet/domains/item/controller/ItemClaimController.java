@@ -24,7 +24,7 @@ public class ItemClaimController {
     @PostMapping("/{itemId}/claim")
     public ResponseEntity<Void> claimItem(
             @ReqUser User user,
-            @PathVariable Long itemId
+            @PathVariable(value = "itemId") Long itemId
     ) {
         itemClaimService.claimItem(user, itemId);
         return ResponseDto.noContent();
