@@ -13,7 +13,7 @@ import org.springframework.validation.annotation.Validated;
 @NoArgsConstructor
 @Validated
 @AllArgsConstructor
-public class ItemSaveRequestDto {
+public class ItemCreateRequestDto {
 
 	@Schema(description = "위치 정보")
 	@Valid

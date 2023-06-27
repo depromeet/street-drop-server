@@ -1,5 +1,6 @@
 package com.depromeet.domains.item.service;
 
+import com.depromeet.area.village.VillageArea;
 import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.exception.common.InvalidUserException;
 import com.depromeet.common.error.exception.common.NotFoundException;
@@ -36,17 +37,17 @@ public class ItemService {
 	}
 
 	@Transactional
-	public ItemResponseDto create(User user, ItemSaveRequestDto itemSaveRequestDto) {
-		var song = musicService.getOrCreateMusic(itemSaveRequestDto.getMusic());
+	public ItemResponseDto create(User user, ItemCreateRequestDto itemCreateRequestDto) {
+		var song = musicService.getOrCreateMusic(itemCreateRequestDto.getMusic());
 
 		var item = Item.builder()
 				.user(user)
 				.albumCover(song.getAlbum().getAlbumCover())
 				.song(song)
-				.content(itemSaveRequestDto.getContent())
+				.content(itemCreateRequestDto.getContent())
 				.build();
 
-		ItemLocationRequestDto locationRequestDto = itemSaveRequestDto.getLocation();
+		ItemLocationRequestDto locationRequestDto = itemCreateRequestDto.getLocation();
 		Point point = GeomUtil.createPoint(locationRequestDto.getLongitude(), locationRequestDto.getLatitude());
 		VillageArea villageArea = villageAreaService.getVillageByLocationPoint(point);
 

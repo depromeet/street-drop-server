@@ -1,6 +1,6 @@
 package com.depromeet.domains.item.controller;
 
-import com.depromeet.domains.item.dto.request.ItemSaveRequestDto;
+import com.depromeet.domains.item.dto.request.ItemCreateRequestDto;
 import com.depromeet.domains.item.dto.request.ItemUpdateRequestDto;
 import com.depromeet.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.domains.item.dto.response.ItemsResponseDto;
@@ -36,7 +36,7 @@ public class ItemController {
 	@PostMapping
 	public ResponseEntity<ItemResponseDto> create(
             @ReqUser User user,
-            @Valid @RequestBody ItemSaveRequestDto itemRequestDto) {
+            @Valid @RequestBody ItemCreateRequestDto itemRequestDto) {
 		var response = itemService.create(user, itemRequestDto);
 		return ResponseDto.created(response);
 	}
