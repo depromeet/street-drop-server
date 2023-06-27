@@ -5,11 +5,14 @@ import com.depromeet.common.error.exception.common.BusinessException;
 import com.depromeet.domains.item.repository.ItemClaimRepository;
 import com.depromeet.item.Item;
 import com.depromeet.item.ItemClaim;
+import com.depromeet.item.ItemClaimStatus;
 import com.depromeet.report.SlackItemClaimService;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.depromeet.item.ItemClaimStatus.WAITING;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +29,7 @@ public class ItemClaimService {
         var itemClaim = ItemClaim.builder()
                 .item(item)
                 .user(user)
+                .itemClaimStatus(WAITING)
                 .build();
 
         var saved = itemClaimRepository.save(itemClaim);

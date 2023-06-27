@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
@@ -17,6 +18,10 @@ public class ItemClaim extends BaseTimeEntity {
     @Column(name = "item_claim_id")
     private Long id;
 
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private ItemClaimStatus itemClaimStatus;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
@@ -26,9 +31,10 @@ public class ItemClaim extends BaseTimeEntity {
     private User user;
 
     @Builder
-    public ItemClaim(Item item, User user) {
+    public ItemClaim(Item item, User user, ItemClaimStatus itemClaimStatus) {
         this.item = item;
         this.user = user;
+        this.itemClaimStatus = itemClaimStatus;
     }
 
 }
