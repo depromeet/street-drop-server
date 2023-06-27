@@ -6,7 +6,6 @@ import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.item.dto.request.ItemClaimRequestDto;
 import com.depromeet.domains.item.repository.ItemClaimRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
-import com.depromeet.item.Item;
 import com.depromeet.item.ItemClaim;
 import com.depromeet.report.dto.ItemClaimReportDto;
 import com.depromeet.report.service.SlackItemClaimReportService;
@@ -26,9 +25,10 @@ public class ItemClaimService {
 
     @Transactional
     public void claimItem(User user, ItemClaimRequestDto itemClaimRequestDto) {
-        var item = itemRepository.findById(itemClaimRequestDto.getItemId())
-                .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, String.valueOf(itemClaimRequestDto.getItemId())));
-        checkUserAlreadyReport(user, item);
+        var itemId = itemClaimRequestDto.getItemId();
+        var item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, String.valueOf(itemId)));
+        checkUserAlreadyReport(user.getId(), itemId);
 
         var itemClaim = ItemClaim.builder()
                 .item(item)
@@ -41,8 +41,8 @@ public class ItemClaimService {
         slackItemClaimReportService.sendReport(new ItemClaimReportDto(saveditemClaim));
     }
 
-    private void checkUserAlreadyReport(User user, Item item) {
-        boolean alreadyReported = itemClaimRepository.existsByUserIdAndItemId(user.getId(), item.getId());
+    private void checkUserAlreadyReport(Long userId, Long itemId) {
+        boolean alreadyReported = itemClaimRepository.existsByUserIdAndItemId(userId, itemId);
         if (alreadyReported) {
             throw new BusinessException(ErrorCode.ALREADY_ITEM_REPORTED_ERROR);
         }
