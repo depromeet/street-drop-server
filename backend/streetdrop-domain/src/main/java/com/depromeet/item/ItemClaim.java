@@ -34,9 +34,10 @@ public class ItemClaim extends BaseTimeEntity {
     private User user;
 
     @Builder
-    public ItemClaim(Item item, User user, ItemClaimStatus status) {
+    public ItemClaim(Item item, User user, String reason, ItemClaimStatus status) {
         this.item = item;
         this.user = user;
+        this.reason = reason;
         this.status = status;
     }
 

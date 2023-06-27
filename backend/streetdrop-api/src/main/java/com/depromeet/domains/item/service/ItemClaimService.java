@@ -31,6 +31,7 @@ public class ItemClaimService {
         checkUserAlreadyReport(user.getId(), itemId);
 
         var itemClaim = ItemClaim.builder()
+                .reason(itemClaimRequestDto.getReason())
                 .item(item)
                 .user(user)
                 .status(WAITING)
