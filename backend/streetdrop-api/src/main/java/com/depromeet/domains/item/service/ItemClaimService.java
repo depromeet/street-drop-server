@@ -29,7 +29,7 @@ public class ItemClaimService {
         var itemClaim = ItemClaim.builder()
                 .item(item)
                 .user(user)
-                .itemClaimStatus(WAITING)
+                .status(WAITING)
                 .build();
 
         var saved = itemClaimRepository.save(itemClaim);

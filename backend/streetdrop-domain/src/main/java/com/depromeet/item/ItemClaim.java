@@ -20,7 +20,7 @@ public class ItemClaim extends BaseTimeEntity {
 
     @Setter
     @Enumerated(EnumType.STRING)
-    private ItemClaimStatus itemClaimStatus;
+    private ItemClaimStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
@@ -31,10 +31,10 @@ public class ItemClaim extends BaseTimeEntity {
     private User user;
 
     @Builder
-    public ItemClaim(Item item, User user, ItemClaimStatus itemClaimStatus) {
+    public ItemClaim(Item item, User user, ItemClaimStatus status) {
         this.item = item;
         this.user = user;
-        this.itemClaimStatus = itemClaimStatus;
+        this.status = status;
     }
 
 }
