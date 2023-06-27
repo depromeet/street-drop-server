@@ -17,9 +17,8 @@ module.exports = function (app) {
         }
     }));
 
-    // TODO: Localhost CORS 해결용. 추후 Street Drop Admin Server로 변경 필요
     app.use('/admin', createProxyMiddleware({
-        target: 'http://localhost:8080',
+        target: 'http://admin.street-drop.com',
         changeOrigin: true,
         pathRewrite: {
             '^/admin': ''
