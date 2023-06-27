@@ -39,7 +39,9 @@ public enum ErrorCode {
 
 	ITEM_NOT_LIKED_ERROR(HttpStatus.BAD_REQUEST, "C-0006", "Item Not liked"),
 
-	NOT_SUPPORT_LOCATION(HttpStatus.BAD_REQUEST, "C-0007", "Not Support Location");
+	NOT_SUPPORT_LOCATION(HttpStatus.BAD_REQUEST, "C-0007", "Not Support Location"),
+
+	ALREADY_ITEM_REPORTED_ERROR(HttpStatus.CONFLICT, "C-0008", "User Already Item reported");
 
 	private final HttpStatus status;
 	private final String code;

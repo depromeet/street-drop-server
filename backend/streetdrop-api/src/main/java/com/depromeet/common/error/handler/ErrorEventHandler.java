@@ -1,6 +1,6 @@
 package com.depromeet.common.error.handler;
 
-import com.depromeet.common.monitoring.MonitoringProvider;
+import com.depromeet.monitoring.MonitoringProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;

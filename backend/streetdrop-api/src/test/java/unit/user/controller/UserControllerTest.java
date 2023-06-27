@@ -1,9 +1,9 @@
 package unit.user.controller;
 
-import com.depromeet.user.controller.UserController;
-import com.depromeet.user.dto.response.UserResponseDto;
+import com.depromeet.domains.user.controller.UserController;
+import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.user.User;
-import com.depromeet.user.service.UserService;
+import com.depromeet.domains.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

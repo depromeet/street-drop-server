@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 20
+  jpa:
+    hibernate:
+      ddl-auto: validate
+swagger:
+  server-url: ${SWAGGER_SERVER_URL}
+slack:
+  token: ${slack.token}
+  monitoring-channel: error
+  report-channel: report
+cloud:
+  aws:
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY}
+      secretKey: ${AWS_SECRET_KEY}
+    s3:
+      bucket: ${AWS_BUCKET_NAME}
+      region:
+        auto: false
+        static: ${AWS_REGION}
+      stack:
+        auto: false
