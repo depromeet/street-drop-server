@@ -3,14 +3,10 @@ package com.depromeet.domains.item.service;
 import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.exception.common.InvalidUserException;
 import com.depromeet.common.error.exception.common.NotFoundException;
+import com.depromeet.domains.item.dto.request.*;
 import com.depromeet.domains.village.service.VillageAreaService;
-import com.depromeet.area.village.VillageArea;
 import com.depromeet.item.Item;
 import com.depromeet.item.ItemLocation;
-import com.depromeet.domains.item.dto.request.ItemLocationRequestDto;
-import com.depromeet.domains.item.dto.request.ItemRequestDto;
-import com.depromeet.domains.item.dto.request.NearItemPointRequestDto;
-import com.depromeet.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.domains.item.dto.response.PoiResponseDto;
@@ -40,17 +36,17 @@ public class ItemService {
 	}
 
 	@Transactional
-	public ItemResponseDto create(User user, ItemRequestDto itemRequestDto) {
-		var song = musicService.getOrCreateMusic(itemRequestDto.getMusic());
+	public ItemResponseDto create(User user, ItemSaveRequestDto itemSaveRequestDto) {
+		var song = musicService.getOrCreateMusic(itemSaveRequestDto.getMusic());
 
 		var item = Item.builder()
 				.user(user)
 				.albumCover(song.getAlbum().getAlbumCover())
 				.song(song)
-				.content(itemRequestDto.getContent())
+				.content(itemSaveRequestDto.getContent())
 				.build();
 
-		ItemLocationRequestDto locationRequestDto = itemRequestDto.getLocation();
+		ItemLocationRequestDto locationRequestDto = itemSaveRequestDto.getLocation();
 		Point point = GeomUtil.createPoint(locationRequestDto.getLongitude(), locationRequestDto.getLatitude());
 		VillageArea villageArea = villageAreaService.getVillageByLocationPoint(point);
 
@@ -87,10 +83,22 @@ public class ItemService {
 	public void delete(User user, Long itemId) {
 		var item = itemRepository.findById(itemId)
 				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, String.valueOf(itemId)));
-		var userId = item.getUser().getId();
-		if (!userId.equals(user.getId())) {
-			throw new InvalidUserException(ErrorCode.INVALID_USER_EXCEPTION, user.getNickname());
+		var userIdfv = item.getUser().getIdfv();
+		if (!userIdfv.equals(user.getIdfv())) {
+			throw new InvalidUserException(ErrorCode.INVALID_USER_EXCEPTION, String.valueOf(user.getIdfv()));
 		}
 		itemRepository.deleteById(itemId);
+	}
+
+	@Transactional
+	public ItemResponseDto update(User user, Long itemId, ItemUpdateRequestDto itemRequestDto) {
+		var item = itemRepository.findById(itemId)
+				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, String.valueOf(itemId)));
+
+		if (!item.getUser().getIdfv().equals(user.getIdfv())) {
+			throw new InvalidUserException(ErrorCode.INVALID_USER_EXCEPTION, String.valueOf(user.getIdfv()));
+		}
+		item.updateContent(itemRequestDto.getContent());
+		return new ItemResponseDto(item);
 	}
 }

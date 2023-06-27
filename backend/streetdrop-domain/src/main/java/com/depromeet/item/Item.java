@@ -66,4 +66,7 @@ public class Item extends BaseTimeEntity {
 		return likes != null && likes.stream().anyMatch(like -> like.isLiked(user));
 	}
 
+	public void updateContent(String content) {
+		this.content = content;
+	}
 }
