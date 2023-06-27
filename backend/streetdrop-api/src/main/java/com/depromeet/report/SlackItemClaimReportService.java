@@ -26,7 +26,8 @@ public class SlackItemClaimReportService implements ItemClaimReportService {
         var markdownTextObject = markdownText("*Reporter:* " + itemClaim.getUser().getNickname()
                 + "\n*Item Id:* " + itemClaim.getItem().getId()
                 + "\n*Item Content:* " + itemClaim.getItem().getContent()
-                + "\n*Report Time:* " + itemClaim.getCreatedAt()
+                + "\n*Item Claim Status:* " + itemClaim.getStatus()
+                + "\n*Claim Time:* " + itemClaim.getCreatedAt()
         );
 
         List<LayoutBlock> blocks = asBlocks(
