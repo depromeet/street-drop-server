@@ -8,7 +8,7 @@ import com.depromeet.domains.item.repository.ItemClaimRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.item.Item;
 import com.depromeet.item.ItemClaim;
-import com.depromeet.report.SlackItemClaimReportService;
+import com.depromeet.report.service.SlackItemClaimReportService;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

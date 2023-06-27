@@ -1,4 +1,4 @@
-package com.depromeet.report;
+package com.depromeet.report.service;
 
 import com.depromeet.external.slack.SlackService;
 import com.depromeet.item.ItemClaim;
