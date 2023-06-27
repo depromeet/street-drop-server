@@ -1,7 +1,7 @@
 package com.depromeet.report.service;
 
-import com.depromeet.item.ItemClaim;
+import com.depromeet.report.dto.ItemClaimReportDto;
 
 public interface ItemClaimReportService {
-    void sendReport(ItemClaim itemClaim);
+    void sendReport(ItemClaimReportDto itemClaimReportDto);
 }

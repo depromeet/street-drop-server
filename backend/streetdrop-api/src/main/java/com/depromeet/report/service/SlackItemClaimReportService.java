@@ -2,6 +2,7 @@ package com.depromeet.report.service;
 
 import com.depromeet.external.slack.SlackService;
 import com.depromeet.item.ItemClaim;
+import com.depromeet.report.dto.ItemClaimReportDto;
 import com.slack.api.model.block.LayoutBlock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,13 +23,14 @@ public class SlackItemClaimReportService implements ItemClaimReportService {
     private String slackReportingChannel;
     private static final String TITLE = "Item Claim Report";
 
-    public void sendReport(ItemClaim itemClaim) {
-        var markdownTextObject = markdownText("*Item Claim Id:* " + itemClaim.getId()
-                + "\n*Reporter:* " + itemClaim.getUser().getNickname()
-                + "\n*Item Id:* " + itemClaim.getItem().getId()
-                + "\n*Item Content:* " + itemClaim.getItem().getContent()
-                + "\n*Item Claim Status:* " + itemClaim.getStatus()
-                + "\n*Claim Time:* " + itemClaim.getCreatedAt()
+    public void sendReport(ItemClaimReportDto itemClaimReportDto) {
+        var markdownTextObject = markdownText("*Item Claim Id:* " + itemClaimReportDto.itemClaimId()
+                + "\n*Item Claim Reason:* " + itemClaimReportDto.itemClaimReason()
+                + "\n*Item Claim Status:* " + itemClaimReportDto.itemClaimStatus()
+                + "\n*Reporter:* " + itemClaimReportDto.reporter()
+                + "\n*Item Id:* " + itemClaimReportDto.itemId()
+                + "\n*Item Content:* " + itemClaimReportDto.itemContent()
+                + "\n*Claim Time:* " + itemClaimReportDto.claimTime()
         );
 
         List<LayoutBlock> blocks = asBlocks(

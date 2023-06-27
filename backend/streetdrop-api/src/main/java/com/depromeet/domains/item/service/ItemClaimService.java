@@ -8,6 +8,7 @@ import com.depromeet.domains.item.repository.ItemClaimRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.item.Item;
 import com.depromeet.item.ItemClaim;
+import com.depromeet.report.dto.ItemClaimReportDto;
 import com.depromeet.report.service.SlackItemClaimReportService;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +37,8 @@ public class ItemClaimService {
                 .build();
 
         var saveditemClaim = itemClaimRepository.save(itemClaim);
-        slackItemClaimReportService.sendReport(saveditemClaim);
+
+        slackItemClaimReportService.sendReport(new ItemClaimReportDto(saveditemClaim));
     }
 
     private void checkUserAlreadyReport(User user, Item item) {
