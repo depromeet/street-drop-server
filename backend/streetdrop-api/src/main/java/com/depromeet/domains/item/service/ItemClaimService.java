@@ -35,8 +35,8 @@ public class ItemClaimService {
                 .status(WAITING)
                 .build();
 
-        var saved = itemClaimRepository.save(itemClaim);
-        slackItemClaimReportService.sendReport(saved);
+        var saveditemClaim = itemClaimRepository.save(itemClaim);
+        slackItemClaimReportService.sendReport(saveditemClaim);
     }
 
     private void checkUserAlreadyReport(User user, Item item) {
