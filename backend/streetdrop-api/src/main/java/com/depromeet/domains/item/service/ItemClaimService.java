@@ -2,6 +2,7 @@ package com.depromeet.domains.item.service;
 
 import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.exception.common.BusinessException;
+import com.depromeet.domains.item.dto.request.ItemClaimRequestDto;
 import com.depromeet.domains.item.repository.ItemClaimRepository;
 import com.depromeet.item.Item;
 import com.depromeet.item.ItemClaim;
@@ -22,8 +23,8 @@ public class ItemClaimService {
     private final SlackItemClaimService slackItemClaimService;
 
     @Transactional
-    public void claimItem(User user, Long itemId) {
-        var item = itemService.getItem(itemId);
+    public void claimItem(User user, ItemClaimRequestDto itemClaimRequestDto) {
+        var item = itemService.getItem(itemClaimRequestDto.getItemId());
         checkUserAlreadyReport(user, item);
 
         var itemClaim = ItemClaim.builder()

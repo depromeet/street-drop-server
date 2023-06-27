@@ -18,6 +18,9 @@ public class ItemClaim extends BaseTimeEntity {
     @Column(name = "item_claim_id")
     private Long id;
 
+    @Column(nullable = false)
+    private String reason;
+
     @Setter
     @Enumerated(EnumType.STRING)
     private ItemClaimStatus status;
