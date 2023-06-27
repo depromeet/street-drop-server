@@ -2,11 +2,12 @@ package com.depromeet.domains.item.service;
 
 import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.exception.common.BusinessException;
+import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.item.dto.request.ItemClaimRequestDto;
 import com.depromeet.domains.item.repository.ItemClaimRepository;
+import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.item.Item;
 import com.depromeet.item.ItemClaim;
-import com.depromeet.report.ItemClaimReportService;
 import com.depromeet.report.SlackItemClaimReportService;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +20,13 @@ import static com.depromeet.item.ItemClaimStatus.WAITING;
 @RequiredArgsConstructor
 public class ItemClaimService {
     private final ItemClaimRepository itemClaimRepository;
-    private final ItemService itemService;
+    private final ItemRepository itemRepository;
     private final SlackItemClaimReportService slackItemClaimReportService;
 
     @Transactional
     public void claimItem(User user, ItemClaimRequestDto itemClaimRequestDto) {
-        var item = itemService.getItem(itemClaimRequestDto.getItemId());
+        var item = itemRepository.findById(itemClaimRequestDto.getItemId())
+                .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, String.valueOf(itemClaimRequestDto.getItemId())));
         checkUserAlreadyReport(user, item);
 
         var itemClaim = ItemClaim.builder()
