@@ -5,7 +5,6 @@ import com.depromeet.item.ItemClaim;
 import com.slack.api.model.block.LayoutBlock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,10 +23,10 @@ public class SlackItemClaimReportService implements ItemClaimReportService {
     private static final String TITLE = "Item Claim Report";
 
     public void sendReport(ItemClaim itemClaim) {
-        var markdownTextObject = markdownText("*신고자:* " + itemClaim.getUser().getNickname()
-                + "\n*아이템 아이디:* " + itemClaim.getItem().getId()
-                + "\n*아이템 콘텐츠:* " + itemClaim.getItem().getContent()
-                + "\n*신고 시간:* " + itemClaim.getCreatedAt()
+        var markdownTextObject = markdownText("*Reporter:* " + itemClaim.getUser().getNickname()
+                + "\n*Item Id:* " + itemClaim.getItem().getId()
+                + "\n*Item Content:* " + itemClaim.getItem().getContent()
+                + "\n*Report Time:* " + itemClaim.getCreatedAt()
         );
 
         List<LayoutBlock> blocks = asBlocks(
