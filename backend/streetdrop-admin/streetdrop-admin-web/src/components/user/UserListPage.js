@@ -32,7 +32,7 @@ function UserListPage() {
     }, []);
 
     const fetchUser = () => {
-        axios.get('/test/users')
+        axios.get('/admin/users')
             .then(response => {
                 messageApi.open({
                     type: 'success',
