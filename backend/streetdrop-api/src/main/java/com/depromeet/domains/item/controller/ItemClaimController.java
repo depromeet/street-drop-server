@@ -7,6 +7,7 @@ import com.depromeet.security.annotation.ReqUser;
 import com.depromeet.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class ItemClaimController {
     @PostMapping("/claim")
     public ResponseEntity<Void> claimItem(
             @ReqUser User user,
-            @RequestBody ItemClaimRequestDto itemClaimRequestDto
+            @Valid @RequestBody ItemClaimRequestDto itemClaimRequestDto
     ) {
         itemClaimService.claimItem(user, itemClaimRequestDto);
         return ResponseDto.noContent();
