@@ -5,6 +5,7 @@ import com.depromeet.item.ItemClaim;
 import com.slack.api.model.block.LayoutBlock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import static com.slack.api.model.block.composition.BlockCompositions.plainText;
 
 @Component
 @RequiredArgsConstructor
-public class SlackItemClaimService {
+public class SlackItemClaimReportService implements ItemClaimReportService {
 
     private final SlackService slackService;
     @Value("${slack.report-channel}")
