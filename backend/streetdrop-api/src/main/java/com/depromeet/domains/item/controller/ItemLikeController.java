@@ -25,7 +25,7 @@ public class ItemLikeController {
 	@PostMapping("/{itemId}/likes")
 	public ResponseEntity<ItemLikeResponseDto> likeItem(
 			@ReqUser User user,
-			@PathVariable Long itemId
+			@PathVariable(value = "itemId") Long itemId
 	) {
 		var response = itemLikeService.likeItem(user, itemId);
 		return ResponseDto.ok(response);
@@ -35,8 +35,7 @@ public class ItemLikeController {
 	@PostMapping("/{itemId}/unlikes")
 	public ResponseEntity<Void> unlikeItem(
 			@ReqUser User user,
-			@PathVariable Long itemId
-
+			@PathVariable(value = "itemId") Long itemId
 	) {
 		itemLikeService.unlikeItem(user, itemId);
 		return ResponseDto.noContent();
