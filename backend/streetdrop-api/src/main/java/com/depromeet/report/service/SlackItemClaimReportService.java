@@ -23,7 +23,8 @@ public class SlackItemClaimReportService implements ItemClaimReportService {
     private static final String TITLE = "Item Claim Report";
 
     public void sendReport(ItemClaim itemClaim) {
-        var markdownTextObject = markdownText("*Reporter:* " + itemClaim.getUser().getNickname()
+        var markdownTextObject = markdownText("*Item Claim Id:* " + itemClaim.getId()
+                + "\n*Reporter:* " + itemClaim.getUser().getNickname()
                 + "\n*Item Id:* " + itemClaim.getItem().getId()
                 + "\n*Item Content:* " + itemClaim.getItem().getContent()
                 + "\n*Item Claim Status:* " + itemClaim.getStatus()
