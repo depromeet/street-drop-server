@@ -2,6 +2,9 @@ enable:
   issues: false
   prs: true
 
+comment: |
+  🏷 Applied labels matching special text in your Pull Request.
+
 labels:
   '✨feature':
     include:
