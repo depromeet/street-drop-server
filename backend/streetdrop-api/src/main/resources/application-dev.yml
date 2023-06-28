@@ -15,6 +15,7 @@ swagger:
 slack:
   token: ${slack.token}
   monitoring-channel: error
+  report-channel: report
 cloud:
   aws:
     credentials:

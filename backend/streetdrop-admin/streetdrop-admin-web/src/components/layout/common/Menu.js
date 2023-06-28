@@ -36,7 +36,9 @@ const MenuComponent = () => {
                 </Menu.Item>
             </Menu.SubMenu>
             <Menu.SubMenu key="sub2" icon={<UserOutlined/>} title="사용자 관리">
-                <Menu.Item key="6">• 유저조회</Menu.Item>
+                <Menu.Item key="6">
+                    <Link to="/user/list">• 유저조회</Link>
+                </Menu.Item>
             </Menu.SubMenu>
             <Menu.SubMenu key="sub3" icon={<FundProjectionScreenOutlined/>} title="마케팅 관리">
                 <Menu.Item key="7">• 캠페인 생성</Menu.Item>

@@ -14,6 +14,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import static org.springframework.http.HttpMethod.POST;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -33,6 +35,7 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.PATCH, "/items/*").authenticated()
                 .requestMatchers(HttpMethod.DELETE, "/items/*").authenticated()
                 .requestMatchers("/items/*/likes", "/items/*/unlikes").authenticated()
+                .requestMatchers(POST, "items/claim").authenticated()
                 .anyRequest().permitAll().and()
                 .anonymous().and()
                 .formLogin().disable()

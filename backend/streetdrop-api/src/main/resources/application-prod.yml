@@ -9,12 +9,13 @@ spring:
       maximum-pool-size: 20
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
 swagger:
   server-url: ${SWAGGER_SERVER_URL}
 slack:
   token: ${slack.token}
   monitoring-channel: error
+  report-channel: report
 cloud:
   aws:
     credentials:

@@ -41,6 +41,8 @@ public enum ErrorCode {
 
 	NOT_SUPPORT_LOCATION(HttpStatus.BAD_REQUEST, "C-0007", "Not Support Location"),
 
+	ALREADY_ITEM_REPORTED_ERROR(HttpStatus.CONFLICT, "C-0008", "User Already Item reported"),
+
 	INVALID_USER_EXCEPTION(HttpStatus.FORBIDDEN, "C-0009", "Modify or Delete Not Permitted");
 
 	private final HttpStatus status;
