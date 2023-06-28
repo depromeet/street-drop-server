@@ -41,7 +41,7 @@ public enum ErrorCode {
 
 	NOT_SUPPORT_LOCATION(HttpStatus.BAD_REQUEST, "C-0007", "Not Support Location"),
 
-	INVALID_USER_EXCEPTION(HttpStatus.FORBIDDEN, "C-0009", "Invalid User");
+	INVALID_USER_EXCEPTION(HttpStatus.FORBIDDEN, "C-0009", "Modify or Delete Not Permitted");
 
 	private final HttpStatus status;
 	private final String code;

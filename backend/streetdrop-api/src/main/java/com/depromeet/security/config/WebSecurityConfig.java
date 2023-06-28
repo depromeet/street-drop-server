@@ -30,6 +30,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/users/me").authenticated()
                 .requestMatchers(HttpMethod.POST, "/items").authenticated()
+                .requestMatchers(HttpMethod.PATCH, "/items/*").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/items/*").authenticated()
                 .requestMatchers("/items/*/likes", "/items/*/unlikes").authenticated()
                 .anyRequest().permitAll().and()
                 .anonymous().and()

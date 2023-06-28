@@ -2,6 +2,7 @@ package com.depromeet.domains.item.service;
 
 import com.depromeet.area.village.VillageArea;
 import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.common.error.exception.common.BusinessException;
 import com.depromeet.common.error.exception.common.InvalidUserException;
 import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.item.dto.request.*;
@@ -86,7 +87,7 @@ public class ItemService {
 				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, String.valueOf(itemId)));
 		var userIdfv = item.getUser().getIdfv();
 		if (!userIdfv.equals(user.getIdfv())) {
-			throw new InvalidUserException(ErrorCode.INVALID_USER_EXCEPTION, String.valueOf(user.getIdfv()));
+			throw new InvalidUserException(ErrorCode.INVALID_USER_EXCEPTION,  String.valueOf(user.getId()));
 		}
 		itemRepository.deleteById(itemId);
 	}
@@ -94,10 +95,10 @@ public class ItemService {
 	@Transactional
 	public ItemResponseDto update(User user, Long itemId, ItemUpdateRequestDto itemRequestDto) {
 		var item = itemRepository.findById(itemId)
-				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, String.valueOf(itemId)));
+				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND,itemId));
 
 		if (!item.getUser().getIdfv().equals(user.getIdfv())) {
-			throw new InvalidUserException(ErrorCode.INVALID_USER_EXCEPTION, String.valueOf(user.getIdfv()));
+			throw new InvalidUserException(ErrorCode.INVALID_USER_EXCEPTION, String.valueOf(user.getId()));
 		}
 		item.updateContent(itemRequestDto.getContent());
 		return new ItemResponseDto(item);

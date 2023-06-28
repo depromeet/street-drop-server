@@ -16,4 +16,9 @@ public class BusinessException extends RuntimeException {
 		super(message);
 		this.errorCode = errorCode;
 	}
+
+	public BusinessException(ErrorCode errorCode, Long id) {
+		super(id + " is not found");
+		this.errorCode = errorCode;
+	}
 }
