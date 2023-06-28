@@ -243,7 +243,7 @@ public class ItemControllerTest {
         }
 
         private ItemResponseDto createValidItemResponseDto() {
-            UserResponseDto userResponse = new UserResponseDto("User1", "https://s3.orbi.kr/data/file/united/35546557a06831597f6e7851cb6c86e9.jpg", "youtubemusic");
+            UserResponseDto userResponse = new UserResponseDto(1L, "User1", "https://s3.orbi.kr/data/file/united/35546557a06831597f6e7851cb6c86e9.jpg", "youtubemusic");
             ItemLocationResponseDto locationResponse = new ItemLocationResponseDto("서울시 성수동 성수 1가");
             ItemResponseDto itemResponseDto = new ItemResponseDto(1L, userResponse, locationResponse, LocalDateTime.now(), 1);
             return itemResponseDto;
@@ -443,7 +443,7 @@ public class ItemControllerTest {
                         List.of(
                                 new ItemsResponseDto.ItemDetailDto(
                                         1L,
-                                        new UserResponseDto("nickname", "/profile.jpg", "youtubemusic"),
+                                        new UserResponseDto(1L,"nickname", "/profile.jpg", "youtubemusic"),
                                         new ItemLocationResponseDto("성동구 성수1가 1동"),
                                         new MusicResponseDto("title", "artist", "/albumImage.jpg", List.of("genre")),
                                         "사용자 코멘트",
@@ -485,7 +485,7 @@ public class ItemControllerTest {
                         List.of(
                                 new ItemsResponseDto.ItemDetailDto(
                                         1L,
-                                        new UserResponseDto("nickname", "/profile.jpg", "youtubemusic"),
+                                        new UserResponseDto(1L, "nickname", "/profile.jpg", "youtubemusic"),
                                         new ItemLocationResponseDto("성동구 성수1가 1동"),
                                         new MusicResponseDto("title", "artist", "/albumImage.jpg", List.of("genre")),
                                         "사용자 코멘트",
