@@ -1,0 +1,29 @@
+enable:
+  issues: false
+  prs: true
+
+labels:
+  '✨feature':
+    include:
+      - '\bfeat\b'
+  '🐛bug':
+    include:
+      - '\bfix\b'
+  '✅test':
+    include:
+      - '\btest\b'
+  '📝docs':
+    include:
+      - '\bdocs\b'
+  '♻️refactor':
+    include:
+      - '\brefactor\b'
+  '⚙️config':
+    include:
+      - '\bconfig\b'
+  '🚑hotfix' :
+    include:
+      - '\bhotfix\b'
+  '🥇asap' :
+    include:
+      - '\bhotfix\b'
