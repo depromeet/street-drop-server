@@ -87,7 +87,7 @@ public class ItemService {
 		var userIdfv = item.getUser().getIdfv();
 
 		if (!userIdfv.equals(user.getIdfv())) {
-			throw new BusinessException(ErrorCode.INVALID_USER_EXCEPTION,  user.getId());
+			throw new BusinessException(ErrorCode.INVALID_USER_EXCEPTION);
 		}
 		itemRepository.deleteById(itemId);
 	}
@@ -98,7 +98,7 @@ public class ItemService {
 				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, itemId));
 
 		if (!item.getUser().getIdfv().equals(user.getIdfv())) {
-			throw new BusinessException(ErrorCode.INVALID_USER_EXCEPTION, user.getId());
+			throw new BusinessException(ErrorCode.INVALID_USER_EXCEPTION);
 		}
 		item.updateContent(itemRequestDto.getContent());
 		return new ItemResponseDto(item);
