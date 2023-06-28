@@ -12,6 +12,6 @@ public class NotFoundException extends BusinessException {
 	}
 
 	public NotFoundException(ErrorCode errorCode, Long id) {
-		super(errorCode, id);
+		super(errorCode, id + " is not found");
 	}
 }
