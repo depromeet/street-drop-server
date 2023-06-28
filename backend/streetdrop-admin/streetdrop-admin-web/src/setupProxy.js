@@ -1,4 +1,4 @@
-const {createProxyMiddleware} = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function (app) {
     app.use('/search', createProxyMiddleware({
@@ -14,6 +14,14 @@ module.exports = function (app) {
         changeOrigin: true,
         pathRewrite: {
             '^/api': ''
+        }
+    }));
+
+    app.use('/admin', createProxyMiddleware({
+        target: 'http://admin.street-drop.com',
+        changeOrigin: true,
+        pathRewrite: {
+            '^/admin': ''
         }
     }));
 }

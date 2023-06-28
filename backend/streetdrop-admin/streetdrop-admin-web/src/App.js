@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import MusicRecommend from './components/music/recommend/MusicRecommend';
 import MusicList from './components/music/near/MusicList';
 import MusicListPage from "./components/music/MusicListPage";
+import UserListPage from "./components/user/UserListPage";
 
 const App = () => {
     return (
@@ -25,6 +26,7 @@ const App = () => {
                     <Route path='/music/recommend' element={<MusicRecommend/>}/>
                     <Route path='/music/map' element={<MusicList/>}/>
                     <Route path='/music/list' element={<MusicListPage/>}/>
+                    <Route path='/user/list' element={<UserListPage/>}/>
                 </Routes>
             </Router>
         </Layout>
