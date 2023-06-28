@@ -1,18 +1,42 @@
 package com.depromeet.domains.item.repository;
 
 import com.depromeet.domains.item.dao.ItemPointDao;
-import com.depromeet.item.ItemLocation;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Point;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface ItemLocationRepository extends JpaRepository<ItemLocation, Long> {
-    @Query("SELECT New com.depromeet.domains.item.dao.ItemPointDao(il.point, i.id, ac.albumThumbnail, (ST_Distance_Sphere(il.point, :point) <= :innerDistance)) " +
-            "FROM ItemLocation il JOIN Item i on il.item.id = i.id " +
-            "JOIN AlbumCover ac on il.item.albumCover.id = ac.id " +
-            "WHERE ST_Distance_Sphere(il.point, :point) <= :distance")
-    List<ItemPointDao> findNearItemsPointsByDistance(@Param("point") Point point, @Param("distance") Double distance, @Param("innerDistance") Double innerDistance);
+import static com.depromeet.external.querydsl.mysql.spatial.MySqlSpatialFunction.mySqlDistanceSphereFunction;
+import static com.depromeet.item.QItem.item;
+import static com.depromeet.item.QItemLocation.itemLocation;
+import static com.depromeet.music.album.QAlbumCover.albumCover;
+
+@Repository
+@RequiredArgsConstructor
+public class ItemLocationRepository {
+
+    private final JPAQueryFactory queryFactory;
+
+    public List<ItemPointDao> findNearItemsPointsByDistance(Point point, Double distance, Double innerDistance) {
+        return queryFactory.select(
+                        Projections.fields(
+                                ItemPointDao.class,
+                                itemLocation.point,
+                                item.id,
+                                albumCover.albumThumbnail,
+                                mySqlDistanceSphereFunction(itemLocation.point, point)
+                                        .loe(String.valueOf(innerDistance))
+                                        .as("isInnerDistance")
+                        ))
+                .from(itemLocation)
+                .join(itemLocation.item, item)
+                .on(itemLocation.item.id.eq(item.id))
+                .join(itemLocation.item.albumCover, albumCover)
+                .on(item.albumCover.id.eq(albumCover.id))
+                .where(mySqlDistanceSphereFunction(itemLocation.point, point).loe(String.valueOf(distance)))
+                .fetch();
+    }
 }
