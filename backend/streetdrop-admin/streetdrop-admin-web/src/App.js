@@ -20,7 +20,7 @@ const App = () => {
                     <Route exact path="/login" element={<Login/>}/>
                     <Route exact path="/" element={<Dashboard/>}/>
                     <Route path="/drop-music" element={<SearchDropMusic/>}/>
-                    <Route path="/drop-music/details" element={<DropSingleMusic/>}/>
+                    <Route path="/drop-music/single" element={<DropSingleMusic/>}/>
                     <Route path='/drop-music/result/success' element={<DropMusicSuccess/>}/>
                     <Route path='/drop-music/result/fail' element={<DropMusicFail/>}/>
                     <Route path='/music/recommend' element={<MusicRecommend/>}/>

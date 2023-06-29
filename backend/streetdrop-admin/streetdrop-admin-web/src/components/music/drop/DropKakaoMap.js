@@ -54,8 +54,7 @@ const DropKakaoMap = ({onMapClick, height}) => {
                     onMapClick && onMapClick({lat: mouseEvent.latLng.getLat(), lng: mouseEvent.latLng.getLng()})
                 }}
             >
-                {position
-                    &&
+                {
                     poi.map((poiInfo, index) => (
                         <MapMarker
                             key={`${poiInfo.id}`}
@@ -74,8 +73,18 @@ const DropKakaoMap = ({onMapClick, height}) => {
                             }}
                         />
                     ))
+                }{
+
+                    position
                     &&
-                    <MapMarker position={position}/>
+                    <MapMarker position={position}
+                    image={{
+                        src: "/image/new-poi.png",
+                        size: {
+                            width: 60,
+                            height: 60
+                        }
+                    }}/>
                 }
             </Map>
         </>

@@ -30,10 +30,17 @@ function SearchDropMusic() {
             setSelectedSongList([...selectedSongList, songs[selectedRowKeys[0] - 1]]);
             if (selectedSongList.length > 0) {
                 // 마지막 요소 선택
-                navigate('/drop-music/details', {state: {selectedSong: selectedSongList[selectedSongList.length - 1]}});
+                navigate('/drop-music/single', {state: {selectedSong: selectedSongList[selectedSongList.length - 1]}});
             }
         }
     };
+
+    const onClickDropInCart = () => {
+        messageApi.open({
+            type: 'error',
+            content: "현재 준비중인 기능입니다.",
+        })
+    }
 
 
     /*
@@ -186,7 +193,7 @@ function SearchDropMusic() {
                     extra={
                         <Space>
                             <Button onClick={() => setSelectedSongList([])}>지우기</Button>
-                            <Button type="primary" onClick={console.log("clicked")}>모두 드랍하기</Button>
+                            <Button type="primary" onClick={onClickDropInCart}>모두 드랍하기</Button>
                         </Space>
                     }
                 >
