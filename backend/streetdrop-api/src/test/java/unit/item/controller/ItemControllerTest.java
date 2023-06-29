@@ -2,8 +2,8 @@ package unit.item.controller;
 
 import com.depromeet.domains.item.controller.ItemController;
 import com.depromeet.common.error.GlobalExceptionHandler;
+import com.depromeet.domains.item.dto.request.ItemCreateRequestDto;
 import com.depromeet.domains.item.dto.request.ItemLocationRequestDto;
-import com.depromeet.domains.item.dto.request.ItemRequestDto;
 import com.depromeet.domains.item.dto.request.NearItemPointRequestDto;
 import com.depromeet.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.domains.item.dto.response.ItemLocationResponseDto;
@@ -73,7 +73,7 @@ public class ItemControllerTest {
             void createItem_ValidRequest_ReturnsCreated() throws Exception {
                 MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", "IVE", "1st EP IVE", "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
                 ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 127.123456, "서울시 성수동 성수 1가");
-                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
+                ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
@@ -94,7 +94,7 @@ public class ItemControllerTest {
             void createItem_InvalidMusicTitle_ReturnsBadRequest() throws Exception {
                 MusicRequestDto musicRequestDto = new MusicRequestDto(null, "IVE", "1st EP IVE", "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
                 ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 127.123456, "서울시 성수동 성수 1가");
-                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
+                ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
@@ -113,7 +113,7 @@ public class ItemControllerTest {
             void createItem_InvalidMusicArtist_ReturnsBadRequest() throws Exception {
                 MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", null, "1st EP IVE", "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
                 ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 127.123456, "서울시 성수동 성수 1가");
-                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
+                ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
@@ -132,7 +132,7 @@ public class ItemControllerTest {
             void createItem_InvalidMusicAlbum_ReturnsBadRequest() throws Exception {
                 MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", "IVE", null, "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
                 ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 127.123456, "서울시 성수동 성수 1가");
-                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
+                ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
@@ -151,7 +151,7 @@ public class ItemControllerTest {
             void createItem_InvalidAlbumCover_ReturnsBadRequest() throws Exception {
                 MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", "IVE", "아이브 정규1집", null, List.of("K-POP", "HipHop"));
                 ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 127.123456, "서울시 성수동 성수 1가");
-                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
+                ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
@@ -170,7 +170,7 @@ public class ItemControllerTest {
             void createItem_InvalidLatitudeRequest_ReturnsBadRequest() throws Exception {
                 MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", "IVE", "1st EP IVE", "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
                 ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(100000000.0, 127.123456, "서울시 성수동 성수 1가");
-                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
+                ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
@@ -189,7 +189,7 @@ public class ItemControllerTest {
             void createItem_InvalidLogitudeRequest_ReturnsBadRequest() throws Exception {
                 MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", "IVE", "1st EP IVE", "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
                 ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 100000000.0, "서울시 성수동 성수 1가");
-                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
+                ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
@@ -208,7 +208,7 @@ public class ItemControllerTest {
             void createItem_InvalidAddressRequest_ReturnsBadRequest() throws Exception {
                 MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", "IVE", "1st EP IVE", "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
                 ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 127.123456, null);
-                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
+                ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
@@ -227,7 +227,7 @@ public class ItemControllerTest {
             void createItem_InvalidContentRequest_ReturnsBadRequest() throws Exception {
                 MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", "IVE", "1st EP IVE", "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
                 ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 127.123456, "서울시 성수동 성수 1가");
-                ItemRequestDto itemRequestDto = new ItemRequestDto(itemLocationRequestDto, musicRequestDto, null);
+                ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, null);
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);

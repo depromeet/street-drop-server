@@ -42,7 +42,7 @@ public class Item extends BaseTimeEntity {
 	@JoinColumn(name = "album_cover_id")
 	private AlbumCover albumCover;
 
-	@OneToMany(mappedBy = "item")
+	@OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
 	private List<ItemLike> likes;
 
 	@Builder
@@ -66,4 +66,7 @@ public class Item extends BaseTimeEntity {
 		return likes != null && likes.stream().anyMatch(like -> like.isLiked(user));
 	}
 
+	public void updateContent(String content) {
+		this.content = content;
+	}
 }
