@@ -43,7 +43,9 @@ public enum ErrorCode {
 
 	ALREADY_ITEM_REPORTED_ERROR(HttpStatus.CONFLICT, "C-0008", "User Already Item reported"),
 
-	INVALID_USER_EXCEPTION(HttpStatus.FORBIDDEN, "C-0009", "Modify or Delete Not Permitted");
+	INVALID_USER_EXCEPTION(HttpStatus.FORBIDDEN, "C-0009", "Modify or Delete Not Permitted"),
+
+	CANNOT_USE_BANNED_WORD(HttpStatus.BAD_REQUEST, "C-0010", "Cannot Use Banned Word");
 
 	private final HttpStatus status;
 	private final String code;
