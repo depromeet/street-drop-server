@@ -1,5 +1,8 @@
 package com.depromeet.domains.user.service;
 
+import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.common.error.exception.common.BusinessException;
+import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.user.User;
 import com.depromeet.domains.user.repository.UserRepository;
@@ -14,6 +17,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class UserService {
+	public static final int NICKNAME_MIN_LENGTH = 1;
+	public static final int NICKNAME_MAX_LENGTH = 10;
 	private final UserRepository userRepository;
 
 	@Transactional(readOnly = true)
@@ -64,4 +69,21 @@ public class UserService {
         return preName.get((int) (Math.random() * preName.size()))
                 + " " + postName.get((int) (Math.random() * postName.size()));
     }
+
+	@Transactional
+	public UserResponseDto changeNickname(User user, String nickname) {
+		validateNicknameLength(nickname);
+
+		var findUser = userRepository.findUserByIdfv(user.getIdfv())
+				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, user.getId()))
+				.changeNickname(nickname);
+
+		return new UserResponseDto(findUser);
+	}
+
+	private void validateNicknameLength(String nickname) {
+		if (nickname.length() < NICKNAME_MIN_LENGTH || nickname.length() > NICKNAME_MAX_LENGTH) {
+			throw new BusinessException(ErrorCode.INVALID_INPUT_EXCEPTION);
+		}
+	}
 }
