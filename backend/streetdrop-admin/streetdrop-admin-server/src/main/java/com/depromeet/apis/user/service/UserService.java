@@ -1,12 +1,11 @@
 package com.depromeet.apis.user.service;
 
 import com.depromeet.apis.user.dto.UserAllResponseDto;
+import com.depromeet.apis.user.dto.UserCountResponseDto;
 import com.depromeet.apis.user.repository.UserRepository;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,5 +28,20 @@ public class UserService {
 		var userAllResponseDtoList = new ArrayList<>();
 		userAllResponseDtoList.add(new UserAllResponseDto(userResponseDtoList));
 		return new UserAllResponseDto(userResponseDtoList);
+	}
+
+	@Transactional
+	public List<UserCountResponseDto> countUsersByCreatedAt() {
+		List<Object[]> result = userRepository.countUserByCreatedAt();
+		List<UserCountResponseDto> userCountList = new ArrayList<>();
+
+		for (Object[] row : result) {
+			String joinDate = (String) row[0];
+			Long count = (Long) row[1];
+
+			UserCountResponseDto userCountResponseDto = new UserCountResponseDto(joinDate, count);
+			userCountList.add(userCountResponseDto);
+		}
+		return userCountList;
 	}
 }
