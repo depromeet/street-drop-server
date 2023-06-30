@@ -38,7 +38,6 @@ public class UserService {
 		for (Object[] row : result) {
 			String joinDate = (String) row[0];
 			Long count = (Long) row[1];
-
 			UserCountResponseDto userCountResponseDto = new UserCountResponseDto(joinDate, count);
 			userCountList.add(userCountResponseDto);
 		}
