@@ -33,14 +33,14 @@ public class UserService {
 	@Transactional
 	public List<UserCountResponseDto> countUsersByCreatedAt() {
 		List<Object[]> result = userRepository.countUserByCreatedAt();
-		List<UserCountResponseDto> userCountList = new ArrayList<>();
+		List<UserCountResponseDto> userCountResponseDtos = new ArrayList<>();
 
 		for (Object[] row : result) {
 			String joinDate = (String) row[0];
 			Long count = (Long) row[1];
 			UserCountResponseDto userCountResponseDto = new UserCountResponseDto(joinDate, count);
-			userCountList.add(userCountResponseDto);
+			userCountResponseDtos.add(userCountResponseDto);
 		}
-		return userCountList;
+		return userCountResponseDtos;
 	}
 }
