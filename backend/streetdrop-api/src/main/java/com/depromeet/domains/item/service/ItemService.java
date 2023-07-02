@@ -4,16 +4,17 @@ import com.depromeet.area.village.VillageArea;
 import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.exception.common.BusinessException;
 import com.depromeet.common.error.exception.common.NotFoundException;
+import com.depromeet.common.repository.BannedWordRepository;
 import com.depromeet.domains.item.dto.request.*;
-import com.depromeet.domains.village.service.VillageAreaService;
-import com.depromeet.item.Item;
-import com.depromeet.item.ItemLocation;
 import com.depromeet.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.domains.item.repository.ItemLocationRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.music.service.MusicService;
+import com.depromeet.domains.village.service.VillageAreaService;
+import com.depromeet.item.Item;
+import com.depromeet.item.ItemLocation;
 import com.depromeet.user.User;
 import com.depromeet.util.GeomUtil;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +22,16 @@ import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ItemService {
-	private final MusicService musicService;
-	private final ItemRepository itemRepository;
-	private final ItemLocationRepository itemLocationRepository;
-	private final VillageAreaService villageAreaService;
+    private final MusicService musicService;
+    private final ItemRepository itemRepository;
+    private final ItemLocationRepository itemLocationRepository;
+    private final VillageAreaService villageAreaService;
+    private final BannedWordRepository bannedWordRepository;
 
 	public PoiResponseDto findNearItemsPoints(NearItemPointRequestDto nearItemPointRequestDto) {
 		Point point = GeomUtil.createPoint(nearItemPointRequestDto.getLongitude(), nearItemPointRequestDto.getLatitude());
@@ -39,6 +43,13 @@ public class ItemService {
 	@Transactional
 	public ItemResponseDto create(User user, ItemCreateRequestDto itemCreateRequestDto) {
 		var song = musicService.getOrCreateMusic(itemCreateRequestDto.getMusic());
+
+        var contentWord = List.of(itemCreateRequestDto.getContent().split(" "));
+        var bannedWord = bannedWordRepository.findBannedWordsInWordList(contentWord);
+        if (bannedWord.size() > 0) {
+            throw new BusinessException(ErrorCode.CANNOT_USE_BANNED_WORD,
+                    String.join(", ", bannedWord) + " is Banned Word");
+        }
 
 		var item = Item.builder()
 				.user(user)
@@ -74,33 +85,33 @@ public class ItemService {
         return new ItemsResponseDto(itemDetailDtoList);
     }
 
-	@Transactional(readOnly = true)
-	public Item getItem(Long itemId) {
-		return itemRepository.findById(itemId)
-				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, String.valueOf(itemId)));
-	}
+    @Transactional(readOnly = true)
+    public Item getItem(Long itemId) {
+        return itemRepository.findById(itemId)
+                .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, String.valueOf(itemId)));
+    }
 
-	@Transactional
-	public void delete(User user, Long itemId) {
-		var item = itemRepository.findById(itemId)
-				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, itemId));
-		var userIdfv = item.getUser().getIdfv();
+    @Transactional
+    public void delete(User user, Long itemId) {
+        var item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, itemId));
+        var userIdfv = item.getUser().getIdfv();
 
-		if (!userIdfv.equals(user.getIdfv())) {
-			throw new BusinessException(ErrorCode.INVALID_USER_EXCEPTION);
-		}
-		itemRepository.deleteById(itemId);
-	}
+        if (!userIdfv.equals(user.getIdfv())) {
+            throw new BusinessException(ErrorCode.INVALID_USER_EXCEPTION);
+        }
+        itemRepository.deleteById(itemId);
+    }
 
-	@Transactional
-	public ItemResponseDto update(User user, Long itemId, ItemUpdateRequestDto itemRequestDto) {
-		var item = itemRepository.findById(itemId)
-				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, itemId));
+    @Transactional
+    public ItemResponseDto update(User user, Long itemId, ItemUpdateRequestDto itemRequestDto) {
+        var item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, itemId));
 
-		if (!item.getUser().getIdfv().equals(user.getIdfv())) {
-			throw new BusinessException(ErrorCode.INVALID_USER_EXCEPTION);
-		}
-		item.updateContent(itemRequestDto.getContent());
-		return new ItemResponseDto(item);
-	}
+        if (!item.getUser().getIdfv().equals(user.getIdfv())) {
+            throw new BusinessException(ErrorCode.INVALID_USER_EXCEPTION);
+        }
+        item.updateContent(itemRequestDto.getContent());
+        return new ItemResponseDto(item);
+    }
 }
