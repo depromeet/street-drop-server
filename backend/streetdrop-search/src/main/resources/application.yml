@@ -1,0 +1,10 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
