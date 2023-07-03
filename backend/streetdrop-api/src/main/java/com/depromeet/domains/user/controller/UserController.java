@@ -7,6 +7,7 @@ import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +30,11 @@ public class UserController {
     }
 
     @Operation(summary = "닉네임 변경하기")
-    @PatchMapping("/nickname")
+    @PatchMapping("/me/nickname")
     public ResponseEntity<UserResponseDto> changeNickname(
             @ReqUser User user,
-            @RequestParam("nickname") @Size(min = 1, max = 10) String nickname
+            @RequestParam("nickname") @NotNull(message = "Nickname is required")
+            @Size(min = 1, max = 10, message = "닉네임은 한글자 이상 10글자 이하입니다.") String nickname
     ) {
         var response = userService.changeNickname(user, nickname);
         return ResponseDto.ok(response);
