@@ -1,11 +1,17 @@
 import React from 'react';
-import {ResponsiveLine} from '@nivo/line'
+import { ResponsiveLine } from '@nivo/line'
 
 function UserLineGraph({data}) {
     return (
         <div style={{height: '330px'}}>
             <ResponsiveLine
-                data={data}
+                data={[
+                    {
+                      id: '일자별 가입 유저',
+                      color: 'hsl(210,98%,37%)',
+                      data: data,
+                    }
+                ]}
                 margin={{top: 50, right: 50, bottom: 50, left: 50}}
                 xScale={{type: 'point'}}
                 yScale={{
