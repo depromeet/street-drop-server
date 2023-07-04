@@ -5,6 +5,7 @@ import com.depromeet.domains.user.service.UserService;
 import com.depromeet.security.annotation.ReqUser;
 import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.user.User;
+import com.depromeet.user.vo.MusicApp;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotNull;
@@ -37,6 +38,16 @@ public class UserController {
             @Size(min = 1, max = 10, message = "닉네임은 한글자 이상 10글자 이하입니다.") String nickname
     ) {
         var response = userService.changeNickname(user, nickname);
+        return ResponseDto.ok(response);
+    }
+
+    @Operation(summary = "사용자 뮤직 앱 변경")
+    @PatchMapping("/music-app")
+    public ResponseEntity<UserResponseDto> changeMusicApp(
+            @ReqUser User user,
+            @RequestParam("musicApp") MusicApp musicApp
+    ) {
+        var response = userService.changeMusicApp(user, musicApp);
         return ResponseDto.ok(response);
     }
 }
