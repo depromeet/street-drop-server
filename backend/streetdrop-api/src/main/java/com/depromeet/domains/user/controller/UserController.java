@@ -40,11 +40,12 @@ public class UserController {
         var response = userService.changeNickname(user, nickname);
         return ResponseDto.ok(response);
     }
+
     @Operation(summary = "사용자 뮤직 앱 변경")
     @PatchMapping("/music-app")
-    public ResponseEntity<UserResponseDto> changeMusicAPp(
+    public ResponseEntity<UserResponseDto> changeMusicApp(
             @ReqUser User user,
-            @RequestParam("musicApp") String musicApp
+            @RequestParam("musicApp") MusicApp musicApp
     ) {
         var response = userService.changeMusicApp(user, musicApp);
         return ResponseDto.ok(response);

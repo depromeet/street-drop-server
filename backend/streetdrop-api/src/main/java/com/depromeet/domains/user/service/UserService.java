@@ -82,11 +82,9 @@ public class UserService {
 	}
 
 	@Transactional
-	public UserResponseDto changeMusicApp(User user, String musicApp) {
-		var findUser = userRepository.findUserByIdfv(user.getIdfv())
-				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, user.getId()));
-
-		findUser.changeMusicApp(musicApp);
-		return new UserResponseDto(findUser);
+	public UserResponseDto changeMusicApp(User user, MusicApp musicApp) {
+		user.changeMusicApp(musicApp);
+		userRepository.save(user);
+		return new UserResponseDto(user);
 	}
 }

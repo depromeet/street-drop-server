@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -85,24 +86,11 @@ public class UserServiceTest {
 
         @DisplayName("뮤직 앱을 수정한다 - 성공")
         @ParameterizedTest
-        @ValueSource(strings = {"youtubemusic", "spotify", "applemusic"})
-        void changeMusicAppSuccess(String musicApp) {
+        @EnumSource(MusicApp.class)
+        void changeMusicAppSuccess(MusicApp musicApp) {
             User user = new User();
-
             user.changeMusicApp(musicApp);
-
-            assertThat(user.getMusicApp().getAppName()).isEqualTo(musicApp);
-        }
-
-        @DisplayName("뮤직 앱을 수정한다 - 실패")
-        @ParameterizedTest
-        @ValueSource(strings = {"test", "test2", "test3"})
-        void changeMusicAppFail(String musicApp) {
-            User user = new User();
-
-            assertThatCode(() -> user.changeMusicApp(musicApp))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("This is not support music app. Support music apps are: youtubemusic, spotify, applemusic");
+            assertThat(user.getMusicApp()).isEqualTo(musicApp);
         }
     }
 }

@@ -16,14 +16,4 @@ public enum MusicApp {
 	MusicApp(String appName) {
 		this.appName = appName;
 	}
-
-	public static MusicApp findByAppName(String appName) {
-		return Arrays.stream(MusicApp.values())
-				.filter(musicApp -> musicApp.appName.equals(appName))
-				.findFirst()
-				.orElseThrow(() -> new IllegalArgumentException("This is not support music app. " +
-						"Support music apps are: " + Arrays.stream(MusicApp.values())
-						.map(MusicApp::getAppName)
-						.collect(Collectors.joining(", "))));
-	}
 }

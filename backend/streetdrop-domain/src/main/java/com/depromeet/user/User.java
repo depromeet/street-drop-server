@@ -46,7 +46,7 @@ public class User extends BaseTimeEntity {
 		return this;
 	}
 
-	public void changeMusicApp(String musicApp) {
-		this.musicApp = MusicApp.findByAppName(musicApp);;
+	public void changeMusicApp(MusicApp musicApp) {
+		this.musicApp = musicApp;
 	}
 }
