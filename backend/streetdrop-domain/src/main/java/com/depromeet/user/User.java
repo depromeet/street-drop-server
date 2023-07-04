@@ -42,6 +42,13 @@ public class User extends BaseTimeEntity {
 		this.musicApp = musicApp;
 	}
 
+	public MusicApp getMusicApp() {
+		if (musicApp == null) {
+			return MusicApp.YOUTUBE_MUSIC;
+		}
+		return musicApp;
+	}
+
 	public User changeNickname(String nickname) {
 		this.nickname = nickname;
 		return this;
