@@ -41,6 +41,7 @@ public class UserService {
             User newUser = User.builder()
                     .nickname(generateDefaultNickname())
                     .idfv(idfv)
+		            .musicApp(MusicApp.YOUTUBE_MUSIC)
                     .build();
             return userRepository.save(newUser);
         }

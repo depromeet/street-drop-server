@@ -1,10 +1,5 @@
 package com.depromeet.user.vo;
 
-import lombok.Getter;
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
-@Getter
 public enum MusicApp {
 	YOUTUBE_MUSIC("youtubemusic"),
 	SPOTIFY("spotify"),
@@ -15,5 +10,12 @@ public enum MusicApp {
 
 	MusicApp(String appName) {
 		this.appName = appName;
+	}
+
+	public String getAppName() {
+		if (appName == null) {
+			return "youtubemusic";
+		}
+		return appName;
 	}
 }
