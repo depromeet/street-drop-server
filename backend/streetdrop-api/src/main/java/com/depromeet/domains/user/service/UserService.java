@@ -1,6 +1,9 @@
 package com.depromeet.domains.user.service;
 
 import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.common.error.exception.common.BusinessException;
+import com.depromeet.common.error.exception.common.NotFoundException;
+import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.user.User;
@@ -17,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class UserService {
+
 	private final UserRepository userRepository;
 
 	@Transactional(readOnly = true)
@@ -67,6 +71,15 @@ public class UserService {
         return preName.get((int) (Math.random() * preName.size()))
                 + " " + postName.get((int) (Math.random() * postName.size()));
     }
+
+	@Transactional
+	public UserResponseDto changeNickname(User user, String nickname) {
+		var changedUser = user.changeNickname(nickname);
+
+		userRepository.save(changedUser);
+
+		return new UserResponseDto(user);
+	}
 
 	@Transactional
 	public UserResponseDto changeMusicApp(User user, String musicApp) {

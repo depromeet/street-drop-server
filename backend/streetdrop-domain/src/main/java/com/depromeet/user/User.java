@@ -41,6 +41,11 @@ public class User extends BaseTimeEntity {
 		this.idfv = idfv;
 	}
 
+	public User changeNickname(String nickname) {
+		this.nickname = nickname;
+		return this;
+	}
+
 	public void changeMusicApp(String musicApp) {
 		this.musicApp = MusicApp.findByAppName(musicApp);;
 	}
