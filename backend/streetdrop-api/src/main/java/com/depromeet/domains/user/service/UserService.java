@@ -1,8 +1,14 @@
 package com.depromeet.domains.user.service;
 
+import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.common.error.exception.common.BusinessException;
+import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.user.dto.response.UserDetailResponseDto;
+import com.depromeet.domains.user.dto.response.UserDetailResponseDto;
+import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.user.User;
 import com.depromeet.domains.user.repository.UserRepository;
+import com.depromeet.user.vo.MusicApp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,11 +73,18 @@ public class UserService {
     }
 
 	@Transactional
-	public UserDetailResponseDto changeNickname(User user, String nickname) {
+	public UserResponseDto changeNickname(User user, String nickname) {
 		var changedUser = user.changeNickname(nickname);
 
 		userRepository.save(changedUser);
 
-		return new UserDetailResponseDto(user);
-	}
+        return new UserResponseDto(user);
+    }
+
+    @Transactional
+    public UserResponseDto changeMusicApp(User user, MusicApp musicApp) {
+        user.changeMusicApp(musicApp);
+        userRepository.save(user);
+        return new UserResponseDto(user);
+    }
 }
