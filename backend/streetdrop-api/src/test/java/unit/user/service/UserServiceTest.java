@@ -1,6 +1,6 @@
 package unit.user.service;
 
-import com.depromeet.domains.user.dto.response.UserResponseDto;
+import com.depromeet.domains.user.dto.response.UserDetailResponseDto;
 import com.depromeet.user.User;
 import com.depromeet.domains.user.repository.UserRepository;
 import com.depromeet.domains.user.service.UserService;
@@ -36,10 +36,10 @@ public class UserServiceTest {
         @Test
         void getUserInfoTestSuccess() {
             User user = new User();
-            UserResponseDto userResponseDto = new UserResponseDto(user);
+            UserDetailResponseDto userDetailResponseDto = new UserDetailResponseDto(user);
             var result = userService.getUserInfo(user);
 
-            assertThat(result).isEqualTo(userResponseDto);
+            assertThat(result).isEqualTo(userDetailResponseDto);
         }
 
     }

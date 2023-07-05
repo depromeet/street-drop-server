@@ -1,9 +1,6 @@
 package com.depromeet.domains.user.service;
 
-import com.depromeet.common.error.dto.ErrorCode;
-import com.depromeet.common.error.exception.common.BusinessException;
-import com.depromeet.common.error.exception.common.NotFoundException;
-import com.depromeet.domains.user.dto.response.UserResponseDto;
+import com.depromeet.domains.user.dto.response.UserDetailResponseDto;
 import com.depromeet.user.User;
 import com.depromeet.domains.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,8 +41,8 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserResponseDto getUserInfo(User user) {
-        return new UserResponseDto(user);
+    public UserDetailResponseDto getUserInfo(User user) {
+        return new UserDetailResponseDto(user);
     }
 
     private String generateDefaultNickname() {
@@ -70,11 +67,11 @@ public class UserService {
     }
 
 	@Transactional
-	public UserResponseDto changeNickname(User user, String nickname) {
+	public UserDetailResponseDto changeNickname(User user, String nickname) {
 		var changedUser = user.changeNickname(nickname);
 
 		userRepository.save(changedUser);
 
-		return new UserResponseDto(user);
+		return new UserDetailResponseDto(user);
 	}
 }

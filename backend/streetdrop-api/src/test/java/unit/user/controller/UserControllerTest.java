@@ -1,7 +1,7 @@
 package unit.user.controller;
 
 import com.depromeet.domains.user.controller.UserController;
-import com.depromeet.domains.user.dto.response.UserResponseDto;
+import com.depromeet.domains.user.dto.response.UserDetailResponseDto;
 import com.depromeet.user.User;
 import com.depromeet.domains.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
@@ -43,8 +43,8 @@ public class UserControllerTest {
             @Test
             void GetUserInfoTest() throws Exception {
                 User user = User.builder().nickname("Guest").idfv("new-idfv").build();
-                UserResponseDto userResponseDto = new UserResponseDto(user);
-                given(userService.getUserInfo(any(User.class))).willReturn(userResponseDto);
+                UserDetailResponseDto userDetailResponseDto = new UserDetailResponseDto(user);
+                given(userService.getUserInfo(any(User.class))).willReturn(userDetailResponseDto);
 
                 var response = mvc.perform(
                         get("/users/me")

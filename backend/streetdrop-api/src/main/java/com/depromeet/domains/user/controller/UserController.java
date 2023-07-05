@@ -1,6 +1,6 @@
 package com.depromeet.domains.user.controller;
 
-import com.depromeet.domains.user.dto.response.UserResponseDto;
+import com.depromeet.domains.user.dto.response.UserDetailResponseDto;
 import com.depromeet.domains.user.service.UserService;
 import com.depromeet.security.annotation.ReqUser;
 import com.depromeet.common.dto.ResponseDto;
@@ -22,7 +22,7 @@ public class UserController {
 
     @Operation(summary = "내 정보 가져오기")
     @GetMapping("/me")
-    public ResponseEntity<UserResponseDto> getUserInfo(
+    public ResponseEntity<UserDetailResponseDto> getUserInfo(
             @ReqUser User user
     ) {
         var response = userService.getUserInfo(user);
@@ -31,7 +31,7 @@ public class UserController {
 
     @Operation(summary = "닉네임 변경하기")
     @PatchMapping("/me/nickname")
-    public ResponseEntity<UserResponseDto> changeNickname(
+    public ResponseEntity<UserDetailResponseDto> changeNickname(
             @ReqUser User user,
             @RequestParam("nickname") @NotNull(message = "Nickname is required")
             @Size(min = 1, max = 10, message = "닉네임은 한글자 이상 10글자 이하입니다.") String nickname
