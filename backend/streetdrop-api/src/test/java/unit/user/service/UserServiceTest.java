@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+import static com.depromeet.user.vo.MusicApp.YOUTUBE_MUSIC;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -38,7 +39,7 @@ public class UserServiceTest {
         @DisplayName("유저 정보 조회 - 성공")
         @Test
         void getUserInfoTestSuccess() {
-            User user = new User();
+            User user = User.builder().nickname("Guest").idfv("new-idfv").musicApp(YOUTUBE_MUSIC).build();
             UserDetailResponseDto userDetailResponseDto = new UserDetailResponseDto(user);
             var result = userService.getUserInfo(user);
 

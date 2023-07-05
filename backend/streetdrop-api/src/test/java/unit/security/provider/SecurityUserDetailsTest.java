@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static com.depromeet.user.vo.MusicApp.YOUTUBE_MUSIC;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
@@ -16,7 +17,7 @@ public class SecurityUserDetailsTest {
     @Test
     @DisplayName("SecurityUserDetails 테스트")
     void testSecurityUserDetailsTest() {
-        User user = new User("nickname", "idfv");
+        User user = new User("nickname", "idfv", YOUTUBE_MUSIC);
         SecurityUserDetails securityUserDetails = new SecurityUserDetails(user);
         assertThat(securityUserDetails.getAuthorities()).isNull();
         assertThat(securityUserDetails.getPassword()).isNull();

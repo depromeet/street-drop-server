@@ -36,9 +36,10 @@ public class User extends BaseTimeEntity {
 	private MusicApp musicApp;
 
 	@Builder
-	public User(String nickname, String idfv) {
+	public User(String nickname, String idfv, MusicApp musicApp) {
 		this.nickname = nickname;
 		this.idfv = idfv;
+		this.musicApp = musicApp;
 	}
 
 	public User changeNickname(String nickname) {
