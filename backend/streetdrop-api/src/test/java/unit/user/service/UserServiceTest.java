@@ -1,7 +1,6 @@
 package unit.user.service;
 
-import com.depromeet.common.error.exception.common.NotFoundException;
-import com.depromeet.domains.user.dto.response.UserResponseDto;
+import com.depromeet.domains.user.dto.response.UserDetailResponseDto;
 import com.depromeet.user.User;
 import com.depromeet.domains.user.repository.UserRepository;
 import com.depromeet.domains.user.service.UserService;
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -20,7 +18,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -42,10 +39,10 @@ public class UserServiceTest {
         @Test
         void getUserInfoTestSuccess() {
             User user = new User();
-            UserResponseDto userResponseDto = new UserResponseDto(user);
+            UserDetailResponseDto userDetailResponseDto = new UserDetailResponseDto(user);
             var result = userService.getUserInfo(user);
 
-            assertThat(result).isEqualTo(userResponseDto);
+            assertThat(result).isEqualTo(userDetailResponseDto);
         }
 
     }

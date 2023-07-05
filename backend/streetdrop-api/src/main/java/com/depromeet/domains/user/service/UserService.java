@@ -1,11 +1,6 @@
 package com.depromeet.domains.user.service;
 
-import com.depromeet.common.error.dto.ErrorCode;
-import com.depromeet.common.error.exception.common.BusinessException;
-import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.user.dto.response.UserDetailResponseDto;
-import com.depromeet.domains.user.dto.response.UserDetailResponseDto;
-import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.user.User;
 import com.depromeet.domains.user.repository.UserRepository;
 import com.depromeet.user.vo.MusicApp;
@@ -73,18 +68,18 @@ public class UserService {
     }
 
 	@Transactional
-	public UserResponseDto changeNickname(User user, String nickname) {
+	public UserDetailResponseDto changeNickname(User user, String nickname) {
 		var changedUser = user.changeNickname(nickname);
 
 		userRepository.save(changedUser);
 
-        return new UserResponseDto(user);
+        return new UserDetailResponseDto(user);
     }
 
     @Transactional
-    public UserResponseDto changeMusicApp(User user, MusicApp musicApp) {
+    public UserDetailResponseDto changeMusicApp(User user, MusicApp musicApp) {
         user.changeMusicApp(musicApp);
         userRepository.save(user);
-        return new UserResponseDto(user);
+        return new UserDetailResponseDto(user);
     }
 }

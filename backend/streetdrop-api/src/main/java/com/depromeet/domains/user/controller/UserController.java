@@ -43,7 +43,7 @@ public class UserController {
 
     @Operation(summary = "사용자 뮤직 앱 변경")
     @PatchMapping("/music-app")
-    public ResponseEntity<UserResponseDto> changeMusicApp(
+    public ResponseEntity<UserDetailResponseDto> changeMusicApp(
             @ReqUser User user,
             @RequestParam("musicApp") MusicApp musicApp
     ) {

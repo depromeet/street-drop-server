@@ -18,7 +18,7 @@ public record UserDetailResponseDto(
                 user.getId(),
                 user.getNickname(),
                 "https://s3.orbi.kr/data/file/united/35546557a06831597f6e7851cb6c86e9.jpg",
-                "youtubemusic"
+                user.getMusicApp().getAppName()
         );
     }
 }
