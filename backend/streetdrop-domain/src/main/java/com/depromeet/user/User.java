@@ -43,9 +43,6 @@ public class User extends BaseTimeEntity {
 	}
 
 	public MusicApp getMusicApp() {
-		if (musicApp == null) {
-			return MusicApp.YOUTUBE_MUSIC;
-		}
 		return musicApp;
 	}
 
