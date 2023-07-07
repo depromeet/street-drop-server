@@ -12,14 +12,19 @@ public class TokenController {
 
     private final TokenService tokenService;
 
-    @PostMapping()
+    @PostMapping
     public void createToken(@RequestBody TokenRequestDto tokenRequestDto) {
         tokenService.createToken(tokenRequestDto);
     }
 
-    @PutMapping()
+    @PutMapping
     public void updateToken(@RequestBody TokenRequestDto tokenRequestDto) {
         tokenService.updateToken(tokenRequestDto);
+    }
+
+    @DeleteMapping
+    public void deleteToken(@RequestBody Long userId) {
+        tokenService.deleteToken(userId);
     }
 
 }

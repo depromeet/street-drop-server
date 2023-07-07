@@ -8,10 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class TokenRequestDto {
-    @NotNull
-    private Long userId;
+public class AllPushRequestDto {
+    private String title;
 
     @NotNull
-    private String token;
+    private String content;
 }

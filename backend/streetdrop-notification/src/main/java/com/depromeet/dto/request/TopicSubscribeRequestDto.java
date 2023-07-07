@@ -3,15 +3,15 @@ package com.depromeet.dto.request;
 import com.google.firebase.database.annotations.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
-public class TokenRequestDto {
+public class TopicSubscribeRequestDto {
     @NotNull
-    private Long userId;
+    List<Long> userIds;
 
     @NotNull
-    private String token;
+    String topic;
 }

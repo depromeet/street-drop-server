@@ -5,13 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class TokenRequestDto {
+public class MultiPushRequestDto {
     @NotNull
-    private Long userId;
+    private List<Long> userIds;
+
+    private String title;
 
     @NotNull
-    private String token;
+    private String content;
 }

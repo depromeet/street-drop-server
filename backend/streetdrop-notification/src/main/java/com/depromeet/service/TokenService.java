@@ -18,4 +18,8 @@ public class TokenService {
     public void updateToken(TokenRequestDto tokenRequestDto) {
         tokenRepository.update(tokenRequestDto.getUserId(), tokenRequestDto.getToken());
     }
+
+    public void deleteToken(Long userId) {
+        tokenRepository.delete(userId);
+    }
 }
