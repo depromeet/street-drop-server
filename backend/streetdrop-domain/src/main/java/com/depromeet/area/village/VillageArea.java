@@ -28,7 +28,7 @@ public class VillageArea {
     @Column(nullable = false)
     private int version;
 
-    @Column(nullable = false, columnDefinition = "MultiPolygon")
+    @Column(nullable = false, columnDefinition = "MULTIPOLYGON SRID 4326")
     private MultiPolygon villagePolygon;
 
     @Column(columnDefinition = "Point")

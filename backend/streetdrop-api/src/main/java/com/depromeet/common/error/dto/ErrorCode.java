@@ -41,7 +41,11 @@ public enum ErrorCode {
 
 	NOT_SUPPORT_LOCATION(HttpStatus.BAD_REQUEST, "C-0007", "Not Support Location"),
 
-	ALREADY_ITEM_REPORTED_ERROR(HttpStatus.CONFLICT, "C-0008", "User Already Item reported");
+	ALREADY_ITEM_REPORTED_ERROR(HttpStatus.CONFLICT, "C-0008", "User Already Item reported"),
+
+	INVALID_USER_EXCEPTION(HttpStatus.FORBIDDEN, "C-0009", "Modify or Delete Not Permitted"),
+
+	INVALID_INPUT_EXCEPTION(HttpStatus.BAD_REQUEST, "C-0015", "Nickname must be at least 1 character and not more than 10 characters");
 
 	private final HttpStatus status;
 	private final String code;

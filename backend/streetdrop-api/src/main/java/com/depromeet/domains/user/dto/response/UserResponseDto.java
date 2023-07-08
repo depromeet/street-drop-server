@@ -1,6 +1,7 @@
 package com.depromeet.domains.user.dto.response;
 
 import com.depromeet.user.User;
+import com.depromeet.user.vo.MusicApp;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public record UserResponseDto(
@@ -10,7 +11,7 @@ public record UserResponseDto(
         String nickname,
         @Schema(description = "사용자 프로필 이미지 URL")
         String profileImage,
-        @Schema(description = "사용자 음악앱", example = "youtubemusic")
+        @Schema(description = "사용자 음악앱", example = "[youtubemusic, spotify, applemusic]")
         String musicApp
 ) {
     public UserResponseDto(User user) {
@@ -18,7 +19,7 @@ public record UserResponseDto(
                 user.getId(),
                 user.getNickname(),
                 "https://s3.orbi.kr/data/file/united/35546557a06831597f6e7851cb6c86e9.jpg",
-                "youtubemusic"
+                user.getMusicApp().getAppName()
         );
     }
 }

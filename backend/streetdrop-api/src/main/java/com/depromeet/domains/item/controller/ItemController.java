@@ -1,6 +1,7 @@
 package com.depromeet.domains.item.controller;
 
-import com.depromeet.domains.item.dto.request.ItemRequestDto;
+import com.depromeet.domains.item.dto.request.ItemCreateRequestDto;
+import com.depromeet.domains.item.dto.request.ItemUpdateRequestDto;
 import com.depromeet.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.domains.item.dto.response.PoiResponseDto;
@@ -35,9 +36,30 @@ public class ItemController {
 	@PostMapping
 	public ResponseEntity<ItemResponseDto> create(
             @ReqUser User user,
-            @Valid @RequestBody ItemRequestDto itemRequestDto) {
+            @Valid @RequestBody ItemCreateRequestDto itemRequestDto) {
 		var response = itemService.create(user, itemRequestDto);
 		return ResponseDto.created(response);
+	}
+
+	@Operation(summary = "아이템 드랍 - 수정")
+	@PatchMapping("/{itemId}")
+	public ResponseEntity<ItemResponseDto> update(
+			@ReqUser User user,
+			@PathVariable(value = "itemId") Long itemId,
+			@Valid @RequestBody ItemUpdateRequestDto itemUpdateRequestDto
+	) {
+		var response = itemService.update(user, itemId, itemUpdateRequestDto);
+		return ResponseDto.ok(response);
+	}
+
+	@Operation(summary = "드랍 아이템 삭제")
+	@DeleteMapping("/{itemId}")
+	public ResponseEntity<Void> delete(
+			@ReqUser User user,
+			@PathVariable(value = "itemId") Long itemId
+	) {
+		itemService.delete(user, itemId);
+		return ResponseDto.noContent();
 	}
 
     @Operation(summary = "주변 아이템 상세 조회")
