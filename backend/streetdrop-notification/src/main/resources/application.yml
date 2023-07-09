@@ -2,3 +2,5 @@ spring:
   data:
     mongodb:
       uri: ${MONGO_DB_URL}
+fcm:
+  value: streetdrop-notification-fcm.json
