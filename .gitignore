@@ -43,3 +43,7 @@ src/**/resources/schema.sql
 
 ### GENERATED ###
 src/main/generated/
+
+
+### Notification ###
+backend/streetdrop-notification/src/main/resources/streetdrop-notification-fcm.json
