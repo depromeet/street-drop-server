@@ -1,18 +1,20 @@
 package com.depromeet.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
-@AllArgsConstructor
-@Getter
+@Builder
 @Document("notification")
 public class Notification {
+
     @Id
-    private Long id;
+    private String id;
     private String title;
     private String content;
     private String type;
@@ -20,4 +22,9 @@ public class Notification {
     private Target target;
     private LocalDateTime viewedTime;
     private boolean isDeleted;
+    @CreatedDate
+    private Date createdAt;
+    @LastModifiedDate
+    private Date modifiedAt;
+
 }
