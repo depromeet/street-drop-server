@@ -1,7 +1,6 @@
 package com.depromeet.service;
 
 import com.depromeet.dto.request.AllPushRequestDto;
-import com.depromeet.dto.request.MultiPushRequestDto;
 import com.depromeet.dto.request.PushRequestDto;
 import com.depromeet.dto.request.TopicPushRequestDto;
 import com.depromeet.external.fcm.FcmService;
@@ -11,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,12 +19,20 @@ public class PushService {
     private final FcmService fcmService;
 
     public void sendPush(PushRequestDto pushRequestDto) {
-        Optional<String> token = tokenRepository.findByUserId(pushRequestDto.getUserId());
-        if (token.isEmpty()) {
+        List<String> tokens = tokenRepository.findByUserIds(pushRequestDto.getUserIds());
+        if (tokens.isEmpty()) {
             throw new RuntimeException("token not found");
         }
         try {
-            fcmService.sendMessageSync(token.get(), pushRequestDto.getContent());
+            if (tokens.size() == 1) {
+                fcmService.sendMessageSync(tokens.get(0), pushRequestDto.getContent());
+            } else {
+                if (pushRequestDto.getTitle() != null) {
+                    fcmService.sendMulticastMessageSync(tokens, pushRequestDto.getTitle(), pushRequestDto.getContent());
+                } else {
+                    fcmService.sendMulticastMessageSync(tokens, pushRequestDto.getContent());
+                }
+            }
         } catch (FirebaseMessagingException e) {
         }
     }
@@ -38,18 +44,6 @@ public class PushService {
                 fcmService.sendMulticastMessageSync(tokens, pushRequestDto.getTitle(), pushRequestDto.getContent());
             } else {
                 fcmService.sendMulticastMessageSync(tokens, pushRequestDto.getContent());
-            }
-        } catch (FirebaseMessagingException e) {
-        }
-    }
-
-    public void sendMultiPush(MultiPushRequestDto multiPushRequestDto) {
-        List<String> tokens = tokenRepository.findByUserIds(multiPushRequestDto.getUserIds());
-        try {
-            if (multiPushRequestDto.getTitle() != null) {
-                fcmService.sendMulticastMessageSync(tokens, multiPushRequestDto.getTitle(), multiPushRequestDto.getContent());
-            } else {
-                fcmService.sendMulticastMessageSync(tokens, multiPushRequestDto.getContent());
             }
         } catch (FirebaseMessagingException e) {
         }

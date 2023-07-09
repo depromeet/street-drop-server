@@ -1,4 +1,4 @@
-package com.depromeet.controller;
+package com.depromeet.common.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

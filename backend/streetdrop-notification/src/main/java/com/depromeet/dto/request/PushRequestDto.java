@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 public class PushRequestDto {
     @NotNull
-    private Long userId;
+    private List<Long> userIds;
 
     private String title;
 

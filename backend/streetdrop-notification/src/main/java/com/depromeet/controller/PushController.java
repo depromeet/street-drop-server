@@ -1,7 +1,6 @@
 package com.depromeet.controller;
 
 import com.depromeet.dto.request.AllPushRequestDto;
-import com.depromeet.dto.request.MultiPushRequestDto;
 import com.depromeet.dto.request.PushRequestDto;
 import com.depromeet.dto.request.TopicPushRequestDto;
 import com.depromeet.service.PushService;
@@ -25,11 +24,6 @@ public class PushController {
     @PostMapping("/all/send")
     public void sendAllPush(@RequestBody AllPushRequestDto allPushRequestDto) {
         pushService.sendAllPush(allPushRequestDto);
-    }
-
-    @PostMapping("/multi/send")
-    public void sendMultiPush(@RequestBody MultiPushRequestDto multiPushRequestDto) {
-        pushService.sendMultiPush(multiPushRequestDto);
     }
 
     @PostMapping("/topic/send")
