@@ -2,8 +2,6 @@ package com.depromeet.domains.user.service;
 
 import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.exception.common.NotFoundException;
-import com.depromeet.domains.item.repository.ItemRepository;
-import com.depromeet.domains.user.dto.request.BlockUserRequestDto;
 import com.depromeet.domains.user.dto.response.BlockUserResponseDto;
 import com.depromeet.domains.user.repository.BlockUserRepository;
 import com.depromeet.domains.user.repository.UserRepository;
