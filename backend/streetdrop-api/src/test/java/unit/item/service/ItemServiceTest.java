@@ -106,7 +106,7 @@ public class ItemServiceTest {
 
                 when(itemRepository.findNearItemsByDistance(any(Point.class), any(Double.class))).thenReturn(List.of());
 
-                var result = itemService.findNearItems(nearItemRequestDto);
+                var result = itemService.findNearItems(user, nearItemRequestDto);
                 var expected = new ItemsResponseDto(List.of());
 
                 assertThat(result).isEqualTo(expected);
@@ -166,7 +166,7 @@ public class ItemServiceTest {
                 NearItemRequestDto nearItemRequestDto = new NearItemRequestDto(127.123, 37.123, 1000.0);
                 when(itemRepository.findNearItemsByDistance(any(Point.class), any(Double.class))).thenReturn(List.of(item1, item2));
 
-                var result = itemService.findNearItems(nearItemRequestDto);
+                var result = itemService.findNearItems(user, nearItemRequestDto);
                 var expected = new ItemsResponseDto(
                         List.of(
                             new ItemsResponseDto.ItemDetailDto(item1),

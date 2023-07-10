@@ -455,7 +455,7 @@ public class ItemControllerTest {
 
                 );
 
-                given(itemService.findNearItems(any(NearItemRequestDto.class))).willReturn(itemsResponseDto);
+                given(itemService.findNearItems(user, any(NearItemRequestDto.class))).willReturn(itemsResponseDto);
 
                 var response = mvc.perform(
                         get("/items")
@@ -497,7 +497,7 @@ public class ItemControllerTest {
 
                 );
 
-                given(itemService.findNearItems(any(NearItemRequestDto.class))).willReturn(itemsResponseDto);
+                given(itemService.findNearItems(user, any(NearItemRequestDto.class))).willReturn(itemsResponseDto);
 
                 var response = mvc.perform(
                         get("/items")

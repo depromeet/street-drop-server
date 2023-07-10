@@ -1,10 +1,11 @@
 package com.depromeet.domains.item.service;
 
-import com.depromeet.area.village.VillageArea;
 import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.exception.common.BusinessException;
 import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.item.dto.request.*;
+import com.depromeet.domains.user.repository.BlockUserRepository;
+import com.depromeet.domains.user.repository.UserRepository;
 import com.depromeet.domains.village.service.VillageAreaService;
 import com.depromeet.item.Item;
 import com.depromeet.item.ItemLocation;
@@ -21,6 +22,8 @@ import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ItemService {
@@ -28,6 +31,8 @@ public class ItemService {
 	private final ItemRepository itemRepository;
 	private final ItemLocationRepository itemLocationRepository;
 	private final VillageAreaService villageAreaService;
+	private final BlockUserRepository blockUserRepository;
+	private final UserRepository userRepository;
 
 	public PoiResponseDto findNearItemsPoints(NearItemPointRequestDto nearItemPointRequestDto) {
 		Point point = GeomUtil.createPoint(nearItemPointRequestDto.getLongitude(), nearItemPointRequestDto.getLatitude());
@@ -65,14 +70,34 @@ public class ItemService {
 	}
 
 	@Transactional(readOnly = true)
-    public ItemsResponseDto findNearItems(NearItemRequestDto nearItemRequestDto) {
+    public ItemsResponseDto findNearItems(User user, NearItemRequestDto nearItemRequestDto) {
         Point point = GeomUtil.createPoint(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude());
         var items = itemRepository.findNearItemsByDistance(point, nearItemRequestDto.getDistance());
-        var itemDetailDtoList = items.stream()
+
+		List<Long> blockedUserIds = getBlockedUserIds(user);
+		chageBlindNicknameAndContent(blockedUserIds);
+		var itemDetailDtoList = items.stream()
+//				.filter(item -> !blockedUserIds.contains(item.getUser().getId()))
                 .map(ItemsResponseDto.ItemDetailDto::new)
                 .toList();
         return new ItemsResponseDto(itemDetailDtoList);
     }
+
+	@Transactional
+	public void chageBlindNicknameAndContent(List<Long> blockedUserIds) {
+		for (Long blockedUserId : blockedUserIds) {
+			userRepository.findUserById(blockedUserId)
+					.ifPresent(user -> {
+						user.setNickname("Blocked User");
+						user.getItems()
+								.forEach(item -> item.setContent("Blocked Content"));
+					});
+		}
+	}
+
+	private List<Long> getBlockedUserIds(User user) {
+		return blockUserRepository.findBlockedIdsByBlockerId(user.getId());
+	}
 
 	@Transactional(readOnly = true)
 	public Item getItem(Long itemId) {

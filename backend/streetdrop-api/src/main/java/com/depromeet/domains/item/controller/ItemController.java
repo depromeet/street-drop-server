@@ -65,9 +65,10 @@ public class ItemController {
     @Operation(summary = "주변 아이템 상세 조회")
     @GetMapping
     public ResponseEntity<ItemsResponseDto> findNearItems(
+			@ReqUser User user,
             @Valid NearItemRequestDto nearItemRequestDto
     ) {
-        var response = itemService.findNearItems(nearItemRequestDto);
+        var response = itemService.findNearItems(user, nearItemRequestDto);
         return ResponseEntity.ok(response);
     }
 }
