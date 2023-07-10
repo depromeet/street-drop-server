@@ -13,9 +13,6 @@ public enum MusicApp {
 	}
 
 	public String getAppName() {
-		if (appName == null) {
-			return YOUTUBE_MUSIC.appName;
-		}
 		return appName;
 	}
 }
