@@ -2,6 +2,14 @@ package com.depromeet.repository;
 
 import com.depromeet.domain.UserDevice;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.Optional;
 
 public interface UserDeviceRepository extends MongoRepository<UserDevice, String> {
+
+    @Query(value = "{ 'userId' : userId }", fields = "{ 'deviceToken' : 1 }")
+    Optional<String> findDeviceTokenByUserId(@Param("userId") Long userId);
+
 }
