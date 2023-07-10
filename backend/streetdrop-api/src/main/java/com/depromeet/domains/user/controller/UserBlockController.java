@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserBlockController {
 	private final UserBlockService userBlockService;
 
-	@Operation(summary = "사용자 차단")
+	@Operation(summary = "사용자 차단하기")
 	@PostMapping("/users/block")
 	public ResponseEntity<BlockUserResponseDto> blockUser(
 			@ReqUser User user,

@@ -1,20 +1,21 @@
 package com.depromeet.domains.item.service;
 
+import com.depromeet.area.village.VillageArea;
 import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.exception.common.BusinessException;
 import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.item.dto.request.*;
-import com.depromeet.domains.user.repository.BlockUserRepository;
-import com.depromeet.domains.user.repository.UserRepository;
-import com.depromeet.domains.village.service.VillageAreaService;
-import com.depromeet.item.Item;
-import com.depromeet.item.ItemLocation;
 import com.depromeet.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.domains.item.repository.ItemLocationRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.music.service.MusicService;
+import com.depromeet.domains.user.repository.BlockUserRepository;
+import com.depromeet.domains.user.repository.UserRepository;
+import com.depromeet.domains.village.service.VillageAreaService;
+import com.depromeet.item.Item;
+import com.depromeet.item.ItemLocation;
 import com.depromeet.user.User;
 import com.depromeet.util.GeomUtil;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,9 @@ public class ItemService {
 	private final VillageAreaService villageAreaService;
 	private final BlockUserRepository blockUserRepository;
 	private final UserRepository userRepository;
+
+	public static final String BLOCKED_USER = "Blocked User";
+	public static final String BLOCKED_CONTENTS = "Blocked Contents";
 
 	public PoiResponseDto findNearItemsPoints(NearItemPointRequestDto nearItemPointRequestDto) {
 		Point point = GeomUtil.createPoint(nearItemPointRequestDto.getLongitude(), nearItemPointRequestDto.getLatitude());
@@ -73,26 +77,23 @@ public class ItemService {
     public ItemsResponseDto findNearItems(User user, NearItemRequestDto nearItemRequestDto) {
         Point point = GeomUtil.createPoint(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude());
         var items = itemRepository.findNearItemsByDistance(point, nearItemRequestDto.getDistance());
-
 		List<Long> blockedUserIds = getBlockedUserIds(user);
-		chageBlindNicknameAndContent(blockedUserIds);
+		chageBlindNicknameAndContents(blockedUserIds);
+
 		var itemDetailDtoList = items.stream()
-//				.filter(item -> !blockedUserIds.contains(item.getUser().getId()))
+//				.filter(item -> !blockedUserIds.contains(item.getUser().getId()))  // TODO: 추후 필터로 조회에서 제외할 경우 사용
                 .map(ItemsResponseDto.ItemDetailDto::new)
                 .toList();
         return new ItemsResponseDto(itemDetailDtoList);
     }
 
 	@Transactional
-	public void chageBlindNicknameAndContent(List<Long> blockedUserIds) {
-		for (Long blockedUserId : blockedUserIds) {
-			userRepository.findUserById(blockedUserId)
-					.ifPresent(user -> {
-						user.setNickname("Blocked User");
-						user.getItems()
-								.forEach(item -> item.setContent("Blocked Content"));
-					});
-		}
+	public void chageBlindNicknameAndContents(List<Long> blockedUserIds) {
+		userRepository.findAllById(blockedUserIds)
+				.forEach(user -> {
+					user.setNickname(BLOCKED_USER);
+					user.getItems().forEach(item -> item.setContent(BLOCKED_CONTENTS));
+				});
 	}
 
 	private List<Long> getBlockedUserIds(User user) {

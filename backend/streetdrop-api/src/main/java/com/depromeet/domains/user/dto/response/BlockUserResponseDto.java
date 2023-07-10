@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public record BlockUserResponseDto(
 		@Schema(description = "차단된 사용자 ID", example = "1")
 		Long userId,
-
 		@Schema(description = "차단된 사용자 닉네임", example = "사용자 1")
 		String nickname
 ) {
