@@ -36,6 +36,7 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/items/*").authenticated()
                 .requestMatchers("/items/*/likes", "/items/*/unlikes").authenticated()
                 .requestMatchers(POST, "items/claim").authenticated()
+                .requestMatchers(POST, "notifications/tokens").authenticated()
                 .anyRequest().permitAll().and()
                 .anonymous().and()
                 .formLogin().disable()
