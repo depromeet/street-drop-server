@@ -1,13 +1,9 @@
 import React from 'react';
 import {Button, Result} from 'antd';
-import {useLocation, useNavigate} from "react-router-dom";
-import BasicLayout from "../../layout/BasicLayout";
+import {useNavigate} from "react-router-dom";
+import BasicLayout from "../../../layout/BasicLayout";
 
 function DropMusicFail() {
-    const location = useLocation();
-    const songInfo = {...location.state};
-    console.log(songInfo);
-
     const navigate = useNavigate();
     const clickGoBack = () => {
         navigate('/drop-music');
