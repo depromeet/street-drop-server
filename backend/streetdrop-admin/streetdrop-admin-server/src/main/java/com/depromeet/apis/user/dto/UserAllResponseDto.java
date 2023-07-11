@@ -1,23 +1,16 @@
 package com.depromeet.apis.user.dto;
 
-import com.depromeet.user.User;
+import com.depromeet.apis.common.dto.PageMetaData;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-public record UserAllResponseDto(
-		List<UserResponseDto> users
-) {
-	public record UserResponseDto(
-			Long id,
-			String nickname,
-			String idfv
-	) {
-		public UserResponseDto(User user) {
-			this(
-					user.getId(),
-					user.getNickname(),
-					user.getIdfv()
-			);
-		}
-	}
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+public class UserAllResponseDto {
+    List<UserResponseDto> users;
+    PageMetaData meta;
 }

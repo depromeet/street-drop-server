@@ -1,7 +1,9 @@
 package com.depromeet.apis.user.service;
 
+import com.depromeet.apis.common.dto.PageMetaData;
 import com.depromeet.apis.user.dto.UserAllResponseDto;
 import com.depromeet.apis.user.dto.UserCountResponseDto;
+import com.depromeet.apis.user.dto.UserResponseDto;
 import com.depromeet.apis.user.repository.UserRepository;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +23,17 @@ public class UserService {
 	@Transactional(readOnly = true)
 	public UserAllResponseDto searchAllUsers(Pageable pageable) {
 		Page<User> user = userRepository.findAll(pageable);
-		var userResponseDtoList = user.getContent()
+		PageMetaData pageMetaData = new PageMetaData(
+				user.getNumber(),
+				user.getSize(),
+				(int) user.getTotalElements(),
+				user.getTotalPages()
+		);
+		List<UserResponseDto> users = user.getContent()
 				.stream()
-				.map(UserAllResponseDto.UserResponseDto::new)
+				.map(UserResponseDto::new)
 				.toList();
-		var userAllResponseDtoList = new ArrayList<>();
-		userAllResponseDtoList.add(new UserAllResponseDto(userResponseDtoList));
-		return new UserAllResponseDto(userResponseDtoList);
+		return new UserAllResponseDto(users, pageMetaData);
 	}
 
 	@Transactional
