@@ -24,4 +24,12 @@ module.exports = function (app) {
             '^/admin': ''
         }
     }));
+
+    app.use('/noti', createProxyMiddleware({
+        target: 'http://notification.street-drop.com',
+        changeOrigin: true,
+        pathRewrite: {
+            '^/noti': ''
+        }
+    }));
 }
