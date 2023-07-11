@@ -1,8 +1,15 @@
 package com.depromeet.domains.user.service;
 
+import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.common.error.exception.common.BusinessException;
+import com.depromeet.common.error.exception.common.NotFoundException;
+import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.user.dto.response.UserDetailResponseDto;
+import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.user.User;
 import com.depromeet.domains.user.repository.UserRepository;
+import com.depromeet.domains.user.repository.DefaultNickNameRepository;
 import com.depromeet.user.vo.MusicApp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,8 +24,9 @@ import java.util.Optional;
 public class UserService {
 
 	private final UserRepository userRepository;
+    private final DefaultNickNameRepository defaultNickNameRepository;
 
-	@Transactional(readOnly = true)
+    @Transactional(readOnly = true)
 	public User getOrCreateUser(String nickname) {
 		return userRepository.findUserByNickname(nickname)
 				.orElseGet(() -> User.builder()
@@ -36,6 +44,7 @@ public class UserService {
             User newUser = User.builder()
                     .nickname(generateDefaultNickname())
                     .idfv(idfv)
+                    .musicApp(MusicApp.YOUTUBE_MUSIC)
                     .build();
             return userRepository.save(newUser);
         }
@@ -73,13 +82,13 @@ public class UserService {
 
 		userRepository.save(changedUser);
 
-        return new UserDetailResponseDto(user);
-    }
+		return new UserDetailResponseDto(user);
+	}
 
-    @Transactional
-    public UserDetailResponseDto changeMusicApp(User user, MusicApp musicApp) {
-        user.changeMusicApp(musicApp);
-        userRepository.save(user);
-        return new UserDetailResponseDto(user);
-    }
+	@Transactional
+	public UserDetailResponseDto changeMusicApp(User user, MusicApp musicApp) {
+		user.changeMusicApp(musicApp);
+		userRepository.save(user);
+		return new UserDetailResponseDto(user);
+	}
 }

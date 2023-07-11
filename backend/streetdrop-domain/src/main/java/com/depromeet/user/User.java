@@ -42,6 +42,10 @@ public class User extends BaseTimeEntity {
 		this.musicApp = musicApp;
 	}
 
+	public MusicApp getMusicApp() {
+		return musicApp;
+	}
+
 	public User changeNickname(String nickname) {
 		this.nickname = nickname;
 		return this;
