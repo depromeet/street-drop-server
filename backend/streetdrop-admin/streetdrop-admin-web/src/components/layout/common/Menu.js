@@ -45,11 +45,12 @@ const MenuComponent = () => {
                 <Menu.Item key="8">• 캠페인 분석</Menu.Item>
             </Menu.SubMenu>
             <Menu.SubMenu key="sub4" icon={<BellOutlined/>} title="푸시알림 관리">
-                <Menu.Item key="7">• 푸시알림 생성</Menu.Item>
-                <Menu.Item key="8">• 푸시알림 분석</Menu.Item>
+                <Menu.Item key="9">
+                    <Link to="/notification/create">• 푸시알림 생성</Link></Menu.Item>
+                <Menu.Item key="10">• 푸시알림 분석</Menu.Item>
             </Menu.SubMenu>
             <Menu.SubMenu key="sub5" icon={<ExperimentOutlined/>} title="실험 플랫폼">
-                <Menu.Item key="9">• A/B 테스트</Menu.Item>
+                <Menu.Item key="11">• A/B 테스트</Menu.Item>
             </Menu.SubMenu>
         </Menu>
     );

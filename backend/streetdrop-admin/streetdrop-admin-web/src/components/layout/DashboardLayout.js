@@ -24,9 +24,12 @@ function DashboardLayout({children, children2, children3, children4}) {
                         <Col span={12}>
                             <Content
                                 style={{
-                                    margin: '24px 16px',
+                                    marginTop: '24px',
+                                    marginBottom: '8px',
+                                    marginLeft: '16px',
+                                    marginRight: '8px',
                                     padding: 24,
-                                    minHeight: 400,
+                                    minHeight: 350,
                                     background: colorBgContainer,
                                 }}
                             >
@@ -38,9 +41,12 @@ function DashboardLayout({children, children2, children3, children4}) {
                         <Col span={12}>
                             <Content
                                 style={{
-                                    margin: '24px 16px',
+                                    marginTop: '24px',
+                                    marginBottom: '8px',
+                                    marginLeft: '8px',
+                                    marginRight: '16px',
                                     padding: 24,
-                                    minHeight: 400,
+                                    minHeight: 350,
                                     background: colorBgContainer,
                                 }}
                             >
@@ -54,7 +60,10 @@ function DashboardLayout({children, children2, children3, children4}) {
                         <Col span={12}>
                             <Content
                                 style={{
-                                    margin: '16px 16px',
+                                    marginTop: '8px',
+                                    marginBottom: '16px',
+                                    marginLeft: '16px',
+                                    marginRight: '8px',
                                     padding: 24,
                                     minHeight: 400,
                                     background: colorBgContainer,
@@ -68,7 +77,10 @@ function DashboardLayout({children, children2, children3, children4}) {
                         <Col span={12}>
                             <Content
                                 style={{
-                                    margin: '16px 16px',
+                                    marginTop: '8px',
+                                    marginBottom: '16px',
+                                    marginLeft: '8px',
+                                    marginRight: '16px',
                                     padding: 24,
                                     minHeight: 400,
                                     background: colorBgContainer,
@@ -80,7 +92,6 @@ function DashboardLayout({children, children2, children3, children4}) {
                             </Content>
                         </Col>
                     </Row>
-
                 </Layout>
             </Layout>
         </>
