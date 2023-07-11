@@ -15,7 +15,7 @@ public class NotificationService {
     private String serverUrl;
 
 
-    public void createToken(User user, NotificationTokenDto notificationTokenDto) {
+    public void saveToken(User user, NotificationTokenDto notificationTokenDto) {
 
         @Getter
         class NotificationBody {

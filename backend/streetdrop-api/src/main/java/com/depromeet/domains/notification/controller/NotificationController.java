@@ -25,11 +25,11 @@ public class NotificationController {
 
     @Operation(summary = "푸시 토큰 등록")
     @PostMapping("/tokens")
-    public ResponseEntity<Void> createToken(
+    public ResponseEntity<Void> saveToken(
             @ReqUser User user,
             @Valid @RequestBody NotificationTokenDto notificationTokenDto
     ) {
-        notificationService.createToken(user, notificationTokenDto);
+        notificationService.saveToken(user, notificationTokenDto);
         return ResponseDto.noContent();
     }
 }
