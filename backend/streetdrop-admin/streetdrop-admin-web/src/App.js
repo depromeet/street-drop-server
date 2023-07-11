@@ -11,6 +11,7 @@ import MusicRecommend from './components/music/recommend/MusicRecommend';
 import MusicList from './components/music/near/MusicList';
 import MusicListPage from "./components/music/MusicListPage";
 import UserListPage from "./components/user/UserListPage";
+import CreateNotification from "./components/notification/CreateNotification";
 
 const App = () => {
     return (
@@ -27,6 +28,7 @@ const App = () => {
                     <Route path='/music/map' element={<MusicList/>}/>
                     <Route path='/music/list' element={<MusicListPage/>}/>
                     <Route path='/user/list' element={<UserListPage/>}/>
+                    <Route path='/notification/create' element={<CreateNotification/>}/>
                 </Routes>
             </Router>
         </Layout>
