@@ -1,9 +1,9 @@
 package unit.area.village.controller;
 
-import com.depromeet.area.village.controller.VillageItemController;
-import com.depromeet.area.village.dto.request.VillageItemsRequestDto;
-import com.depromeet.area.village.dto.response.VillageItemsCountResponseDto;
-import com.depromeet.area.village.service.VillageItemService;
+import com.depromeet.domains.village.controller.VillageItemController;
+import com.depromeet.domains.village.dto.request.VillageItemsRequestDto;
+import com.depromeet.domains.village.dto.response.VillageItemsCountResponseDto;
+import com.depromeet.domains.village.service.VillageItemService;
 import com.depromeet.common.error.GlobalExceptionHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

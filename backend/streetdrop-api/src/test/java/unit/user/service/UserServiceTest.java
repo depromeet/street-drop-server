@@ -1,13 +1,18 @@
 package unit.user.service;
 
-import com.depromeet.user.dto.response.UserResponseDto;
+import com.depromeet.common.error.exception.common.NotFoundException;
+import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.user.User;
-import com.depromeet.user.repository.UserRepository;
-import com.depromeet.user.service.UserService;
+import com.depromeet.domains.user.repository.UserRepository;
+import com.depromeet.domains.user.service.UserService;
+import com.depromeet.user.vo.MusicApp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -15,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -74,5 +80,17 @@ public class UserServiceTest {
 
     }
 
+    @DisplayName("유저 정보 수정")
+    @Nested
+    class ChangeUserInfoTest {
 
+        @DisplayName("뮤직 앱을 수정한다 - 성공")
+        @ParameterizedTest
+        @EnumSource(MusicApp.class)
+        void changeMusicAppSuccess(MusicApp musicApp) {
+            User user = new User();
+            user.changeMusicApp(musicApp);
+            assertThat(user.getMusicApp()).isEqualTo(musicApp);
+        }
+    }
 }

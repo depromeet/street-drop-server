@@ -1,6 +1,6 @@
 package com.depromeet.security.config;
 
-import com.depromeet.user.service.UserService;
+import com.depromeet.domains.user.service.UserService;
 import com.depromeet.security.filter.IdfvAuthenticationFilter;
 import com.depromeet.security.provider.IdfvUserDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import static org.springframework.http.HttpMethod.POST;
 
 @Configuration
 @EnableWebSecurity
@@ -28,9 +30,12 @@ public class WebSecurityConfig {
                 .and().cors()
                 .and().csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/users/me").authenticated()
+                .requestMatchers("/users/*").authenticated()
                 .requestMatchers(HttpMethod.POST, "/items").authenticated()
+                .requestMatchers(HttpMethod.PATCH, "/items/*").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/items/*").authenticated()
                 .requestMatchers("/items/*/likes", "/items/*/unlikes").authenticated()
+                .requestMatchers(POST, "items/claim").authenticated()
                 .anyRequest().permitAll().and()
                 .anonymous().and()
                 .formLogin().disable()

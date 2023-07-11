@@ -41,6 +41,7 @@
     <!-- log Level Setting (logging.level.root=info)-->
     <root level="info">
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
     </root>
 
     <!-- log Level Setting (org.springframework.web=debug)-->

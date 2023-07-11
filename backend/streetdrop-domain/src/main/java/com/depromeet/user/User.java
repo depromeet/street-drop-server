@@ -2,6 +2,7 @@ package com.depromeet.user;
 
 import com.depromeet.common.entity.BaseTimeEntity;
 import com.depromeet.item.Item;
+import com.depromeet.user.vo.MusicApp;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,9 +32,26 @@ public class User extends BaseTimeEntity {
 	@OneToMany(mappedBy = "user")
 	private List<Item> items;
 
+	@Enumerated(EnumType.STRING)
+	private MusicApp musicApp;
+
 	@Builder
-	public User(String nickname, String idfv) {
+	public User(String nickname, String idfv, MusicApp musicApp) {
 		this.nickname = nickname;
 		this.idfv = idfv;
+		this.musicApp = musicApp;
+	}
+
+	public MusicApp getMusicApp() {
+		return musicApp;
+	}
+
+	public User changeNickname(String nickname) {
+		this.nickname = nickname;
+		return this;
+	}
+
+	public void changeMusicApp(MusicApp musicApp) {
+		this.musicApp = musicApp;
 	}
 }
