@@ -20,7 +20,7 @@ public class ItemLocationRepository {
 
     private final JPAQueryFactory queryFactory;
 
-    public List<ItemPointDao> findNearItemsPointsByDistance(Point point, Double distance, Double innerDistance) {
+    public List<ItemPointDao> findNearItemsPointsByDistance(Point point, Double distance, Double innerDistance, List<Long> blockedUserIds) {
         return queryFactory.select(
                         Projections.fields(
                                 ItemPointDao.class,
@@ -37,6 +37,7 @@ public class ItemLocationRepository {
                 .join(itemLocation.item.albumCover, albumCover)
                 .on(item.albumCover.id.eq(albumCover.id))
                 .where(mySqlDistanceSphereFunction(itemLocation.point, point).loe(String.valueOf(distance)))
+                .where(itemLocation.item.user.id.notIn(blockedUserIds))
                 .fetch();
     }
 }

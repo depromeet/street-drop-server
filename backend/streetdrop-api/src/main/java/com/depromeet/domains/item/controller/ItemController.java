@@ -27,8 +27,10 @@ public class ItemController {
 
     @Operation(summary = "주변 아이템 조회 - POI")
     @GetMapping("/points")
-    public ResponseEntity<PoiResponseDto> findNearItemsPoints(@Valid NearItemPointRequestDto nearItemPointRequestDto) {
-        var response = itemService.findNearItemsPoints(nearItemPointRequestDto);
+    public ResponseEntity<PoiResponseDto> findNearItemsPoints(
+			@ReqUser User user,
+			@Valid NearItemPointRequestDto nearItemPointRequestDto) {
+        var response = itemService.findNearItemsPoints(user, nearItemPointRequestDto);
         return ResponseDto.ok(response);
     }
 
@@ -65,9 +67,10 @@ public class ItemController {
     @Operation(summary = "주변 아이템 상세 조회")
     @GetMapping
     public ResponseEntity<ItemsResponseDto> findNearItems(
+			@ReqUser User user,
             @Valid NearItemRequestDto nearItemRequestDto
     ) {
-        var response = itemService.findNearItems(nearItemRequestDto);
+        var response = itemService.findNearItems(user, nearItemRequestDto);
         return ResponseEntity.ok(response);
     }
 }

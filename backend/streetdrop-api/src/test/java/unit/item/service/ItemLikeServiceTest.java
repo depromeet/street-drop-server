@@ -10,6 +10,7 @@ import com.depromeet.domains.item.repository.ItemLikeRepository;
 import com.depromeet.domains.item.service.ItemLikeService;
 import com.depromeet.domains.item.service.ItemService;
 import com.depromeet.user.User;
+import com.depromeet.user.vo.MusicApp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -52,6 +53,7 @@ public class ItemLikeServiceTest {
 				User user = User.builder()
 						.nickname("test1")
 						.idfv("1234567")
+						.musicApp(MusicApp.APPLE_MUSIC)
 						.build();
 				long itemId = 1L;
 
@@ -70,7 +72,7 @@ public class ItemLikeServiceTest {
 				given(itemLikeRepository.save(any(ItemLike.class))).willReturn(itemLike);
 
 				// When
-				ItemLikeResponseDto result = itemLikeService.likeItem(user, itemId);
+				ItemLikeResponseDto result = itemLikeService.likeItem(any(User.class), itemId);
 
 				// Then
 				assertThat(result).isNotNull();

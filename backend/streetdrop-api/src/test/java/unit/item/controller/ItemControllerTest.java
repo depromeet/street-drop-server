@@ -272,7 +272,7 @@ public class ItemControllerTest {
                 PoiResponseDto.PoiDto poiResponseDto2 = new PoiResponseDto.PoiDto(2L, "/karina2.jpg", 37.123436, 127.123466, false);
                 PoiResponseDto poiResponseDto = new PoiResponseDto(List.of(poiResponseDto1, poiResponseDto2));
 
-                given(itemService.findNearItemsPoints(any(NearItemPointRequestDto.class))).willReturn(poiResponseDto);
+                given(itemService.findNearItemsPoints(any(User.class), any(NearItemPointRequestDto.class))).willReturn(poiResponseDto);
 
                 var response = mvc.perform(
                         get("/items/points")
@@ -299,7 +299,7 @@ public class ItemControllerTest {
             @Test
             void getNearItemPointsTest2() throws Exception {
                 PoiResponseDto poiResponseDto = new PoiResponseDto(List.of());
-                given(itemService.findNearItemsPoints(any(NearItemPointRequestDto.class))).willReturn(poiResponseDto);
+                given(itemService.findNearItemsPoints(any(User.class), any(NearItemPointRequestDto.class))).willReturn(poiResponseDto);
 
                 var response = mvc.perform(
                         get("/items/points")
@@ -319,8 +319,7 @@ public class ItemControllerTest {
                 PoiResponseDto.PoiDto poiResponseDto1 = new PoiResponseDto.PoiDto(1L, "/butter1.jpg", 37.123454, 127.123456, true);
                 PoiResponseDto poiResponseDto = new PoiResponseDto(List.of(poiResponseDto1));
 
-                given(itemService.findNearItemsPoints(any(NearItemPointRequestDto.class))).willReturn(poiResponseDto);
-
+                given(itemService.findNearItemsPoints(any(User.class), any(NearItemPointRequestDto.class))).willReturn(poiResponseDto);
                 var response = mvc.perform(
                         get("/items/points")
                                 .param("latitude", String.valueOf(latitude))
@@ -455,7 +454,7 @@ public class ItemControllerTest {
 
                 );
 
-                given(itemService.findNearItems(any(NearItemRequestDto.class))).willReturn(itemsResponseDto);
+                given(itemService.findNearItems(any(User.class), any(NearItemRequestDto.class))).willReturn(itemsResponseDto);
 
                 var response = mvc.perform(
                         get("/items")
@@ -497,7 +496,7 @@ public class ItemControllerTest {
 
                 );
 
-                given(itemService.findNearItems(any(NearItemRequestDto.class))).willReturn(itemsResponseDto);
+                given(itemService.findNearItems(any(User.class), any(NearItemRequestDto.class))).willReturn(itemsResponseDto);
 
                 var response = mvc.perform(
                         get("/items")

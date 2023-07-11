@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class Item extends BaseTimeEntity {
 	private Long id;
 
 	@Column(length = 500, nullable = false)
+	@Setter
 	private String content;
 
 	@OneToOne(fetch = LAZY, mappedBy = "item", cascade = CascadeType.ALL)
