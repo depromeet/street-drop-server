@@ -5,6 +5,7 @@ import com.depromeet.domains.notification.dto.NotificationTokenDto;
 import com.depromeet.domains.notification.service.NotificationService;
 import com.depromeet.security.annotation.ReqUser;
 import com.depromeet.user.User;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class NotificationController {
 
     private final NotificationService notificationService;
 
+    @Operation(summary = "푸시 토큰 등록")
     @PostMapping("/tokens")
     public ResponseEntity<Void> createToken(
             @ReqUser User user,
