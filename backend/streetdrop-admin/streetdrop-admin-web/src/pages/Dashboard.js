@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row, Statistic, Typography } from 'antd';
 
-import CountUp from 'react-countup';
 import axios from "axios";
 
 import UserLineGraph from "../components/dashboard/UserLineGraph";
@@ -81,7 +80,7 @@ function Dashboard() {
     const dashboard4 = (<>
         <Title level={5}>마케팅 분석</Title>
         <p style={{color: 'gray', marginBottom: '15px'}}>갱신시간 : 2023.06.19 오전 3:06:49</p>
-        <MarketingDashboard data={data2}/>
+
     </>)
     return (<>
         <DashboardLayout children={dashboard1} children2={dashboard2} children3={dashboard3} children4={dashboard4}>
