@@ -1,5 +1,6 @@
 package unit.item.service;
 
+import com.depromeet.domains.user.repository.BlockUserRepository;
 import com.depromeet.item.Item;
 import com.depromeet.item.ItemLocation;
 import com.depromeet.domains.item.dao.ItemPointDao;
@@ -17,7 +18,9 @@ import com.depromeet.music.genre.Genre;
 import com.depromeet.music.genre.SongGenre;
 import com.depromeet.music.song.Song;
 import com.depromeet.user.User;
+import com.depromeet.user.vo.MusicApp;
 import com.depromeet.util.GeomUtil;
+import org.junit.Rule;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -28,12 +31,16 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.quality.Strictness;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -49,6 +56,10 @@ public class ItemServiceTest {
     @Mock
     ItemLocationRepository itemLocationRepository;
 
+    @Mock
+    BlockUserRepository blockUserRepository;
+
+
     private final GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
 
     @DisplayName("특정 지역 주변의 아이템 조회")
@@ -57,13 +68,20 @@ public class ItemServiceTest {
         @Nested
         @DisplayName("성공")
         class Success {
+
             @DisplayName("특정 지역 주변의 아이템 조회 - 조회 아이템이 없는 경우")
             @Test
             void getNearItemPointsTestSuccess1() {
-                NearItemPointRequestDto nearItemRequestDto = new NearItemPointRequestDto(127.123, 37.123, 1000.0, 1000.0);
-                when(itemLocationRepository.findNearItemsPointsByDistance(any(Point.class), any(Double.class), any(Double.class))).thenReturn(List.of());
+                User user = User.builder()
+                        .nickname("test1")
+                        .idfv("1234567")
+                        .build();
 
-                var result = itemService.findNearItemsPoints(nearItemRequestDto);
+                NearItemPointRequestDto nearItemRequestDto = new NearItemPointRequestDto(127.123, 37.123, 1000.0, 1000.0);
+                when(blockUserRepository.findBlockedIdsByBlockerId(any(Long.class))).thenReturn(List.of());
+                when(itemLocationRepository.findNearItemsPointsByDistance(any(Point.class), any(Double.class), any(Double.class), anyList())).thenReturn(List.of());
+
+                var result = itemService.findNearItemsPoints(user, nearItemRequestDto);
 
                 assertThat(result).isEqualTo(new PoiResponseDto(List.of()));
             }
@@ -71,15 +89,20 @@ public class ItemServiceTest {
             @DisplayName("특정 지역 주변의 아이템 조회 - 조회 아이템이 2개 있는 경우")
             @Test
             void getNearItemPointsTestSuccess2() {
-                NearItemPointRequestDto nearItemPointRequestDto = new NearItemPointRequestDto(127.123, 37.123, 1000.0, 1000.0);
+                User user = User.builder()
+                        .nickname("test1")
+                        .idfv("1234567")
+                        .build();
 
+                NearItemPointRequestDto nearItemPointRequestDto = new NearItemPointRequestDto(127.123, 37.123, 1000.0, 1000.0);
                 List<ItemPointDao> itemPointDaos = List.of(
                         new ItemPointDao(gf.createPoint(new Coordinate(127.123, 37.123)), 1L, "/image1.jpg", false),
                         new ItemPointDao(gf.createPoint(new Coordinate(127.133, 37.323)), 2L, "/image2.jpg", false)
                 );
-                when(itemLocationRepository.findNearItemsPointsByDistance(any(Point.class), any(Double.class), any(Double.class))).thenReturn(itemPointDaos);
 
-                var result = itemService.findNearItemsPoints(nearItemPointRequestDto);
+                when(itemLocationRepository.findNearItemsPointsByDistance(any(Point.class), any(Double.class), any(Double.class), List.of(10L))).thenReturn(itemPointDaos);
+
+                var result = itemService.findNearItemsPoints(user, nearItemPointRequestDto);
 
                 assertThat(result).isEqualTo(
                         new PoiResponseDto(
@@ -106,7 +129,7 @@ public class ItemServiceTest {
 
                 when(itemRepository.findNearItemsByDistance(any(Point.class), any(Double.class))).thenReturn(List.of());
 
-                var result = itemService.findNearItems(user, nearItemRequestDto);
+                var result = itemService.findNearItems(null, nearItemRequestDto);
                 var expected = new ItemsResponseDto(List.of());
 
                 assertThat(result).isEqualTo(expected);
@@ -125,6 +148,7 @@ public class ItemServiceTest {
                         .build();
                 User user = User.builder()
                         .nickname("user name")
+                        .musicApp(MusicApp.APPLE_MUSIC)
                         .build();
                 Artist artist = Artist.builder()
                         .name("artist name")
@@ -166,7 +190,7 @@ public class ItemServiceTest {
                 NearItemRequestDto nearItemRequestDto = new NearItemRequestDto(127.123, 37.123, 1000.0);
                 when(itemRepository.findNearItemsByDistance(any(Point.class), any(Double.class))).thenReturn(List.of(item1, item2));
 
-                var result = itemService.findNearItems(user, nearItemRequestDto);
+                var result = itemService.findNearItems(null, nearItemRequestDto);
                 var expected = new ItemsResponseDto(
                         List.of(
                             new ItemsResponseDto.ItemDetailDto(item1),

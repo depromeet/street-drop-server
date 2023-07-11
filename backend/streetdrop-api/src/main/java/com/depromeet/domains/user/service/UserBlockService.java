@@ -5,7 +5,7 @@ import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.user.dto.response.BlockUserResponseDto;
 import com.depromeet.domains.user.repository.BlockUserRepository;
 import com.depromeet.domains.user.repository.UserRepository;
-import com.depromeet.user.Block;
+import com.depromeet.user.BlockUser;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,9 +23,13 @@ public class UserBlockService {
 		var blockUser  = userRepository.findUserById(blockUserID)
 				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, user.getId()));
 
-		Block block = Block.builder()
-				.blockerId(user.getId())  // 차단한 사용자 아이디
-				.blockedId(blockUserID)   // 차단된 사용자 아이디
+		/*
+		 * blockerId : 차단한 사용자 아이디
+		 * blockedId : 차단된 사용자 아이디
+		 */
+		BlockUser block = BlockUser.builder()
+				.blockerId(user.getId())
+				.blockedId(blockUserID)
 				.build();
 		blockUserRepository.save(block);
 		return new BlockUserResponseDto(blockUser);

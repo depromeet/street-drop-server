@@ -27,8 +27,10 @@ public class ItemController {
 
     @Operation(summary = "주변 아이템 조회 - POI")
     @GetMapping("/points")
-    public ResponseEntity<PoiResponseDto> findNearItemsPoints(@Valid NearItemPointRequestDto nearItemPointRequestDto) {
-        var response = itemService.findNearItemsPoints(nearItemPointRequestDto);
+    public ResponseEntity<PoiResponseDto> findNearItemsPoints(
+			@ReqUser User user,
+			@Valid NearItemPointRequestDto nearItemPointRequestDto) {
+        var response = itemService.findNearItemsPoints(user, nearItemPointRequestDto);
         return ResponseDto.ok(response);
     }
 

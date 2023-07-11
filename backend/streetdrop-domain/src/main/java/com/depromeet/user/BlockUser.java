@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Block {
+public class BlockUser {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class Block {
 	private Long blockedId;
 
 	@Builder
-	public Block(Long blockerId, Long blockedId) {
+	public BlockUser(Long blockerId, Long blockedId) {
 		this.blockerId = blockerId;
 		this.blockedId = blockedId;
 	}
