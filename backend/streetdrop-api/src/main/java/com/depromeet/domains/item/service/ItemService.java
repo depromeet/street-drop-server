@@ -20,6 +20,7 @@ import com.depromeet.user.User;
 import com.depromeet.util.GeomUtil;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Point;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +40,7 @@ public class ItemService {
 	private final UserRepository userRepository;
 
 
+	@Cacheable(value = "findNearItemsPointsCache", cacheManager = "redisCacheManager")
 	public PoiResponseDto findNearItemsPoints(User user, NearItemPointRequestDto nearItemPointRequestDto) {
 		Point point = GeomUtil.createPoint(nearItemPointRequestDto.getLongitude(), nearItemPointRequestDto.getLatitude());
 
