@@ -11,6 +11,9 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 	Optional<User> findUserByNickname(String nickname);
+
 	@Lock(LockModeType.PESSIMISTIC_WRITE)
 	Optional<User> findUserByIdfv(String idfv);
+
+	Optional<User> findUserById(Long blockUserID);
 }

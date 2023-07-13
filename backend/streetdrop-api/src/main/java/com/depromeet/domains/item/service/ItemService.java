@@ -5,21 +5,28 @@ import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.exception.common.BusinessException;
 import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.item.dto.request.*;
-import com.depromeet.domains.village.service.VillageAreaService;
-import com.depromeet.item.Item;
-import com.depromeet.item.ItemLocation;
 import com.depromeet.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.domains.item.repository.ItemLocationRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.music.service.MusicService;
+import com.depromeet.domains.user.repository.BlockUserRepository;
+import com.depromeet.domains.user.repository.UserRepository;
+import com.depromeet.domains.village.service.VillageAreaService;
+import com.depromeet.item.Item;
+import com.depromeet.item.ItemLocation;
 import com.depromeet.user.User;
 import com.depromeet.util.GeomUtil;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.depromeet.item.QItem.item;
 
 @Service
 @RequiredArgsConstructor
@@ -28,11 +35,20 @@ public class ItemService {
 	private final ItemRepository itemRepository;
 	private final ItemLocationRepository itemLocationRepository;
 	private final VillageAreaService villageAreaService;
+	private final BlockUserRepository blockUserRepository;
+	private final UserRepository userRepository;
 
-	public PoiResponseDto findNearItemsPoints(NearItemPointRequestDto nearItemPointRequestDto) {
+
+	public PoiResponseDto findNearItemsPoints(User user, NearItemPointRequestDto nearItemPointRequestDto) {
 		Point point = GeomUtil.createPoint(nearItemPointRequestDto.getLongitude(), nearItemPointRequestDto.getLatitude());
-		var poiDtoList = itemLocationRepository.findNearItemsPointsByDistance(point, nearItemPointRequestDto.getDistance(), nearItemPointRequestDto.getInnerDistance())
-				.stream().map(PoiResponseDto.PoiDto::fromItemPoint).toList();
+
+		List<Long> blockedUserIds = new ArrayList<>();
+		if (user != null) {
+			blockedUserIds = getBlockedUserIds(user);
+		}
+		var poiDtoList = itemLocationRepository.findNearItemsPointsByDistance(point, nearItemPointRequestDto.getDistance(), nearItemPointRequestDto.getInnerDistance(), blockedUserIds)
+				.stream()
+				.map(PoiResponseDto.PoiDto::fromItemPoint).toList();
 		return new PoiResponseDto(poiDtoList);
 	}
 
@@ -65,14 +81,29 @@ public class ItemService {
 	}
 
 	@Transactional(readOnly = true)
-    public ItemsResponseDto findNearItems(NearItemRequestDto nearItemRequestDto) {
+    public ItemsResponseDto findNearItems(User user, NearItemRequestDto nearItemRequestDto) {
         Point point = GeomUtil.createPoint(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude());
         var items = itemRepository.findNearItemsByDistance(point, nearItemRequestDto.getDistance());
-        var itemDetailDtoList = items.stream()
-                .map(ItemsResponseDto.ItemDetailDto::new)
-                .toList();
-        return new ItemsResponseDto(itemDetailDtoList);
+
+		if (user != null) {
+			final List<Long> blockedUserIds =  getBlockedUserIds(user);
+			var itemDetailDtoList = items.stream()
+					.filter((item) -> !blockedUserIds.contains(item.getUser().getId()))
+					.map(ItemsResponseDto.ItemDetailDto::new)
+					.toList();
+			return new ItemsResponseDto(itemDetailDtoList);
+		} else {
+			final List<Long> blockedUserIds = new ArrayList<>();
+			var itemDetailDtoList = items.stream()
+					.map(ItemsResponseDto.ItemDetailDto::new)
+					.toList();
+			return new ItemsResponseDto(itemDetailDtoList);
+		}
     }
+
+	private List<Long> getBlockedUserIds(User user) {
+		return blockUserRepository.findBlockedIdsByBlockerId(user.getId());
+	}
 
 	@Transactional(readOnly = true)
 	public Item getItem(Long itemId) {

@@ -4,6 +4,7 @@ import com.depromeet.domains.user.controller.UserController;
 import com.depromeet.domains.user.dto.response.UserDetailResponseDto;
 import com.depromeet.user.User;
 import com.depromeet.domains.user.service.UserService;
+import com.depromeet.user.vo.MusicApp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import unit.annotation.MockAnonymousUser;
 
-import static com.depromeet.user.vo.MusicApp.YOUTUBE_MUSIC;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -43,7 +43,7 @@ public class UserControllerTest {
             @DisplayName("유저 정보 조회")
             @Test
             void GetUserInfoTest() throws Exception {
-                User user = User.builder().nickname("Guest").idfv("new-idfv").musicApp(YOUTUBE_MUSIC).build();
+                User user = User.builder().nickname("Guest").idfv("new-idfv").musicApp(MusicApp.YOUTUBE_MUSIC).build();
                 UserDetailResponseDto userDetailResponseDto = new UserDetailResponseDto(user);
                 given(userService.getUserInfo(any(User.class))).willReturn(userDetailResponseDto);
 

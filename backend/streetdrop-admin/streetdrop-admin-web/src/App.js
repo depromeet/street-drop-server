@@ -12,6 +12,7 @@ import MusicList from './components/music/near/MusicList';
 import MusicListPage from "./components/music/MusicListPage";
 import UserListPage from "./components/user/UserListPage";
 import CreateNotification from "./components/notification/CreateNotification";
+import ItemListPage from "./components/music/items/ItemListPage";
 
 const App = () => {
     return (
@@ -20,6 +21,7 @@ const App = () => {
                 <Routes>
                     <Route exact path="/login" element={<Login/>}/>
                     <Route exact path="/" element={<Dashboard/>}/>
+                    <Route path="/items" element={<ItemListPage/>}/>
                     <Route path="/drop-music" element={<SearchDropMusic/>}/>
                     <Route path="/drop-music/details" element={<DropSingleMusic/>}/>
                     <Route path='/drop-music/result/success' element={<DropMusicSuccess/>}/>

@@ -1,4 +1,4 @@
-package com.depromeet.apis.user.dto;
+package com.depromeet.apis.item.dto;
 
 import com.depromeet.apis.common.dto.PageMetaData;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class UserAllResponseDto {
-    List<UserResponseDto> users;
+public class ItemAllResponseDto {
+    List<ItemResponseDto> items;
     PageMetaData meta;
 }

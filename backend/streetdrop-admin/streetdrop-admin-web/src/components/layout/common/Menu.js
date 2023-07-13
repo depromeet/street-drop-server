@@ -22,6 +22,9 @@ const MenuComponent = () => {
                 <Link to="/">대시보드</Link>
             </Menu.Item>
             <Menu.SubMenu key="sub1" icon={<DingtalkOutlined/>} title="드랍 아이템">
+                <Menu.Item key="sub1-1">
+                    <Link to="/items">• 아이템 전체조회</Link>
+                </Menu.Item>
                 <Menu.Item key="2">
                     <Link to="/music/list">• 음악조회</Link>
                 </Menu.Item>
