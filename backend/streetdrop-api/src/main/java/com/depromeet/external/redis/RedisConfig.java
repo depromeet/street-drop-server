@@ -39,20 +39,34 @@ public class RedisConfig {
 
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate() {
+		log.info("Registered redisTemplate");
+
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setConnectionFactory(redisConnectionFactory());
 		redisTemplate.afterPropertiesSet();;
 		return redisTemplate;
 	}
 
-	@Bean(name = "cacheManager")
+	@Bean(name = "redisCacheManager")
 	public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
-		RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
-				.disableCachingNullValues()
-				.entryTtl(Duration.ofHours(timeout))
-				.serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+		log.info("Registered CacheManager");
 
-		return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(connectionFactory).cacheDefaults(configuration).build();
+		RedisCacheConfiguration configuration = RedisCacheConfiguration
+				.defaultCacheConfig()
+				.disableCachingNullValues()
+				.entryTtl(Duration.ofMinutes(timeout))
+				.serializeKeysWith(
+						RedisSerializationContext
+								.SerializationPair
+								.fromSerializer(new StringRedisSerializer()))
+				.serializeValuesWith(
+						RedisSerializationContext
+								.SerializationPair
+								.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+
+		return RedisCacheManager.RedisCacheManagerBuilder
+				.fromConnectionFactory(connectionFactory)
+				.cacheDefaults(configuration)
+				.build();
 	}
 }
