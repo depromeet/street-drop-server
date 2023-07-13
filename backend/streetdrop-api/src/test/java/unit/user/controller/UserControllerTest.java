@@ -4,6 +4,7 @@ import com.depromeet.domains.user.controller.UserController;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.user.User;
 import com.depromeet.domains.user.service.UserService;
+import com.depromeet.user.vo.MusicApp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -42,7 +43,7 @@ public class UserControllerTest {
             @DisplayName("유저 정보 조회")
             @Test
             void GetUserInfoTest() throws Exception {
-                User user = User.builder().nickname("Guest").idfv("new-idfv").build();
+                User user = User.builder().nickname("Guest").idfv("new-idfv").musicApp(MusicApp.YOUTUBE_MUSIC).build();
                 UserResponseDto userResponseDto = new UserResponseDto(user);
                 given(userService.getUserInfo(any(User.class))).willReturn(userResponseDto);
 

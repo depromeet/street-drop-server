@@ -28,3 +28,5 @@ cloud:
         static: ${AWS_REGION}
       stack:
         auto: false
+notification:
+  noti-server-url: ${NOTI_SERVER_URL}

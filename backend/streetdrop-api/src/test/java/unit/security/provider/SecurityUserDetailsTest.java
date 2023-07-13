@@ -2,6 +2,7 @@ package unit.security.provider;
 
 import com.depromeet.user.User;
 import com.depromeet.security.provider.SecurityUserDetails;
+import com.depromeet.user.vo.MusicApp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +17,7 @@ public class SecurityUserDetailsTest {
     @Test
     @DisplayName("SecurityUserDetails 테스트")
     void testSecurityUserDetailsTest() {
-        User user = new User("nickname", "idfv");
+        User user = new User("nickname", "idfv", MusicApp.YOUTUBE_MUSIC);
         SecurityUserDetails securityUserDetails = new SecurityUserDetails(user);
         assertThat(securityUserDetails.getAuthorities()).isNull();
         assertThat(securityUserDetails.getPassword()).isNull();
