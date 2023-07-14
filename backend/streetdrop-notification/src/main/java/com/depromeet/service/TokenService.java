@@ -6,6 +6,8 @@ import com.depromeet.repository.UserDeviceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class TokenService {
@@ -13,18 +15,17 @@ public class TokenService {
     private final UserDeviceRepository userDeviceRepository;
 
     public void saveToken(TokenRequestDto tokenRequestDto) {
-        UserDevice userDevice = UserDevice.builder()
-                .userId(tokenRequestDto.getUserId())
-                .deviceToken(tokenRequestDto.getToken())
-                .build();
-        userDeviceRepository.insert(userDevice);
-    }
-
-    public void updateToken(TokenRequestDto tokenRequestDto) {
-        var userDevice = userDeviceRepository.findByUserId(tokenRequestDto.getUserId())
-                .orElseThrow(() -> new RuntimeException("user not found"));  // TODO : custom exception
-        userDevice.updateDeviceToken(tokenRequestDto.getToken());
-        userDeviceRepository.save(userDevice);
+        Optional<UserDevice> userDevice = userDeviceRepository.findByUserId(tokenRequestDto.getUserId());
+        if (userDevice.isPresent()) {
+            UserDevice updatedUserDevice = userDevice.get().updateDeviceToken(tokenRequestDto.getToken());
+            userDeviceRepository.save(updatedUserDevice);
+        } else {
+            UserDevice createdUserDevice = UserDevice.builder()
+                    .userId(tokenRequestDto.getUserId())
+                    .deviceToken(tokenRequestDto.getToken())
+                    .build();
+            userDeviceRepository.save(createdUserDevice);
+        }
     }
 
     public void deleteToken(Long userId) {

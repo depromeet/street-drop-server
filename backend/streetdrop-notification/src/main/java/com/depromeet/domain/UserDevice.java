@@ -25,8 +25,9 @@ public class UserDevice {
     @LastModifiedDate
     private Date modifiedAt;
 
-    public void updateDeviceToken(String deviceToken) {
+    public UserDevice updateDeviceToken(String deviceToken) {
         this.deviceToken = deviceToken;
+        return this;
     }
 
 }
