@@ -17,11 +17,6 @@ public class TokenController {
         tokenService.saveToken(tokenRequestDto);
     }
 
-    @PutMapping
-    public void updateToken(@RequestBody TokenRequestDto tokenRequestDto) {
-        tokenService.updateToken(tokenRequestDto);
-    }
-
     @DeleteMapping
     public void deleteToken(@RequestBody Long userId) {
         tokenService.deleteToken(userId);
