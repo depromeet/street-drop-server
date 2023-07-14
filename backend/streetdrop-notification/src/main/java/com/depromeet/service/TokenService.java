@@ -2,7 +2,6 @@ package com.depromeet.service;
 
 import com.depromeet.domain.UserDevice;
 import com.depromeet.dto.request.TokenRequestDto;
-import com.depromeet.repository.TokenRepository;
 import com.depromeet.repository.UserDeviceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TokenService {
 
-    private final TokenRepository tokenRepository;
     private final UserDeviceRepository userDeviceRepository;
 
     public void saveToken(TokenRequestDto tokenRequestDto) {
@@ -23,7 +21,10 @@ public class TokenService {
     }
 
     public void updateToken(TokenRequestDto tokenRequestDto) {
-        tokenRepository.update(tokenRequestDto.getUserId(), tokenRequestDto.getToken());
+        var userDevice = userDeviceRepository.findByUserId(tokenRequestDto.getUserId())
+                .orElseThrow(() -> new RuntimeException("user not found"));  // TODO : custom exception
+        userDevice.updateDeviceToken(tokenRequestDto.getToken());
+        userDeviceRepository.save(userDevice);
     }
 
     public void deleteToken(Long userId) {
