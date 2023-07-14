@@ -1,7 +1,9 @@
 package com.depromeet.service;
 
+import com.depromeet.domain.UserDevice;
 import com.depromeet.dto.request.TokenRequestDto;
 import com.depromeet.repository.TokenRepository;
+import com.depromeet.repository.UserDeviceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +12,14 @@ import org.springframework.stereotype.Service;
 public class TokenService {
 
     private final TokenRepository tokenRepository;
+    private final UserDeviceRepository userDeviceRepository;
 
-    public void createToken(TokenRequestDto tokenRequestDto) {
-        tokenRepository.save(tokenRequestDto.getUserId(), tokenRequestDto.getToken());
+    public void saveToken(TokenRequestDto tokenRequestDto) {
+        UserDevice userDevice = UserDevice.builder()
+                .userId(tokenRequestDto.getUserId())
+                .deviceToken(tokenRequestDto.getToken())
+                .build();
+        userDeviceRepository.save(userDevice);
     }
 
     public void updateToken(TokenRequestDto tokenRequestDto) {

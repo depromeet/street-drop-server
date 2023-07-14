@@ -14,7 +14,7 @@ public class TokenController {
 
     @PostMapping
     public void createToken(@RequestBody TokenRequestDto tokenRequestDto) {
-        tokenService.createToken(tokenRequestDto);
+        tokenService.saveToken(tokenRequestDto);
     }
 
     @PutMapping
