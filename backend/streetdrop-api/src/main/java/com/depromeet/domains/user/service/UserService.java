@@ -23,6 +23,7 @@ public class UserService {
         return userRepository.findUserByNickname(nickname)
                 .orElseGet(() -> User.builder()
                         .nickname(nickname)
+                        .musicApp(MusicApp.YOUTUBE_MUSIC)
                         .build()
                 );
     }
