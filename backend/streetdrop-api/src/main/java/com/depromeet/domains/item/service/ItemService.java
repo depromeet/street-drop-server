@@ -20,6 +20,7 @@ import com.depromeet.user.User;
 import com.depromeet.util.GeomUtil;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Point;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,6 +83,7 @@ public class ItemService {
 		return new ItemResponseDto(savedItem);
 	}
 
+	@Cacheable(value = "findNearItemsCache", cacheManager = "redisCacheManager")
 	@Transactional(readOnly = true)
     public ItemsResponseDto findNearItems(User user, NearItemRequestDto nearItemRequestDto) {
         Point point = GeomUtil.createPoint(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude());
@@ -113,6 +115,7 @@ public class ItemService {
 				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, String.valueOf(itemId)));
 	}
 
+	@CacheEvict(value = "findNearItemsCache", allEntries = true)
 	@Transactional
 	public void delete(User user, Long itemId) {
 		var item = itemRepository.findById(itemId)

@@ -11,13 +11,15 @@ import lombok.Setter;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 
+import java.io.Serializable;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Validated
 @ParameterObject
-public class NearItemRequestDto {
+public class NearItemRequestDto implements Serializable {
 
     private final static Double DEFAULT_DISTANCE = 500.0;
 

@@ -4,6 +4,10 @@ import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.item.Item;
 import com.depromeet.domains.music.dto.response.MusicResponseDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
@@ -32,6 +36,8 @@ public record ItemsResponseDto(List<ItemDetailDto> items) {
                         pattern = "yyyy-MM-dd HH:mm:ss",
                         locale = "Asia/Seoul"
                 )
+                @JsonSerialize(using = LocalDateTimeSerializer.class)
+                @JsonDeserialize(using =LocalDateTimeDeserializer.class)
                 LocalDateTime createdAt,
 
                 @Schema(description = "아이템 좋아요 여부", example = "true")
