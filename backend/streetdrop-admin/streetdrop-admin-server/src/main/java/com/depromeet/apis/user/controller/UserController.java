@@ -3,7 +3,7 @@ package com.depromeet.apis.user.controller;
 
 import com.depromeet.apis.user.dto.ResponseDto;
 import com.depromeet.apis.user.dto.UserAllResponseDto;
-import com.depromeet.apis.user.dto.UserCountResponseDto;
+import com.depromeet.apis.user.dto.UserDetailResponseDto;
 import com.depromeet.apis.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -11,27 +11,31 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
-	private final UserService userService;
+    private final UserService userService;
 
-	@GetMapping("/users")
-	public ResponseEntity<UserAllResponseDto> getUsers(
-			@PageableDefault(size = 20, page = 0, sort = "createdAt",
-					direction = Sort.Direction.DESC) Pageable pageable
-			) {
-		var response = userService.searchAllUsers(pageable);
-		return ResponseDto.ok(response);
-	}
+    @GetMapping
+    public ResponseEntity<UserAllResponseDto> getAllUsers(
+            @PageableDefault(size = 20, page = 0, sort = "createdAt",
+                    direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        var response = userService.getAllUsers(pageable);
+        return ResponseDto.ok(response);
+    }
 
-	@GetMapping("/users/count")
-	public ResponseEntity<List<UserCountResponseDto>> getUsersCount() {
-		var response= userService.countUsersByCreatedAt();
-		return ResponseEntity.ok(response);
-	}
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDetailResponseDto> getUserDetail(
+            @PathVariable("userId") Long userId
+    ) {
+        var response = userService.getUserDetail(userId);
+        return ResponseDto.ok(response);
+    }
 }

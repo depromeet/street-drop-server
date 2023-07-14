@@ -1,16 +1,17 @@
 package com.depromeet.apis.user.dto;
 
-import com.depromeet.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-public class UserResponseDto {
+public class UserBasicInfoResponseDto {
     private Long id;
     private String nickname;
     private String idfv;
-    private String createdAt;
+    private LocalDateTime createdAt;
 }
