@@ -18,7 +18,7 @@ module.exports = function (app) {
     }));
 
     app.use('/admin', createProxyMiddleware({
-        target: 'http://admin.street-drop.com',
+        target: 'http://localhost:8080',
         changeOrigin: true,
         pathRewrite: {
             '^/admin': ''
