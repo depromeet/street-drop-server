@@ -22,6 +22,9 @@ const MenuComponent = () => {
                 <Link to="/">대시보드</Link>
             </Menu.Item>
             <Menu.SubMenu key="sub1" icon={<DingtalkOutlined/>} title="드랍 아이템">
+                <Menu.Item key="sub1-1">
+                    <Link to="/items">• 아이템 전체조회</Link>
+                </Menu.Item>
                 <Menu.Item key="2">
                     <Link to="/music/list">• 음악조회</Link>
                 </Menu.Item>
@@ -39,17 +42,21 @@ const MenuComponent = () => {
                 <Menu.Item key="6">
                     <Link to="/user/list">• 유저조회</Link>
                 </Menu.Item>
+                <Menu.Item key="user-2">
+                    <Link to="/user/signup-graph">• 유저가입 분석</Link>
+                </Menu.Item>
             </Menu.SubMenu>
             <Menu.SubMenu key="sub3" icon={<FundProjectionScreenOutlined/>} title="마케팅 관리">
                 <Menu.Item key="7">• 캠페인 생성</Menu.Item>
                 <Menu.Item key="8">• 캠페인 분석</Menu.Item>
             </Menu.SubMenu>
             <Menu.SubMenu key="sub4" icon={<BellOutlined/>} title="푸시알림 관리">
-                <Menu.Item key="7">• 푸시알림 생성</Menu.Item>
-                <Menu.Item key="8">• 푸시알림 분석</Menu.Item>
+                <Menu.Item key="9">
+                    <Link to="/notification/create">• 푸시알림 생성</Link></Menu.Item>
+                <Menu.Item key="10">• 푸시알림 분석</Menu.Item>
             </Menu.SubMenu>
             <Menu.SubMenu key="sub5" icon={<ExperimentOutlined/>} title="실험 플랫폼">
-                <Menu.Item key="9">• A/B 테스트</Menu.Item>
+                <Menu.Item key="11">• A/B 테스트</Menu.Item>
             </Menu.SubMenu>
         </Menu>
     );

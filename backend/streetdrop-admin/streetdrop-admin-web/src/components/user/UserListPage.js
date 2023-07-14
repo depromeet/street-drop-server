@@ -1,14 +1,30 @@
-import React, { useState, useEffect } from "react"
-import { Button, Space, Table, message } from 'antd';
-import { DownloadOutlined } from '@ant-design/icons';
+import React, {useEffect, useState} from "react"
+import {Drawer, Table} from 'antd';
 import axios from "axios";
 
 import BasicLayout from "../layout/BasicLayout";
+import UserDetailPage from "./UserDetailPage";
 
 function UserListPage() {
-    const [ messageApi, contextHolder ] = message.useMessage();
-    const [ users, setUsers ] = useState([]);
-    const [ loading, setLoading ] = useState(false);
+    const [users, setUsers] = useState([]);
+    const [openDrawer, setOpenDrawer] = useState(false);
+    const [clickedUserId, setClickedUserId] = useState(1);
+    const showDrawer = (id) => {
+        setClickedUserId(id);
+        console.log(id);
+        setOpenDrawer(true);
+    };
+
+    const onClose = () => {
+        setOpenDrawer(false);
+    };
+
+    const [tableParams, setTableParams] = useState({
+        pagination: {
+            current: 1,
+            pageSize: 30
+        },
+    });
 
     const columns = [
         {
@@ -22,67 +38,76 @@ function UserListPage() {
         {
             title: 'IDFV',
             dataIndex: 'idfv',
+        },
+        {
+            title: '가입일',
+            dataIndex: 'createdAt',
+            render: (text, record) => (
+                <span>{new Date(record.createdAt).toLocaleString()}</span>
+            )
+        }, {
+            title: '상세보기',
+            dataIndex: 'id',
+            render: (text, record) => (
+                <>
+                    <a onClick={() => {showDrawer(record.id)}}>More</a>
+                    <br/>
+                </>
+            )
         }
     ]
 
+    const handleTableChange = (
+        pagination,
+    ) => {
+        setTableParams({
+            pagination,
+        });
+
+
+        if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+            setUsers([]);
+        }
+    };
+
     useEffect(() => {
-        setUsers([]);
-        setLoading(true);
         fetchUser();
-    }, []);
+    }, [JSON.stringify(tableParams)]);
 
     const fetchUser = () => {
-        axios.get('/admin/users')
+        axios.get('/admin/users' + '?page=' + (tableParams.pagination.current - 1) + '&size=' + tableParams.pagination.pageSize)
             .then(response => {
-                messageApi.open({
-                    type: 'success',
-                    content: "유저 전체 조회에 성공했습니다"
+                console.log(response.data);
+                setUsers(response.data['users']);
+                setTableParams({
+                    ...tableParams,
+                    pagination: {
+                        ...tableParams.pagination,
+                        total: response.data['meta']['totalElements'],
+                    },
                 });
-                const data = response.data.users;
-                const fetchData = data.map((user, index) => {
-                    const key = index + 1;
-                    return {...user, key};
-                });
-                setUsers(fetchData);
             }).catch(error => {
-                console.error("Error fetching data:", error);
-                messageApi.open({
-                    type: 'error',
-                    content:"사용자 검색에 실패했습니다. 다시 시도해주세요.",
-                });
+            console.error("Error fetching data:", error);
         });
-        setLoading(false);
     }
 
-    if (loading)
-        return
-            <>
-                <BasicLayout>
-                    <h3 style={{marginBottom: '10px'}}>사용자 전체 조회</h3>
-                    <p style={{color: 'gray'}}>전체 사용자를 조회할 수 있습니다.</p>
-                    <div> 로딩중 ...</div>
-                </BasicLayout>
-            </>
+
     return (
         <>
             <BasicLayout>
                 <h3 style={{marginBottom: '10px'}}>사용자 전체 조회</h3>
                 <p style={{color: 'gray'}}>전체 사용자를 조회할 수 있습니다.</p>
-                <div>
-                    <Space wrap style={{marginTop: '20px', marginBottom: '10px', float: 'right'}}>
-                        <Button size='default'>최신순</Button>
-                        <Button size='default'>오래된 순</Button>
-                        <Button
-                            icon={<DownloadOutlined/>}
-                            size='default'>
-                            Download
-                        </Button>
-                    </Space>
-                </div>
                 <Table
+                    style={{marginTop: '20px'}}
                     columns={columns}
+                    rowKey={record => record.id}
+                    pagination={tableParams.pagination}
                     dataSource={users}
+                    onChange={handleTableChange}
                 />
+                <Drawer title="유저 상세조회" placement="right" onClose={onClose} open={openDrawer}>
+                    <UserDetailPage userId={clickedUserId}/>
+                </Drawer>
             </BasicLayout>
         </>
     )

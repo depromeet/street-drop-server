@@ -7,7 +7,9 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -24,6 +26,7 @@ public class User extends BaseTimeEntity {
 	private Long id;
 
 	@Column(length = 20)
+	@Setter
 	private String nickname;
 
 	@Column(length = 100)
@@ -36,9 +39,14 @@ public class User extends BaseTimeEntity {
 	private MusicApp musicApp;
 
 	@Builder
-	public User(String nickname, String idfv) {
+	public User(String nickname, String idfv, MusicApp musicApp) {
 		this.nickname = nickname;
 		this.idfv = idfv;
+		this.musicApp = musicApp;
+	}
+
+	public MusicApp getMusicApp() {
+		return musicApp;
 	}
 
 	public User changeNickname(String nickname) {
