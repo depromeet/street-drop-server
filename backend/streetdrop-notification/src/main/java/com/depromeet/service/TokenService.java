@@ -5,6 +5,7 @@ import com.depromeet.dto.request.TokenRequestDto;
 import com.depromeet.repository.UserDeviceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ public class TokenService {
 
     private final UserDeviceRepository userDeviceRepository;
 
+    @Transactional
     public void saveToken(TokenRequestDto tokenRequestDto) {
         Optional<UserDevice> userDevice = userDeviceRepository.findByUserId(tokenRequestDto.getUserId());
         if (userDevice.isPresent()) {
@@ -28,6 +30,7 @@ public class TokenService {
         }
     }
 
+    @Transactional
     public void deleteToken(Long userId) {
         userDeviceRepository.deleteByUserId(userId);
     }
