@@ -27,6 +27,6 @@ public class TokenService {
     }
 
     public void deleteToken(Long userId) {
-        tokenRepository.delete(userId);
+        userDeviceRepository.deleteByUserId(userId);
     }
 }
