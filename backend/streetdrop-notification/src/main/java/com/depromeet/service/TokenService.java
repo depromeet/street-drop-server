@@ -23,8 +23,10 @@ public class TokenService {
     }
 
     public void updateToken(TokenRequestDto tokenRequestDto) {
-        tokenRepository.update(tokenRequestDto.getUserId(), tokenRequestDto.getToken());
-    }
+        var userDevice = userDeviceRepository.findByUserId(tokenRequestDto.getUserId())
+                .orElseThrow(() -> new RuntimeException("user not found"));
+        userDevice.updateDeviceToken(tokenRequestDto.getToken());
+        userDeviceRepository.save(userDevice);    }
 
     public void deleteToken(Long userId) {
         tokenRepository.delete(userId);

@@ -24,4 +24,9 @@ public class UserDevice {
     private Date createdAt;
     @LastModifiedDate
     private Date modifiedAt;
+
+    public void updateDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
+
 }

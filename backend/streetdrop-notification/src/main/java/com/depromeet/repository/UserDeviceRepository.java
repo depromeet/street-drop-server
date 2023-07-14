@@ -10,6 +10,9 @@ import java.util.Optional;
 
 public interface UserDeviceRepository extends MongoRepository<UserDevice, String> {
 
+    @Query(value = "{ 'userId' : userId }")
+    Optional<UserDevice> findByUserId(@Param("userId") Long userId);
+
     @Query(value = "{ 'userId' : userId }", fields = "{ 'deviceToken' : 1 }")
     Optional<String> findDeviceTokenByUserId(@Param("userId") Long userId);
 
