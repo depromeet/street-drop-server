@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,6 +26,8 @@ public class NotificationService {
 
     @Transactional
     public void save(PushRequestDto pushRequestDto) {
+        List<Notification> notificationList = new ArrayList<>();
+
         for (Long userId : pushRequestDto.getUserIds()) {
             var userDevice = userDeviceRepository.findByUserId(userId)
                     .orElseThrow(() -> new RuntimeException("Token not found for userId: " + userId));
@@ -44,12 +47,17 @@ public class NotificationService {
                     .content(pushRequestDto.getContent())
                     .build();
 
-            notificationRepository.save(notification);
+            notificationList.add(notification);
         }
+
+        notificationRepository.saveAll(notificationList);
     }
+
 
     @Transactional
     public void save(AllPushRequestDto pushRequestDto) {
+        List<Notification> notificationList = new ArrayList<>();
+
         List<UserDevice> userDevices = userDeviceRepository.findAll();
         for (UserDevice userDevice : userDevices) {
             User user = User.builder()
@@ -68,8 +76,10 @@ public class NotificationService {
                     .content(pushRequestDto.getContent())
                     .build();
 
-            notificationRepository.save(notification);
+            notificationList.add(notification);
         }
+
+        notificationRepository.saveAll(notificationList);
     }
 
     @Transactional
