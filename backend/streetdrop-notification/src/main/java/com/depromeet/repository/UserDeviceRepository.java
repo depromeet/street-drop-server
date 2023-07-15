@@ -16,7 +16,7 @@ public interface UserDeviceRepository extends MongoRepository<UserDevice, String
     @Query(value = "{ 'userId' : userId }", fields = "{ 'deviceToken' : 1 }")
     Optional<String> findDeviceTokenByUserId(@Param("userId") Long userId);
 
-    @Query(fields = "{ 'deviceToken' : 1 }")
+    @Query(value = "{}", fields = "{ 'deviceToken' : 1 }")
     List<String> findAllDeviceTokens();
 
     @Query("{'userId': ?0 }")
