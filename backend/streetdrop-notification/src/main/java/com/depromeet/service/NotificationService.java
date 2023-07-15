@@ -24,12 +24,11 @@ public class NotificationService {
 
     public void save(PushRequestDto pushRequestDto) {
         for (Long userId : pushRequestDto.getUserIds()) {
-            String deviceToken = userDeviceRepository.findDeviceTokenByUserId(userId)
+            var userDevice = userDeviceRepository.findByUserId(userId)
                     .orElseThrow(() -> new RuntimeException("token not found"));
-
             User user = User.builder()
                     .userId(userId)
-                    .deviceToken(deviceToken)
+                    .deviceToken(userDevice.getDeviceToken())
                     .build();
 
             Target target = Target.builder()
