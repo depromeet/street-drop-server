@@ -12,6 +12,7 @@ import com.depromeet.repository.NotificationRepository;
 import com.depromeet.repository.UserDeviceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class NotificationService {
     private final NotificationRepository notificationRepository;
     private final UserDeviceRepository userDeviceRepository;
 
+    @Transactional
     public void save(PushRequestDto pushRequestDto) {
         for (Long userId : pushRequestDto.getUserIds()) {
             var userDevice = userDeviceRepository.findByUserId(userId)
@@ -46,6 +48,7 @@ public class NotificationService {
         }
     }
 
+    @Transactional
     public void save(AllPushRequestDto pushRequestDto) {
         List<UserDevice> userDevices = userDeviceRepository.findAll();
         for (UserDevice userDevice : userDevices) {
@@ -69,6 +72,7 @@ public class NotificationService {
         }
     }
 
+    @Transactional
     public void save(TopicPushRequestDto tokenPushRequestDto) {
         // TODO: 토픽 저장에 따른 스키마 변경 후 구체화
     }

@@ -9,6 +9,7 @@ import com.depromeet.repository.UserDeviceRepository;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class PushService {
     private final NotificationService notificationService;
     private final FcmService fcmService;
 
+    @Transactional
     public void sendPush(PushRequestDto pushRequestDto) {
         List<String> tokens = pushRequestDto.getUserIds().stream()
                 .map(userId -> userDeviceRepository.findByUserId(userId)
@@ -43,6 +45,7 @@ public class PushService {
         notificationService.save(pushRequestDto);
     }
 
+    @Transactional
     public void sendAllPush(AllPushRequestDto pushRequestDto) {
         List<String> tokens = userDeviceRepository.findAllDeviceTokens();
         try {
@@ -57,6 +60,7 @@ public class PushService {
         notificationService.save(pushRequestDto);
     }
 
+    @Transactional
     public void sendTopicPush(TopicPushRequestDto tokenPushRequestDto) {
         try {
             if (tokenPushRequestDto.getTitle() != null) {
