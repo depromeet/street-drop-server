@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -34,6 +33,10 @@ public class User extends BaseTimeEntity {
 
 	@OneToMany(mappedBy = "user")
 	private List<Item> items;
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "level_id")
+	private UserLevel userLevel;
 
 	@Enumerated(EnumType.STRING)
 	private MusicApp musicApp;

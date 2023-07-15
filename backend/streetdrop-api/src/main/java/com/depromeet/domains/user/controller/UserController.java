@@ -1,6 +1,8 @@
 package com.depromeet.domains.user.controller;
 
+import com.depromeet.domains.user.dto.response.UserLevelResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
+import com.depromeet.domains.user.service.UserLevelService;
 import com.depromeet.domains.user.service.UserService;
 import com.depromeet.security.annotation.ReqUser;
 import com.depromeet.common.dto.ResponseDto;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Users", description = "User API")
 public class UserController {
     private final UserService userService;
+    private final UserLevelService userLevelService;
 
     @Operation(summary = "내 정보 가져오기")
     @GetMapping("/me")
@@ -48,6 +51,13 @@ public class UserController {
             @RequestParam("musicApp") MusicApp musicApp
     ) {
         var response = userService.changeMusicApp(user, musicApp);
+        return ResponseDto.ok(response);
+    }
+
+    @Operation(summary = "사용자 레벨 조회")
+    @GetMapping("/me/level")
+    public ResponseEntity<UserLevelResponseDto> getUserLevel(@ReqUser User user) {
+        var response = userLevelService.getOrCreateUserLevel(user);
         return ResponseDto.ok(response);
     }
 }
