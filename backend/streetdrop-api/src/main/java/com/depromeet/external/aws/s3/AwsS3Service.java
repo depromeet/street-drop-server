@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 public class AwsS3Service {
 	private final AmazonS3 amazonS3;
 
-	public static final String DIR_NAME = "USER_PROFILE";
-
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
 
@@ -21,9 +19,5 @@ public class AwsS3Service {
 
 	public String getS3FilePaths() {
 		return bucket;
-	}
-
-	public String getFileName() {
-		return DIR_NAME + "/" + "Level1.png";
 	}
 }
