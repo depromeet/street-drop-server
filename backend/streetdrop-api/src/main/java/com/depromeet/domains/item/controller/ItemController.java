@@ -46,7 +46,7 @@ public class ItemController {
 
     @Operation(summary = "아이템 드랍 - 단건조회")
     @GetMapping("/{itemId}")
-    public ResponseEntity<ItemDetailResponseDto> findOne(
+    public ResponseEntity<ItemDetailResponseDto> findOneItem(
             @ReqUser User user,
             @PathVariable(value = "itemId") Long itemId
     ) {
