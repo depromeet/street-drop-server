@@ -2,6 +2,7 @@ package com.depromeet.domain;
 
 import com.depromeet.domain.vo.OsType;
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -9,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
+@Getter
 @Builder
 @Document(collection = "user_device")
 public class UserDevice {
@@ -24,4 +26,10 @@ public class UserDevice {
     private Date createdAt;
     @LastModifiedDate
     private Date modifiedAt;
+
+    public UserDevice updateDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+        return this;
+    }
+
 }
