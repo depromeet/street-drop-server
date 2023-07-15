@@ -1,6 +1,5 @@
 package com.depromeet.service;
 
-import com.depromeet.domain.UserDevice;
 import com.depromeet.dto.request.TopicSubscribeRequestDto;
 import com.depromeet.external.fcm.FcmService;
 import com.depromeet.repository.UserDeviceRepository;
