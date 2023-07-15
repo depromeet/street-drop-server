@@ -17,11 +17,7 @@ public class TopicService {
     private final FcmService fcmService;
 
     public void subscribeTopic(TopicSubscribeRequestDto topicSubscribeRequestDto) {
-        List<String> tokens = topicSubscribeRequestDto.getUserIds().stream()
-                .map(userId -> userDeviceRepository.findByUserId(userId)
-                        .map(UserDevice::getDeviceToken)
-                        .orElseThrow(() -> new RuntimeException("Token not found for userId: " + userId)))
-                .toList();
+        List<String> tokens = getTokens(topicSubscribeRequestDto.getUserIds());
         try {
             fcmService.subscribeTopicSync(topicSubscribeRequestDto.getTopic(), tokens);
         } catch (Exception e) {
@@ -29,15 +25,19 @@ public class TopicService {
     }
 
     public void unsubscribeTopic(TopicSubscribeRequestDto topicSubscribeRequestDto) {
-        List<String> tokens = topicSubscribeRequestDto.getUserIds().stream()
-                .map(userId -> userDeviceRepository.findByUserId(userId)
-                        .map(UserDevice::getDeviceToken)
-                        .orElseThrow(() -> new RuntimeException("Token not found for userId: " + userId)))
-                .toList();
+        List<String> tokens = getTokens(topicSubscribeRequestDto.getUserIds());
         try {
             fcmService.subscribeTopicSync(topicSubscribeRequestDto.getTopic(), tokens);
         } catch (Exception e) {
         }
+    }
+
+    private List<String> getTokens(List<Long> userIds) {
+        return userIds.stream()
+                .map(userId -> userDeviceRepository.findByUserId(userId)
+                        .map(UserDevice::getDeviceToken)
+                        .orElseThrow(() -> new RuntimeException("Token not found for userId: " + userId)))
+                .toList();
     }
 
 }
