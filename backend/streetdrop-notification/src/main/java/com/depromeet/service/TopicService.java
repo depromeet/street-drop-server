@@ -1,5 +1,6 @@
 package com.depromeet.service;
 
+import com.depromeet.domain.UserDevice;
 import com.depromeet.dto.request.TopicSubscribeRequestDto;
 import com.depromeet.external.fcm.FcmService;
 import com.depromeet.repository.UserDeviceRepository;
@@ -17,8 +18,9 @@ public class TopicService {
 
     public void subscribeTopic(TopicSubscribeRequestDto topicSubscribeRequestDto) {
         List<String> tokens = topicSubscribeRequestDto.getUserIds().stream()
-                .map(userId -> userDeviceRepository.findDeviceTokenByUserId(userId)
-                        .orElseThrow(() -> new RuntimeException("token not found")))
+                .map(userId -> userDeviceRepository.findByUserId(userId)
+                        .map(UserDevice::getDeviceToken)
+                        .orElseThrow(() -> new RuntimeException("Token not found for userId: " + userId)))
                 .toList();
         try {
             fcmService.subscribeTopicSync(topicSubscribeRequestDto.getTopic(), tokens);
@@ -28,8 +30,9 @@ public class TopicService {
 
     public void unsubscribeTopic(TopicSubscribeRequestDto topicSubscribeRequestDto) {
         List<String> tokens = topicSubscribeRequestDto.getUserIds().stream()
-                .map(userId -> userDeviceRepository.findDeviceTokenByUserId(userId)
-                        .orElseThrow(() -> new RuntimeException("token not found")))
+                .map(userId -> userDeviceRepository.findByUserId(userId)
+                        .map(UserDevice::getDeviceToken)
+                        .orElseThrow(() -> new RuntimeException("Token not found for userId: " + userId)))
                 .toList();
         try {
             fcmService.subscribeTopicSync(topicSubscribeRequestDto.getTopic(), tokens);
