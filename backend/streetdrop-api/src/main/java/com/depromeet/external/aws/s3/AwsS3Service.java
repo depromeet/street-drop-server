@@ -26,6 +26,6 @@ public class AwsS3Service {
 	}
 
 	public String getFileName() {
-		return DIR_NAME + "/" + "Level1.png";
+		return DIR_NAME;
 	}
 }
