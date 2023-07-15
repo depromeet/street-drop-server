@@ -2,8 +2,6 @@ package com.depromeet.domains.user.service;
 
 import com.depromeet.domains.user.dto.response.UserLevelResponseDto;
 import com.depromeet.domains.user.event.UserLevelCreateEvent;
-import com.depromeet.domains.user.repository.UserLevelRepository;
-import com.depromeet.external.aws.s3.AwsS3Service;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
