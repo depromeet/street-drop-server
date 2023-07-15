@@ -33,7 +33,7 @@ public class TokenService {
     @Transactional
     public void deleteToken(Long userId) {
         var userDevice = userDeviceRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("token not found"));
+                .orElseThrow(() -> new RuntimeException("Token not found for userId: " + userId));
         userDeviceRepository.delete(userDevice);
     }
 }
