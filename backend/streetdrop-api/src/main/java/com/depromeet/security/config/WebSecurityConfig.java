@@ -29,6 +29,7 @@ public class WebSecurityConfig {
                 .and().csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/users/*").authenticated()
+                .requestMatchers("/users/me/*").authenticated()
                 .requestMatchers(HttpMethod.POST, "/items/*").authenticated()
                 .requestMatchers(HttpMethod.PATCH, "/items/*").authenticated()
                 .requestMatchers(HttpMethod.DELETE, "/items/*").authenticated()

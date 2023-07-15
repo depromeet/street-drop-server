@@ -34,7 +34,7 @@ public class User extends BaseTimeEntity {
 	@OneToMany(mappedBy = "user")
 	private List<Item> items;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "level_id")
 	private UserLevel userLevel;
 
@@ -54,6 +54,11 @@ public class User extends BaseTimeEntity {
 
 	public User changeNickname(String nickname) {
 		this.nickname = nickname;
+		return this;
+	}
+
+	public User changeLevel(UserLevel userLevel) {
+		this.userLevel = userLevel;
 		return this;
 	}
 

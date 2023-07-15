@@ -57,7 +57,7 @@ public class UserController {
     @Operation(summary = "사용자 레벨 조회")
     @GetMapping("/me/level")
     public ResponseEntity<UserLevelResponseDto> getUserLevel(@ReqUser User user) {
-        var response = userLevelService.getOrCreateUserLevel(user);
+        var response = userLevelService.getUserLevel(user);
         return ResponseDto.ok(response);
     }
 }

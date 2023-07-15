@@ -1,10 +1,12 @@
 package com.depromeet.user;
 
-import com.depromeet.user.vo.Level;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -18,19 +20,22 @@ public class UserLevel {
 	private Long id;
 
 	@Column(nullable = false)
-	private String levelImage;
+	private String name;
 
-	@Column
-	@Enumerated(EnumType.STRING)
-	private Level level;
+	@Column(nullable = false)
+	private String description;
 
-	@OneToOne(mappedBy = "userLevel", fetch = FetchType.LAZY)
-	private User user;
+	@Column(nullable = false)
+	private String image;
+
+	@OneToMany(mappedBy = "userLevel")
+	private List<User> users = new ArrayList<>();
 
 	@Builder
-	public UserLevel(String levelImage, Level level, User user) {
-		this.levelImage = levelImage;
-		this.level = level;
-		this.user = user;
+	public UserLevel(String name, String description, String image, List<User> users) {
+		this.name = name;
+		this.description = description;
+		this.image = image;
+		this.users = users;
 	}
 }
