@@ -1,6 +1,5 @@
 package com.depromeet.service;
 
-import com.depromeet.domain.UserDevice;
 import com.depromeet.dto.request.AllPushRequestDto;
 import com.depromeet.dto.request.PushRequestDto;
 import com.depromeet.dto.request.TopicPushRequestDto;
@@ -24,8 +23,7 @@ public class PushService {
     @Transactional
     public void sendPush(PushRequestDto pushRequestDto) {
         List<String> tokens = pushRequestDto.getUserIds().stream()
-                .map(userId -> userDeviceRepository.findByUserId(userId)
-                        .map(UserDevice::getDeviceToken)
+                .map(userId -> userDeviceRepository.findDeviceTokenByUserId(userId)
                         .orElseThrow(() -> new RuntimeException("Token not found for userId: " + userId)))
                 .toList();
 

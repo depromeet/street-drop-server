@@ -34,8 +34,7 @@ public class TopicService {
 
     private List<String> getTokens(List<Long> userIds) {
         return userIds.stream()
-                .map(userId -> userDeviceRepository.findByUserId(userId)
-                        .map(UserDevice::getDeviceToken)
+                .map(userId -> userDeviceRepository.findDeviceTokenByUserId(userId)
                         .orElseThrow(() -> new RuntimeException("Token not found for userId: " + userId)))
                 .toList();
     }
