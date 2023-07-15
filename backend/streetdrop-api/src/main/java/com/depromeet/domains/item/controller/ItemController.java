@@ -1,15 +1,16 @@
 package com.depromeet.domains.item.controller;
 
+import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.domains.item.dto.request.ItemCreateRequestDto;
 import com.depromeet.domains.item.dto.request.ItemUpdateRequestDto;
+import com.depromeet.domains.item.dto.request.NearItemPointRequestDto;
+import com.depromeet.domains.item.dto.request.NearItemRequestDto;
+import com.depromeet.domains.item.dto.response.ItemDetailResponseDto;
 import com.depromeet.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.domains.item.service.ItemService;
 import com.depromeet.security.annotation.ReqUser;
-import com.depromeet.common.dto.ResponseDto;
-import com.depromeet.domains.item.dto.request.NearItemPointRequestDto;
-import com.depromeet.domains.item.dto.request.NearItemRequestDto;
 import com.depromeet.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,6 +43,16 @@ public class ItemController {
 		var response = itemService.create(user, itemRequestDto);
 		return ResponseDto.created(response);
 	}
+
+    @Operation(summary = "아이템 드랍 - 단건조회")
+    @GetMapping("/{itemId}")
+    public ResponseEntity<ItemDetailResponseDto> findOne(
+            @ReqUser User user,
+            @PathVariable(value = "itemId") Long itemId
+    ) {
+        var response = itemService.findOneItem(user, itemId);
+        return ResponseDto.ok(response);
+    }
 
 	@Operation(summary = "아이템 드랍 - 수정")
 	@PatchMapping("/{itemId}")
