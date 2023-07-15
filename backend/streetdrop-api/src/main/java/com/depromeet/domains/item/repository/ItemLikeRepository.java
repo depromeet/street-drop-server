@@ -19,8 +19,8 @@ public interface ItemLikeRepository extends JpaRepository<ItemLike, Long> {
     int countByItemId(Long itemId);
 
     @Query(value = """
-            SELECT ItemLike FROM ItemLike il JOIN FETCH Item
-            WHERE ItemLike.user.id = :userId AND ItemLike.id < :lastCursor
+            SELECT il FROM ItemLike il JOIN FETCh Item 
+            WHERE il.user.id = :userId AND il.id < :lastCursor 
             ORDER BY il.id DESC
             """)
     List<ItemLike> findByUserId(@Param("userId") Long userId, @Param("lastCursor") long lastCursor);
