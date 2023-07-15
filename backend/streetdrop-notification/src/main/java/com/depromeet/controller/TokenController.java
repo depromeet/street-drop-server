@@ -17,8 +17,8 @@ public class TokenController {
         tokenService.saveToken(tokenRequestDto);
     }
 
-    @DeleteMapping
-    public void deleteToken(@RequestBody Long userId) {
+    @DeleteMapping("/{userId}")
+    public void deleteToken(@PathVariable("userId") Long userId) {
         tokenService.deleteToken(userId);
     }
 

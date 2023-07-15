@@ -19,7 +19,4 @@ public interface UserDeviceRepository extends MongoRepository<UserDevice, String
     @Query(value = "{}", fields = "{ 'deviceToken' : 1 }")
     List<String> findAllDeviceTokens();
 
-    @Query("{'userId': ?0 }")
-    void deleteByUserId(Long userId);
-
 }

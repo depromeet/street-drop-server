@@ -32,6 +32,7 @@ public class TokenService {
 
     @Transactional
     public void deleteToken(Long userId) {
-        userDeviceRepository.deleteByUserId(userId);
+        var userDevice = userDeviceRepository.findByUserId(userId);
+        userDevice.ifPresent(userDeviceRepository::delete);
     }
 }
