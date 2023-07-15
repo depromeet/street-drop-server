@@ -16,6 +16,7 @@ import java.util.List;
 public class PushService {
 
     private final UserDeviceRepository userDeviceRepository;
+    private final NotificationService notificationService;
     private final FcmService fcmService;
 
     public void sendPush(PushRequestDto pushRequestDto) {
@@ -35,6 +36,8 @@ public class PushService {
             }
         } catch (FirebaseMessagingException e) {
         }
+
+        notificationService.save(pushRequestDto);
     }
 
     public void sendAllPush(AllPushRequestDto pushRequestDto) {
@@ -47,6 +50,8 @@ public class PushService {
             }
         } catch (FirebaseMessagingException e) {
         }
+
+        notificationService.save(pushRequestDto);
     }
 
     public void sendTopicPush(TopicPushRequestDto tokenPushRequestDto) {
@@ -58,6 +63,8 @@ public class PushService {
             }
         } catch (FirebaseMessagingException e) {
         }
+
+        notificationService.save(tokenPushRequestDto);
     }
 }
 
