@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public record ItemDetailResponseDto(
         @Schema(description = "아이템 아이디", example = "1")
         Long itemId,
+        
         @Schema(description = "사용자 정보")
         UserProfileResponseDto user,
 
@@ -19,6 +20,7 @@ public record ItemDetailResponseDto(
 
         @Schema(description = "음악 정보")
         MusicResponseDto music,
+
         @Schema(description = "사용자 코멘트", example = "이 노래 좋아요")
         String content,
 
