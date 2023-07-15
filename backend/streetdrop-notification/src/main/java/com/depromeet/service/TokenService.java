@@ -32,7 +32,8 @@ public class TokenService {
 
     @Transactional
     public void deleteToken(Long userId) {
-        var userDevice = userDeviceRepository.findByUserId(userId);
-        userDevice.ifPresent(userDeviceRepository::delete);
+        var userDevice = userDeviceRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("token not found"));
+        userDeviceRepository.delete(userDevice);
     }
 }
