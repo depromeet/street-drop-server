@@ -26,7 +26,7 @@ public class UserItemController {
     @GetMapping("/drop")
     public ResponseEntity<InfiniteScrollResponseDto<?, ?>> getUserDropItems(
             @ReqUser User user,
-            @RequestParam(defaultValue = "9223372036854775806") long lastCursor
+            @RequestParam(defaultValue = "9223372036854775000") long lastCursor
     ) {
         var response = userItemService.getDropItems(user, lastCursor);
         return ResponseDto.ok(response);
@@ -36,7 +36,7 @@ public class UserItemController {
     @GetMapping("/like")
     public ResponseEntity<InfiniteScrollResponseDto<?, ?>> getUserLikedItems(
             @ReqUser User user,
-            @RequestParam(defaultValue = "9223372036854775806") long lastCursor
+            @RequestParam(defaultValue = "9223372036854775000") long lastCursor
     ) {
         var response = userItemService.getLikedItems(user, lastCursor);
         return ResponseDto.ok(response);

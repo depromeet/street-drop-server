@@ -21,8 +21,12 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("SELECT i FROM Item i JOIN FETCH i.itemLocation JOIN FETCH i.user JOIN FETCH i.song WHERE i.id = :itemId")
     Optional<Item> findById(Long itemId);
 
-    @Query("SELECT i FROM Item i JOIN FETCH i.itemLocation JOIN FETCH ItemLike" +
-            " JOIN FETCH i.user JOIN FETCH i.song WHERE i.user.id = :userId AND i.id < :lastCursor ORDER BY i.id DESC")
+    @Query("""
+            SELECT i FROM Item i JOIN FETCH i.itemLocation 
+            JOIN FETCH ItemLike JOIN FETCH i.user JOIN FETCH i.song 
+            WHERE i.user.id = :userId AND i.id < :lastCursor 
+            ORDER BY i.id DESC
+            """)
     List<Item> findByUserId(@Param("userId") Long userId, @Param("lastCursor") long lastCursor);
 
 }
