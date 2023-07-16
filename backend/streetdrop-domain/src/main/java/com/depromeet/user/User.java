@@ -38,14 +38,18 @@ public class User extends BaseTimeEntity {
 	@JoinColumn(name = "level_id")
 	private UserLevel userLevel;
 
+	@Column
+	private Long userLevelId;
+
 	@Enumerated(EnumType.STRING)
 	private MusicApp musicApp;
 
 	@Builder
-	public User(String nickname, String idfv, MusicApp musicApp) {
+	public User(String nickname, String idfv, MusicApp musicApp, Long levelId) {
 		this.nickname = nickname;
 		this.idfv = idfv;
 		this.musicApp = musicApp;
+		this.userLevelId = levelId;
 	}
 
 	public MusicApp getMusicApp() {
