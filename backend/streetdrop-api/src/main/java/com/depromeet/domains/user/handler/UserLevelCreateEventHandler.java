@@ -6,7 +6,6 @@ import com.depromeet.domains.user.repository.UserRepository;
 import com.depromeet.user.User;
 import com.depromeet.user.UserLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -15,7 +14,6 @@ import java.util.Collections;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class UserLevelCreateEventHandler {
 
 	public static final String NAME = "L.1 드랍 스타터";
@@ -32,7 +30,6 @@ public class UserLevelCreateEventHandler {
 	public void createLevel(UserLevelCreateEvent event) {
 		var user = event.getUser();
 		var newLevel = createLevel(user);
-		log.info("create user level: {}, {}", user.getNickname(), newLevel.getName());
 		userLevelRepository.save(newLevel);
 		user.changeLevel(newLevel);
 		userRepository.save(user);

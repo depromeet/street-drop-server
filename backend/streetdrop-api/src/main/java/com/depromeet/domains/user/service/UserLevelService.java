@@ -14,9 +14,6 @@ public class UserLevelService {
 
 	private final ApplicationEventPublisher eventPublisher;
 
-	/**
-	 * 사용자 레벨 조회
-	 */
 	@Transactional
 	public UserLevelResponseDto getUserLevel(User user) {
 		var userLevel = user.getUserLevel();

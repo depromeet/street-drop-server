@@ -28,14 +28,10 @@ public class UserLevel {
 	@Column(nullable = false)
 	private String image;
 
-	@OneToMany(mappedBy = "userLevel")
-	private List<User> users = new ArrayList<>();
-
 	@Builder
-	public UserLevel(String name, String description, String image, List<User> users) {
+	public UserLevel(String name, String description, String image) {
 		this.name = name;
 		this.description = description;
 		this.image = image;
-		this.users = users;
 	}
 }
