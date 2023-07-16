@@ -21,7 +21,7 @@ public class UserBlockController {
 	@PostMapping("/users/block")
 	public ResponseEntity<BlockUserResponseDto> blockUser(
 			@ReqUser User user,
-			@RequestParam Long blockUserID
+			@RequestParam(value = "blockUserID") Long blockUserID
 	) {
 		var response = userBlockService.blockUser(user, blockUserID);
 		return ResponseDto.ok(response);
