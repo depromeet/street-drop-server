@@ -26,6 +26,7 @@ public class ItemClaim extends BaseTimeEntity {
 
     @Setter
     @Enumerated(STRING)
+    @Column(nullable = false)
     private ItemClaimStatus status;
 
     @ManyToOne(fetch = LAZY)

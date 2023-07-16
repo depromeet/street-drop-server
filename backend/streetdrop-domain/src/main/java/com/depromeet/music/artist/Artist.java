@@ -21,6 +21,7 @@ public class Artist {
 	@Column(name = "artist_id")
 	private Long id;
 
+	@Column(nullable = false)
 	private String name;
 
 	@OneToMany(mappedBy = "artist", cascade = ALL)

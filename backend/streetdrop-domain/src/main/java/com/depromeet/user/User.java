@@ -26,17 +26,18 @@ public class User extends BaseTimeEntity {
 	@Column(name = "user_id")
 	private Long id;
 
-	@Column(length = 20)
+	@Column(length = 20, nullable = false)
 	@Setter
 	private String nickname;
 
-	@Column(length = 100)
+	@Column(length = 100, nullable = false)
 	private String idfv;
 
 	@OneToMany(mappedBy = "user")
 	private List<Item> items;
 
 	@Enumerated(STRING)
+	@Column(nullable = false)
 	private MusicApp musicApp;
 
 	@Builder

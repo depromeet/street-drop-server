@@ -17,8 +17,10 @@ public class BlockUser {
 	@Column(name = "block_id")
 	private Long id;
 
+	@Column(nullable = false)
 	private Long blockerId;
 
+	@Column(nullable = false)
 	private Long blockedId;
 
 	@Builder

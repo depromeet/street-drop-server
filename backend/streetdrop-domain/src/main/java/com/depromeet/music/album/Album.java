@@ -24,6 +24,7 @@ public class Album {
 	@Column(name = "album_id")
 	private Long id;
 
+	@Column(nullable = false)
 	private String name;
 
 	@OneToOne(fetch = LAZY, cascade = ALL)

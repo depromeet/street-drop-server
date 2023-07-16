@@ -25,6 +25,7 @@ public class Song {
 	@Column(name = "song_id")
 	private Long id;
 
+	@Column(nullable = false)
 	private String name;
 
 	@ManyToOne(fetch = LAZY, cascade = ALL)

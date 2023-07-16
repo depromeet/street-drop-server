@@ -16,10 +16,10 @@ public class DefaultNickName {
         @GeneratedValue(strategy = IDENTITY)
         private Long id;
 
-        @Column(length = 5)
+        @Column(length = 5, nullable = false)
         private String preNickName;
 
-        @Column(length = 5)
+        @Column(length = 5, nullable = false)
         private String postNickName;
 
 }
