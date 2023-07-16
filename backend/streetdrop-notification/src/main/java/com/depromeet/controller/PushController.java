@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/push")
 public class PushController {
+
     private final PushService pushService;
 
     @PostMapping("/send")
@@ -30,4 +31,5 @@ public class PushController {
     public void sendTopicPush(@RequestBody TopicPushRequestDto topicPushRequestDto) {
         pushService.sendTopicPush(topicPushRequestDto);
     }
+
 }

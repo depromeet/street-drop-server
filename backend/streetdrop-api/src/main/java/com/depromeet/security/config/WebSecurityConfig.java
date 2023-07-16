@@ -30,6 +30,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/users/*").authenticated()
                 .requestMatchers("/users/me/*").authenticated()
+                .requestMatchers("/users/me/items/*").authenticated()
+                .requestMatchers(HttpMethod.GET, "/items/*").authenticated()
                 .requestMatchers(HttpMethod.POST, "/items/*").authenticated()
                 .requestMatchers(HttpMethod.PATCH, "/items/*").authenticated()
                 .requestMatchers(HttpMethod.DELETE, "/items/*").authenticated()
