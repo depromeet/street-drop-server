@@ -1,6 +1,5 @@
 package com.depromeet.music.artist;
 
-import com.depromeet.common.entity.BaseTimeEntity;
 import com.depromeet.music.album.Album;
 import jakarta.persistence.*;
 import lombok.Builder;
