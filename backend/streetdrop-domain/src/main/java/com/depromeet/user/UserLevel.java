@@ -13,7 +13,7 @@ public class UserLevel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "level_id")
+	@Column(name = "user_level_id")
 	private Long id;
 
 	@Column(nullable = false)
