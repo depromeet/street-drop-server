@@ -34,12 +34,12 @@ public class User extends BaseTimeEntity {
 	@OneToMany(mappedBy = "user")
 	private List<Item> items;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "level_id")
-	private UserLevel userLevel;
-
-	@Column
+	@Column(name = "user_level_id", nullable = false)
 	private Long userLevelId;
+
+	@ManyToOne(fetch = FetchType.LAZY, optional=false)
+	@JoinColumn(name = "user_level_id", insertable = false, updatable = false, nullable = false)
+	private UserLevel userLevel;
 
 	@Enumerated(EnumType.STRING)
 	private MusicApp musicApp;
