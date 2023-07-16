@@ -12,6 +12,7 @@ import lombok.Setter;
 
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -29,7 +30,7 @@ public class Item extends BaseTimeEntity {
 	@Setter
 	private String content;
 
-	@OneToOne(fetch = LAZY, mappedBy = "item", cascade = CascadeType.ALL)
+	@OneToOne(fetch = LAZY, mappedBy = "item", cascade = ALL)
 	private ItemLocation itemLocation;
 
 	@ManyToOne(fetch = LAZY)
@@ -44,7 +45,7 @@ public class Item extends BaseTimeEntity {
 	@JoinColumn(name = "album_cover_id")
 	private AlbumCover albumCover;
 
-	@OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "item", cascade = ALL)
 	private List<ItemLike> likes;
 
 	@Builder

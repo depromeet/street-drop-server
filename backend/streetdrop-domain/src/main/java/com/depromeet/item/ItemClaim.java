@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.FetchType.LAZY;
+
 @Getter
 @NoArgsConstructor
 @Entity
@@ -22,14 +25,14 @@ public class ItemClaim extends BaseTimeEntity {
     private String reason;
 
     @Setter
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     private ItemClaimStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_Id")
     private User user;
 

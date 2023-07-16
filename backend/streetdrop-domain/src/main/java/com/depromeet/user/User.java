@@ -12,6 +12,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Getter
@@ -35,7 +36,7 @@ public class User extends BaseTimeEntity {
 	@OneToMany(mappedBy = "user")
 	private List<Item> items;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(STRING)
 	private MusicApp musicApp;
 
 	@Builder
