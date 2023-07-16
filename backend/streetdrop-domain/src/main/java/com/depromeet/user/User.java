@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -35,14 +34,22 @@ public class User extends BaseTimeEntity {
 	@OneToMany(mappedBy = "user")
 	private List<Item> items;
 
+	@Column(name = "user_level_id", nullable = false)
+	private Long userLevelId;
+
+	@ManyToOne(fetch = FetchType.LAZY, optional=false)
+	@JoinColumn(name = "user_level_id", insertable = false, updatable = false, nullable = false)
+	private UserLevel userLevel;
+
 	@Enumerated(EnumType.STRING)
 	private MusicApp musicApp;
 
 	@Builder
-	public User(String nickname, String idfv, MusicApp musicApp) {
+	public User(String nickname, String idfv, MusicApp musicApp, Long userLevelId) {
 		this.nickname = nickname;
 		this.idfv = idfv;
 		this.musicApp = musicApp;
+		this.userLevelId = userLevelId;
 	}
 
 	public MusicApp getMusicApp() {
@@ -51,6 +58,11 @@ public class User extends BaseTimeEntity {
 
 	public User changeNickname(String nickname) {
 		this.nickname = nickname;
+		return this;
+	}
+
+	public User changeLevel(UserLevel userLevel) {
+		this.userLevel = userLevel;
 		return this;
 	}
 
