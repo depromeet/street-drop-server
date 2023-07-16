@@ -18,7 +18,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Album extends BaseTimeEntity {
+public class Album {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)

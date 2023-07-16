@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Artist extends BaseTimeEntity {
+public class Artist {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

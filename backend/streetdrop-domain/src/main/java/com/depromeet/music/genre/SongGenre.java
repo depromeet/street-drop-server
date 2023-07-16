@@ -13,7 +13,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Getter
 @NoArgsConstructor
 @Entity
-public class SongGenre extends BaseTimeEntity {
+public class SongGenre {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
