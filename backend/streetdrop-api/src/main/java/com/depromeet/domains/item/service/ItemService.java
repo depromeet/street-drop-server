@@ -5,14 +5,13 @@ import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.exception.common.BusinessException;
 import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.item.dto.request.*;
-import com.depromeet.domains.item.dto.response.ItemResponseDto;
-import com.depromeet.domains.item.dto.response.ItemsResponseDto;
-import com.depromeet.domains.item.dto.response.PoiResponseDto;
+import com.depromeet.domains.item.dto.response.*;
+import com.depromeet.domains.item.repository.ItemLikeRepository;
 import com.depromeet.domains.item.repository.ItemLocationRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.music.service.MusicService;
+import com.depromeet.domains.user.dto.response.UserProfileResponseDto;
 import com.depromeet.domains.user.repository.BlockUserRepository;
-import com.depromeet.domains.user.repository.UserRepository;
 import com.depromeet.domains.village.service.VillageAreaService;
 import com.depromeet.item.Item;
 import com.depromeet.item.ItemLocation;
@@ -26,8 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.depromeet.item.QItem.item;
-
 @Service
 @RequiredArgsConstructor
 public class ItemService {
@@ -36,7 +33,7 @@ public class ItemService {
 	private final ItemLocationRepository itemLocationRepository;
 	private final VillageAreaService villageAreaService;
 	private final BlockUserRepository blockUserRepository;
-	private final UserRepository userRepository;
+	private final ItemLikeRepository itemLikeRepository;
 
 
 	public PoiResponseDto findNearItemsPoints(User user, NearItemPointRequestDto nearItemPointRequestDto) {
@@ -78,6 +75,30 @@ public class ItemService {
 		var savedItem = itemRepository.save(item);
 
 		return new ItemResponseDto(savedItem);
+	}
+
+
+	@Transactional(readOnly = true)
+	public ItemDetailResponseDto findOneItem(User user, Long itemId) {
+		var item = itemRepository.findById(itemId)
+				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, itemId));
+		var itemLikeCount = itemLikeRepository.countByItemId(itemId);
+		var isLiked = itemLikeRepository.existsByUserIdAndItemId(user.getId(), itemId);
+
+		var musicResponseDto = musicService.getMusic(item.getSong().getId());
+		var userProfileResponseDto = new UserProfileResponseDto(item.getUser().getId(), item.getUser().getNickname());
+		var itemLocationResponseDto = new ItemLocationResponseDto(item.getItemLocation().getName());
+
+		return ItemDetailResponseDto.builder()
+				.itemId(item.getId())
+				.music(musicResponseDto)
+				.user(userProfileResponseDto)
+				.location(itemLocationResponseDto)
+				.content(item.getContent())
+				.createdAt(item.getCreatedAt())
+				.isLiked(isLiked)
+				.itemLikeCount(itemLikeCount)
+				.build();
 	}
 
 	@Transactional(readOnly = true)
