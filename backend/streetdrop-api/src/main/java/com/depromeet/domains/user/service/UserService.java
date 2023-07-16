@@ -14,7 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class UserService {
-
+    public static final long LEVEL_ID = 1L;
     private final UserRepository userRepository;
     private final DefaultNickNameRepository defaultNickNameRepository;
 
@@ -37,7 +37,7 @@ public class UserService {
                     .nickname(generateDefaultNickname())
                     .idfv(idfv)
 		            .musicApp(MusicApp.YOUTUBE_MUSIC)
-                    .levelId(1L)
+                    .levelId(LEVEL_ID)
                     .build();
             return userRepository.save(newUser);
         }
