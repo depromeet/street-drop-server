@@ -38,7 +38,7 @@ public class UserService {
                     .idfv(idfv)
 		            .musicApp(MusicApp.YOUTUBE_MUSIC)
                     .build();
-            return userRepository.save(newUser);
+            return userRepository.saveAndFlush(newUser);
         }
     }
 
@@ -46,6 +46,7 @@ public class UserService {
     public UserResponseDto getUserInfo(User user) {
         return new UserResponseDto(user);
     }
+
 
     private String generateDefaultNickname() {
         return defaultNickNameRepository.getDefaultNickNameByRandom();

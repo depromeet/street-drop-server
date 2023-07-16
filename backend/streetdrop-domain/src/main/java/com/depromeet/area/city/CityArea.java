@@ -32,10 +32,10 @@ public class CityArea {
     private int version;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "state_id")
+    @JoinColumn(name = "state_id", nullable = false)
     private StateArea stateArea;
 
     @OneToMany(mappedBy = "cityArea")
-     private List<VillageArea> villageAreas;
+    private List<VillageArea> villageAreas;
 
 }

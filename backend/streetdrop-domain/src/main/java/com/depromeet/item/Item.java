@@ -38,11 +38,11 @@ public class Item extends BaseTimeEntity {
 	private User user;
 
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "song_id")
+	@JoinColumn(name = "song_id", nullable = false)
 	private Song song;
 
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "album_cover_id")
+	@JoinColumn(name = "album_cover_id", nullable = false)
 	private AlbumCover albumCover;
 
 	@OneToMany(mappedBy = "item", cascade = ALL)

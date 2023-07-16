@@ -30,11 +30,11 @@ public class ItemLocation extends BaseTimeEntity {
 	private Point point;
 
 	@OneToOne(fetch = LAZY, cascade = ALL)
-	@JoinColumn(name = "item_id")
+	@JoinColumn(name = "item_id", nullable = false)
 	private Item item;
 
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "village_id")
+	@JoinColumn(name = "village_id", nullable = false)
 	private VillageArea villageArea;
 
 	@Builder

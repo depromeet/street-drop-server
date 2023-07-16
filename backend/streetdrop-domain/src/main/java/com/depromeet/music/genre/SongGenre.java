@@ -22,11 +22,11 @@ public class SongGenre {
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "song_id")
+    @JoinColumn(name = "song_id", nullable = false)
     private Song song;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "genre_id")
+    @JoinColumn(name = "genre_id", nullable = false)
     private Genre genre;
 
     @Builder

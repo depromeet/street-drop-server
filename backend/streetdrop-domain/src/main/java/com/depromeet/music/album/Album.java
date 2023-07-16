@@ -29,14 +29,14 @@ public class Album {
 	private String name;
 
 	@OneToOne(fetch = LAZY, cascade = ALL)
-	@JoinColumn(name = "album_cover_id")
+	@JoinColumn(name = "album_cover_id", nullable = false)
 	private AlbumCover albumCover;
 
 	@OneToMany(mappedBy = "album", fetch = LAZY, cascade = ALL, orphanRemoval = true)
 	private List<Song> songs = new ArrayList<>();
 
 	@ManyToOne(fetch = LAZY, cascade = ALL)
-	@JoinColumn(name = "artist_id")
+	@JoinColumn(name = "artist_id", nullable = false)
 	private Artist artist;
 
 	@Builder

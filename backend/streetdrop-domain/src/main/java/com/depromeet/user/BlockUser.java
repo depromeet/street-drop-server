@@ -1,5 +1,6 @@
 package com.depromeet.user;
 
+import com.depromeet.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @Entity
-public class BlockUser {
+public class BlockUser extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)

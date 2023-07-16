@@ -36,7 +36,7 @@ public class VillageArea {
     private Point villageCenterPoint;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = "city_id", nullable = false)
     private CityArea cityArea;
 
 }

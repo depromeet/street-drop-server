@@ -30,7 +30,7 @@ public class Song {
 	private String name;
 
 	@ManyToOne(fetch = LAZY, cascade = ALL)
-	@JoinColumn(name = "album_id")
+	@JoinColumn(name = "album_id", nullable = false)
 	private Album album;
 
 	@OneToMany(mappedBy = "song")
