@@ -1,7 +1,11 @@
 package com.depromeet.domains.music.service;
 
+import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.music.album.repository.AlbumRepository;
 import com.depromeet.domains.music.artist.repository.ArtistRepository;
+import com.depromeet.domains.music.dto.request.MusicRequestDto;
+import com.depromeet.domains.music.dto.response.MusicResponseDto;
 import com.depromeet.domains.music.genre.repository.SongGenreRepository;
 import com.depromeet.domains.music.genre.service.GenreService;
 import com.depromeet.domains.music.song.repository.SongRepository;
@@ -10,7 +14,6 @@ import com.depromeet.music.album.AlbumCover;
 import com.depromeet.music.artist.Artist;
 import com.depromeet.music.genre.SongGenre;
 import com.depromeet.music.song.Song;
-import com.depromeet.domains.music.dto.request.MusicRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -110,5 +113,12 @@ public class MusicService {
 		for (SongGenre songGenre : songGenres) {
 			songGenre.updateSong(song);
 		}
+	}
+
+	@Transactional(readOnly = true)
+	public MusicResponseDto getMusic(Long songId) {
+		return songRepository.findSongById(songId)
+				.map(MusicResponseDto::new)
+				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, songId));
 	}
 }
