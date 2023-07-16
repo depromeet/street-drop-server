@@ -13,9 +13,10 @@ import java.util.List;
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class Album {
 
@@ -46,7 +47,4 @@ public class Album {
 		this.artist = artist;
 	}
 
-	public void updateAlbumCover(AlbumCover albumCover) {
-		this.albumCover = albumCover;
-	}
 }

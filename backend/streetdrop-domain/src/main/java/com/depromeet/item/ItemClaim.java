@@ -1,6 +1,7 @@
 package com.depromeet.item;
 
 import com.depromeet.common.entity.BaseTimeEntity;
+import com.depromeet.item.vo.ItemClaimStatus;
 import com.depromeet.user.User;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -10,9 +11,10 @@ import lombok.Setter;
 
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class ItemClaim extends BaseTimeEntity {
 

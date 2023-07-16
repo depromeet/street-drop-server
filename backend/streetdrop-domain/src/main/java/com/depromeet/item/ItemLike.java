@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class ItemLike extends BaseTimeEntity {
 
@@ -35,7 +36,7 @@ public class ItemLike extends BaseTimeEntity {
 	}
 
 	public boolean isLiked(User user) {
-		return user.equals(user);
+		return this.user.equals(user);
 	}
 
 }

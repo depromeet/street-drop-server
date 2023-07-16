@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.depromeet.item.ItemClaimStatus.WAITING;
+import static com.depromeet.item.vo.ItemClaimStatus.WAITING;
 
 @Service
 @RequiredArgsConstructor

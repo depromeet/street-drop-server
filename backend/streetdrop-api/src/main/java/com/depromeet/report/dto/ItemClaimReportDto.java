@@ -1,7 +1,7 @@
 package com.depromeet.report.dto;
 
 import com.depromeet.item.ItemClaim;
-import com.depromeet.item.ItemClaimStatus;
+import com.depromeet.item.vo.ItemClaimStatus;
 
 import java.time.LocalDateTime;
 
