@@ -12,7 +12,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @Entity
-public class AlbumCover extends BaseTimeEntity {
+public class AlbumCover {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
