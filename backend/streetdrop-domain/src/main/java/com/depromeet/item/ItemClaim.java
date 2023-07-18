@@ -1,6 +1,7 @@
 package com.depromeet.item;
 
 import com.depromeet.common.entity.BaseTimeEntity;
+import com.depromeet.item.vo.ItemClaimStatus;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

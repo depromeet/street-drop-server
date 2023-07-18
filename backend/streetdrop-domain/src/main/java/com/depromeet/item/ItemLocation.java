@@ -8,11 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.locationtech.jts.geom.Point;
 
+import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class ItemLocation extends BaseTimeEntity {
 
@@ -27,12 +29,12 @@ public class ItemLocation extends BaseTimeEntity {
 	@Column(columnDefinition = "Point")
 	private Point point;
 
-	@OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "item_id")
+	@OneToOne(fetch = LAZY, cascade = ALL)
+	@JoinColumn(name = "item_id", nullable = false)
 	private Item item;
 
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "village_id")
+	@JoinColumn(name = "village_id", nullable = false)
 	private VillageArea villageArea;
 
 	@Builder

@@ -9,11 +9,12 @@ import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Entity
-public class SongGenre extends BaseTimeEntity {
+public class SongGenre {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -21,11 +22,11 @@ public class SongGenre extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "song_id")
+    @JoinColumn(name = "song_id", nullable = false)
     private Song song;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "genre_id")
+    @JoinColumn(name = "genre_id", nullable = false)
     private Genre genre;
 
     @Builder

@@ -1,6 +1,5 @@
 package com.depromeet.music.album;
 
-import com.depromeet.common.entity.BaseTimeEntity;
 import com.depromeet.music.artist.Artist;
 import com.depromeet.music.song.Song;
 import jakarta.persistence.*;
@@ -14,28 +13,30 @@ import java.util.List;
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Entity
-public class Album extends BaseTimeEntity {
+public class Album {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "album_id")
 	private Long id;
 
+	@Column(nullable = false)
 	private String name;
 
 	@OneToOne(fetch = LAZY, cascade = ALL)
-	@JoinColumn(name = "album_cover_id")
+	@JoinColumn(name = "album_cover_id", nullable = false)
 	private AlbumCover albumCover;
 
 	@OneToMany(mappedBy = "album", fetch = LAZY, cascade = ALL, orphanRemoval = true)
 	private List<Song> songs = new ArrayList<>();
 
 	@ManyToOne(fetch = LAZY, cascade = ALL)
-	@JoinColumn(name = "artist_id")
+	@JoinColumn(name = "artist_id", nullable = false)
 	private Artist artist;
 
 	@Builder
@@ -46,7 +47,4 @@ public class Album extends BaseTimeEntity {
 		this.artist = artist;
 	}
 
-	public void updateAlbumCover(AlbumCover albumCover) {
-		this.albumCover = albumCover;
-	}
 }
