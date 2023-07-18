@@ -39,7 +39,7 @@ public class UserService {
 		            .musicApp(MusicApp.YOUTUBE_MUSIC)
                     .userLevelId(USER_LEVEL_ID)
                     .build();
-            return userRepository.save(newUser);
+            return userRepository.saveAndFlush(newUser);
         }
     }
 
@@ -47,6 +47,7 @@ public class UserService {
     public UserResponseDto getUserInfo(User user) {
         return new UserResponseDto(user);
     }
+
 
     private String generateDefaultNickname() {
         return defaultNickNameRepository.getDefaultNickNameByRandom();

@@ -6,18 +6,23 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
+
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Entity
-public class AlbumCover extends BaseTimeEntity {
+public class AlbumCover {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "album_cover_id")
 	private Long id;
 
+	@Column(nullable = false)
 	private String albumImage;
 
+	@Column(nullable = false)
 	private String albumThumbnail;
 
 	@Builder

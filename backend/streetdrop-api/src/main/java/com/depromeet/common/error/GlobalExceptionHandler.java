@@ -9,10 +9,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.sql.SQLException;
 
 @RestControllerAdvice
 @Slf4j
@@ -60,7 +63,7 @@ public class GlobalExceptionHandler {
 				.body(errorResponseDto);
 	}
 
-	@ExceptionHandler(Exception.class)
+	@ExceptionHandler(value = {Exception.class, RuntimeException.class, SQLException.class, DataIntegrityViolationException.class})
 	protected ResponseEntity<ErrorResponseDto> handleInternalException(
 			final Exception e,
 			final HttpServletRequest request

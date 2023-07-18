@@ -12,11 +12,13 @@ import lombok.Setter;
 
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class Item extends BaseTimeEntity {
 
@@ -26,25 +28,24 @@ public class Item extends BaseTimeEntity {
 	private Long id;
 
 	@Column(length = 500, nullable = false)
-	@Setter
 	private String content;
 
-	@OneToOne(fetch = LAZY, mappedBy = "item", cascade = CascadeType.ALL)
+	@OneToOne(fetch = LAZY, mappedBy = "item", cascade = ALL)
 	private ItemLocation itemLocation;
 
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "song_id")
+	@JoinColumn(name = "song_id", nullable = false)
 	private Song song;
 
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "album_cover_id")
+	@JoinColumn(name = "album_cover_id", nullable = false)
 	private AlbumCover albumCover;
 
-	@OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "item", cascade = ALL)
 	private List<ItemLike> likes;
 
 	@Builder
