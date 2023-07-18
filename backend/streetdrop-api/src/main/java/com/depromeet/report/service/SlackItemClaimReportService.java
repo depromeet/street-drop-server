@@ -27,7 +27,7 @@ public class SlackItemClaimReportService implements ItemClaimReportService {
         var markdownTextObject = markdownText("*Item Claim Id:* " + itemClaimReportDto.itemClaimId()
                 + "\n*Item Claim Reason:* " + itemClaimReportDto.itemClaimReason()
                 + "\n*Item Claim Status:* " + itemClaimReportDto.itemClaimStatus()
-                + "\n*Reporter:* " + itemClaimReportDto.reporter()
+                + "\n*Reporter:* " + itemClaimReportDto.reportUserId()
                 + "\n*Item Id:* " + itemClaimReportDto.itemId()
                 + "\n*Item Content:* " + itemClaimReportDto.itemContent()
                 + "\n*Claim Time:* " + itemClaimReportDto.claimTime()
