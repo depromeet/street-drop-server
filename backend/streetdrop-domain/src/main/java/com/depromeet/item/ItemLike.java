@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static jakarta.persistence.ConstraintMode.NO_CONSTRAINT;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
@@ -22,11 +23,11 @@ public class ItemLike extends BaseTimeEntity {
 	private Long id;
 
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "item_id")
+	@JoinColumn(name = "item_id", nullable = true, foreignKey = @ForeignKey(NO_CONSTRAINT))
 	private Item item;
 
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "user_Id")
+	@JoinColumn(name = "user_Id", nullable = true, foreignKey = @ForeignKey(NO_CONSTRAINT))
 	private User user;
 
 	@Builder

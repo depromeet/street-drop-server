@@ -33,9 +33,6 @@ public class User extends BaseTimeEntity {
 	@Column(length = 100, nullable = false)
 	private String idfv;
 
-	@OneToMany(mappedBy = "user")
-	private List<Item> items;
-
 	@Column(name = "user_level_id", nullable = false)
 	private Long userLevelId;
 
