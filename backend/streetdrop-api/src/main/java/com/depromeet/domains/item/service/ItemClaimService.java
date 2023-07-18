@@ -39,7 +39,16 @@ public class ItemClaimService {
 
         var saveditemClaim = itemClaimRepository.save(itemClaim);
 
-        slackItemClaimReportService.sendReport(new ItemClaimReportDto(saveditemClaim));
+        ItemClaimReportDto itemClaimReportDto = ItemClaimReportDto.builder()
+                .itemClaimId(saveditemClaim.getId())
+                .itemClaimReason(saveditemClaim.getReason())
+                .itemClaimStatus(saveditemClaim.getStatus())
+                .reportUserId(saveditemClaim.getUserId())
+                .itemId(saveditemClaim.getItemId())
+                .itemContent(item.getContent())
+                .build();
+
+        slackItemClaimReportService.sendReport(itemClaimReportDto);
     }
 
     private void checkUserAlreadyReport(Long userId, Long itemId) {

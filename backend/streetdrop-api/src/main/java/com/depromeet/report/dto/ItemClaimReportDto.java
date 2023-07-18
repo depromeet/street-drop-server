@@ -1,5 +1,6 @@
 package com.depromeet.report.dto;
 
+import lombok.Builder;
 import com.depromeet.item.ItemClaim;
 import com.depromeet.item.vo.ItemClaimStatus;
 
@@ -9,20 +10,28 @@ public record ItemClaimReportDto(
         Long itemClaimId,
         String itemClaimReason,
         ItemClaimStatus itemClaimStatus,
-        String reporter,
+        Long reportUserId,
         Long itemId,
         String itemContent,
         LocalDateTime claimTime
 ) {
-    public ItemClaimReportDto(ItemClaim itemClaim) {
+
+    @Builder
+    public ItemClaimReportDto(Long itemClaimId,
+                              String itemClaimReason,
+                              ItemClaimStatus itemClaimStatus,
+                              Long reportUserId,
+                              Long itemId,
+                              String itemContent
+    ) {
         this(
-                itemClaim.getId(),
-                itemClaim.getReason(),
-                itemClaim.getStatus(),
-                itemClaim.getUser().getNickname(),
-                itemClaim.getItem().getId(),
-                itemClaim.getItem().getContent(),
-                itemClaim.getCreatedAt()
+                itemClaimId,
+                itemClaimReason,
+                itemClaimStatus,
+                reportUserId,
+                itemId,
+                itemContent,
+                LocalDateTime.now()
         );
     }
 }
