@@ -32,8 +32,8 @@ public class ItemClaimService {
 
         var itemClaim = ItemClaim.builder()
                 .reason(itemClaimRequestDto.getReason())
-                .item(item)
-                .user(user)
+                .itemId(itemId)
+                .userId(user.getId())
                 .status(WAITING)
                 .build();
 
