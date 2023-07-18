@@ -47,7 +47,10 @@ public class PushService {
 
     @Transactional
     public void sendAllPush(AllPushRequestDto pushRequestDto) {
-        List<String> tokens = userDeviceRepository.findAllDeviceTokens();
+        List<String> tokens = userDeviceRepository.findAll()
+                .stream()
+                .map(UserDevice::getDeviceToken)
+                .toList();
         try {
             if (pushRequestDto.getTitle() != null) {
                 fcmService.sendMulticastMessageSync(tokens, pushRequestDto.getTitle(), pushRequestDto.getContent());
