@@ -4,15 +4,15 @@ on:
   push:
     branches: [ "*" ]
     paths:
-      - [ "backend/streetdrop-api/**",
-          "backend/streetdrop-domain/**",
-          "backend/streetdrop-common/**" ]
+      - "backend/streetdrop-api/**"
+      - "backend/streetdrop-domain/**"
+      - "backend/streetdrop-common/**"
   pull_request:
     branches: [ "main", "dev" ]
     paths:
-      - [ "backend/streetdrop-api/**",
-          "backend/streetdrop-domain/**",
-          "backend/streetdrop-common/**" ]
+      - "backend/streetdrop-api/**"
+      - "backend/streetdrop-domain/**"
+      - "backend/streetdrop-common/**"
 
 permissions:
   contents: read
