@@ -24,4 +24,7 @@ public interface ItemLikeRepository extends JpaRepository<ItemLike, Long> {
             ORDER BY il.id DESC
             """)
     List<ItemLike> findByUserId(@Param("userId") Long userId, @Param("lastCursor") long lastCursor);
+
+    Optional<ItemLike> findByItemId(Long itemId);
+
 }

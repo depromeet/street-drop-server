@@ -14,6 +14,7 @@ import com.depromeet.domains.user.dto.response.UserProfileResponseDto;
 import com.depromeet.domains.user.repository.BlockUserRepository;
 import com.depromeet.domains.village.service.VillageAreaService;
 import com.depromeet.item.Item;
+import com.depromeet.item.ItemLike;
 import com.depromeet.item.ItemLocation;
 import com.depromeet.user.User;
 import com.depromeet.util.GeomUtil;
@@ -24,6 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -74,7 +77,7 @@ public class ItemService {
 		item.setItemLocation(itemLocation);
 		var savedItem = itemRepository.save(item);
 
-		return new ItemResponseDto(savedItem);
+		return new ItemResponseDto(savedItem, user);
 	}
 
 
@@ -110,17 +113,30 @@ public class ItemService {
 			final List<Long> blockedUserIds =  getBlockedUserIds(user);
 			var itemDetailDtoList = items.stream()
 					.filter((item) -> !blockedUserIds.contains(item.getUser().getId()))
-					.map(ItemsResponseDto.ItemDetailDto::new)
+					.map(item -> {
+						List<User> likedUsers = item.getLikes().stream()
+								.map(ItemLike::getUser)
+								.filter(likeUser -> likeUser.getIdfv().equals(user.getIdfv()))
+								.collect(Collectors.toList());
+						return new ItemsResponseDto.ItemDetailDto(item, likedUsers);
+					})
 					.toList();
 			return new ItemsResponseDto(itemDetailDtoList);
 		} else {
 			final List<Long> blockedUserIds = new ArrayList<>();
 			var itemDetailDtoList = items.stream()
-					.map(ItemsResponseDto.ItemDetailDto::new)
+					.map(item -> {
+						List<User> likedUsers = item.getLikes().stream()
+								.map(ItemLike::getUser)
+								.filter(likeUser -> likeUser.getIdfv().equals(user.getIdfv()))
+								.collect(Collectors.toList());
+						return new ItemsResponseDto.ItemDetailDto(item, likedUsers);
+					})
 					.toList();
 			return new ItemsResponseDto(itemDetailDtoList);
 		}
     }
+
 
 	private List<Long> getBlockedUserIds(User user) {
 		return blockUserRepository.findBlockedIdsByBlockerId(user.getId());
@@ -153,6 +169,6 @@ public class ItemService {
 			throw new BusinessException(ErrorCode.INVALID_USER_EXCEPTION);
 		}
 		item.updateContent(itemRequestDto.getContent());
-		return new ItemResponseDto(item);
+		return new ItemResponseDto(item, user);
 	}
 }

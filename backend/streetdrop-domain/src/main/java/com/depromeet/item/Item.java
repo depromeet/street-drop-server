@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.CascadeType.ALL;
@@ -65,8 +66,8 @@ public class Item extends BaseTimeEntity {
 		return likes != null ? likes.size() : 0;
 	}
 
-	public boolean isLiked(User user) {
-		return likes != null && likes.stream().anyMatch(like -> like.isLiked(user));
+	public boolean isLiked(List<User> users) {
+		return likes != null && likes.stream().anyMatch(like -> users.contains(like.getUser()));
 	}
 
 	public void updateContent(String content) {

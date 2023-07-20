@@ -2,6 +2,7 @@ package com.depromeet.domains.item.dto.response;
 
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.item.Item;
+import com.depromeet.user.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -28,7 +29,7 @@ public record ItemResponseDto(
 		@Schema(description = "아이템 좋아요 개수", example = "1")
 		int itemLikeCount
 ) {
-	public ItemResponseDto(Item item) {
+	public ItemResponseDto(Item item, User user) {
 		this(
 				item.getId(),
 				new UserResponseDto(item.getUser()),
