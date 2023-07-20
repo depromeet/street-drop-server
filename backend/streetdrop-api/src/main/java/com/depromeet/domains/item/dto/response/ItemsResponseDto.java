@@ -3,6 +3,7 @@ package com.depromeet.domains.item.dto.response;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.item.Item;
 import com.depromeet.domains.music.dto.response.MusicResponseDto;
+import com.depromeet.user.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -40,7 +41,7 @@ public record ItemsResponseDto(List<ItemDetailDto> items) {
                 @Schema(description = "아이템 좋아요 개수", example = "100")
                 int itemLikeCount
         ) {
-                public ItemDetailDto(Item item) {
+                public ItemDetailDto(Item item,  List<User> likeUsers) {
                         this(
                                 item.getId(),
                                 new UserResponseDto(item.getUser()),
@@ -48,7 +49,7 @@ public record ItemsResponseDto(List<ItemDetailDto> items) {
                                 new MusicResponseDto(item),
                                 item.getContent(),
                                 item.getCreatedAt(),
-                                item.isLiked(item.getUser()),
+                                item.isLiked(likeUsers),
                                 item.getItemLikeCount()
                         );
                 }
