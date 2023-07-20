@@ -16,9 +16,16 @@ import java.util.List;
 public class UserStaticService {
     private final UserRepository userRepository;
 
+    private final LocalDateTime serviceStartDate = LocalDateTime.of(2023, 7, 13, 0, 0, 0);
+
     @Transactional(readOnly = true)
     public List<UserSignUpCountResponseDto> getUserSignUpCount(UserSignUpCountRequestDto userSignUpCountRequestDto) {
-        return userRepository.countUserByCreatedAt(userSignUpCountRequestDto.getStartDate(), userSignUpCountRequestDto.getEndDate())
+        LocalDateTime startDate = userSignUpCountRequestDto.getStartDate();
+        LocalDateTime endDate = userSignUpCountRequestDto.getEndDate();
+        if (startDate.isBefore(serviceStartDate)) {
+            startDate = serviceStartDate;
+        }
+        return userRepository.countUserByCreatedAt(startDate, endDate)
                 .stream()
                 .map(row -> {
                     String joinDate = (String) row[0];
@@ -29,7 +36,7 @@ public class UserStaticService {
 
     @Transactional(readOnly = true)
     public UserAllStaticCountDto getAllUserCount() {
-        Long allUserCount = userRepository.count();
+        Long allUserCount = userRepository.countAllByCreatedAtAfter();
         int todayUserCount = userRepository.countUserByCreatedAt(LocalDateTime.now().minusDays(1), LocalDateTime.now()).size();
         int dropUserCount = userRepository.countUserByDropCountIsNotNull();
         return new UserAllStaticCountDto(allUserCount, todayUserCount, dropUserCount);

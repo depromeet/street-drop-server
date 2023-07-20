@@ -9,7 +9,6 @@ const {TextArea} = Input;
 
 function MusicRecommendEventCreate() {
     const [form] = Form.useForm();
-    const [eventType, setEventType] = useState('basic');
     const [showDurationFields, setShowDurationFields] = useState(false);
 
     const onFormEventTypeChange = (changedValues) => {
