@@ -61,8 +61,8 @@ public class User extends BaseTimeEntity {
 		return this;
 	}
 
-	public User changeLevel(UserLevel userLevel) {
-		this.userLevel = userLevel;
+	public User changeLevel(Long userLevelId) {
+		this.userLevelId = userLevelId;
 		return this;
 	}
 
