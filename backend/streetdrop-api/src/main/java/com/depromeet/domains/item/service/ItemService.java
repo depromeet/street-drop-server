@@ -103,24 +103,20 @@ public class ItemService {
 
 	@Transactional(readOnly = true)
     public ItemsResponseDto findNearItems(User user, NearItemRequestDto nearItemRequestDto) {
-        Point point = GeomUtil.createPoint(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude());
-        var items = itemRepository.findNearItemsByDistance(point, nearItemRequestDto.getDistance());
+		Point point = GeomUtil.createPoint(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude());
+		var items = itemRepository.findNearItemsByDistance(point, nearItemRequestDto.getDistance());
 
-		if (user != null) {
-			final List<Long> blockedUserIds =  getBlockedUserIds(user);
-			var itemDetailDtoList = items.stream()
-					.filter((item) -> !blockedUserIds.contains(item.getUser().getId()))
-					.map(ItemsResponseDto.ItemDetailDto::new)
-					.toList();
-			return new ItemsResponseDto(itemDetailDtoList);
-		} else {
-			final List<Long> blockedUserIds = new ArrayList<>();
-			var itemDetailDtoList = items.stream()
-					.map(ItemsResponseDto.ItemDetailDto::new)
-					.toList();
-			return new ItemsResponseDto(itemDetailDtoList);
-		}
-    }
+		final List<Long> blockedUserIds = getBlockedUserIds(user);
+		var itemDetailDtoList = items.stream()
+				.filter((item) -> !blockedUserIds.contains(item.getUser().getId()))
+				.map(item ->
+				{
+					Boolean isLiked = itemLikeRepository.existsByUserIdAndItemId(user.getId(), item.getId());
+					return new ItemsResponseDto.ItemDetailDto(item, isLiked);
+				})
+				.toList();
+		return new ItemsResponseDto(itemDetailDtoList);
+	}
 
 	private List<Long> getBlockedUserIds(User user) {
 		return blockUserRepository.findBlockedIdsByBlockerId(user.getId());

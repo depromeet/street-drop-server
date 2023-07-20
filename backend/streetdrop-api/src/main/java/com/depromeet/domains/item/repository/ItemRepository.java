@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Query("SELECT i FROM Item i " +
-            "JOIN ItemLocation il on il.item.id = i.id " +
+            "JOIN FETCH i.itemLocation il " +
             "WHERE ST_Distance_Sphere(il.point, :point) <= :distance")
     List<Item> findNearItemsByDistance(@Param("point") Point point, @Param("distance") Double distance);
 
