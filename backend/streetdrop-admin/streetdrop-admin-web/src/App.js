@@ -1,19 +1,18 @@
 import React from 'react';
 import {Layout} from 'antd';
-import SearchDropMusic from './components/music/drop/SearchDropMusic';
-import DropSingleMusic from './components/music/drop/DropSingleMusic';
+import SearchDropMusic from './components/items/drop/SearchDropMusic';
+import DropSingleMusic from './components/items/drop/DropSingleMusic';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
-import DropMusicSuccess from './components/music/drop/result/DropMusicSuccess';
-import DropMusicFail from './components/music/drop/result/DropMusicFail';
+import DropMusicSuccess from './components/items/drop/result/DropMusicSuccess';
+import DropMusicFail from './components/items/drop/result/DropMusicFail';
 import Login from './pages/Login';
-import MusicRecommend from './components/music/recommend/MusicRecommend';
-import MusicList from './components/music/near/MusicList';
-import MusicListPage from "./components/music/MusicListPage";
+import MusicRecommend from './components/items/music/recommend/MusicRecommend';
 import UserListPage from "./components/user/UserListPage";
 import CreateNotification from "./components/notification/CreateNotification";
-import ItemListPage from "./components/music/items/ItemListPage";
+import ItemListPage from "./components/items/ItemListPage";
 import UserSignUpGraph from "./components/user/UserSignUpGraph";
+import LocationAnalysis from "./components/location/LocationAnalysis";
 
 const App = () => {
     return (
@@ -28,8 +27,7 @@ const App = () => {
                     <Route path='/drop-music/result/success' element={<DropMusicSuccess/>}/>
                     <Route path='/drop-music/result/fail' element={<DropMusicFail/>}/>
                     <Route path='/music/recommend' element={<MusicRecommend/>}/>
-                    <Route path='/music/map' element={<MusicList/>}/>
-                    <Route path='/music/list' element={<MusicListPage/>}/>
+                    <Route path='/location/analysis' element={<LocationAnalysis/>}/>
                     <Route path='/user/list' element={<UserListPage/>}/>
                     <Route path='/user/signup-graph' element={<UserSignUpGraph/>}/>
                     <Route path='/notification/create' element={<CreateNotification/>}/>

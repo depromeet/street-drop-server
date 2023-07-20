@@ -28,7 +28,7 @@ function CommonHeader() {
     return (
         <>
             <Header style={{padding: 0, background: colorBgContainer}}>
-                <span style={{marginLeft: 30, font: "bold"}}>Street Drop Admin</span>
+                <span style={{marginLeft: 30, fontWeight: "bold"}}>Street Drop Admin</span>
                 <Dropdown menu={{items}} placement="bottomRight" arrow>
                     <Button
                         type="text"

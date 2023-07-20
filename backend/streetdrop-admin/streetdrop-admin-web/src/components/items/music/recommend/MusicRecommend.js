@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import {Button, Modal, Table, Tag} from 'antd';
 import MusicRecommendEventCreate from "./MusicRecommendEventCreate";
-import BasicLayout from "../../layout/BasicLayout";
+import BasicLayout from "../../../../layout/BasicLayout";
 
 
 function MusicRecommend() {

@@ -4,7 +4,7 @@ import {Button, Form, Input} from 'antd';
 import {useLocation, useNavigate} from "react-router-dom";
 import SelectedMusicView from "./SelectedMusicView";
 import axios from "axios";
-import MapLayout from "../../layout/MapLayout";
+import MapLayout from "../../../layout/MapLayout";
 
 
 function DropSingleMusic() {
@@ -106,8 +106,6 @@ function DropSingleMusic() {
                 <div style={{padding: 48}}>
                     <h2>음악 드랍</h2>
                     <SelectedMusicView musicInfo={musicInfo}/>
-
-
                     <Form ref={formRef} form={form} style={{marginTop: '30px'}}>
                         <Form.Item style={{marginBottom: '10px'}}>
                             <Form.Item label="위도" name="latitude" rules={[{required: true}]}>
