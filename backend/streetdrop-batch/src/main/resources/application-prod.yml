@@ -9,24 +9,10 @@ spring:
       maximum-pool-size: 20
   jpa:
     hibernate:
-      ddl-auto: update
-swagger:
-  server-url: ${SWAGGER_SERVER_URL}
+      ddl-auto: validate
 slack:
   token: ${slack.token}
   monitoring-channel: error
   report-channel: report
-cloud:
-  aws:
-    credentials:
-      accessKey: ${AWS_ACCESS_KEY}
-      secretKey: ${AWS_SECRET_KEY}
-    s3:
-      bucket: ${AWS_BUCKET_NAME}
-      region:
-        auto: false
-        static: ${AWS_REGION}
-      stack:
-        auto: false
 notification:
   noti-server-url: ${NOTI_SERVER_URL}
