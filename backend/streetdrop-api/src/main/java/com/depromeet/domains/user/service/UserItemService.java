@@ -18,9 +18,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.depromeet.util.WeekUtil.getWeekString2Int;
 import static com.depromeet.util.WeekUtil.getWeeksAgo;
 
 @Service
@@ -70,7 +72,9 @@ public class UserItemService {
                         .entrySet()
                         .stream()
                         .map(entry -> new ItemGroupByDateResponseDto(entry.getKey(), entry.getValue()))
+                        .sorted(Comparator.comparingInt(dto -> getWeekString2Int(dto.date())))
                         .toList();
+
         var meta = new InfiniteScrollMetaResponseDto(itemList.size(), -1);
 
         return new InfiniteScrollResponseDto<>(itemGroupByDateResponseDtoList, meta);
@@ -107,6 +111,7 @@ public class UserItemService {
                         .entrySet()
                         .stream()
                         .map(entry -> new ItemGroupByDateResponseDto(entry.getKey(), entry.getValue()))
+                        .sorted(Comparator.comparingInt(dto -> getWeekString2Int(dto.date())))
                         .toList();
         var meta = new InfiniteScrollMetaResponseDto(itemLikeList.size(), -1);
 
