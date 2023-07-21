@@ -3,8 +3,8 @@ import DropKakaoMap from "./DropKakaoMap";
 import {Button, Form, Input} from 'antd';
 import {useLocation, useNavigate} from "react-router-dom";
 import SelectedMusicView from "./SelectedMusicView";
-import axios from "axios";
 import MapLayout from "../../../layout/MapLayout";
+import DropApi from "../../../api/domain/music/DropApi";
 
 
 function DropSingleMusic() {
@@ -70,30 +70,13 @@ function DropSingleMusic() {
         postData(data);
     }
 
-    const postData = (data) => {
-
-        let config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: '/api/items',
-            headers: {
-                'x-sdp-idfv': 'admin',
-                'Content-Type': 'application/json'
-            },
-            data: data
-        };
-
-        axios.request(config)
-            .then(
-                (response) => {
-                    navigate('/drop-music/result/success');
-                }
-            )
-            .catch(
-                (error) => {
-                    navigate('/drop-music/result/fail', {state: {error}});
-                }
-            )
+    const postData = async (data) => {
+        try {
+            await DropApi(data);
+            navigate('/drop-music/result/success');
+        } catch (error) {
+            navigate('/drop-music/result/fail', {state: {error}});
+        }
     };
 
 

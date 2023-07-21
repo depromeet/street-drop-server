@@ -1,7 +1,7 @@
 import {Col, Row, Statistic} from "antd";
 import React, {useEffect, useState} from "react";
 import CountUp from "react-countup";
-import axios from "axios";
+import UserStaticApi from "../../api/domain/dashboard/UserStaticApi";
 
 const formatter = (value) => <CountUp end={value} separator=","/>;
 
@@ -13,14 +13,9 @@ function KpiDashboard() {
         fetchUserKpi();
     }, []);
 
-    const fetchUserKpi = () => {
-        axios.get('/admin/users/statical/all/count')
-            .then(response => {
-                const data = response.data;
-                setUserKpiData(data);
-            }).catch(error => {
-            console.error("Error fetching data:", error);
-        });
+    const fetchUserKpi = async () => {
+        const response = await UserStaticApi.getUserKpiData();
+        setUserKpiData(response.data);
     }
 
     const UserKpi = ({allUserCount, todayUserCount, dropUserCount}) => (
