@@ -35,6 +35,8 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.3.1'
+
+    implementation 'org.springframework.boot:spring-boot-starter-amqp:3.1.2'
 }
 
 test {

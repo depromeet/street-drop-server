@@ -2,5 +2,11 @@ spring:
   data:
     mongodb:
       uri: ${MONGO_DB_URL}
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_USERNAME}
+
 fcm:
   value: streetdrop-notification-fcm.json

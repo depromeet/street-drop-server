@@ -10,6 +10,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_USERNAME}
 swagger:
   server-url: ${SWAGGER_SERVER_URL}
 slack:
