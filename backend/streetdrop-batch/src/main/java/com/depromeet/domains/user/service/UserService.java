@@ -1,7 +1,9 @@
 package com.depromeet.domains.user.service;
 
+import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.level.LevelUpdatePolicy;
 import com.depromeet.domains.level.LevelUpdatePolicyImpl;
+import com.depromeet.domains.user.UserItemDto;
 import com.depromeet.domains.user.repository.UserLevelRepository;
 import com.depromeet.domains.user.repository.UserRepository;
 import com.depromeet.user.User;
@@ -10,61 +12,66 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class UserService {
 
+	public static final int LEVEL_ONE = 1;
+	public static final int LEVEL_TWO = 2;
+	public static final int LEVEL_THREE = 3;
+
 	private final UserRepository userRepository;
-
 	private final UserLevelRepository userLevelRepository;
+	private final ItemRepository itemRepository;
+	private final Map<Integer, LevelUpdatePolicy> levelUpdatePolicies;
 
-	private final List<LevelUpdatePolicy> levelUpdatePolicies;
-
-	public UserService(UserRepository userRepository, UserLevelRepository userLevelRepository) {
+	public UserService(UserRepository userRepository, UserLevelRepository userLevelRepository, ItemRepository itemRepository) {
 		this.userRepository = userRepository;
 		this.userLevelRepository = userLevelRepository;
-		levelUpdatePolicies = Arrays.asList(
-				new LevelUpdatePolicyImpl(5, getUserLevelById(userLevelRepository, 2L)),
-				new LevelUpdatePolicyImpl(25, getUserLevelById(userLevelRepository, 3L))
-		);
+		this.itemRepository = itemRepository;
+		levelUpdatePolicies = createLevelUpdatePolicies();
 	}
 
-	private UserLevel getUserLevelById(UserLevelRepository userLevelRepository, long userLevelId) {
+	private Map<Integer, LevelUpdatePolicy> createLevelUpdatePolicies() {
+		Map<Integer, LevelUpdatePolicy> policies = new HashMap<>();
+		policies.put(LEVEL_ONE, new LevelUpdatePolicyImpl(0, 4, getUserLevelById(1L)));
+		policies.put(LEVEL_TWO, new LevelUpdatePolicyImpl(5, 24, getUserLevelById(2L)));
+		policies.put(LEVEL_THREE, new LevelUpdatePolicyImpl(25, 55, getUserLevelById(3L)));
+		return policies;
+	}
+
+	private UserLevel getUserLevelById(long userLevelId) {
 		return userLevelRepository.findUserLevelById(userLevelId);
 	}
 
 	@Transactional
 	public void updateLevel() {
-		var usersToUpdateLevel = findUsersToUpdateLevel();
-		updateUsersLevel(usersToUpdateLevel);
+		List<User> usersToUpdateLevel = new ArrayList<>();
+		var allUsers = userRepository.findAll();
+		var userIds = allUsers.stream().map(User::getId).collect(Collectors.toList());
+		var userItemDtoList = itemRepository.countItemsByUserIdIn(userIds);
+
+		Map<Long, Integer> itemCountMap = userItemDtoList.stream()
+				.collect(Collectors.toMap(UserItemDto::getUserId, UserItemDto::getItemCount));
+
+		allUsers.forEach(user -> {
+			var itemCount = itemCountMap.getOrDefault(user.getId(), 0);
+			updateUserLevel(user, itemCount, usersToUpdateLevel);
+		});
+		userRepository.saveAll(usersToUpdateLevel);
 	}
 
-	private List<User> findUsersToUpdateLevel() {
-		List<User> usersToUpdateLevel = new ArrayList<>();
-		List<User> allUsers = userRepository.findAll();
-
-		for (User user : allUsers) {
-			var itemCount = getItemCount(user);
-			for (LevelUpdatePolicy policy : levelUpdatePolicies) {
-				if (policy.isAcceptable(itemCount)) {
-					var newLevel = policy.getNewLevel();
-					user.changeLevel(newLevel.getId());
-					usersToUpdateLevel.add(user);
-				}
+	private void updateUserLevel(User user, Integer itemCount, List<User> usersToUpdateLevel) {
+		for (Map.Entry<Integer, LevelUpdatePolicy> entry : levelUpdatePolicies.entrySet()) {
+			LevelUpdatePolicy policy = entry.getValue();
+			if (policy.isAcceptable(itemCount)) {
+				user.changeLevel(policy.getNewLevel().getId());
+				usersToUpdateLevel.add(user);
+				break;
 			}
 		}
-		return usersToUpdateLevel;
-	}
-
-	private int getItemCount(User user) {
-		return user.getItems() != null ? user.getItems().size() : 0;
-	}
-
-	private void updateUsersLevel(List<User> usersToUpdateLevel) {
-		userRepository.saveAll(usersToUpdateLevel);
 	}
 }
