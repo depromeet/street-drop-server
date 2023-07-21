@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import {Button, Empty, Input, message, Space, Table, Tag} from 'antd';
-import axios from "axios";
 import {useNavigate} from 'react-router-dom';
 import BasicLayout from "../../../layout/BasicLayout";
+import MusicSearchApi from "../../../api/domain/music/MusicSearchApi";
 
 
 const {Search} = Input;
@@ -59,36 +59,35 @@ function SearchDropMusic() {
     ]
 
 
+    const successMessage = () => {
+        messageApi.open({
+            type: 'success',
+            content: "음악 검색에 성공했습니다.",
+        })
+    }
+
+    const errorMessage = () => {
+        messageApi.open({
+            type: 'error',
+            content: "음악 검색에 실패했습니다. 다시 시도해주세요.",
+        })
+    }
+
     /*
      * Get Data From Search Server
      */
-    const fetchData = () => {
+    const fetchData = async () => {
         setSongs([]);
-        axios.get('/search/music', {
-            params: {
-                keyword: search
-            }
-        })
-            .then(response => {
-                messageApi.open({
-                    type: 'success',
-                    content: "음악 검색에 성공했습니다.",
-                })
-                const data = response.data.data;
-                const newData = data.map((item, index) => {
-                    const key = index + 1;
-                    return {...item, key};
-                });
-
-                setSongs(newData);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                messageApi.open({
-                    type: 'error',
-                    content: "음악 검색에 실패했습니다. 다시 시도해주세요.",
-                });
-            });
+        try {
+            const response = await MusicSearchApi.searchMusic(search);
+            successMessage();
+            const data = response.data.data.map(
+                (item, index) => ({...item, key: index + 1})
+            );
+            setSongs(data);
+        } catch (error) {
+            errorMessage();
+        }
     }
 
     const onSelectChange = (newSelectedRowKeys) => {

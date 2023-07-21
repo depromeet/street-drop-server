@@ -1,22 +1,17 @@
 import {Table} from "antd";
-import axios from "axios";
 import {useEffect, useState} from "react";
+import VillageApi from "../../api/domain/village/VillageApi";
 
 function ItemDashboard() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
         fetchData();
-    },[])
-    const fetchData = () => {
-        axios.get('/admin/villages/items/count/recent')
-            .then(response => {
-                const dataResult = response.data.slice(0, 5);
-                setData(dataResult);
-            })
-            .catch(error => {
-                console.error('fail when fetching data', error);
-            });
+    }, [])
+
+    const fetchData = async () => {
+        const response = await VillageApi.getVillageItemCountRecent();
+        setData(response.data.slice(0, 5));
     }
 
     const columns = [

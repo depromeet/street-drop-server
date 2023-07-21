@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react"
 import {Drawer, Table} from 'antd';
-import axios from "axios";
 
 import BasicLayout from "../../layout/BasicLayout";
 import UserDetailPage from "./UserDetailPage";
+import UserApi from "../../api/domain/user/UserApi";
 
 function UserListPage() {
     const [users, setUsers] = useState([]);
@@ -74,20 +74,15 @@ function UserListPage() {
         fetchUser();
     }, [JSON.stringify(tableParams)]);
 
-    const fetchUser = () => {
-        axios.get('/admin/users' + '?page=' + (tableParams.pagination.current - 1) + '&size=' + tableParams.pagination.pageSize)
-            .then(response => {
-                console.log(response.data);
-                setUsers(response.data['users']);
-                setTableParams({
-                    ...tableParams,
-                    pagination: {
-                        ...tableParams.pagination,
-                        total: response.data['meta']['totalElements'],
-                    },
-                });
-            }).catch(error => {
-            console.error("Error fetching data:", error);
+    const fetchUser = async () => {
+        const response = await UserApi.getAllUser(tableParams.pagination.current - 1, tableParams.pagination.pageSize);
+        setUsers(response.data['users']);
+        setTableParams({
+            ...tableParams,
+            pagination: {
+                ...tableParams.pagination,
+                total: response.data['meta']['totalElements'],
+            },
         });
     }
 

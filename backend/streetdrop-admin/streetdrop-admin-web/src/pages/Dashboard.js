@@ -1,38 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Typography} from 'antd';
-
-import axios from "axios";
-
-import UserLineGraph from "../components/dashboard/UserLineGraph";
 import DashboardLayout from "../layout/DashboardLayout";
 import ItemDashboard from "../components/dashboard/ItemDashboard";
 import KpiDashboard from "../components/dashboard/KpiDashboard";
 import PushDashboard from "../components/dashboard/PushDashboard";
+import UserSignUpGraphDashboard from "../components/dashboard/UserSignUpGraphDashboard";
 
 
 const {Title} = Typography;
 
 function Dashboard() {
-    const [data, setData] = useState([]);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = () => {
-        axios.get('/admin/users/statical/signup/count')
-            .then(response => {
-                const formattedData = response.data.map(data => ({
-                    x: data.date,
-                    y: data.count
-                }));
-                console.log(formattedData);
-                setData(formattedData);
-            })
-            .catch(error => {
-                console.error('fail when fetching data', error);
-            });
-    };
 
 
     const dashboard1 = (<>
@@ -51,7 +29,7 @@ function Dashboard() {
     const dashboard3 = (<>
         <Title level={5}>가입유저</Title>
         <p style={{color: 'gray', marginBottom: '15px'}}>일별 가입유저 그래프입니다.</p>
-        {data && <UserLineGraph data={data}/>}
+        <UserSignUpGraphDashboard/>
     </>);
 
 

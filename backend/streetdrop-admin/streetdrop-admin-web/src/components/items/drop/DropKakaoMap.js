@@ -1,31 +1,11 @@
 import React, {useState} from 'react'
 import {Map, MapMarker} from 'react-kakao-maps-sdk'
-import axios from "axios";
 
 const DropKakaoMap = ({onMapClick, height}) => {
     const [position, setPosition] = useState()
     const [poi, setPoi] = useState([]);
     const [latitude, setLatitude] = useState(37.566826);
     const [longitude, setLongitude] = useState(126.9786567);
-
-    const fetchPoiData = () => {
-        setPoi([]);
-        axios.get('/api/items/points',
-            {
-                params: {
-                    latitude: latitude,
-                    longitude: longitude
-                }
-            }).then(
-            (response) => {
-                console.log(response.data['poi']);
-                setPoi(response.data['poi']);
-            }
-        )
-            .catch((error) => {
-                console.log(error);
-            });
-    }
 
 
     return (
@@ -46,7 +26,6 @@ const DropKakaoMap = ({onMapClick, height}) => {
                 onDragEnd={(map) => {
                     setLatitude(map.getCenter().getLat());
                     setLongitude(map.getCenter().getLng());
-                    fetchPoiData();
                 }}
 
                 onClick={(_t, mouseEvent) => {

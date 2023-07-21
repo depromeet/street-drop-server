@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import BasicLayout from "../../layout/BasicLayout";
 import {Form, Radio, Table} from "antd";
-import axios from "axios";
+import VillageApi from "../../api/domain/village/VillageApi";
 
 
 function LocationAnalysis() {
@@ -12,8 +12,7 @@ function LocationAnalysis() {
     const onRangeChange = (changedValues, allValues) => {
         if (allValues.rangeValue === 'all') {
             fetchAllData();
-        }
-        else {
+        } else {
             fetchRecentData();
         }
         setRange(allValues.rangeValue);
@@ -21,28 +20,17 @@ function LocationAnalysis() {
 
     useEffect(() => {
         fetchAllData();
-    },[])
+    }, [])
 
-    const fetchAllData = () => {
-        axios.get('/admin/villages/items/count')
-            .then(response => {
-                setData(response.data);
-            })
-            .catch(error => {
-                console.error('fail when fetching data', error);
-            });
+    const fetchAllData = async () => {
+        const response = await VillageApi.getVillageItemCountAll()
+        setData(response.data)
     }
 
-    const fetchRecentData = () => {
-        axios.get('/admin/villages/items/count/recent')
-            .then(response => {
-                setData(response.data);
-            })
-            .catch(error => {
-                console.error('fail when fetching data', error);
-            });
+    const fetchRecentData = async () => {
+        const response = await VillageApi.getVillageItemCountRecent()
+        setData(response.data)
     }
-
 
 
     const columns = [

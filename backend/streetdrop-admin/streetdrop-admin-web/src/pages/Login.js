@@ -1,104 +1,87 @@
-import React, {useState} from "react";
-import {useNavigate} from 'react-router-dom';
-import axios from "axios";
+import {Button, Form, Input, Tooltip, Typography} from "antd";
 import '../styles/Login.css';
+import React from 'react';
+import {useNavigate} from "react-router-dom";
+import LoginApi from "../api/domain/auth/LoginApi";
+import authService from "../service/AuthService";
+import {InfoCircleOutlined} from "@ant-design/icons";
 
-function isValidEmail(emailStr) {
-    var regExp =
-        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    if (emailStr.match(regExp) != null) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
+const {Title} = Typography;
 
 function Login() {
-    const [inputEmail, setInputEmail] = useState("");
-    const [inputPassword, setInputPassword] = useState("");
-    let [loginStatus, setLoginStatus] = useState("Login");
+
     const navigate = useNavigate();
-
-    const handleLoginStatus = async () => {
-        setLoginStatus("Login");
-    }
-
-    const handleEmailChange = (e) => {
-        setInputEmail(e.target.value);
-    }
-
-    const handlePasswordChange = (e) => {
-        setInputPassword(e.target.value);
-    }
-
-    const onClickLogin = () => {
-        if (isValidEmail(inputEmail)) {
-            if (loginStatus === "Verify") {
-                axios.post("/api/auth", {
-                    email: inputEmail
-                }).then(res => {
-                    console.log(res);
-                    if (res.status === 200) {
-                        console.log("이메일 전송 성공");
-                        alert('이메일을 확인해주세요.')
-                        handleLoginStatus();
-                    }
-                }).catch(err => {
-                    console.log(err);
-                })
-            } else if (loginStatus === "Login") {
-                axios.post("/api/users", {
-                    email: inputEmail,
-                }).then(res => {
-                    console.log(res);
-                    if (res.status === 200 || res.status === 201) {
-                        const data = JSON.stringify({accessToken: res.data.access_token});
-                        localStorage.setItem("user", JSON.stringify(data));
-                        navigate("/");
-                    }
-                }).catch(err => {
-                    console.log(err);
-                })
+    const onLoginClick = async ({username, password}) => {
+        try {
+            const result = await LoginApi(username, password);
+            authService.saveToken(result.data.accessToken)
+            navigate('/')
+        } catch (error) {
+            const {status} = error.response;
+            if (status === 400) {
+                alert('이메일 또는 비밀번호를 확인하세요.');
+            } else if (status === 401) {
+                alert('이메일 또는 비밀번호를 확인하세요.');
+            } else {
+                alert('로그인 실패');
             }
-        } else {
-            alert('이메일 형식이 올바르지 않습니다.');
         }
+    };
 
-    }
 
     return (
-        <div class="page-container">
-            <div class="login-form-container shadow">
-                <div class="login-form-right-side">
-                    <div class="top-logo-wrap">
+        <div className="back-ground-color full-screen">
+            <div className="login-box-container">
+                <img className="street-drop-img" src="image/login_img.png" alt="img"/>
+                <div className="login-from-box-container">
+                    <Tooltip title="스트릿 드랍 관리자 페이지 입니다.">
+                    <p className="login-title">관리자 로그인</p>
+                    </Tooltip>
 
-                    </div>
-                    <h1>Street Drop Admin Login</h1>
-                    <p>Let’s drop the music. This Website for Street Drop Admin Page</p>
-                </div>
-                <div class="login-form-left-side">
+                    <Form
+                        name="normal_login"
+                        className="form-container"
+                        initialValues={{remember: true}}
+                        onFinish={onLoginClick}
+                    >
+                        <Form.Item
+                            name="username"
+                            rules={[{required: true, message: '아이디를 입력해주세요'}]}
+                        >
+                            <Input
+                                className="id-field"
+                                placeholder="아이디"/>
+                        </Form.Item>
+                        <Form.Item
+                            name="password"
+                            rules={[{required: true, message: '비밀번호를 입력해주세요'}]}
+                        >
+                            <Input
+                                className="password-field"
+                                type="password"
+                                placeholder="패스워드"
+                            />
+                        </Form.Item>
+                        <Form.Item>
+                            <Button htmlType="submit" className="button-style">
+                                <div
+                                    style={{
+                                        fontSize: '16px',
+                                        fontWeight: 'bold',
+                                    }}
+                                >
+                                    로그인
+                                </div>
 
-                    <div class="login-input-container">
-                        <div class="login-input-wrap input-id">
-                            <i class="far fa-envelope"></i>
-                            <input placeholder="Email" type="text" name='input_email' value={inputEmail}
-                                   onChange={handleEmailChange}/>
-                        </div>
-                        <div class="login-input-wrap input-pw">
-                            <i class="fas fa-lock"></i>
-                            <input placeholder="Password" type="password" name='input_password' value={inputPassword}
-                                   onChange={handlePasswordChange}/>
-                        </div>
-                    </div>
-                    <div class="login-btn-wrap">
-                        <button class="login-btn" onClick={onClickLogin}>{loginStatus}</button>
-                    </div>
+                            </Button>
+                        </Form.Item>
+                    </Form>
                 </div>
+
             </div>
+
         </div>
     )
 }
-
 
 export default Login;

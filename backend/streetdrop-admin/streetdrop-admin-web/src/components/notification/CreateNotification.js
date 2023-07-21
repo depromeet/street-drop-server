@@ -1,7 +1,7 @@
 import BasicLayout from "../../layout/BasicLayout";
 import {Button, Form, Input, message, Radio} from "antd";
 import {useState} from "react";
-import axios from "axios";
+import NotificationApi from "../../api/domain/notification/NotificationApi";
 
 const {TextArea} = Input;
 
@@ -30,6 +30,20 @@ function CreateNotification() {
         );
     }
 
+    const successMessage = () => {
+        messageApi.open({
+            type: 'success',
+            content: "푸시 발송에 성공했습니다"
+        })
+    }
+
+    const errorMessage = () => {
+        messageApi.open({
+            type: 'error',
+            content: "푸시 발송에 실패했습니다"
+        })
+    }
+
     const AllPush = (title, content) => {
         return JSON.stringify(
             {
@@ -41,73 +55,22 @@ function CreateNotification() {
 
 
     const requestAllPush = (data) => {
-        let config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: '/noti/push/all/send',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: data
-        }
 
-        axios.request(config)
-            .then(
-                (response) => {
-                    console.log(JSON.stringify(response.data));
-                    messageApi.open(
-                        {
-                            type: 'success',
-                            content: "푸시 발송에 성공했습니다"
-                        }
-                    )
-                }
-            )
-            .catch(
-                (error) => {
-                    console.log(error);
-                    messageApi.open(
-                        {
-                            type: 'error',
-                            content: "푸시 발송에 실패했습니다"
-                        }
-                    )
-                })
+        try {
+            NotificationApi.sendNotificationAll(data);
+            successMessage();
+        } catch (error) {
+            errorMessage();
+        }
     }
 
     const requsetIndividaulPush = (data) => {
-
-        let config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: '/noti/push/send',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: data
-        };
-
-        axios.request(config)
-            .then(
-                (response) => {
-                    messageApi.open(
-                        {
-                            type: 'success',
-                            content: "푸시 발송에 성공했습니다"
-                        }
-                    )
-                }
-            )
-            .catch(
-                (error) => {
-                    messageApi.open(
-                        {
-                            type: 'error',
-                            content: "푸시 발송에 실패했습니다"
-                        }
-                    )
-                }
-            )
+        try {
+            NotificationApi.sendNotification(data);
+            successMessage();
+        } catch (error) {
+            errorMessage();
+        }
     };
 
 
@@ -116,14 +79,10 @@ function CreateNotification() {
         const content = form.getFieldValue('content');
         const userIds = form.getFieldValue('userIds');
 
-        console.log("clicked")
-
         if (pushType === 'all') {
-            console.log("all")
             const data = AllPush(title, content);
             requestAllPush(data);
         } else {
-            console.log("individual")
             const data = IndivdualPush(userIds, title, content);
             requsetIndividaulPush(data);
         }

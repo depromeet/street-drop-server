@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react"
 import {Drawer, Table} from 'antd';
 import axios from "axios";
 import BasicLayout from "../../layout/BasicLayout";
+import ItemApi from "../../api/domain/item/ItemApi";
 
 
 function ItemListPage() {
@@ -16,18 +17,9 @@ function ItemListPage() {
         setOpenDrawer(false);
     };
 
-    const deleteItem = (itemId) => {
-
-        axios.delete(`/admin/items/${itemId}`)
-            .then(res => {
-                fetchData();
-            })
-            .catch(
-                err => {
-                    console.log(err);
-                }
-            )
-
+    const deleteItem = async (itemId) => {
+        await ItemApi.deleteItem(itemId);
+        fetchData();
     }
 
     const [tableParams, setTableParams] = useState({
@@ -99,20 +91,15 @@ function ItemListPage() {
         fetchData();
     }, [JSON.stringify(tableParams)]);
 
-    const fetchData = () => {
-
-        axios.get('/admin/items' + '?page=' + (tableParams.pagination.current - 1) + '&size=' + tableParams.pagination.pageSize)
-            .then(response => {
-                setData(response.data['items']);
-                setTableParams({
-                    ...tableParams,
-                    pagination: {
-                        ...tableParams.pagination,
-                        total: response.data['meta']['totalElements'],
-                    },
-                });
-            }).catch(error => {
-            console.error("Error fetching data:", error);
+    const fetchData = async () => {
+        const response = await ItemApi.getItems(tableParams.pagination.current - 1, tableParams.pagination.pageSize);
+        setData(response.data['items']);
+        setTableParams({
+            ...tableParams,
+            pagination: {
+                ...tableParams.pagination,
+                total: response.data['meta']['totalElements'],
+            },
         });
     }
 
