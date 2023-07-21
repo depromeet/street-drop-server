@@ -14,11 +14,30 @@
     align-items: center;
 }
 
+.street-drop-login-img-container {
+    float: left;
+    flex-shrink: 0;
+    width: 600px;
+    height: 600px;
+    position: relative;
+    align-items: center;
+}
+
 .street-drop-img {
     width: 600px;
     height: 600px;
-    flex-shrink: 0;
-    float: left;
+    position: relative;
+    z-index: 1;
+}
+
+.street-drop-app {
+    width: 600px;
+    height: 600px;
+    position: absolute;
+    top: 0; /* Position the top of the element at the top of the container */
+    left: 0;
+    z-index: 2;
+    animation: dropAnimation 0.6s forwards ease-out;
 }
 
 .logo-container {
@@ -97,4 +116,15 @@
     justify-content: center; /* Center vertically */
     align-items: center; /* Center horizontally */
     margin-left: 100px;
+}
+
+@keyframes dropAnimation {
+    0% {
+        transform: translateY(-10%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }

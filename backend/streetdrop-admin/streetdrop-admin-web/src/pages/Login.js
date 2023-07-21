@@ -1,12 +1,9 @@
-import {Button, Form, Input, Tooltip, Typography} from "antd";
+import {Button, Form, Input, Tooltip} from "antd";
 import '../styles/Login.css';
 import React from 'react';
 import {useNavigate} from "react-router-dom";
 import LoginApi from "../api/domain/auth/LoginApi";
 import authService from "../service/AuthService";
-import {InfoCircleOutlined} from "@ant-design/icons";
-
-const {Title} = Typography;
 
 function Login() {
 
@@ -32,10 +29,13 @@ function Login() {
     return (
         <div className="back-ground-color full-screen">
             <div className="login-box-container">
-                <img className="street-drop-img" src="image/login_img.png" alt="img"/>
+                <div className="street-drop-login-img-container">
+                    <img className="street-drop-img" src="image/login_background.png" alt="img"/>
+                    <img className="street-drop-app" src="image/login_app.png" alt="img"/>
+                </div>
                 <div className="login-from-box-container">
                     <Tooltip title="스트릿 드랍 관리자 페이지 입니다.">
-                    <p className="login-title">관리자 로그인</p>
+                        <p className="login-title">관리자 로그인</p>
                     </Tooltip>
 
                     <Form
