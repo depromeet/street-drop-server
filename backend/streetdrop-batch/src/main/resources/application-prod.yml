@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 20
+  jpa:
+    hibernate:
+      ddl-auto: validate
+slack:
+  token: ${slack.token}
+  monitoring-channel: error
+  report-channel: report
+notification:
+  noti-server-url: ${NOTI_SERVER_URL}
