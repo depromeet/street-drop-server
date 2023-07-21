@@ -5,9 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 @Table(name = "default_nick_name")
 public class DefaultNickName {
@@ -16,10 +17,10 @@ public class DefaultNickName {
         @GeneratedValue(strategy = IDENTITY)
         private Long id;
 
-        @Column(length = 5)
+        @Column(length = 5, nullable = false)
         private String preNickName;
 
-        @Column(length = 5)
+        @Column(length = 5, nullable = false)
         private String postNickName;
 
 }

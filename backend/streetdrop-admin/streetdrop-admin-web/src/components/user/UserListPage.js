@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import {Drawer, Table} from 'antd';
 import axios from "axios";
 
-import BasicLayout from "../layout/BasicLayout";
+import BasicLayout from "../../layout/BasicLayout";
 import UserDetailPage from "./UserDetailPage";
 
 function UserListPage() {

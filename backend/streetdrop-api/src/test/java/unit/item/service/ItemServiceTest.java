@@ -193,8 +193,8 @@ public class ItemServiceTest {
                 var result = itemService.findNearItems(null, nearItemRequestDto);
                 var expected = new ItemsResponseDto(
                         List.of(
-                            new ItemsResponseDto.ItemDetailDto(item1),
-                            new ItemsResponseDto.ItemDetailDto(item2)
+                            new ItemsResponseDto.ItemDetailDto(item1, true),
+                            new ItemsResponseDto.ItemDetailDto(item2, true)
                         )
                 );
                 assertThat(result).isEqualTo(expected);

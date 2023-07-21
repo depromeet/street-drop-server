@@ -11,10 +11,12 @@ import lombok.Setter;
 
 import java.util.List;
 
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 @Table(name = "users")
 public class User extends BaseTimeEntity {
@@ -24,15 +26,12 @@ public class User extends BaseTimeEntity {
 	@Column(name = "user_id")
 	private Long id;
 
-	@Column(length = 20)
+	@Column(length = 20, nullable = false)
 	@Setter
 	private String nickname;
 
-	@Column(length = 100)
+	@Column(length = 100, nullable = false)
 	private String idfv;
-
-	@OneToMany(mappedBy = "user")
-	private List<Item> items;
 
 	@Column(name = "user_level_id", nullable = false)
 	private Long userLevelId;
@@ -41,7 +40,8 @@ public class User extends BaseTimeEntity {
 	@JoinColumn(name = "user_level_id", insertable = false, updatable = false, nullable = false)
 	private UserLevel userLevel;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(STRING)
+	@Column(nullable = false)
 	private MusicApp musicApp;
 
 	@Builder

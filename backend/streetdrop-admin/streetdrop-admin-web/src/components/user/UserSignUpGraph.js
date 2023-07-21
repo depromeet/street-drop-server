@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 
-import BasicLayout from "../layout/BasicLayout";
+import BasicLayout from "../../layout/BasicLayout";
 import UserLineGraph from "../dashboard/UserLineGraph";
 import axios from "axios";
 import {Button, Col, DatePicker, Form, Row, Space, Table} from "antd";
@@ -26,7 +26,7 @@ function UserSignUpGraph() {
     }, []);
 
     const fetchData = () => {
-        const startDate = dayRange[0].format('YYYY-MM-DDTHH:mm:ss');
+        const startDate = dayRange[0].startOf('day').format('YYYY-MM-DDTHH:mm:ss');
         const endDate = dayRange[1].format('YYYY-MM-DDTHH:mm:ss');
         axios.get(`/admin/users/statical/signup/count?startDate=${startDate}&endDate=${endDate}`)
             .then(response => {

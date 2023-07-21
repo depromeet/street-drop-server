@@ -1,4 +1,4 @@
-import BasicLayout from "../layout/BasicLayout";
+import BasicLayout from "../../layout/BasicLayout";
 import {Button, Form, Input, message, Radio} from "antd";
 import {useState} from "react";
 import axios from "axios";
@@ -15,7 +15,6 @@ function CreateNotification() {
     }
 
     const IndivdualPush = (userIds, title, content) => {
-        // userId int로
         const userIdList = userIds.split(',').map(
             (userId) => {
                 return parseInt(userId);

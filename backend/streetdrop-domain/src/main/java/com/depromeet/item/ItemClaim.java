@@ -1,15 +1,18 @@
 package com.depromeet.item;
 
 import com.depromeet.common.entity.BaseTimeEntity;
-import com.depromeet.user.User;
+import com.depromeet.item.vo.ItemClaimStatus;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import static jakarta.persistence.EnumType.STRING;
+import static lombok.AccessLevel.PROTECTED;
+
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class ItemClaim extends BaseTimeEntity {
 
@@ -22,21 +25,20 @@ public class ItemClaim extends BaseTimeEntity {
     private String reason;
 
     @Setter
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
+    @Column(nullable = false)
     private ItemClaimStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id")
-    private Item item;
+    @Column(nullable = false)
+    private Long itemId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_Id")
-    private User user;
+    @Column(nullable = false)
+    private Long userId;
 
     @Builder
-    public ItemClaim(Item item, User user, String reason, ItemClaimStatus status) {
-        this.item = item;
-        this.user = user;
+    public ItemClaim(Long itemId, Long userId, String reason, ItemClaimStatus status) {
+        this.itemId = itemId;
+        this.userId = userId;
         this.reason = reason;
         this.status = status;
     }

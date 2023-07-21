@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.depromeet.item.ItemClaimStatus.WAITING;
+import static com.depromeet.item.vo.ItemClaimStatus.WAITING;
 
 @Service
 @RequiredArgsConstructor
@@ -32,14 +32,23 @@ public class ItemClaimService {
 
         var itemClaim = ItemClaim.builder()
                 .reason(itemClaimRequestDto.getReason())
-                .item(item)
-                .user(user)
+                .itemId(itemId)
+                .userId(user.getId())
                 .status(WAITING)
                 .build();
 
         var saveditemClaim = itemClaimRepository.save(itemClaim);
 
-        slackItemClaimReportService.sendReport(new ItemClaimReportDto(saveditemClaim));
+        ItemClaimReportDto itemClaimReportDto = ItemClaimReportDto.builder()
+                .itemClaimId(saveditemClaim.getId())
+                .itemClaimReason(saveditemClaim.getReason())
+                .itemClaimStatus(saveditemClaim.getStatus())
+                .reportUserId(saveditemClaim.getUserId())
+                .itemId(saveditemClaim.getItemId())
+                .itemContent(item.getContent())
+                .build();
+
+        slackItemClaimReportService.sendReport(itemClaimReportDto);
     }
 
     private void checkUserAlreadyReport(Long userId, Long itemId) {

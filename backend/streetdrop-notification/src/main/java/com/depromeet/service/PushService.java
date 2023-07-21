@@ -1,5 +1,6 @@
 package com.depromeet.service;
 
+import com.depromeet.domain.UserDevice;
 import com.depromeet.dto.request.AllPushRequestDto;
 import com.depromeet.dto.request.PushRequestDto;
 import com.depromeet.dto.request.TopicPushRequestDto;
@@ -23,8 +24,9 @@ public class PushService {
     @Transactional
     public void sendPush(PushRequestDto pushRequestDto) {
         List<String> tokens = pushRequestDto.getUserIds().stream()
-                .map(userId -> userDeviceRepository.findDeviceTokenByUserId(userId)
+                .map(userId -> userDeviceRepository.findByUserId(userId)
                         .orElseThrow(() -> new RuntimeException("Token not found for userId: " + userId)))
+                .map(UserDevice::getDeviceToken)
                 .toList();
 
         try {
@@ -45,7 +47,10 @@ public class PushService {
 
     @Transactional
     public void sendAllPush(AllPushRequestDto pushRequestDto) {
-        List<String> tokens = userDeviceRepository.findAllDeviceTokens();
+        List<String> tokens = userDeviceRepository.findAll()
+                .stream()
+                .map(UserDevice::getDeviceToken)
+                .toList();
         try {
             if (pushRequestDto.getTitle() != null) {
                 fcmService.sendMulticastMessageSync(tokens, pushRequestDto.getTitle(), pushRequestDto.getContent());

@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import {Button, Space, Table} from 'antd';
 import {DownloadOutlined} from '@ant-design/icons';
-import BasicLayout from "../layout/BasicLayout";
+import BasicLayout from "../../../layout/BasicLayout";
 
 
 function MusicListPage() {

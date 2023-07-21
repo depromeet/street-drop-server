@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Result} from 'antd';
 import {useNavigate} from "react-router-dom";
-import BasicLayout from "../../../layout/BasicLayout";
+import BasicLayout from "../../../../layout/BasicLayout";
 
 function DropMusicFail() {
     const navigate = useNavigate();
