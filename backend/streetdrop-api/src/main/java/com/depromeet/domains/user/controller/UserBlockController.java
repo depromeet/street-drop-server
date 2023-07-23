@@ -8,6 +8,7 @@ import com.depromeet.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,9 +22,19 @@ public class UserBlockController {
 	@PostMapping("/users/block")
 	public ResponseEntity<BlockUserResponseDto> blockUser(
 			@ReqUser User user,
-			@RequestParam(value = "blockUserID") Long blockUserID
+			@RequestParam(value = "blockUserId") Long blockUserId
 	) {
-		var response = userBlockService.blockUser(user, blockUserID);
+		var response = userBlockService.blockUser(user, blockUserId);
 		return ResponseDto.ok(response);
+	}
+
+	@Operation(summary = "사용자 차단 해제하기")
+	@DeleteMapping("/users/unblock")
+	public ResponseEntity<Void> unBlockUser(
+			@ReqUser User user,
+			@RequestParam(value = "unblockUserId") Long unblockUserId
+	) {
+		userBlockService.unBlockUser(user, unblockUserId);
+		return ResponseDto.noContent();
 	}
 }

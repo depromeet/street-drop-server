@@ -34,4 +34,12 @@ public class UserBlockService {
 		blockUserRepository.save(block);
 		return new BlockUserResponseDto(blockUser);
 	}
+
+	@Transactional
+	public void unBlockUser(User user, Long unblockUserId) {
+		var userId = user.getId();
+		var blockedUser = blockUserRepository.findBlockUserByBlockerIdAndBlockedId(userId, unblockUserId)
+				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, unblockUserId));
+		blockUserRepository.delete(blockedUser);
+	}
 }
