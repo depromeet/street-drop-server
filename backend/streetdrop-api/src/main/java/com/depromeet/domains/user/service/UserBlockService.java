@@ -22,7 +22,6 @@ public class UserBlockService {
 	public BlockUserResponseDto blockUser(User user, Long blockUserID) {
 		var blockUser  = userRepository.findUserById(blockUserID)
 				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, user.getId()));
-
 		/*
 		 * blockerId : 차단한 사용자 아이디
 		 * blockedId : 차단된 사용자 아이디
