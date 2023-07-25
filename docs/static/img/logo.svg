@@ -1,0 +1,28 @@
+<svg width="190" height="190" viewBox="0 0 190 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="189.999" height="190" rx="24.0046" fill="#010101"/>
+<mask id="mask0_587_1786" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="48" y="47" width="94" height="96">
+<path d="M135.042 73.35H54.954C58.0876 66.4177 62.1856 60.7984 67.2479 56.4871C74.4272 50.3729 83.8356 47.3086 95.473 47.3086C104.216 47.3086 111.612 49.0431 117.633 52.5266C123.655 56.0101 128.533 61.0692 132.252 67.7037C133.258 69.4764 134.188 71.3587 135.042 73.35Z" fill="white"/>
+<path d="M141.836 142.692C141.474 139.651 141.033 136.729 140.514 133.925C138.85 124.443 136.172 116.421 132.466 109.888C128.747 103.253 123.869 98.1942 117.847 94.7107C111.826 91.2272 104.43 89.4926 95.687 89.4926C84.0496 89.4926 74.6412 92.557 67.4619 98.6712C60.2826 104.785 55.0428 113.53 51.7426 124.92C50.1771 130.323 48.983 136.247 48.1602 142.692H81.7418C82.203 140.106 82.7697 137.819 83.4417 135.833C85.5984 129.401 89.8393 126.192 95.7014 126.192C101.564 126.192 105.356 129.502 107.093 136.151C107.628 138.088 108.085 140.268 108.463 142.692H141.836Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_587_1786)">
+<rect x="169.396" y="147.683" width="140.463" height="132.37" transform="rotate(180 169.396 147.683)" fill="url(#paint0_linear_587_1786)"/>
+<rect x="169.396" y="147.683" width="140.463" height="132.37" transform="rotate(180 169.396 147.683)" fill="url(#paint1_angular_587_1786)" style="mix-blend-mode:screen"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_587_1786" x1="182.266" y1="163.51" x2="302.427" y2="256.413" gradientUnits="userSpaceOnUse">
+<stop stop-color="#B0C6FF"/>
+<stop offset="0.1875" stop-color="#CBB3FF"/>
+<stop offset="0.588542" stop-color="#71FFF6"/>
+<stop offset="0.8125" stop-color="#F7F7F7"/>
+<stop offset="1" stop-color="#DCCCFF"/>
+</linearGradient>
+<radialGradient id="paint1_angular_587_1786" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(239.628 213.868) rotate(90) scale(66.1848 70.2313)">
+<stop offset="0.046875" stop-color="white" stop-opacity="0.72"/>
+<stop offset="0.244792"/>
+<stop offset="0.421875" stop-color="white" stop-opacity="0.72"/>
+<stop offset="0.625"/>
+<stop offset="0.802083" stop-color="white" stop-opacity="0.72"/>
+<stop offset="1"/>
+</radialGradient>
+</defs>
+</svg>
