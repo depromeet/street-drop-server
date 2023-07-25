@@ -2,11 +2,11 @@ name: Docs
 
 on:
   push:
-    branches: [main, dev]
+    branches: [main, dev, config/docs]
     paths:
       - "docs/**"
   pull_request:
-    branches: [main, dev]
+    branches: [main, dev, config/docs]
     paths:
       - "docs/**"
 
