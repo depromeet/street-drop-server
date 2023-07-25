@@ -9,7 +9,8 @@ on:
     branches: [main, dev, config/docs]
     paths:
       - "docs/**"
-
+      -
+jobs:
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
