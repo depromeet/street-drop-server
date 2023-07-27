@@ -39,17 +39,9 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -77,16 +69,7 @@ const config = {
             label: 'Document',
           },
           {to: '/blog', label: 'Blog', position: 'left'},
-          {
-            href: 'https://apps.apple.com/kr/app/%EC%8A%A4%ED%8A%B8%EB%A6%BF%EB%93%9C%EB%9E%8D-street-drop/id6450315928',
-            label: 'App Store',
-            position: 'right',
-          },
-          {
-            href: 'https://github.com/depromeet/street-drop-server',
-            label: 'GitHub',
-            position: 'right',
-          },
+          {to: '/culture', label: 'Culture', position: 'left'}
         ],
       },
       footer: {
@@ -133,6 +116,10 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+      },
+      colorMode: {
+        defaultMode: 'light',
+        disableSwitch: true,
       },
     }),
 };

@@ -1,6 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
-import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
@@ -8,34 +6,26 @@ import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import styles from './index.module.css';
 
 function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <h1 className="hero__title">{siteConfig.title}</h1>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro">
-            Docusaurus Tutorial
-          </Link>
-        </div>
-      </div>
-    </header>
+      <header className={styles.bannerContainer}>
+          <div className={styles.titleContainer}>
+              <div className={styles.logo}/>
+              <p className={styles.smallTitle}>Street Drop Engineering</p>
+              <h2 className={styles.mainTitle}>스트릿 드랍 개발간</h2>
+              <h2 className={styles.mainTitle}>다양한 경험을 공유합니다.</h2>
+          </div>
+      </header>
   );
 }
 
 export default function Home(): JSX.Element {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
-      <HomepageHeader />
-      <main>
-        <HomepageFeatures />
-      </main>
-    </Layout>
+      <Layout>
+          <HomepageHeader/>
+          <main>
+              <HomepageFeatures/>
+          </main>
+      </Layout>
   );
 }
