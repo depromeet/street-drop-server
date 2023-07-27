@@ -2,11 +2,11 @@ name: Docs
 
 on:
   push:
-    branches: [main, dev, config/docs]
+    branches: [main, dev]
     paths:
       - "docs/**"
   pull_request:
-    branches: [main, dev, config/docs]
+    branches: [main, dev]
     paths:
       - "docs/**"
       -
@@ -31,6 +31,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./docs
           user_name: github-actions[bot]
-          user_email: 41898282+github-actionㅅs[bot]@users.noreply.github.com
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
