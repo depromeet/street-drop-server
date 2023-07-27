@@ -68,8 +68,7 @@ const config = {
             position: 'left',
             label: 'Document',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
-          {to: '/culture', label: 'Culture', position: 'left'}
+          {to: '/blog', label: 'Blog', position: 'left'}
         ],
       },
       footer: {
