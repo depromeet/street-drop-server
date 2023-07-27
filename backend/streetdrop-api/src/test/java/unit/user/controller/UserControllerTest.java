@@ -2,8 +2,9 @@ package unit.user.controller;
 
 import com.depromeet.domains.user.controller.UserController;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
-import com.depromeet.user.User;
+import com.depromeet.domains.user.service.UserLevelService;
 import com.depromeet.domains.user.service.UserService;
+import com.depromeet.user.User;
 import com.depromeet.user.vo.MusicApp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -33,6 +34,9 @@ public class UserControllerTest {
     @MockBean
     UserService userService;
 
+    @MockBean
+    UserLevelService userLevelService;
+
     @DisplayName("[GET] 유저 정보 조회")
     @Nested
     class GetUserInfoTest {
@@ -43,7 +47,12 @@ public class UserControllerTest {
             @DisplayName("유저 정보 조회")
             @Test
             void GetUserInfoTest() throws Exception {
-                User user = User.builder().nickname("Guest").idfv("new-idfv").musicApp(MusicApp.YOUTUBE_MUSIC).build();
+                User user = User.builder()
+                        .nickname("Guest")
+                        .idfv("new-idfv")
+                        .userLevelId(1L)
+                        .musicApp(MusicApp.YOUTUBE_MUSIC).build();
+
                 UserResponseDto userResponseDto = new UserResponseDto(user);
                 given(userService.getUserInfo(any(User.class))).willReturn(userResponseDto);
 

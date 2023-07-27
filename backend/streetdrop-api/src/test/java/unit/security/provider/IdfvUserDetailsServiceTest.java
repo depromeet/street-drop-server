@@ -1,9 +1,10 @@
 package unit.security.provider;
 
-import com.depromeet.user.User;
 import com.depromeet.domains.user.service.UserService;
 import com.depromeet.security.provider.IdfvUserDetailsService;
 import com.depromeet.security.provider.SecurityUserDetails;
+import com.depromeet.user.User;
+import com.depromeet.user.vo.MusicApp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +30,13 @@ public class IdfvUserDetailsServiceTest {
     @Test
     void loadUserByUsernameTest() {
         String idfv = "idfv";
-        User user = new User();
+        User user = User.builder()
+                .nickname("testUser")
+                .idfv("test-idfv")
+                .userLevelId(1L)
+                .musicApp(MusicApp.YOUTUBE_MUSIC)
+                .build();
+
         SecurityUserDetails securityUserDetails = new SecurityUserDetails(user);
         when(userService.getOrCreateUserByIdfv(any())).thenReturn(user);
 

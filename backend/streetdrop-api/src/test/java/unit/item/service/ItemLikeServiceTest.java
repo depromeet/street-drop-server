@@ -72,7 +72,7 @@ public class ItemLikeServiceTest {
 				given(itemLikeRepository.save(any(ItemLike.class))).willReturn(itemLike);
 
 				// When
-				ItemLikeResponseDto result = itemLikeService.likeItem(any(User.class), itemId);
+				ItemLikeResponseDto result = itemLikeService.likeItem(user, itemId);
 
 				// Then
 				assertThat(result).isNotNull();
