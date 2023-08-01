@@ -29,11 +29,11 @@
 ![user-flow](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/user-flow.png?raw=true)
 
 ## 👨‍💻 Server Engineers
-| Photo | Name | Github | Contact |
-|:---:|:---:|:---:|:---:|
-| <img src="https://avatars.githubusercontent.com/u/17813930?v=4" width="200" height="200"> | 윤영 | <a href="https://github.com/yunyoung1819" target="_blank"><img src="https://img.shields.io/badge/yunyoung1819-181717?style=for-the-badge&logo=github&logoColor=white"/></a> | codud2003@naver.com |
-| <img src="https://avatars.githubusercontent.com/u/80201773?v=4" width="200" height="200"> | 정성훈 | <a href="https://github.com/seonghun-dev" target="_blank"><img src="https://img.shields.io/badge/seonghun_dev-181717?style=for-the-badge&logo=github&logoColor=white"/></a> | dev.seonghun@gmail.com |
-| <img src="https://avatars.githubusercontent.com/u/87802191?s=400&u=a046b207b40b564a97db82bd2264b81727b50b77&v=4" width="200" height="200"> | 손시연 | <a href="https://github.com/siyeonSon" target="_blank"><img src="https://img.shields.io/badge/siyeonSon-181717?style=for-the-badge&logo=github&logoColor=white"/></a> | siyeon0209@naver.com |
+| Profile | Contact | Github |
+|:---:|:---:|:---:|
+| <img src="https://avatars.githubusercontent.com/u/17813930?v=4" width="200" height="200"> | <a href="https://www.linkedin.com/in/young-yun-60aa94163" target="_blank"><img src="https://img.shields.io/badge/윤_영-%230077B5.svg?style=for-the-socail&logo=linkedin&logoColor=white"/></a> | <a href="https://github.com/yunyoung1819" target="_blank"><img src="https://img.shields.io/badge/yunyoung1819-181717?style=for-the-social&logo=github&logoColor=white"/></a> |
+| <img src="https://avatars.githubusercontent.com/u/80201773?v=4" width="200" height="200"> | <a href="https://www.linkedin.com/in/seonghun" target="_blank"><img src="https://img.shields.io/badge/정_성_훈-%230077B5.svg?style=for-the-social&logo=linkedin&logoColor=white"/></a> | <a href="https://github.com/seonghun-dev" target="_blank"><img src="https://img.shields.io/badge/seonghun_dev-181717?style=for-the-social&logo=github&logoColor=white"/></a> |
+| <img src="https://avatars.githubusercontent.com/u/87802191?s=400&u=a046b207b40b564a97db82bd2264b81727b50b77&v=4" width="200" height="200"> | <a href="https://www.linkedin.com/in/siyeonson" target="_blank"><img src="https://img.shields.io/badge/손_시_연-%230077B5.svg?style=for-the-social&logo=linkedin&logoColor=white"/></a> | <a href="https://github.com/siyeonSon" target="_blank"><img src="https://img.shields.io/badge/siyeonSon-181717?style=for-the-social&logo=github&logoColor=white"/></a> |
 
 ## 👜 Repository
 | [street-drop-iOS](https://github.com/depromeet/street-drop-iOS) | [street-drop-server](https://github.com/depromeet/street-drop-server) |
