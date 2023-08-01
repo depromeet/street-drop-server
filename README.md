@@ -3,8 +3,6 @@
 [![codecov](https://codecov.io/gh/depromeet/street-drop-server/branch/main/graph/badge.svg?token=7EHWI73ZQU)](https://codecov.io/gh/depromeet/street-drop-server)
 [![Github Action](https://github.com/depromeet/street-drop-server/actions/workflows/jacoco.yml/badge.svg)](https://github.com/depromeet/street-drop-server/actions)
 
-
-
 ## 💁‍♂️Introduction
 ![Untitled](https://github.com/yunyoung1819/ReadmeImage/blob/master/src/street-drop/street-drop-readme-1.png?raw=true)
 ![Untitled](https://github.com/yunyoung1819/ReadmeImage/blob/master/src/street-drop/street-drop-readme-7.png?raw=true)
@@ -24,6 +22,9 @@
 
 ## 🚎 Architecture
 ![server-architecture](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/sever-architecture.png?raw=true)
+
+## 📈 ERD
+![ERD](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/ERD.png?raw=true)
 
 ## 💁‍♀️ User-Flow
 ![user-flow](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/user-flow.png?raw=true)
