@@ -20,6 +20,9 @@
 <a href="https://apps.apple.com/kr/app/%EC%8A%A4%ED%8A%B8%EB%A6%BF%EB%93%9C%EB%9E%8D-street-drop/id6450315928" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1641254400&h=ddfff0c3bd61d9f88f53494b401881d3" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
 </p>
 
+## 💁‍♀️ User Flow
+![user-flow](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/user-flow.png?raw=true)
+
 ## 👜 Repository
 | [street-drop-iOS](https://github.com/depromeet/street-drop-iOS) | [street-drop-server](https://github.com/depromeet/street-drop-server) |
 |:--------:|:--------:|
@@ -64,10 +67,7 @@
 ## 📈 ERD
 ![ERD](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/ERD.png?raw=true)
 
-## 💁‍♀️ UserFlow
-![user-flow](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/user-flow.png?raw=true)
-
-## 👨‍💻 Server Engineers
+## 🧑‍💻 Server Engineers
 | Profile | Contact | Github |
 |:---:|:---:|:---:|
 | <img src="https://avatars.githubusercontent.com/u/17813930?v=4" width="200" height="200"> | <a href="https://www.linkedin.com/in/young-yun-60aa94163" target="_blank"><img src="https://img.shields.io/badge/윤_영-%230077B5.svg?style=for-the-socail&logo=linkedin&logoColor=white"/></a> | <a href="https://github.com/yunyoung1819" target="_blank"><img src="https://img.shields.io/badge/yunyoung1819-181717?style=for-the-social&logo=github&logoColor=white"/></a> |
