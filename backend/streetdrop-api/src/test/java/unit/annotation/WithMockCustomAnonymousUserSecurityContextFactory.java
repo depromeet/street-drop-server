@@ -13,7 +13,7 @@ public class WithMockCustomAnonymousUserSecurityContextFactory implements WithSe
     @Override
     public SecurityContext createSecurityContext(MockAnonymousUser annotation) {
 
-        User user = new User();
+        User user = User.builder().build();
 
         SecurityUserDetails userDetails = new SecurityUserDetails(user);
 

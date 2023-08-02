@@ -17,11 +17,16 @@ public class SecurityUserDetailsTest {
     @Test
     @DisplayName("SecurityUserDetails 테스트")
     void testSecurityUserDetailsTest() {
-        User user = new User("nickname", "idfv", MusicApp.YOUTUBE_MUSIC);
+
+        User user = User.builder()
+                .nickname("testUser")
+                .userLevelId(1L)
+                .musicApp(MusicApp.YOUTUBE_MUSIC)
+                .build();
         SecurityUserDetails securityUserDetails = new SecurityUserDetails(user);
         assertThat(securityUserDetails.getAuthorities()).isNull();
         assertThat(securityUserDetails.getPassword()).isNull();
-        assertThat(securityUserDetails.getUsername()).isEqualTo("nickname");
+        assertThat(securityUserDetails.getUsername()).isEqualTo("testUser");
         assertThat(securityUserDetails.isAccountNonExpired()).isFalse();
         assertThat(securityUserDetails.isAccountNonLocked()).isFalse();
         assertThat(securityUserDetails.isCredentialsNonExpired()).isFalse();
