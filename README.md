@@ -1,11 +1,22 @@
-# 스트릿 드랍(Street Drop)
+# Street Drop(스트릿 드랍) <a href="https://apps.apple.com/kr/app/%EC%8A%A4%ED%8A%B8%EB%A6%BF%EB%93%9C%EB%9E%8D-street-drop/id6450315928"><img src="https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/app-logo.png" align="left" width="100"></a>
+
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fdepromeet%2Fstreet-drop-server&count_bg=%2328DBE6&title_bg=%232D3540&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 [![codecov](https://codecov.io/gh/depromeet/street-drop-server/branch/main/graph/badge.svg?token=7EHWI73ZQU)](https://codecov.io/gh/depromeet/street-drop-server)
 [![Github Action](https://github.com/depromeet/street-drop-server/actions/workflows/jacoco.yml/badge.svg)](https://github.com/depromeet/street-drop-server/actions)
 
 ## 💁‍♂️ Introduction
-![Untitled](https://github.com/yunyoung1819/ReadmeImage/blob/master/src/street-drop/street-drop-readme-1.png?raw=true)
-![Untitled](https://github.com/yunyoung1819/ReadmeImage/blob/master/src/street-drop/street-drop-readme-7.png?raw=true)
+![intro-main](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/intro-main.jpg?raw=true)
+![intro-description](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/intro-description.jpg?raw=true)
+![home](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/home.png?raw=true)
+![radius](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/radius.png?raw=true)
+![search](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/search.png?raw=true)
+![commnet](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/comment.png?raw=true)
+![home-2](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/home-2.png?raw=true)
+![community](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/community.png?raw=true)
+![mypage](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/mypage.png?raw=true)
+![setting](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/setting.png?raw=true)
+![push-notification](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/push-notification.png?raw=true)
+![let's-go](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/let's-go.png?raw=true)
 
 <p align="center">
 <a href="https://apps.apple.com/kr/app/%EC%8A%A4%ED%8A%B8%EB%A6%BF%EB%93%9C%EB%9E%8D-street-drop/id6450315928" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1641254400&h=ddfff0c3bd61d9f88f53494b401881d3" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
