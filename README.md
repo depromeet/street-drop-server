@@ -3,7 +3,7 @@
 [![codecov](https://codecov.io/gh/depromeet/street-drop-server/branch/main/graph/badge.svg?token=7EHWI73ZQU)](https://codecov.io/gh/depromeet/street-drop-server)
 [![Github Action](https://github.com/depromeet/street-drop-server/actions/workflows/jacoco.yml/badge.svg)](https://github.com/depromeet/street-drop-server/actions)
 
-## 💁‍♂️Introduction
+## 💁‍♂️ Introduction
 ![Untitled](https://github.com/yunyoung1819/ReadmeImage/blob/master/src/street-drop/street-drop-readme-1.png?raw=true)
 ![Untitled](https://github.com/yunyoung1819/ReadmeImage/blob/master/src/street-drop/street-drop-readme-7.png?raw=true)
 ![Untitled](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/home.png?raw=true)
@@ -19,22 +19,6 @@
 <p align="center">
 <a href="https://apps.apple.com/kr/app/%EC%8A%A4%ED%8A%B8%EB%A6%BF%EB%93%9C%EB%9E%8D-street-drop/id6450315928" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1641254400&h=ddfff0c3bd61d9f88f53494b401881d3" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
 </p>
-
-## 🚎 Architecture
-![server-architecture](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/sever-architecture.png?raw=true)
-
-## 📈 ERD
-![ERD](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/ERD.png?raw=true)
-
-## 💁‍♀️ UserFlow
-![user-flow](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/user-flow.png?raw=true)
-
-## 👨‍💻 Server Engineers
-| Profile | Contact | Github |
-|:---:|:---:|:---:|
-| <img src="https://avatars.githubusercontent.com/u/17813930?v=4" width="200" height="200"> | <a href="https://www.linkedin.com/in/young-yun-60aa94163" target="_blank"><img src="https://img.shields.io/badge/윤_영-%230077B5.svg?style=for-the-socail&logo=linkedin&logoColor=white"/></a> | <a href="https://github.com/yunyoung1819" target="_blank"><img src="https://img.shields.io/badge/yunyoung1819-181717?style=for-the-social&logo=github&logoColor=white"/></a> |
-| <img src="https://avatars.githubusercontent.com/u/80201773?v=4" width="200" height="200"> | <a href="https://www.linkedin.com/in/seonghun" target="_blank"><img src="https://img.shields.io/badge/정_성_훈-%230077B5.svg?style=for-the-social&logo=linkedin&logoColor=white"/></a> | <a href="https://github.com/seonghun-dev" target="_blank"><img src="https://img.shields.io/badge/seonghun_dev-181717?style=for-the-social&logo=github&logoColor=white"/></a> |
-| <img src="https://avatars.githubusercontent.com/u/87802191?s=400&u=a046b207b40b564a97db82bd2264b81727b50b77&v=4" width="200" height="200"> | <a href="https://www.linkedin.com/in/siyeonson" target="_blank"><img src="https://img.shields.io/badge/손_시_연-%230077B5.svg?style=for-the-social&logo=linkedin&logoColor=white"/></a> | <a href="https://github.com/siyeonSon" target="_blank"><img src="https://img.shields.io/badge/siyeonSon-181717?style=for-the-social&logo=github&logoColor=white"/></a> |
 
 ## 👜 Repository
 | [street-drop-iOS](https://github.com/depromeet/street-drop-iOS) | [street-drop-server](https://github.com/depromeet/street-drop-server) |
@@ -57,7 +41,7 @@
 <img src="https://img.shields.io/badge/MySQL-4479A1.svg?style=for-the-social&logo=MySQL&logoColor=white">  <img src="https://img.shields.io/badge/MongoDB-234ea94b.svg?logo=mongodb&logoColor=white&style=for-the-social">  <img src="https://img.shields.io/badge/Redis-DC382D.svg?logo=redis&logoColor=white&style=for-the-social">
 
 ### Message Queue
-<img src="https://img.shields.io/badge/Rabbit MQ-FF6600?style=for-the-social&logo=rabbitmq&logoColor=white">
+<img src="https://img.shields.io/badge/RabbitMQ-FF6600?style=for-the-social&logo=rabbitmq&logoColor=white">
 
 ### AWS 
 <img src ="https://img.shields.io/badge/AWS EC2-FF9900?style=for-the-social&logo=amazonec2&logoColor=white">  <img src ="https://img.shields.io/badge/AWS S3-69A31?style=for-the-social&logo=amazons3&logoColor=white">  <img src="https://img.shields.io/badge/AWS RDS-527FFF?style=for-the-social&logo=amazonrds&logoColor=white">  <img src ="https://img.shields.io/badge/AWS Cloud Watch-FF4F8B?style=for-the-social&logo=amazoncloudwatch&logoColor=white">  <img src ="https://img.shields.io/badge/AWS Lambda-F9900?style=for-the-social&logo=awslambda&logoColor=white">
@@ -73,3 +57,19 @@
 
 ### Notification
 <img src="https://img.shields.io/badge/Firebase Cloud Messaging-FFCA28?style=for-the-social&logo=firebase&logoColor=white">
+
+## 🚎 Architecture
+![server-architecture](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/sever-architecture.png?raw=true)
+
+## 📈 ERD
+![ERD](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/ERD.png?raw=true)
+
+## 💁‍♀️ UserFlow
+![user-flow](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/user-flow.png?raw=true)
+
+## 👨‍💻 Server Engineers
+| Profile | Contact | Github |
+|:---:|:---:|:---:|
+| <img src="https://avatars.githubusercontent.com/u/17813930?v=4" width="200" height="200"> | <a href="https://www.linkedin.com/in/young-yun-60aa94163" target="_blank"><img src="https://img.shields.io/badge/윤_영-%230077B5.svg?style=for-the-socail&logo=linkedin&logoColor=white"/></a> | <a href="https://github.com/yunyoung1819" target="_blank"><img src="https://img.shields.io/badge/yunyoung1819-181717?style=for-the-social&logo=github&logoColor=white"/></a> |
+| <img src="https://avatars.githubusercontent.com/u/80201773?v=4" width="200" height="200"> | <a href="https://www.linkedin.com/in/seonghun" target="_blank"><img src="https://img.shields.io/badge/정_성_훈-%230077B5.svg?style=for-the-social&logo=linkedin&logoColor=white"/></a> | <a href="https://github.com/seonghun-dev" target="_blank"><img src="https://img.shields.io/badge/seonghun_dev-181717?style=for-the-social&logo=github&logoColor=white"/></a> |
+| <img src="https://avatars.githubusercontent.com/u/87802191?s=400&u=a046b207b40b564a97db82bd2264b81727b50b77&v=4" width="200" height="200"> | <a href="https://www.linkedin.com/in/siyeonson" target="_blank"><img src="https://img.shields.io/badge/손_시_연-%230077B5.svg?style=for-the-social&logo=linkedin&logoColor=white"/></a> | <a href="https://github.com/siyeonSon" target="_blank"><img src="https://img.shields.io/badge/siyeonSon-181717?style=for-the-social&logo=github&logoColor=white"/></a> |
