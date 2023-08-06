@@ -2,46 +2,24 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Intro(개요)
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Street Drop Docs는 Street Drop의 공식 문서입니다.
 
-## Getting Started
+## Street Drop 이란?
+스트릿드랍은 길을 걸으며 음악을 드랍하는 음악 공유 소셜 서비스예요
 
-Get started by **creating a new site**.
+[**디프만(디자이너와 프로그래머가 만났을 때)**](https://www.depromeet.com/) 13기 프로젝트로 진행되었으며, 2023년 3월부터 시작하여, 2023년 7월에 공개베타 서비스를 오픈하여 운영중입니다.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
 
-### What you'll need
+사이드 프로젝트로 진행된 만큼 다양한 문서와 작업 과정, 코드등을 공개하고 있습니다.
 
-- [Node.js](https://nodejs.org/en/download/) version 16.14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+### Street Drop Docs 란?
+Street Drop Docs는 **Street Drop의 공식 문서**이며 SRS 문서, 여러 개발자 문서 등을 확인할 수 있습니다.
+Street Drop Docs는 [_Docusaurus_](https://docusaurus.io/)를 사용하여 만들어졌습니다.
 
-## Generate a new site
+### Street Drop SRS
+Street Drop SRS는 Street Drop의 SRS 문서입니다. Street Drop의 SRS 문서는 [_여기_](/docs/srs/intro)에서 확인할 수 있습니다.
 
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+### Street Drop SDD
+Street Drop SDD는 Street Drop의 SDD 문서입니다. Street Drop의 SDD 문서는 [_여기_](/docs/sdd/intro)에서 확인할 수 있습니다.
