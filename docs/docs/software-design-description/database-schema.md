@@ -1,6 +1,6 @@
 ---
-title: Database Schema
-sidebar_position: 5
+title: 4. Database Schema (데이터베이스 스키마)
+sidebar_position: 4
 ---
 
 # Database Schema
@@ -17,10 +17,10 @@ sidebar_position: 5
 
 ## Schema 설계
 ### 전체 ERD 다이어그램
-![](./images/ERD.png)
+![](images/ERD.png)
 
 ### 사용자 관련 ERD 다이어그램
-![](./images/ERD-Users.png)
+![](images/ERD-Users.png)
 
 사용자 도메인에 대한 ERD 다이어그램 입니다. 
 
@@ -36,7 +36,7 @@ sidebar_position: 5
 
 
 ### 드랍 아이템 관련 ERD 다이어그램
-![](./images/ERD-Items.png)
+![](images/ERD-Items.png)
 
 드랍 아이템 도메인에 대한 ERD 다이어그램 입니다.
 
@@ -49,7 +49,7 @@ sidebar_position: 5
 
 
 ### 음악 관련 ERD 다이어그램
-![](./images/ERD-Music.png)
+![](images/ERD-Music.png)
 
 음악 도메인에 대한 ERD 다이어그램 입니다.
 
@@ -64,7 +64,7 @@ sidebar_position: 5
 
 
 ### 지역 관련 ERD 다이어그램
-![](./images/ERD-Areas.png)
+![](images/ERD-Areas.png)
 
 지역 도메인에 대한 ERD 다이어그램 입니다.
 
@@ -76,7 +76,7 @@ sidebar_position: 5
 | 읍면동 및 마을 지역 | Village Area | village_area | 읍면동 및 마을 지역에 대한 정보를 담고 있습니다.  마을 지역 ID, 마을 명, 마을 코드, 버전, 마을 지역 폴리곤, 마을 중심지역, 도시지역 ID 필드가 있습니다. |
 
 ### 관리자 관련 ERD 다이어그램
-![](./images/ERD-Admin.png)
+![](images/ERD-Admin.png)
 
 관리자 도메인에 대한 ERD 다이어그램 입니다.
 
