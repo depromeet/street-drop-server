@@ -4,9 +4,11 @@ import com.depromeet.domains.music.dto.response.MusicResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
+@Builder
 public record ItemGroupResponseDto(
         @Schema(description = "아이템 아이디", example = "1")
         Long itemId,
@@ -32,7 +34,7 @@ public record ItemGroupResponseDto(
         LocalDateTime createdAt,
 
         @Schema(description = "아이템 좋아요 개수", example = "1")
-        int itemLikeCount
+        long itemLikeCount
 
 ) {
 }
