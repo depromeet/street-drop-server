@@ -19,7 +19,7 @@ Street Drop Docs는 **Street Drop의 공식 문서**이며 SRS 문서, 여러 �
 Street Drop Docs는 [_Docusaurus_](https://docusaurus.io/)를 사용하여 만들어졌습니다.
 
 ### Street Drop SRS
-Street Drop SRS는 Street Drop의 SRS 문서입니다. Street Drop의 SRS 문서는 [_여기_](/docs/srs/intro)에서 확인할 수 있습니다.
+Street Drop SRS는 Street Drop의 SRS 문서입니다.
 
 ### Street Drop SDD
-Street Drop SDD는 Street Drop의 SDD 문서입니다. Street Drop의 SDD 문서는 [_여기_](/docs/sdd/intro)에서 확인할 수 있습니다.
+Street Drop SDD는 Street Drop의 SDD 문서입니다.
