@@ -1,7 +1,9 @@
 package com.depromeet.common.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 
+@Builder
 public record InfiniteScrollMetaResponseDto(
         @Schema(description = "전체 데이터 개수", example = "100")
         int totalCount,

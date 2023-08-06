@@ -17,6 +17,14 @@ public class WeekUtil {
                         String.format(WEEKS_AGO, weeksDiff);
     }
 
+    public static String getWeeksAgo(int week) {
+        return switch (week) {
+            case 0 -> THIS_WEEK;
+            case 1 -> LAST_WEEK;
+            default -> String.format(WEEKS_AGO, week);
+        };
+    }
+
     public static int getWeekString2Int(String week) {
         return switch (week) {
             case "이번 주" -> 0;
