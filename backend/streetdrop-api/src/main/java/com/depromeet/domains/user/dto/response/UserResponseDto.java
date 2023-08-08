@@ -22,4 +22,8 @@ public record UserResponseDto(
                 user.getMusicApp().getAppName() != null ? user.getMusicApp().getAppName() : MusicApp.YOUTUBE_MUSIC.getAppName()
         );
     }
+
+    public UserResponseDto(Long userId, String nickname) {
+        this(userId, nickname, "", MusicApp.YOUTUBE_MUSIC.getAppName());
+    }
 }

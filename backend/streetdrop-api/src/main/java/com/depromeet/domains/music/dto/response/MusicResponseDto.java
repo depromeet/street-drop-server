@@ -1,7 +1,10 @@
 package com.depromeet.domains.music.dto.response;
 
 import com.depromeet.item.Item;
+import com.depromeet.music.genre.Genre;
+import com.depromeet.music.song.Song;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 
 import java.util.List;
 
@@ -29,4 +32,25 @@ public record MusicResponseDto(
                         .toList()
         );
     }
+
+    public MusicResponseDto(Song song) {
+        this(
+                song.getName(),
+                song.getAlbum().getArtist().getName(),
+                song.getAlbum().getAlbumCover().getAlbumImage(),
+                song.getGenres()
+                        .stream()
+                        .map(Genre::getName)
+                        .toList()
+        );
+    }
+
+    @Builder
+    public MusicResponseDto(String title, String artist, String albumImage, List<String> genre) {
+        this.title = title;
+        this.artist = artist;
+        this.albumImage = albumImage;
+        this.genre = genre;
+    }
+
 }

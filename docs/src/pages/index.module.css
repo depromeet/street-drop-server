@@ -1,0 +1,60 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.bannerContainer {
+  padding: 3rem 0;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(9, 21, 22, 0.00) 0%, #091516 63.02%, #072027 100%), #08090B;
+}
+
+.titleContainer {
+  display: flex; /* Add this */
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: var(--ifm-container-width)
+}
+
+.logo {
+  background-image: url(@site/static/img/ring.png);
+  width: 70px;
+  height: 70px;
+  margin-bottom: 0.5rem;
+  background-size: contain;
+}
+
+.smallTitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #68EFF7;
+  margin-bottom: 1rem;
+  line-height: 130%
+}
+
+.mainTitle {
+  font-size: 2rem;
+  color: #fff;
+}
+
+
+@media screen and (max-width: 996px) {
+  .banner-container {
+    padding: 5rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

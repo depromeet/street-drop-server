@@ -10,9 +10,10 @@ import java.util.List;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class CityArea {
 
@@ -31,10 +32,10 @@ public class CityArea {
     private int version;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "state_id")
+    @JoinColumn(name = "state_id", nullable = false)
     private StateArea stateArea;
 
     @OneToMany(mappedBy = "cityArea")
-     private List<VillageArea> villageAreas;
+    private List<VillageArea> villageAreas;
 
 }

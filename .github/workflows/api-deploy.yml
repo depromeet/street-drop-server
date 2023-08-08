@@ -3,6 +3,10 @@ name: Street Drop CI/CD
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - "backend/streetdrop-api/**"
+      - "backend/streetdrop-domain/**"
+      - "backend/streetdrop-common/**"
 
 jobs:
   deploy:

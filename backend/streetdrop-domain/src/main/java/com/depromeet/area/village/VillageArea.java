@@ -9,9 +9,10 @@ import org.locationtech.jts.geom.Point;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Entity
 public class VillageArea {
     @Id
@@ -35,7 +36,7 @@ public class VillageArea {
     private Point villageCenterPoint;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = "city_id", nullable = false)
     private CityArea cityArea;
 
 }

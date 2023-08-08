@@ -1,12 +1,24 @@
 import React, {useEffect, useState} from "react"
-import {Table} from 'antd';
-import axios from "axios";
+import {Drawer, Table} from 'antd';
 
-import BasicLayout from "../layout/BasicLayout";
+import BasicLayout from "../../layout/BasicLayout";
+import UserDetailPage from "./UserDetailPage";
+import UserApi from "../../api/domain/user/UserApi";
 
 function UserListPage() {
     const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [openDrawer, setOpenDrawer] = useState(false);
+    const [clickedUserId, setClickedUserId] = useState(1);
+    const showDrawer = (id) => {
+        setClickedUserId(id);
+        console.log(id);
+        setOpenDrawer(true);
+    };
+
+    const onClose = () => {
+        setOpenDrawer(false);
+    };
+
     const [tableParams, setTableParams] = useState({
         pagination: {
             current: 1,
@@ -26,6 +38,22 @@ function UserListPage() {
         {
             title: 'IDFV',
             dataIndex: 'idfv',
+        },
+        {
+            title: '가입일',
+            dataIndex: 'createdAt',
+            render: (text, record) => (
+                <span>{new Date(record.createdAt).toLocaleString()}</span>
+            )
+        }, {
+            title: '상세보기',
+            dataIndex: 'id',
+            render: (text, record) => (
+                <>
+                    <a onClick={() => {showDrawer(record.id)}}>More</a>
+                    <br/>
+                </>
+            )
         }
     ]
 
@@ -46,28 +74,19 @@ function UserListPage() {
         fetchUser();
     }, [JSON.stringify(tableParams)]);
 
-    const fetchUser = () => {
-        setLoading(true);
-
-        axios.get('/admin/users' + '?page=' + (tableParams.pagination.current - 1) + '&size=' + tableParams.pagination.pageSize)
-            .then(response => {
-                setLoading(false)
-                console.log(response.data);
-                setUsers(response.data['users']);
-                setTableParams({
-                    ...tableParams,
-                    pagination: {
-                        ...tableParams.pagination,
-                        total: response.data['meta']['totalElements'],
-                    },
-                });
-            }).catch(error => {
-            console.error("Error fetching data:", error);
+    const fetchUser = async () => {
+        const response = await UserApi.getAllUser(tableParams.pagination.current - 1, tableParams.pagination.pageSize);
+        setUsers(response.data['users']);
+        setTableParams({
+            ...tableParams,
+            pagination: {
+                ...tableParams.pagination,
+                total: response.data['meta']['totalElements'],
+            },
         });
     }
 
-    if (loading)
-        return
+
     return (
         <>
             <BasicLayout>
@@ -79,9 +98,11 @@ function UserListPage() {
                     rowKey={record => record.id}
                     pagination={tableParams.pagination}
                     dataSource={users}
-                    loading={loading}
                     onChange={handleTableChange}
                 />
+                <Drawer title="유저 상세조회" placement="right" onClose={onClose} open={openDrawer}>
+                    <UserDetailPage userId={clickedUserId}/>
+                </Drawer>
             </BasicLayout>
         </>
     )

@@ -46,7 +46,7 @@ public record ItemsResponseDto(List<ItemDetailDto> items) {
                 @Schema(description = "아이템 좋아요 개수", example = "100")
                 int itemLikeCount
         ) {
-                public ItemDetailDto(Item item) {
+                public ItemDetailDto(Item item, Boolean isLiked) {
                         this(
                                 item.getId(),
                                 new UserResponseDto(item.getUser()),
@@ -54,7 +54,7 @@ public record ItemsResponseDto(List<ItemDetailDto> items) {
                                 new MusicResponseDto(item),
                                 item.getContent(),
                                 item.getCreatedAt(),
-                                item.isLiked(item.getUser()),
+                                isLiked,
                                 item.getItemLikeCount()
                         );
                 }

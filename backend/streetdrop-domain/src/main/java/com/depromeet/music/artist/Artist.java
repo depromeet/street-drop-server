@@ -1,6 +1,5 @@
 package com.depromeet.music.artist;
 
-import com.depromeet.common.entity.BaseTimeEntity;
 import com.depromeet.music.album.Album;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -9,19 +8,24 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
+
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Entity
-public class Artist extends BaseTimeEntity {
+public class Artist {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "artist_id")
 	private Long id;
 
+	@Column(nullable = false)
 	private String name;
 
-	@OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "artist", cascade = ALL)
 	private List<Album> albums;
 
 	@Builder

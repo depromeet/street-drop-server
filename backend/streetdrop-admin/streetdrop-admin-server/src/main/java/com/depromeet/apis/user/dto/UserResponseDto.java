@@ -12,10 +12,5 @@ public class UserResponseDto {
     private Long id;
     private String nickname;
     private String idfv;
-
-    public UserResponseDto(User user){
-        this.id = user.getId();
-        this.nickname = user.getNickname();
-        this.idfv = user.getIdfv();
-    }
+    private String createdAt;
 }

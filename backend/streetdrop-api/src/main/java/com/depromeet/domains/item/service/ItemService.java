@@ -5,14 +5,13 @@ import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.exception.common.BusinessException;
 import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.item.dto.request.*;
-import com.depromeet.domains.item.dto.response.ItemResponseDto;
-import com.depromeet.domains.item.dto.response.ItemsResponseDto;
-import com.depromeet.domains.item.dto.response.PoiResponseDto;
+import com.depromeet.domains.item.dto.response.*;
+import com.depromeet.domains.item.repository.ItemLikeRepository;
 import com.depromeet.domains.item.repository.ItemLocationRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.music.service.MusicService;
+import com.depromeet.domains.user.dto.response.UserProfileResponseDto;
 import com.depromeet.domains.user.repository.BlockUserRepository;
-import com.depromeet.domains.user.repository.UserRepository;
 import com.depromeet.domains.village.service.VillageAreaService;
 import com.depromeet.item.Item;
 import com.depromeet.item.ItemLocation;
@@ -28,8 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.depromeet.item.QItem.item;
-
 @Service
 @RequiredArgsConstructor
 public class ItemService {
@@ -38,7 +35,7 @@ public class ItemService {
 	private final ItemLocationRepository itemLocationRepository;
 	private final VillageAreaService villageAreaService;
 	private final BlockUserRepository blockUserRepository;
-	private final UserRepository userRepository;
+	private final ItemLikeRepository itemLikeRepository;
 
 
 	@Cacheable(value = "findNearItemsPointsCache", cacheManager = "redisCacheManager")
@@ -83,27 +80,46 @@ public class ItemService {
 		return new ItemResponseDto(savedItem);
 	}
 
-	@Cacheable(value = "findNearItemsCache", cacheManager = "redisCacheManager")
+
+	@Transactional(readOnly = true)
+	public ItemDetailResponseDto findOneItem(User user, Long itemId) {
+		var item = itemRepository.findById(itemId)
+				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, itemId));
+		var itemLikeCount = itemLikeRepository.countByItemId(itemId);
+		var isLiked = itemLikeRepository.existsByUserIdAndItemId(user.getId(), itemId);
+
+		var musicResponseDto = musicService.getMusic(item.getSong().getId());
+		var userProfileResponseDto = new UserProfileResponseDto(item.getUser().getId(), item.getUser().getNickname());
+		var itemLocationResponseDto = new ItemLocationResponseDto(item.getItemLocation().getName());
+
+		return ItemDetailResponseDto.builder()
+				.itemId(item.getId())
+				.music(musicResponseDto)
+				.user(userProfileResponseDto)
+				.location(itemLocationResponseDto)
+				.content(item.getContent())
+				.createdAt(item.getCreatedAt())
+				.isLiked(isLiked)
+				.itemLikeCount(itemLikeCount)
+				.build();
+	}
+
 	@Transactional(readOnly = true)
     public ItemsResponseDto findNearItems(User user, NearItemRequestDto nearItemRequestDto) {
-        Point point = GeomUtil.createPoint(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude());
-        var items = itemRepository.findNearItemsByDistance(point, nearItemRequestDto.getDistance());
+		Point point = GeomUtil.createPoint(nearItemRequestDto.getLongitude(), nearItemRequestDto.getLatitude());
+		var items = itemRepository.findNearItemsByDistance(point, nearItemRequestDto.getDistance());
 
-		if (user != null) {
-			final List<Long> blockedUserIds =  getBlockedUserIds(user);
-			var itemDetailDtoList = items.stream()
-					.filter((item) -> !blockedUserIds.contains(item.getUser().getId()))
-					.map(ItemsResponseDto.ItemDetailDto::new)
-					.toList();
-			return new ItemsResponseDto(itemDetailDtoList);
-		} else {
-			final List<Long> blockedUserIds = new ArrayList<>();
-			var itemDetailDtoList = items.stream()
-					.map(ItemsResponseDto.ItemDetailDto::new)
-					.toList();
-			return new ItemsResponseDto(itemDetailDtoList);
-		}
-    }
+		final List<Long> blockedUserIds = getBlockedUserIds(user);
+		var itemDetailDtoList = items.stream()
+				.filter((item) -> !blockedUserIds.contains(item.getUser().getId()))
+				.map(item ->
+				{
+					Boolean isLiked = itemLikeRepository.existsByUserIdAndItemId(user.getId(), item.getId());
+					return new ItemsResponseDto.ItemDetailDto(item, isLiked);
+				})
+				.toList();
+		return new ItemsResponseDto(itemDetailDtoList);
+	}
 
 	private List<Long> getBlockedUserIds(User user) {
 		return blockUserRepository.findBlockedIdsByBlockerId(user.getId());
