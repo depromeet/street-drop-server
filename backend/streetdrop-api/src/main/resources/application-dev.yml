@@ -10,6 +10,15 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  cache:
+    type: redis
+    redis:
+      cache-null-values: true
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      timeout: 30
 swagger:
   server-url: ${SWAGGER_SERVER_URL}
 slack:

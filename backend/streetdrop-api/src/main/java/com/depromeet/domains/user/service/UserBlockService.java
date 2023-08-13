@@ -22,7 +22,6 @@ public class UserBlockService {
 	public BlockUserResponseDto blockUser(User user, Long blockUserID) {
 		var blockUser  = userRepository.findUserById(blockUserID)
 				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, user.getId()));
-
 		/*
 		 * blockerId : 차단한 사용자 아이디
 		 * blockedId : 차단된 사용자 아이디
@@ -33,5 +32,13 @@ public class UserBlockService {
 				.build();
 		blockUserRepository.save(block);
 		return new BlockUserResponseDto(blockUser);
+	}
+
+	@Transactional
+	public void unBlockUser(User user, Long unblockUserId) {
+		var userId = user.getId();
+		var blockedUser = blockUserRepository.findBlockUserByBlockerIdAndBlockedId(userId, unblockUserId)
+				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, unblockUserId));
+		blockUserRepository.delete(blockedUser);
 	}
 }

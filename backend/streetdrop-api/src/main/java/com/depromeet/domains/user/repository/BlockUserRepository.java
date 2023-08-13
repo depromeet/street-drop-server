@@ -7,10 +7,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BlockUserRepository extends JpaRepository<BlockUser, Long> {
 
 	@Query("SELECT b.blockedId FROM BlockUser b WHERE b.blockerId = :blockerId")
 	List<Long> findBlockedIdsByBlockerId(@Param("blockerId") Long blockerId);
+
+	Optional<BlockUser> findBlockUserByBlockerIdAndBlockedId(@Param("blockerId") Long blockerId, @Param("blockedId") Long blockedId);
 }

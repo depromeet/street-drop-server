@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {Divider, List, Skeleton} from "antd";
-import axios from "axios";
+import UserApi from "../../api/domain/user/UserApi";
 
 function UserDetailPage({userId}) {
     const [userBasicInfo, setUserBasicInfo] = useState(null);
@@ -11,16 +11,11 @@ function UserDetailPage({userId}) {
         fetchUserDetail(userId);
     }, [userId]);
 
-    const fetchUserDetail = (id) => {
-        axios.get('/admin/users/' + id)
-            .then(response => {
-                const data = response.data;
-                setUserBasicInfo(data.userBasicInfo);
-                setUserDetailInfo(data.userDetailInfo);
-                setUserActivity(data.userActivity);
-            }).catch(error => {
-            console.error("Error fetching data:", error);
-        });
+    const fetchUserDetail = async (id) => {
+        const response = await UserApi.getUser(id);
+        setUserBasicInfo(response.data.userBasicInfo);
+        setUserDetailInfo(response.data.userDetailInfo);
+        setUserActivity(response.data.userActivity);
     }
 
     const DescriptionItem = ({title, content}) => (

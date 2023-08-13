@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react"
 
-import BasicLayout from "../layout/BasicLayout";
-import UserLineGraph from "../dashboard/UserLineGraph";
-import axios from "axios";
+import BasicLayout from "../../layout/BasicLayout";
+import UserLineGraph from "../graph/UserLineGraph";
 import {Button, Col, DatePicker, Form, Row, Space, Table} from "antd";
 import * as PropTypes from "prop-types";
 
 import dayjs from 'dayjs';
+import UserSignUpStaticApi from "../../api/domain/dashboard/UserSignUpStaticApi";
 
 const {RangePicker} = DatePicker;
 
@@ -25,20 +25,16 @@ function UserSignUpGraph() {
         fetchData();
     }, []);
 
-    const fetchData = () => {
-        const startDate = dayRange[0].format('YYYY-MM-DDTHH:mm:ss');
+    const fetchData = async () => {
+        const startDate = dayRange[0].startOf('day').format('YYYY-MM-DDTHH:mm:ss');
         const endDate = dayRange[1].format('YYYY-MM-DDTHH:mm:ss');
-        axios.get(`/admin/users/statical/signup/count?startDate=${startDate}&endDate=${endDate}`)
-            .then(response => {
-                const formattedData = response.data.map(data => ({
-                    x: data.date,
-                    y: data.count
-                }));
-                setData(formattedData);
-            })
-            .catch(error => {
-                console.error('fail when fetching data', error);
-            });
+        const response = await UserSignUpStaticApi.getUserSignUpStaticCount(startDate, endDate);
+        const formattedData = response.data.map(data => ({
+            x: data.date,
+            y: data.count
+        }));
+        setData(formattedData);
+
     };
 
     const onRangeChange = (dates, dateStrings) => {
