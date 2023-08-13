@@ -29,9 +29,9 @@ create table if not exists album
     album_cover_id bigint       null,
     artist_id      bigint       null,
     constraint FK7otyksnaj781l0b2r8570vefc
-        foreign key (album_cover_id) references streetdrop.album_cover (album_cover_id),
+        foreign key (album_cover_id) references album_cover (album_cover_id),
     constraint FKmwc4fyyxb6tfi0qba26gcf8s1
-        foreign key (artist_id) references streetdrop.artist (artist_id)
+        foreign key (artist_id) references artist (artist_id)
 )
     charset = utf8mb3;
 
@@ -95,7 +95,7 @@ create table if not exists song
     name        varchar(255) null,
     album_id    bigint       null,
     constraint FKrcjmk41yqj3pl3iyii40niab0
-        foreign key (album_id) references streetdrop.album (album_id)
+        foreign key (album_id) references album (album_id)
 )
     charset = utf8mb3;
 
@@ -108,9 +108,9 @@ create table if not exists song_genre
     genre_id      bigint      null,
     song_id       bigint      null,
     constraint FK1ssu87dg5vsdxpmyjqqc42if3
-        foreign key (song_id) references streetdrop.song (song_id),
+        foreign key (song_id) references song (song_id),
     constraint FKmpuht870e976moxtxywrfngcr
-        foreign key (genre_id) references streetdrop.genre (genre_id)
+        foreign key (genre_id) references genre (genre_id)
 )
     charset = utf8mb3;
 
@@ -133,7 +133,7 @@ create table if not exists city_area
     version   int          not null,
     state_id  bigint       null,
     constraint FKrf563rtlt9al5bw1lekn18du1
-        foreign key (state_id) references streetdrop.state_area (state_id)
+        foreign key (state_id) references state_area (state_id)
 )
     charset = utf8mb3;
 
@@ -161,11 +161,11 @@ create table if not exists item
     song_id        bigint                                  null,
     user_id        bigint                                  null,
     constraint FKc4s174l330le17rblwgyjawev
-        foreign key (user_id) references streetdrop.users (user_id),
+        foreign key (user_id) references users (user_id),
     constraint FKf9j8ocdanjs7a48djb3aqd0en
-        foreign key (song_id) references streetdrop.song (song_id),
+        foreign key (song_id) references song (song_id),
     constraint FKip7vjlqnw0rt125paig31ni3
-        foreign key (album_cover_id) references streetdrop.album_cover (album_cover_id)
+        foreign key (album_cover_id) references album_cover (album_cover_id)
 )
     charset = utf8mb3;
 
@@ -178,19 +178,19 @@ create table if not exists item_like
     item_id      bigint      null,
     user_id      bigint      null,
     constraint FK943xouml6m8ikrxn862iq9qhj
-        foreign key (item_id) references streetdrop.item (item_id),
+        foreign key (item_id) references item (item_id),
     constraint FKIc81jr021caudusp3hcfjr
-        foreign key (user_id) references streetdrop.users (user_id)
+        foreign key (user_id) references users (user_id)
 )
     charset = utf8mb3;
 
 create index FK943xouml6m8ikrxn862iq9qhj_idx
-    on streetdrop.item_like (item_id);
+    on item_like (item_id);
 
 create index FKIc81jr021caudusp3hcfjr_idx
-    on streetdrop.item_like (user_id);
+    on item_like (user_id);
 
-create table streetdrop.users_level
+create table users_level
 (
     level_id      bigint auto_increment
         primary key,
@@ -211,7 +211,7 @@ create table if not exists village_area
     village_polygon      multipolygon not null,
     city_id              bigint       null,
     constraint FKadtch2u4brlxykg1e03xdkyiw
-        foreign key (city_id) references streetdrop.city_area (city_id)
+        foreign key (city_id) references city_area (city_id)
 );
 
 create table if not exists item_location
@@ -225,11 +225,11 @@ create table if not exists item_location
     item_id          bigint       null,
     village_id       bigint       null,
     constraint FK50oxdirrbr9uk55y7xlrq6jmv
-        foreign key (item_id) references streetdrop.item (item_id),
+        foreign key (item_id) references item (item_id),
     constraint FKlnnflryk5f1y35ismb0qpnepy
-        foreign key (village_id) references streetdrop.village_area (village_id)
+        foreign key (village_id) references village_area (village_id)
 )
     charset = utf8mb3;
 
 create spatial index idx_coordinates
-    on streetdrop.village_area (village_polygon);
+    on village_area (village_polygon);
