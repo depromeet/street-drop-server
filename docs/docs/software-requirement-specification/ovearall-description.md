@@ -3,9 +3,11 @@ title: 2. Overall Description (전체 설명)
 sidebar_position: 3
 ---
 # 2	Overall Description (전체 설명)
+Street Drop은 위치 기반 음악 공유 소셜 서비스로서, 사용자들이 음악을 공유하고 다른 사용자들과 상호작용할 수 있는 플랫폼을 제공합니다. 
 
-본 프로젝트 산출물의 T0-BE 모습에 대한 전체적인 구성 및 동작, 기능 등에 대해 간략하게 기술한다.
-상세한 기능 스펙은 7장에서 기술한다.
+이 서비스는 대한민국 내에서 사용 가능하며, 추후에는 해외 서비스 제공을 확장할 수 있습니다. 
+
+애플리케이션은 iOS 디바이스 중 아이폰만을 지원하며, 안드로이드 기기는 현재 지원하지 않습니다.
 
 ## 2.1	Product Perspective (제품 조망)
 본 프로젝트 산출물과 회사의 기존 제품(또는 신규제품)과의 관계 및 연관성에 대해 기술한다.
@@ -52,21 +54,13 @@ SRS에서 중요한 것은 external interface이다.
 컴포넌트간의 인터페이스 가 명시되어야 하고
 
 ## 2.4	Product Functions (제품 주요 기능)
-본 프로젝트 산출물의 주요 기능을 간략히 기술한다. 상세한 기능은 7장에서 참조한다.
-7장의 주요 제목과 일치해야 한다.
-브로셔에 들어갈 내용을 빠짐없이
-자세한 기술은 생략.
-고객이 보았을 때 이 제품을 왜 사야 하는 지에 대한 것을 기술
+Street Drop은 다음과 같은 기능을 제공합니다.
 
+1) 음악 공유: 사용자들은 자신이 좋아하는 음악을 애플리케이션에 업로드하고, 위치 정보를 기반으로 공유할 수 있습니다.
 
-1)	Provide a summary of  the major functions the product must perform or must let the user perform. Details will be provided in Section 7, so only a high level summary (such as a bullet list) is needed here. Sometimes the function summary that is necessary for this part can be taken directly from the section of the higher-level specification (if one exists) that allocates particular functions to the software product.
-2)	This describes the functionality of the system in the language of the customer .
-3)	What specifically does the system that will be designed have to do?
-4)	Drawings are good, but remember this is a description of what the system needs to do, not how you are going to build it. (That comes in the design document).
+2) 위치 기반 서비스: 애플리케이션은 사용자의 현재 위치 정보를 활용하여 주변의 다른 사용자들이 공유한 음악을 확인하고, 주변 사용자들과 상호작용할 수 있는 서비스를 제공합니다.
 
-For clarity:
-1)	The functions should be organized in a way that makes the list of functions understandable to the customer or to anyone else reading this SRS for the first time.
-2)	Textual or graphic methods can be used to show the different functions and their relationships. A picture of the major groups of related requirements and how they relate, such as a top level data flow diagram or object class diagram, is often effective. Such a diagram is not intended to show a design of a product but simply shows the logical relationships among variables.
+3) 소셜 기능: 사용자들은 음악에 대한 평가와 댓글을 남기며, 다른 사용자들과 소통하고 커뮤니케이션할 수 있습니다.
 
 
 ## 2.5	User Classes and Characteristics (사용자 계층과 특징)
