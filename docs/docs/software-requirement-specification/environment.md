@@ -5,56 +5,48 @@ sidebar_position: 4
 
 
 # 3	Environment (환경)
-샘플을 보고 해도 된다.
 ## 3.1	Operating Environment (운영 환경)
-본 프로젝트의 산출물을 설치하고 운영하기 위한 하드웨어 환경 정보와 소프트웨어 환경 정보(OS 및 사전에 설치되어야 할 소프트웨어 등)를 기술한다.
 
 ### 3.1.1 	Hardware Environment (하드웨어 환경)
-안드로이드는 하드웨어 환경이 여러 가지이다.
-CPU는 생략해도 된다.
-버전 정보와 제품 이름 정도…
+지원하는 IOS 디바이스 기종은 아래와 같습니다.
+
+Mac, iPhone, iPod touch
+
+
+
 ### 3.1.2 	Software Environment (소프트웨어 환경)
-안드로이드는 여러 가지이다. 리눅스, 윈도우…DB….
-제품이 사용되어질 환경
-OS 버전, 제품 버전. 등이 많아 진다.
 
 #### 3.1.2.1 OS Environment (운영체제 환경)
-본 프로젝트의 산출물이 지원하는 OS를 확인하기 위해 전사적으로 최신 OS 목록을 항상 가지고 있어야 한다.
 
-지원하는 플랫폼에 따라 내용을 확인하고, 필요에 따라
-(1) 아래 표와 같이 복사하고, 지원여부란을 만들어 체크하거나,
-(2) 지원하는 플랫폼 리스트만 기술하시기 바랍니다.
+#### IOS 
 
-1) Windows 플랫폼
+| 디바이스         | 최소 요구 사항            |
+|-----------------|--------------------------|
+| Mac             | macOS 11.0 이상, Apple M1 칩 이상 탑재 |
+| iPhone          | iOS 14.0 이상 필요        |
+| iPod touch      | iOS 14.0 이상 필요        |
 
-[아래표는 샘플입니다. 반드시, 최신 OS Coverage Sheet를 받아서 사용하시기 바랍니다.]
 
+#### Server
+Window, Linux, Mac OS 등 다양한 운영체제에서 사용 가능하지만, 서비스 배포를 위해 **Linux 환경을 권장**합니다. 
+클라우드 서비스를 이용하여 배포할 경우, AWS, GCP, Azure 등 다양한 클라우드 서비스에서 사용 가능합니다.
+개발 과정에서 클라우드 환경을 고려하여 개발하였습니다.
 
-2) Unix/Linux 플랫폼
-   최신 OS Coverage Sheet를 참조하여 작성하시기 바랍니다.
+배포를 위한 최소 사양은 다음과 같습니다.
 
-3.1.2.2 OS외 software 환경
-
-1) Web Browser
-
-- MS Internet Explorer 버전 (필수 지원)
-- Mozilla Firefox 버전 (필수 지원)
-
-2) 기타1
-
-3) 기타2
+| Server               | CPU      | RAM     | Storage |
+|----------------------|---------|---------|---------|
+| API Server           | 1 Core  | 1GB     | 10GB    |
+| Search Server        | 1 Core  | 1GB     | 10GB    |
+| Notification Server  | 1 Core  | 1GB     | 10GB    |
+| Database Server      | 1 Core  | 1GB     | 10GB    |
+| Batch Server         | 1 Core  | 1GB     | 10GB    |
 
 
 ## 3.2	Product Installation and Configuration (제품 설치 및 설정)
-본 프로젝트의 산출물의 설치 과정에서의 요구사항을 기술한다. 또한 제품을 실행하는데 필요한 기본 설정 요소 및 방법에 대한 요구사항을 기술한다.
+App Store를 통해 배포되었습니다. 아래 링크를 통해서 앱스토어에서 제품을 다운로드 받을 수 있습니다.
 
-High Level로 기술하면 된다. (간단하게)
-제품을 어디에 올려서 어디서 다운로드 받아서 사용한다..등..
-
-InstallShield와 같은 상용 설치툴 혹은  자체 개발한 설치툴이 있으면 기술한다.
-
-6장의 Site Adaptation Requirements와 중복되는 부분은 명시하지 않는다.
-
+https://apps.apple.com/kr/app/%EC%8A%A4%ED%8A%B8%EB%A6%BF%EB%93%9C%EB%9E%8D-street-drop/id6450315928
 
 ## 3.3	Distribution Environment (배포 환경)
 ### 3.3.1 	Master Configuration (마스터 구성)
@@ -70,7 +62,22 @@ InstallShield와 같은 상용 설치툴 혹은  자체 개발한 설치툴이 �
 •	Manual (매뉴얼 폴더)
 
 스크립트도 포함되어야 하고, apk 파일,
-### 3.3.2 	Distribution Method (배포 방법)
+### 3.3.2 	Distribution Method (배포 방법
+#### IOS
+
+| 디바이스         | 최소 요구 사항            |
+|-----------------|--------------------------|
+| Mac             | macOS 11.0 이상, Apple M1 칩 이상 탑재 |
+| iPhone          | iOS 14.0 이상 필요        |
+| iPod touch      | iOS 14.0 이상 필요        |
+
+
+#### Server
+Window, Linux, Mac OS 등 다양한 운영체제에서 사용 가능하지만, 서비스 배포를 위해 **Linux 환경을 권장**합니다.
+클라우드 서비스를 이용하여 배포할 경우, AWS, GCP, Azure 등 다양한 클라우드 서비스에서 사용 가능합니다.
+개발 과정에서 클라우드 환경을 고려하여 개발하였습니다.
+
+배포를 위한 최소 사양은 다음과 같습니다.
 본 프로젝트의 산출물 마스터를 어떤 방법으로 배포할 것인지를 기술한다.
 예를 들어, CD로 전달한다든지, 소프트웨어를 웹에서 다운로드 받게 한다든지 등의 배포 방법이 있다.
 간단하게 적는다
@@ -97,7 +104,24 @@ iTunes AppStore를 통해 배포한다. 배포 전에 iTunes Connect를 통해 A
 형상관리 서버상의 본 프로젝트의 소스 위치 및 문서 위치를 명시한다.
 구글을 사용한다
 #### 3.6.1.1.	 Location of Source Code (소스코드 위치)
+모든 소스코드는 Github를 통해서 관리됩니다.
+
+**IOS**
+
+
+
+**Server**
+- 모노레포 구조로 관리됩니다.
+- 소스 폴더 구조는 다음과 같습니다.
+```
+.
+├── README.md
+├── api
+```
+
 #### 3.6.1.2.	 Location of Documents (문서 위치)
+- 모든 문서는 현재 웹페이지와 내부적으로 사용되는 문서는 모두 Notion을 통해서 관리됩니다.
+
 ### 3.6.2 	Build Environment (빌드 환경)
 빌드머신 등의 빌드 환경을 어떻게 구축/운영할지 Build/Release 팀과 협의하여 기술한다.
 빌드 기계, 빌드 디렉토리, 특수하게 요구되는 빌드방법 등을 기술한다.
@@ -106,10 +130,22 @@ iTunes AppStore를 통해 배포한다. 배포 전에 iTunes Connect를 통해 A
 빌드 서버의 사양, OS, compiler 등을 명시
 
 
+빌드와 배포의 경우 
+
+
+
+
 ## 3.7	Bugtrack System (버그트래킹)
-이 제품의 유지보수를 위해 사용할 버그트래킹 시스템과 버그트래킹에서 사용될 제품이름을 명시한다.
-구글에서 한다
-버그트래킹은 언제 시작하는가? SRS를 처음 적고 이것에 오류가 있을 때, 버그트래킹을 사용한다.
-보통 빌드.릴리즈 부서가 담당하는 경우가 많다.
-어느 정도 stable 한 버전이 나와야 의미있는 버그가 나온다. 알파버전?...
+Notion으로 Bug Tracking을 진행합니다. 제 품 버전과 해당 버전에서 발생한 문제, 발생 시간 등을 기록하고, 크리티컬한 문제에 대해서 즉각적으로 대응할 수 있도록, 
+버그 레벨을 분류하고, 버그 레벨에 따라 대응 시간을 정합니다. 추가적으로 버그 담당자를 지정하여, 해당 버그에 대한 해결에 대한 진행사항과 해결 여부를 확인할 수 있도록 합니다.
+
+**버그 레벨**
+- Critical: 1일 이내
+- High: 1주 이내
+- Medium: 2주 이내
+- Low: 1달 이내
+- Very Low: 1달 이상
+
+
+
 ## 3.8	Other Environment (기타 환경)
