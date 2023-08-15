@@ -4,11 +4,7 @@ sidebar_position: 9
 ---
 
 # 8	Change Management process (변경관리 프로세스)
-Identify the change management process to be used to identify, log, evaluate, and update the SRS to reflect changes in project scope and requirements.
-1)	How are you going to control changes to the requirements?
-2)	Can the customer just call up and ask for something new?
-3)	Does your team have to reach consensus?
-4)	How do changes to requirements get submitted to the team?
-5)	Formally in writing, email or phone call?
+변경에 관한 모든 프로세스는 정규 회의시간에 전체회의를 통해서 논의되며, 
+변경에 대한 요청은 Notion에 기록되어야 합니다.
 
-This process can be specified in the one of the ‘Process Diagram’s of the company.
+- API 변경의 경우, IOS 버전에 따라 호환이슈가 존재하므로, 필수적으로 IOS 개발팀 진행사항을 확인하고 변경사항을 적용해야 합니다.
