@@ -1,6 +1,5 @@
 package com.depromeet.apis.user.dto;
 
-import com.depromeet.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,10 +1,8 @@
 package com.depromeet.auth.controller;
 
 import com.depromeet.auth.entity.Member;
-import com.depromeet.auth.service.AuthService;
 import com.depromeet.auth.service.MemberService;
 import com.depromeet.global.annotation.ReqMember;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

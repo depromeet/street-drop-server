@@ -4,7 +4,6 @@ import com.depromeet.apis.user.dto.UserAllStaticCountDto;
 import com.depromeet.apis.user.dto.UserSignUpCountRequestDto;
 import com.depromeet.apis.user.dto.UserSignUpCountResponseDto;
 import com.depromeet.apis.user.service.UserStaticService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

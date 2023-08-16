@@ -1,7 +1,6 @@
 package com.depromeet.global.security.config;
 
 
-import com.depromeet.auth.repository.MemberRepository;
 import com.depromeet.auth.repository.MemoryMemberRepository;
 import com.depromeet.global.security.filter.CustomUsernamePasswordAuthenticationFilter;
 import com.depromeet.global.security.filter.JwtAuthenticationFilter;
