@@ -39,3 +39,6 @@ cloud:
         auto: false
 notification:
   noti-server-url: ${NOTI_SERVER_URL}
+springdoc:
+  swagger-ui:
+    enabled: false
