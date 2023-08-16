@@ -9,7 +9,10 @@ spring:
       maximum-pool-size: 20
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
   cache:
     type: redis
     redis:
