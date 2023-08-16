@@ -2,7 +2,6 @@ package com.depromeet.global.security.filter;
 
 
 import com.depromeet.auth.entity.Member;
-import com.depromeet.auth.repository.MemberRepository;
 import com.depromeet.auth.repository.MemoryMemberRepository;
 import com.depromeet.exception.BusinessException;
 import com.depromeet.exception.ErrorResponse;
