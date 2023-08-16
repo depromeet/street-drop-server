@@ -2,7 +2,6 @@ package com.depromeet.domains.user.service;
 
 import com.depromeet.common.dto.PageMetaData;
 import com.depromeet.domains.item.repository.ItemRepository;
-import com.depromeet.apis.user.dto.*;
 import com.depromeet.domains.user.dto.*;
 import com.depromeet.domains.user.repository.UserRepository;
 import com.depromeet.user.User;
