@@ -13,7 +13,7 @@
 ![comment](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/commnet.jpeg?raw=true)
 ![home-2](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/home-2.jpeg?raw=true)
 ![community](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/community.jpeg?raw=true)
-![mypage](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/mypage.jpeg?raw=true)
+![mypage](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/mypage%202.jpeg?raw=true)
 ![setting](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/setting.jpeg?raw=true)
 ![push-notification](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/push-notification.jpeg?raw=true)
 ![let's-go](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/lets-go.jpeg?raw=true)
