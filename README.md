@@ -5,25 +5,25 @@
 [![Github Action](https://github.com/depromeet/street-drop-server/actions/workflows/jacoco.yml/badge.svg)](https://github.com/depromeet/street-drop-server/actions)
 
 ## 💁‍♂️ Introduction
-![intro-main](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/intro-main.jpg?raw=true)
-![intro-description](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/intro-description.jpg?raw=true)
-![home](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/home.jpg?raw=true)
-![radius](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/radius.jpg?raw=true)
-![search](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/search.jpg?raw=true)
-![comment](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/commnet.jpg?raw=true)
-![home-2](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/home-2.jpg?raw=true)
-![community](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/community.jpg?raw=true)
-![mypage](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/mypage.jpg?raw=true)
-![setting](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/setting.jpg?raw=true)
-![push-notification](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/push-notification.jpg?raw=true)
-![let's-go](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/lets-go.jpg?raw=true)
+![intro-main](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/intro-main.jpeg?raw=true)
+![intro-description](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/intro-description.jpeg?raw=true)
+![home](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/home.jpeg?raw=true)
+![radius](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/radius%202.jpeg?raw=true)
+![search](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/search.jpeg?raw=true)
+![comment](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/commnet.jpeg?raw=true)
+![home-2](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/home-2.jpeg?raw=true)
+![community](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/community.jpeg?raw=true)
+![mypage](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/mypage%202.jpeg?raw=true)
+![setting](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/setting.jpeg?raw=true)
+![push-notification](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/push-notification.jpeg?raw=true)
+![let's-go](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/lets-go.jpeg?raw=true)
 
 <p align="center">
 <a href="https://apps.apple.com/kr/app/%EC%8A%A4%ED%8A%B8%EB%A6%BF%EB%93%9C%EB%9E%8D-street-drop/id6450315928" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1641254400&h=ddfff0c3bd61d9f88f53494b401881d3" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
 </p>
 
 ## 💁‍♀️ User Flow
-![user-flow](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/user-flow.png?raw=true)
+![user-flow](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/user-flow.jpeg?raw=true)
 
 ## 👜 Repository
 | [street-drop-iOS](https://github.com/depromeet/street-drop-iOS) | [street-drop-server](https://github.com/depromeet/street-drop-server) |
@@ -64,10 +64,10 @@
 <img src="https://img.shields.io/badge/Firebase Cloud Messaging-FFCA28?style=for-the-social&logo=firebase&logoColor=white">
 
 ## 🚎 Architecture
-![server-architecture](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/sever-architecture.png?raw=true)
+![server-architecture](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/sever-architecture.jpeg?raw=true)
 
 ## 📈 ERD
-![ERD](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/ERD.png?raw=true)
+![ERD](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/ERD.jpeg?raw=true)
 
 ## 🧑‍💻 Server Engineers
 | Profile | Contact | Github |
