@@ -4,6 +4,7 @@ import com.depromeet.domains.user.dto.response.UserLevelResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.domains.user.service.UserLevelService;
 import com.depromeet.domains.user.service.UserService;
+import com.depromeet.external.aws.s3.AwsS3Service;
 import com.depromeet.security.annotation.ReqUser;
 import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.user.User;
@@ -13,8 +14,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/users")
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
     private final UserLevelService userLevelService;
+    private final AwsS3Service awsS3Service;
 
     @Operation(summary = "내 정보 가져오기")
     @GetMapping("/me")
@@ -58,6 +62,17 @@ public class UserController {
     @GetMapping("/me/level")
     public ResponseEntity<UserLevelResponseDto> getUserLevel(@ReqUser User user) {
         var response = userLevelService.getUserLevel(user);
+        return ResponseDto.ok(response);
+    }
+
+    @Operation(summary = "사용자 프로필 이미지 수정")
+    @PatchMapping(value = "/me/profile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserResponseDto> changeProfileImage(
+            @ReqUser User user,
+            @RequestPart(value = "file") MultipartFile multipartFile
+    ) {
+        String imageUrl = awsS3Service.updateFileToS3(multipartFile, "PROFILE");
+        var response = userService.changeImageUrlById(user, imageUrl);
         return ResponseDto.ok(response);
     }
 }

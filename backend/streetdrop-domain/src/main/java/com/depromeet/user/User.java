@@ -44,6 +44,8 @@ public class User extends BaseTimeEntity {
 	@Column(nullable = false)
 	private MusicApp musicApp;
 
+	private String profileImage;
+
 	@Builder
 	public User(String nickname, String idfv, MusicApp musicApp, Long userLevelId) {
 		this.nickname = nickname;
@@ -68,5 +70,9 @@ public class User extends BaseTimeEntity {
 
 	public void changeMusicApp(MusicApp musicApp) {
 		this.musicApp = musicApp;
+	}
+
+	public void changeProfileImage(String profileImage) {
+		this.profileImage = profileImage;
 	}
 }

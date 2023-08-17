@@ -1,5 +1,7 @@
 package com.depromeet.domains.user.service;
 
+import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.domains.user.repository.DefaultNickNameRepository;
 import com.depromeet.domains.user.repository.UserRepository;
@@ -67,5 +69,13 @@ public class UserService {
         user.changeMusicApp(musicApp);
         userRepository.save(user);
         return new UserResponseDto(user);
+    }
+
+    @Transactional
+	public UserResponseDto changeImageUrlById(User user, String imageUrl) {
+        var findUser = userRepository.findUserById(user.getId())
+                .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND));
+        findUser.changeProfileImage(imageUrl);
+        return new UserResponseDto(findUser);
     }
 }
