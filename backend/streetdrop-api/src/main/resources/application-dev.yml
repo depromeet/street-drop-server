@@ -24,6 +24,9 @@ spring:
       timeout: 30
 swagger:
   server-url: ${SWAGGER_SERVER_URL}
+springdoc:
+  swagger-ui:
+    path: /swagger
 slack:
   token: ${slack.token}
   monitoring-channel: error
@@ -42,6 +45,3 @@ cloud:
         auto: false
 notification:
   noti-server-url: ${NOTI_SERVER_URL}
-springdoc:
-  swagger-ui:
-    enabled: true
