@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -60,6 +61,21 @@ public class GlobalExceptionHandler {
 
 		return ResponseEntity
 				.status(ErrorCode.METHOD_ARGUMENT_NOT_VALID.getStatus().value())
+				.body(errorResponseDto);
+	}
+
+	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+	protected ResponseEntity<ErrorResponseDto> handleMethodNotSupportException(
+			final HttpRequestMethodNotSupportedException e
+	) {
+		ErrorResponseDto errorResponseDto = ErrorResponseDto.builder()
+				.code(ErrorCode.METHOD_NOT_ALLOWED.getCode())
+				.status(ErrorCode.METHOD_NOT_ALLOWED.getStatus().value())
+				.error(ErrorCode.METHOD_NOT_ALLOWED.getStatus().name())
+				.message(e.getMessage()).build();
+
+		return ResponseEntity
+				.status(ErrorCode.METHOD_NOT_ALLOWED.getStatus().value())
 				.body(errorResponseDto);
 	}
 
