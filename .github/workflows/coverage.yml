@@ -45,12 +45,13 @@ jobs:
 
       - name: Run tests
         working-directory: ./backend
-        run: ./gradlew streetdrop-api:test
+        run: ./gradlew streetdrop-api:test --parallel
 
       - name: Upload test coverage
         id: jacoco
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./backend/streetdrop-api/build/reports/jacoco/test
           fail_ci_if_error: true
         continue-on-error: true
