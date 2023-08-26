@@ -13,6 +13,7 @@ on:
       - "backend/streetdrop-api/**"
       - "backend/streetdrop-domain/**"
       - "backend/streetdrop-common/**"
+      - ".github/workflows/coverage.yml"
 
 permissions:
   contents: read
