@@ -1,0 +1,13 @@
+package com.streetdrop;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class StreetDropApiApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(StreetDropApiApplication.class, args);
+    }
+
+}

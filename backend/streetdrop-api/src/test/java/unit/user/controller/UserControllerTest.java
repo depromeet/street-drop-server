@@ -1,11 +1,11 @@
 package unit.user.controller;
 
-import com.depromeet.domains.user.controller.UserController;
-import com.depromeet.domains.user.dto.response.UserResponseDto;
-import com.depromeet.domains.user.service.UserLevelService;
-import com.depromeet.domains.user.service.UserService;
-import com.depromeet.user.User;
-import com.depromeet.user.vo.MusicApp;
+import com.streetdrop.domains.user.controller.UserController;
+import com.streetdrop.domains.user.dto.response.UserResponseDto;
+import com.streetdrop.domains.user.service.UserLevelService;
+import com.streetdrop.domains.user.service.UserService;
+import com.streetdrop.user.User;
+import com.streetdrop.user.vo.MusicApp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

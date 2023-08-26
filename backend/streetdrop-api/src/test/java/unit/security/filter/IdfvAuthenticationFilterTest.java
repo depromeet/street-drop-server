@@ -1,7 +1,7 @@
 package unit.security.filter;
 
-import com.depromeet.security.filter.IdfvAuthenticationFilter;
-import com.depromeet.security.provider.IdfvUserDetailsService;
+import com.streetdrop.security.filter.IdfvAuthenticationFilter;
+import com.streetdrop.security.provider.IdfvUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

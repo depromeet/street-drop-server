@@ -12,7 +12,7 @@ repositories {
 }
 
 subprojects {
-    group = 'com.depromeet'
+    group = 'com.streetdrop'
     version = '0.0.1-SNAPSHOT'
     sourceCompatibility = '19'
 

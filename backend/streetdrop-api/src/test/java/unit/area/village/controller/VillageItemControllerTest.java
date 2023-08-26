@@ -1,10 +1,10 @@
 package unit.area.village.controller;
 
-import com.depromeet.domains.village.controller.VillageItemController;
-import com.depromeet.domains.village.dto.request.VillageItemsRequestDto;
-import com.depromeet.domains.village.dto.response.VillageItemsCountResponseDto;
-import com.depromeet.domains.village.service.VillageItemService;
-import com.depromeet.common.error.GlobalExceptionHandler;
+import com.streetdrop.domains.village.controller.VillageItemController;
+import com.streetdrop.domains.village.dto.request.VillageItemsRequestDto;
+import com.streetdrop.domains.village.dto.response.VillageItemsCountResponseDto;
+import com.streetdrop.domains.village.service.VillageItemService;
+import com.streetdrop.common.error.GlobalExceptionHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

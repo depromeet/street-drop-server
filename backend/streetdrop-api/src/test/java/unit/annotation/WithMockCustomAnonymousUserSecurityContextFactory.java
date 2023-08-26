@@ -1,7 +1,7 @@
 package unit.annotation;
 
-import com.depromeet.user.User;
-import com.depromeet.security.provider.SecurityUserDetails;
+import com.streetdrop.user.User;
+import com.streetdrop.security.provider.SecurityUserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;

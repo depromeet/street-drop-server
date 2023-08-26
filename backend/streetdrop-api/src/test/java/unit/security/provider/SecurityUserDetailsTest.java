@@ -1,8 +1,8 @@
 package unit.security.provider;
 
-import com.depromeet.user.User;
-import com.depromeet.security.provider.SecurityUserDetails;
-import com.depromeet.user.vo.MusicApp;
+import com.streetdrop.user.User;
+import com.streetdrop.security.provider.SecurityUserDetails;
+import com.streetdrop.user.vo.MusicApp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

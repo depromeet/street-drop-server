@@ -1,8 +1,8 @@
 package unit.area.village.service;
 
-import com.depromeet.domains.village.dto.response.VillageItemsCountResponseDto;
-import com.depromeet.domains.village.repository.VillageAreaRepository;
-import com.depromeet.domains.village.service.VillageItemService;
+import com.streetdrop.domains.village.dto.response.VillageItemsCountResponseDto;
+import com.streetdrop.domains.village.repository.VillageAreaRepository;
+import com.streetdrop.domains.village.service.VillageItemService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

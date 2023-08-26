@@ -1,16 +1,16 @@
 package unit.item.service;
 
-import com.depromeet.common.error.dto.ErrorCode;
-import com.depromeet.common.error.exception.common.BusinessException;
-import com.depromeet.common.error.exception.common.NotFoundException;
-import com.depromeet.item.Item;
-import com.depromeet.item.ItemLike;
-import com.depromeet.domains.item.dto.response.ItemLikeResponseDto;
-import com.depromeet.domains.item.repository.ItemLikeRepository;
-import com.depromeet.domains.item.service.ItemLikeService;
-import com.depromeet.domains.item.service.ItemService;
-import com.depromeet.user.User;
-import com.depromeet.user.vo.MusicApp;
+import com.streetdrop.common.error.dto.ErrorCode;
+import com.streetdrop.common.error.exception.common.BusinessException;
+import com.streetdrop.common.error.exception.common.NotFoundException;
+import com.streetdrop.item.Item;
+import com.streetdrop.item.ItemLike;
+import com.streetdrop.domains.item.dto.response.ItemLikeResponseDto;
+import com.streetdrop.domains.item.repository.ItemLikeRepository;
+import com.streetdrop.domains.item.service.ItemLikeService;
+import com.streetdrop.domains.item.service.ItemService;
+import com.streetdrop.user.User;
+import com.streetdrop.user.vo.MusicApp;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package unit.common.controller;
 
-import com.depromeet.common.controller.HealthController;
+import com.streetdrop.common.controller.HealthController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
