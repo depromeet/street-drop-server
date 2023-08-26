@@ -33,7 +33,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
-        working-directory: ./backend/streetdrop-api
+        working-directory: ./backend
         run: chmod +x gradlew
 
       - run: gradle init
@@ -41,7 +41,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: build
+          arguments: streetdrop-api:test
           cache-read-only: ${{ github.ref != 'refs/heads/master' && github.ref != 'refs/heads/dev' }}
 
       - name: Upload test coverage
