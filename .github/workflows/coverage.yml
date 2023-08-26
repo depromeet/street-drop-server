@@ -41,8 +41,11 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: streetdrop-api:test
           cache-read-only: ${{ github.ref != 'refs/heads/master' && github.ref != 'refs/heads/dev' }}
+
+      - name: Run tests
+        working-directory: ./backend
+        run: ./gradlew streetdrop-api:test
 
       - name: Upload test coverage
         id: jacoco
