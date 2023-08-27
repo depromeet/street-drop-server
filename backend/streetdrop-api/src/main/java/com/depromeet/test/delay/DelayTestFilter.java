@@ -12,7 +12,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Profile({"test", "local"})
+@Profile({"dev", "local"})
 @Component
 @Slf4j
 public class DelayTestFilter extends OncePerRequestFilter {
