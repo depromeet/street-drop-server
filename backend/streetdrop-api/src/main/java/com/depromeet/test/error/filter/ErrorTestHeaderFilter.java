@@ -21,7 +21,7 @@ import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@Profile({"test", "local"})
+@Profile({"dev", "local"})
 @Component
 @Slf4j
 public class ErrorTestHeaderFilter extends OncePerRequestFilter {
