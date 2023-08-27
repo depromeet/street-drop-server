@@ -20,10 +20,10 @@ public class DelayTestFilter extends OncePerRequestFilter {
     public static final String DELAY_TIME_HEADER = "STREET-DROP-RESPONSE-DELAY-TIME";
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
-        String errorTestCode = request.getHeader(DELAY_TIME_HEADER);
-        if (errorTestCode != null) {
+        String requestDelayTime = request.getHeader(DELAY_TIME_HEADER);
+        if (requestDelayTime != null) {
             try {
-                int delayTime = Integer.parseInt(errorTestCode);
+                int delayTime = Integer.parseInt(requestDelayTime);
                 Thread.sleep(delayTime);
             } catch (NumberFormatException | InterruptedException ignored) {
             }
