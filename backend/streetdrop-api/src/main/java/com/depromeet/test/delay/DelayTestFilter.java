@@ -29,6 +29,9 @@ public class DelayTestFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
         }
+        else {
+            filterChain.doFilter(request, response);
+        }
     }
 
 }
