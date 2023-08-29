@@ -6,6 +6,8 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
+import lombok.RequiredArgsConstructor;
+import org.springdoc.core.customizers.OperationCustomizer;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +19,12 @@ import java.util.List;
 
 @Profile({"local", "dev"})
 @Configuration
+@RequiredArgsConstructor
 public class SwaggerConfig {
+
+    private final OperationCustomizer operationCustomizer;
     private final String IDFV_TOKEN_HEADER = "x-sdp-idfv";
+
 
     @Value(value = "${swagger.server-url}")
     private String serverUrl;
@@ -28,6 +34,7 @@ public class SwaggerConfig {
         return GroupedOpenApi.builder()
                 .group("v1")
                 .pathsToMatch("/**")
+                .addOperationCustomizer(operationCustomizer)
                 .build();
     }
 
