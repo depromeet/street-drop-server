@@ -10,6 +10,7 @@ import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
+import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 
@@ -20,7 +21,7 @@ import java.util.Map;
 import static java.util.stream.Collectors.groupingBy;
 
 @Component
-public class OperationCustomizer implements org.springdoc.core.customizers.OperationCustomizer {
+public class CustomOperationCustomizer implements OperationCustomizer {
 
     @Override
     public Operation customize(Operation operation, HandlerMethod handlerMethod) {
