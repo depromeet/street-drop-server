@@ -36,7 +36,7 @@ public class MusicService {
 		String artistName = musicRequestDto.getArtist();
 		String albumName = musicRequestDto.getAlbumName();
 		String albumImage = musicRequestDto.getAlbumImage();
-		List<SongGenre> songGenres = genreService.createSongGenres(musicRequestDto.getGenre());
+		List<SongGenre> songGenres = genreService.getOrCreateSongGenres(musicRequestDto.getGenre());
 
 		Optional<Artist> artist = findArtist(artistName);
 		if (artist.isEmpty()) {

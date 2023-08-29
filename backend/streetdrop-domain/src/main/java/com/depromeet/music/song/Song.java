@@ -33,7 +33,7 @@ public class Song {
 	@JoinColumn(name = "album_id", nullable = false)
 	private Album album;
 
-	@OneToMany(mappedBy = "song")
+	@OneToMany(mappedBy = "song", cascade = ALL)
 	private List<SongGenre> genres = new ArrayList<>();
 
 	@Builder

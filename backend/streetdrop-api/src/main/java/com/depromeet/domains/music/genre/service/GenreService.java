@@ -16,10 +16,10 @@ public class GenreService {
 	private final GenreRepository genreRepository;
 	private final SongGenreRepository songGenreRepository;
 
-	public List<SongGenre> createSongGenres(List<String> genres) {
+	public List<SongGenre> getOrCreateSongGenres(List<String> genres) {
 		List<SongGenre> songGenres = genres.stream()
 				.map(this::getOrCreateGenre)
-				.map(this::createSongGenre)
+				.map(this::getOrCreateSongGenre)
 				.collect(Collectors.toList());
 
 		return songGenres;
@@ -35,10 +35,12 @@ public class GenreService {
 		return genreRepository.save(genre);
 	}
 
-	private SongGenre createSongGenre(Genre genre) {
-		SongGenre songGenre = SongGenre.builder()
-				.genre(genre)
-				.build();
+	private SongGenre getOrCreateSongGenre(Genre genre) {
+		SongGenre songGenre = songGenreRepository.findSongGenreByGenre(genre)
+				.orElseGet(() -> SongGenre.builder()
+						.genre(genre)
+						.build()
+				);
 
 		return songGenreRepository.save(songGenre);
 	}
