@@ -1,8 +1,8 @@
 # Street Drop(스트릿 드랍) <a href="https://apps.apple.com/kr/app/%EC%8A%A4%ED%8A%B8%EB%A6%BF%EB%93%9C%EB%9E%8D-street-drop/id6450315928"><img src="https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/app-logo.png" align="left" width="100"></a>
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fdepromeet%2Fstreet-drop-server&count_bg=%2328DBE6&title_bg=%232D3540&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
-[![codecov](https://codecov.io/gh/depromeet/street-drop-server/branch/main/graph/badge.svg?token=7EHWI73ZQU)](https://codecov.io/gh/depromeet/street-drop-server)
-[![Github Action](https://github.com/depromeet/street-drop-server/actions/workflows/jacoco.yml/badge.svg)](https://github.com/depromeet/street-drop-server/actions)
+[![codecov](https://codecov.io/gh/depromeet/street-drop-server/branch/dev/graph/badge.svg?token=7EHWI73ZQU)](https://codecov.io/gh/depromeet/street-drop-server)
+[![Github Action](https://github.com/depromeet/street-drop-server/actions/workflows/coverage.yml/badge.svg)](https://github.com/depromeet/street-drop-server/actions)
 
 ## 💁‍♂️ Introduction
 ![intro-main](https://github.com/siyeonSon/ReadmeImage/blob/main/street-drop-server/intro-main.jpeg?raw=true)
