@@ -1,5 +1,5 @@
 ---
-title: 7. Functional Requirements (기능 요구사항)
+title: 7. Functional Requirements (기능 요구사항)(작성중)
 sidebar_position: 8
 ---
 
