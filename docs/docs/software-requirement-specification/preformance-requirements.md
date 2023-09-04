@@ -1,5 +1,5 @@
 ---
-title: 5. Performance Requirements (성능 요구사항)
+title: 5. Performance Requirements (성능 요구사항)(작성중)
 sidebar_position: 6
 ---
 
@@ -59,5 +59,6 @@ SecretNote의 각 개인 정보별 항목에 대한 최대 개수는 다음과 �
 ### 5.5.2 	메모리(RAM) 요구 사항
 SecretNote의 안정적인 동작을 위해서는, 512Kbyte의 메모리가 확보되어야 한다.
 
-### 5.5.3 	Flash 메모리 요구 사항
-SecretNote의 데이터 저장과, resource저장등을 위하여, 1Mbyte의 flash 메모리 저장공간을 요구한다.
+### 5.5.3 	SSD 요구 사항
+Ram을 Swap해서 사용하기 떄문에, 최소 2Gbyte의 SSD가 필요하다.
+

@@ -1,5 +1,5 @@
 ---
-title: 6. Non-Functional Requirements (기능 이외의 요구사항)
+title: 6. Non-Functional Requirements (기능 이외의 요구사항)(작성중)
 sidebar_position: 7
 ---
 
@@ -160,42 +160,18 @@ Any equipment the customer would need to buy or any software setup that needs to
 
 해당 사항 없음
 ## 6.10	Internationalization Requirements (다국어 지원 요구사항)
-다국어 지원 계획에 대해 기술한다.
-지원 가능한 언어종류는 다음과 같이 구분한다.
+현재 1.X.X 버전에서는 한국어만 지원할 예정입니다.
 
-•	한국어
-•	영어
-•	일어
-•	Chinese-PRC(간체, *기존에 지원하는 중국어임)
-•	Chinese-Taiwan(번체)
-•	Chinese-Hongkong(번체)
-•	Chinese-Singapore(간체)
-•	그외 지원하는 언어
-
-고려해야 함.
-다국어 가정하고 진행 할 것 ( 한국,영어,중국어, 정도..?)
 ## 6.11	Unicode Support (유니코드 지원)
-Unicode를 지원할 수 있는지, 향후 지원 계획 등에 대해 기술한다.
+현재 Street Drop은 유니코드를 지원합니다.
 
 ## 6.12	64bit Support (64비트 지원)
-64bit를 지원할 수 있는지, 향후 지원 계획 등에 대해 기술한다.
-해당사항 없음
+현재 Street Drop은 64비트를 지원합니다.
 
 ## 6.13	Certification (제품 인증)
-본 프로젝트 산출물이 외부 인증을 받아야 하는지, 받는다면 어떤 인증을 받아야 하는지, 언제 어떤 방법으로 진행하며, 무엇을 준비해야 하는지, 그 비용은 어떻게 되는지 등을 기술한다. 마케팅과 협의 요망함.
-
-예를 들어, 다음과  같은 리스트가 있다.
-
-•	MS Logo 인증
-•	Good Software 인증
-•	국제공통평가기준(CC)
-
-KEY 받아서 self signing 정도
+해당 사항 없습니다.
 
 ## 6.14	Field Test (필드 테스트)
-본 프로젝트 산출물이 field test가 필요한지 여부 및 field test 계획 등을 마케팅과 협의하여 간략히 기술한다.
-상세 일정 및 레퍼런스 사이트 리스트 등은 개발계획서에 명시한다.
-
-해당 사항 없음
-6.15	Other Requirements (기타 요구 사항)
-Define any other requirements not covered elsewhere in the SRS. This might include database requirements, legal requirements, reuse objectives for the project, and so on. Add any new sections that are pertinent to the project.
+해당 사항 없습니다.
+## 6.15	Other Requirements (기타 요구 사항)
+해당 사항 없습니다.
