@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins_container
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /jenkins:/var/jenkins_home
+    ports:
+      - "8342:8080"
+    privileged: true
+    user: root
