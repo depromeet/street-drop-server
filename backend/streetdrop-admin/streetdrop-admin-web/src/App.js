@@ -14,6 +14,7 @@ import ItemListPage from "./components/items/ItemListPage";
 import UserSignUpGraph from "./components/user/UserSignUpGraph";
 import LocationAnalysis from "./components/location/LocationAnalysis";
 import PrivateRoute from "./route/PrivateRoute";
+import UserBlockPage from "./components/user/UserBlockPage";
 
 const App = () => {
     return (
@@ -31,6 +32,7 @@ const App = () => {
                         <Route path='/music/recommend' element={<MusicRecommend/>}/>
                         <Route path='/location/analysis' element={<LocationAnalysis/>}/>
                         <Route path='/user/list' element={<UserListPage/>}/>
+                        <Route path='/user/block' element={<UserBlockPage/>}/>
                         <Route path='/user/signup-graph' element={<UserSignUpGraph/>}/>
                         <Route path='/notification/create' element={<CreateNotification/>}/>
                     </Route>
