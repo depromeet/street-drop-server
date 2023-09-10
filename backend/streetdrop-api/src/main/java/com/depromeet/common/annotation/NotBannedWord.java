@@ -13,7 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = BannedWordValidator.class)
 public @interface NotBannedWord {
 
-    String message() default "Cannot use this banned word";
+    String message() default "Cannot use banned word";
 
     Class<?>[] groups() default {};
 

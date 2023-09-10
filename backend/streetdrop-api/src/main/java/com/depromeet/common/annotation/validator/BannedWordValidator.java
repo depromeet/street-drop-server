@@ -2,8 +2,6 @@ package com.depromeet.common.annotation.validator;
 
 
 import com.depromeet.common.annotation.NotBannedWord;
-import com.depromeet.common.error.dto.ErrorCode;
-import com.depromeet.common.error.exception.common.BusinessException;
 import com.depromeet.common.repository.BannedWordRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -20,8 +18,10 @@ public class BannedWordValidator implements ConstraintValidator<NotBannedWord, S
     public boolean isValid(String value, ConstraintValidatorContext context) {
         var contentWord = List.of(value.split(" "));
         var bannedWord = bannedWordRepository.findBannedWordsInWordList(contentWord);
-        if (bannedWord.isPresent()) {
-            throw new BusinessException(ErrorCode.CANNOT_USE_BANNED_WORD, bannedWord.get() + " is Banned Word");
+        if (!bannedWord.isEmpty()) {
+            context.buildConstraintViolationWithTemplate("Cannot use banned word : " + bannedWord.get(0))
+                    .addConstraintViolation();
+            return false;
         }
         return true;
     }
