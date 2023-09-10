@@ -1,10 +1,21 @@
 global:
   scrape_interval: 15s
-  evaluation_interval: 1m
+  evaluation_interval: 45s
   external_labels:
     monitor: 'street drop monitor'
+
 scrape_configs:
-  - job_name: 'prometheus'
+  - job_name: 'street-drop-api-prometheus'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['host.docker.internal:8080']
+      - targets: ['api.street-drop.com']
+
+  - job_name: 'street-drop-search-prometheus'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['search.street-drop.com']
+
+  - job_name: 'street-drop-admin-prometheus'
+    metrics_path: '/actuator/admin'
+    static_configs:
+      - targets: ['admin.street-drop.com']
