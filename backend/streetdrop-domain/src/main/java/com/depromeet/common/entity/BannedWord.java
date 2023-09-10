@@ -14,7 +14,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 public class BannedWord {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "bannedword_id")
+    @Column(name = "banned_word_id")
     private Long id;
 
     @Column(length = 20, nullable = false)
