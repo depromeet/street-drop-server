@@ -13,32 +13,32 @@ const callouts: Callout[] = [
     {
         title: "비즈니스",
         text: "유저 행동 로깅과 어드민 페이지를 통해, 사용자의 행동을 분석하고, 통계를 내며 서비스를 개선해나가고 있습니다.",
-        link: "/street-drop-server/docs/intro",
+        link: "/docs/intro",
     },
     {
         title: "모니터링",
         text: "프로메테우스 및 그라파나를 통해 서비스의 상태 모니터링과 500대 에러 Slack 알림, 슬로우 쿼리 모니터링 등을 통해서, 서비스의 안정성을 높이고 있습니다.",
-        link: "/street-drop-server/docs/intro",
+        link: "/docs/intro",
     },
     {
         title: "설계",
         text: "API 서버, Admin 서버, Batch 서버, 알림 서버 등을 분리하여, 서비스의 안정성과 확장성을 높이고 있습니다.",
-        link: "/street-drop-server/docs/intro",
+        link: "/docs/software-design-description/Intrduction",
     },
     {
         title: "문서화",
         text: "Swagger를 통해 API 문서를 자동화하고 있습니다.",
-        link: "/street-drop-server/docs/intro",
+        link: "https://test-api.street-drop.com/swagger",
     },
     {
         title: "로그",
         text: "ELK를 통해 서비스의 로그를 수집하고 있습니다.",
-        link: "/street-drop-server/docs/intro",
+        link: "/docs/intro",
     },
     {
         title: "성능",
         text: "JMeter를 통해 서비스의 성능을 측정하고 있습니다.",
-        link: "/street-drop-server/docs/intro",
+        link: "docs/software-requirement-specification/preformance-requirements",
     },
 ];
 
