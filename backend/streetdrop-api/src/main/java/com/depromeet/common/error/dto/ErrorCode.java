@@ -45,7 +45,9 @@ public enum ErrorCode {
 
 	INVALID_USER_EXCEPTION(HttpStatus.FORBIDDEN, "C-0009", "Modify or Delete Not Permitted"),
 
-	INVALID_INPUT_EXCEPTION(HttpStatus.BAD_REQUEST, "C-0015", "Nickname must be at least 1 character and not more than 10 characters");
+	INVALID_INPUT_EXCEPTION(HttpStatus.BAD_REQUEST, "C-0015", "Nickname must be at least 1 character and not more than 10 characters"),
+
+	CANNOT_USE_BANNED_WORD(HttpStatus.BAD_REQUEST, "C-0010", "Cannot Use Banned Word");
 
 	private final HttpStatus status;
 	private final String code;
