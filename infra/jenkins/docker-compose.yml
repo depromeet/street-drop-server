@@ -3,7 +3,7 @@ version: '3.9'
 services:
   jenkins:
     image: jenkins/jenkins:lts
-    container_name: jenkins_container
+    container_name: street-drop-jenkins
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /jenkins:/var/jenkins_home
