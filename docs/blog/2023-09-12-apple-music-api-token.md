@@ -1,5 +1,5 @@
 ---
-slug: Java Record
+slug: apple-music-api-token
 title: Apple Music API 토큰 발급 받기
 authors: [ siyeon ]
 tags: [ Apple Music API, MusicKit, Apple Developer ]
