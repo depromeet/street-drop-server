@@ -5,13 +5,11 @@ import com.depromeet.domains.geo.controller.GeoController;
 import com.depromeet.domains.geo.dto.request.ReverseGeocodeRequestDto;
 import com.depromeet.domains.geo.dto.response.ReverseGeocodeResponseDto;
 import com.depromeet.domains.geo.service.GeoService;
-import com.depromeet.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -63,17 +61,14 @@ public class GeoControllerTest {
             @Test
             @DisplayName("Reverse Geocoding - 좌표 정상 반환 성공")
             void reverseGeocodingSuccess() throws Exception {
-                // Given
                 given(geoService.reverseGeocode(any(ReverseGeocodeRequestDto.class)))
                         .willReturn(new ReverseGeocodeResponseDto("서울특별시 성수동"));
 
-                // When
                 var response = mvc.perform(get("/geo/reverse-geocode")
                         .param("latitude", String.valueOf(latitude))
                         .param("longitude", String.valueOf(longitude))
                         .contentType(MediaType.APPLICATION_JSON));
 
-                // Then
                 response.andExpect(status().isOk())
                         .andExpect(jsonPath("$.villageName").value("서울특별시 성수동"));
 
