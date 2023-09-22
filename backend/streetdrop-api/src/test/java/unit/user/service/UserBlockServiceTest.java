@@ -49,7 +49,6 @@ public class UserBlockServiceTest {
     @Nested
     class UserBlockTest {
 
-
         private long blockUserId;
 
         private long requestUserId;
@@ -108,14 +107,11 @@ public class UserBlockServiceTest {
             @DisplayName("유저 차단 - 성공")
             @Test
             void userBlockTestSuccess() {
-                // given
                 given(userRepository.findUserById(blockUserId)).willReturn(Optional.of(blockedUser));
                 given(blockUserRepository.save(any(BlockUser.class))).willReturn(block);
 
-                // when
                 var response = userBlockService.blockUser(requestUser, blockUserId);
 
-                // then
                 assertThat(response).isEqualTo(blockUserResponseDto);
                 verify(blockUserRepository).save(any());
             }
@@ -129,27 +125,20 @@ public class UserBlockServiceTest {
             @DisplayName("차단하려는 유저가 없는 경우")
             @Test
             void userBlockTestFail_Not_Found_User() {
-                // given
                 given(userRepository.findUserById(anyLong())).willReturn(Optional.empty());
 
-                // when
                 Throwable thrown = catchThrowable(() -> userBlockService.blockUser(requestUser, blockUserId));
 
-
-                // then
                 Assertions.assertThat(thrown).isInstanceOf(NotFoundException.class);
             }
 
             @DisplayName("차단하려는 유저가 본인인 경우")
             @Test
             void userBlockTestFail_Can_Not_Block_Self() {
-                // given
                 given(userRepository.findUserById(anyLong())).willReturn(Optional.of(requestUser));
 
-                // when
                 Throwable thrown = catchThrowable(() -> userBlockService.blockUser(requestUser, requestUserId));
 
-                // then
                 Assertions.assertThat(thrown).isInstanceOf(BusinessException.class)
                         .hasMessageContaining(ErrorCode.CAN_NOT_BLOCK_SELF.getMessage());
 
@@ -208,13 +197,10 @@ public class UserBlockServiceTest {
             @DisplayName("유저 차단 해제 - 성공")
             @Test
             void userUnBlockTestSuccess() {
-                // given
                 given(blockUserRepository.findBlockUserByBlockerIdAndBlockedId(requestUserId, blockUserId)).willReturn(Optional.of(block));
 
-                // when
                 userBlockService.unBlockUser(requestUser, blockUserId);
 
-                // then
                 verify(blockUserRepository).delete(block);
             }
         }
@@ -227,13 +213,10 @@ public class UserBlockServiceTest {
             @DisplayName("차단 해제하려는 유저가 없는 경우")
             @Test
             void userUnBlockTestFail_Not_Found_User() {
-                // given
                 given(blockUserRepository.findBlockUserByBlockerIdAndBlockedId(anyLong(), anyLong())).willReturn(Optional.empty());
 
-                // when
                 Throwable thrown = catchThrowable(() -> userBlockService.unBlockUser(requestUser, blockUserId));
 
-                // then
                 Assertions.assertThat(thrown).isInstanceOf(NotFoundException.class);
             }
 

@@ -1,13 +1,10 @@
 package unit.user.controller;
 
-import com.depromeet.common.error.dto.ErrorCode;
-import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.user.controller.UserBlockController;
 import com.depromeet.domains.user.dto.response.BlockUserResponseDto;
 import com.depromeet.domains.user.service.UserBlockService;
 import com.depromeet.user.User;
 import com.depromeet.user.vo.MusicApp;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -22,7 +19,8 @@ import unit.annotation.MockAnonymousUser;
 
 import java.lang.reflect.Field;
 
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
@@ -88,10 +86,8 @@ public class UserBlockControllerTest {
             @DisplayName("유저 차단")
             @Test
             void PostUserBlockTest() throws Exception {
-                // Given
                 given(userBlockService.blockUser(any(User.class), anyLong())).willReturn(blockUserResponseDto);
 
-                // When
                 var response = mvc.perform(
                         post("/users/block")
                                 .header("x-sdp-idfv", "idfv1")
@@ -99,8 +95,6 @@ public class UserBlockControllerTest {
                                 .with(csrf())
                 );
 
-
-                // Then
                 response.andExpect(status().isOk())
                         .andExpect(jsonPath("$.userId").value(blockedUser.getId()))
                         .andExpect(jsonPath("$.nickname").value(blockedUser.getNickname()));
@@ -120,10 +114,8 @@ public class UserBlockControllerTest {
             @DisplayName("유저 차단 해제 성공")
             @Test
             void DeleteUserUnBlockTest() throws Exception {
-                // Given
                 doNothing().when(userBlockService).unBlockUser(any(User.class), anyLong());
 
-                // When
                 var response = mvc.perform(
                         delete("/users/unblock")
                                 .header("x-sdp-idfv", "idfv1")
@@ -131,7 +123,6 @@ public class UserBlockControllerTest {
                                 .with(csrf())
                 );
 
-                // Then
                 response.andExpect(status().isNoContent());
                 verify(userBlockService).unBlockUser(any(User.class), anyLong());
             }
