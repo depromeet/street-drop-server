@@ -29,16 +29,16 @@ public class SearchRecommendTerm {
 
     @Column(nullable = false, columnDefinition = "json")
     @Type(value = JsonType.class)
-    private List<DescriptionTextVo> description;
+    private List<TextColorVo> description;
 
     @Column(nullable = false, columnDefinition = "json")
     @Type(value = JsonType.class)
-    private List<String> terms;
+    private List<TextColorVo> terms;
 
     @Column(nullable = false)
     private boolean active;
 
-    public SearchRecommendTerm(String title, List<DescriptionTextVo> description, List<String> terms) {
+    public SearchRecommendTerm(String title, List<TextColorVo> description, List<TextColorVo> terms) {
         this.title = title;
         this.description = description;
         this.terms = terms;

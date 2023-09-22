@@ -9,7 +9,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
-public class DescriptionTextVo {
+public class TextColorVo {
     private String text;
 
     private String color;
