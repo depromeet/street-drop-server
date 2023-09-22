@@ -1,4 +1,4 @@
-package unit.user.controller;
+package unit.domains.user.controller;
 
 import com.depromeet.domains.user.controller.UserController;
 import com.depromeet.domains.user.dto.response.UserResponseDto;

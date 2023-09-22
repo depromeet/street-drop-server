@@ -1,4 +1,4 @@
-package unit.user.service;
+package unit.domains.user.service;
 
 import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.user.dto.response.UserResponseDto;

@@ -1,4 +1,4 @@
-package unit.area.village.service;
+package unit.domains.village.service;
 
 import com.depromeet.area.village.VillageArea;
 import com.depromeet.common.error.dto.ErrorCode;

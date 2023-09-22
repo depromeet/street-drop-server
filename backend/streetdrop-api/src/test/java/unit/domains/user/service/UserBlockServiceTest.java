@@ -1,4 +1,4 @@
-package unit.user.service;
+package unit.domains.user.service;
 
 import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.exception.common.BusinessException;
