@@ -1,4 +1,4 @@
-package unit.item.controller;
+package unit.domains.item.controller;
 
 import com.depromeet.domains.item.controller.ItemController;
 import com.depromeet.common.error.GlobalExceptionHandler;

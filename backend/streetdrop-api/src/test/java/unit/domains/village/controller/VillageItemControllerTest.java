@@ -1,4 +1,4 @@
-package unit.area.village.controller;
+package unit.domains.village.controller;
 
 import com.depromeet.domains.village.controller.VillageItemController;
 import com.depromeet.domains.village.dto.request.VillageItemsRequestDto;

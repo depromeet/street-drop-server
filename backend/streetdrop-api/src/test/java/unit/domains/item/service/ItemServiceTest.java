@@ -1,4 +1,4 @@
-package unit.item.service;
+package unit.domains.item.service;
 
 import com.depromeet.domains.item.dao.ItemPointDao;
 import com.depromeet.domains.item.dto.request.NearItemPointRequestDto;
