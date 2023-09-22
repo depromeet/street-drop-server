@@ -86,15 +86,12 @@ public class VillageItemServiceTest {
             @DisplayName("지역 좌표로 드랍 아이템 개수 조회 - 성공")
             @Test
             void VillageItemCountTest() {
-                // given
                 when(villageAreaRepository.findVillageByLocationPoint(any())).thenReturn(Optional.of(villageArea));
                 when(villageAreaRepository.countItemsByVillageName(any())).thenReturn(1);
                 VillageItemsRequestDto villageItemsRequestDto = new VillageItemsRequestDto(longitude, latitude);
 
-                // when
                 var result = villageItemService.countItemsInVillageByLocation(villageItemsRequestDto);
 
-                // then
                 var response = new VillageItemsCountResponseDto(1, villageName);
                 assertThat(result).isEqualTo(response);
             }
@@ -108,14 +105,11 @@ public class VillageItemServiceTest {
             @DisplayName("지역 좌표로 드랍 아이템 개수 조회 - 실패 - 지역이 존재하지 않음")
             @Test
             void VillageItemCountTest() {
-                // given
                 when(villageAreaRepository.findVillageByLocationPoint(any())).thenReturn(Optional.empty());
                 VillageItemsRequestDto villageItemsRequestDto = new VillageItemsRequestDto(longitude, latitude);
 
-                // when
                 Throwable thrown = catchThrowable(() -> villageItemService.countItemsInVillageByLocation(villageItemsRequestDto));
 
-                // then
                 assertThat(thrown).isInstanceOf(RuntimeException.class)
                         .hasMessageContaining(ErrorCode.NOT_SUPPORT_LOCATION.getMessage());
             }

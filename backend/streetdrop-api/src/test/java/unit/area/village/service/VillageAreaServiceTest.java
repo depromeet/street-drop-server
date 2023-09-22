@@ -62,13 +62,10 @@ public class VillageAreaServiceTest {
             @DisplayName("지역 좌표를 통해서 지역명 조회 - 성공")
             @Test
             void getVillageByLocationPointSuccessTest() {
-                // given
                 when(villageAreaRepository.findVillageByLocationPoint(any())).thenReturn(Optional.of(villageArea));
 
-                // when
                 var result = villageAreaService.getVillageByLocationPoint(correctPoint);
 
-                // then
                 assertThat(result.getVillageName()).isEqualTo(villageName);
             }
         }
@@ -92,13 +89,10 @@ public class VillageAreaServiceTest {
             @DisplayName("지역 좌표가 올바르지 않을 경우")
             @Test
             void VillageItemCountTest_NotSupportLocation() {
-                // given
                 when(villageAreaRepository.findVillageByLocationPoint(any())).thenReturn(Optional.empty());
 
-                // when
                 Throwable thrown = catchThrowable(() -> villageAreaService.getVillageByLocationPoint(invalidPoint));
 
-                // then
                 assertThat(thrown).isInstanceOf(RuntimeException.class)
                         .hasMessageContaining(ErrorCode.NOT_SUPPORT_LOCATION.getMessage());
             }
