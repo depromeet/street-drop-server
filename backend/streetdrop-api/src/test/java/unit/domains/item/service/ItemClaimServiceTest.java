@@ -1,6 +1,9 @@
 package unit.domains.item.service;
 
 
+import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.common.error.exception.common.BusinessException;
+import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.item.dto.request.ItemClaimRequestDto;
 import com.depromeet.domains.item.repository.ItemClaimRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
@@ -23,6 +26,8 @@ import java.lang.reflect.Field;
 import java.util.Optional;
 
 import static com.depromeet.item.vo.ItemClaimStatus.WAITING;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
@@ -108,6 +113,31 @@ public class ItemClaimServiceTest {
         @Nested
         @DisplayName("실패")
         class Fail {
+
+            @DisplayName("아이템 신고 - 실패 - 아이템이 존재하지 않음")
+            @Test
+            void claimItemFailItemNotFound() {
+                given(itemRepository.findById(anyLong())).willReturn(Optional.empty());
+
+                Throwable thrown = catchThrowable(() -> itemClaimService.claimItem(user, itemClaimRequestDto));
+
+                assertThat(thrown)
+                        .isInstanceOf(NotFoundException.class);
+            }
+
+
+            @DisplayName("아이템 신고 - 실패 - 이미 신고한 아이템")
+            @Test
+            void claimITemFail_AlreadyReportItem() {
+                given(itemRepository.findById(anyLong())).willReturn(Optional.of(item));
+                given(itemClaimRepository.existsByUserIdAndItemId(anyLong(), anyLong())).willReturn(true);
+
+                Throwable thrown = catchThrowable(() -> itemClaimService.claimItem(user, itemClaimRequestDto));
+
+                assertThat(thrown)
+                        .isInstanceOf(BusinessException.class)
+                        .hasMessageContaining(ErrorCode.ALREADY_ITEM_REPORTED_ERROR.getMessage());
+            }
 
         }
 
