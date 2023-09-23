@@ -28,6 +28,7 @@ public class UserController {
     private final UserLevelService userLevelService;
 
     @Operation(summary = "내 정보 가져오기")
+    @ApiResponse(responseCode = "200", description = "내 정보 가져오기 성공")
     @GetMapping("/me")
     public ResponseEntity<UserResponseDto> getUserInfo(
             @ReqUser User user
@@ -37,6 +38,7 @@ public class UserController {
     }
 
     @Operation(summary = "닉네임 변경하기")
+    @ApiResponse(responseCode = "200", description = "닉네임 변경 성공")
     @PatchMapping("/me/nickname")
     public ResponseEntity<UserResponseDto> changeNickname(
             @ReqUser User user,
@@ -48,6 +50,7 @@ public class UserController {
     }
 
     @Operation(summary = "사용자 뮤직 앱 변경")
+    @ApiResponse(responseCode = "200", description = "사용자 레벨 조회 성공")
     @PatchMapping("/music-app")
     public ResponseEntity<UserResponseDto> changeMusicApp(
             @ReqUser User user,
