@@ -128,7 +128,7 @@ public class ItemClaimServiceTest {
 
             @DisplayName("아이템 신고 - 실패 - 이미 신고한 아이템")
             @Test
-            void claimITemFail_AlreadyReportItem() {
+            void claimItemFail_AlreadyReportItem() {
                 given(itemRepository.findById(anyLong())).willReturn(Optional.of(item));
                 given(itemClaimRepository.existsByUserIdAndItemId(anyLong(), anyLong())).willReturn(true);
 
