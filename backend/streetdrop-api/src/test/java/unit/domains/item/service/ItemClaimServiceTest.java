@@ -6,6 +6,8 @@ import com.depromeet.domains.item.repository.ItemClaimRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.item.service.ItemClaimService;
 import com.depromeet.item.Item;
+import com.depromeet.item.ItemClaim;
+import com.depromeet.report.dto.ItemClaimReportDto;
 import com.depromeet.report.service.SlackItemClaimReportService;
 import com.depromeet.user.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,11 +19,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.lang.reflect.Field;
 import java.util.Optional;
 
-import static net.bytebuddy.matcher.ElementMatchers.any;
+import static com.depromeet.item.vo.ItemClaimStatus.WAITING;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[Service] ItemClaimService 테스트")
@@ -49,12 +54,18 @@ public class ItemClaimServiceTest {
 
         Item item;
 
+        ItemClaim itemClaim;
+
 
         @BeforeEach
-        void setUp() {
+        void setUp() throws NoSuchFieldException, IllegalAccessException {
             user = User.builder()
                     .nickname("test")
                     .build();
+
+            Field userIdField = User.class.getDeclaredField("id");
+            userIdField.setAccessible(true);
+            userIdField.set(user, 1L);
 
             itemClaimRequestDto = new ItemClaimRequestDto(1L, "Bad Item Contents");
 
@@ -62,6 +73,18 @@ public class ItemClaimServiceTest {
                     .user(user)
                     .content("TEST")
                     .build();
+
+            itemClaim = ItemClaim.builder()
+                    .itemId(item.getId())
+                    .userId(user.getId())
+                    .reason(itemClaimRequestDto.getReason())
+                    .status(WAITING)
+                    .build();
+
+            Field itemClaimField = ItemClaim.class.getDeclaredField("id");
+            itemClaimField.setAccessible(true);
+            itemClaimField.set(itemClaim, 1L);
+
         }
 
         @Nested
@@ -71,13 +94,13 @@ public class ItemClaimServiceTest {
             @DisplayName("아이템 신고 - 성공")
             @Test
             void claimItemSuccess() {
-                // Given
                 given(itemRepository.findById(anyLong())).willReturn(Optional.of(item));
                 given(itemClaimRepository.existsByUserIdAndItemId(anyLong(), anyLong())).willReturn(false);
+                given(itemClaimRepository.save(any(ItemClaim.class))).willReturn(itemClaim);
 
-                // When
+                itemClaimService.claimItem(user, itemClaimRequestDto);
 
-                // Then
+                verify(slackItemClaimReportService).sendReport(any(ItemClaimReportDto.class));
             }
 
         }
