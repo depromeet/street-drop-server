@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/geo")
 @RequiredArgsConstructor
-@Tag(name = "Geo", description = "Geo Service API")
+@Tag(name = "🔁Geo", description = "Geo Service API")
 public class GeoController {
 
     private final GeoService geoService;

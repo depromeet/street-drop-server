@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/items")
 @RequiredArgsConstructor
-@Tag(name = "Items Claim", description = "Item Claim API")
+@Tag(name = "📋Items Claim", description = "Item Claim API")
 public class ItemClaimController {
     private final ItemClaimService itemClaimService;
 

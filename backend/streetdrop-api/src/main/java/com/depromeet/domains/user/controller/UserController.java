@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-@Tag(name = "Users", description = "User API")
+@Tag(name = "👨Users", description = "User API")
 public class UserController {
     private final UserService userService;
     private final UserLevelService userLevelService;

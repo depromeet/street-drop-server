@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/villages/items")
 @RequiredArgsConstructor
-@Tag(name = "Village Items", description = "Village Items API")
+@Tag(name = "🏠Village Items", description = "Village Items API")
 public class VillageItemController {
 
     private final VillageItemService villageItemService;
