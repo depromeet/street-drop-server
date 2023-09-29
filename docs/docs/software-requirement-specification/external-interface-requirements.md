@@ -1,5 +1,5 @@
 ---
-title: 4. External Interface Requirements (외부 인터페이스 요구사항)
+title: 4. External Interface Requirements (외부 인터페이스 요구사항)(작성중)
 sidebar_position: 5
 ---
 
@@ -46,15 +46,29 @@ Details of the user interface design should be documented in a separate user int
 
 
 ## 4.3	Hardware Interface (하드웨어 인터페이스)
-Specify the logical characteristics of each interface between the software product and the hardware components of the system.  This includes configuration characteristics. This may include the supported device types, the nature of the data and control interactions between the software and the hardware, and communication protocols to be used.
-This is not a description of hardware requirements in the sense that “This program must run on a Mac with 64M of RAM”.  This section is for detailing the actual hardware devices your application will interact with and control.  For instance, if you are controlling X10 type home devices, what is the interface to those devices?
+### 4.3.1 Client Hardware Interface (클라이언트 하드웨어 인터페이스)
+- 아래와 같은 ios 디바이스의 개발 기준 해상도를 지원해야합니다.
+  
 
-Designers should be able to look at this and know what hardware they need to worry about in the design.  Many business type applications will have no hardware interfaces.  If none, just state “The system has no hardware interface requirements”  
-If you just delete sections that are not applicable, then readers do not know if:  
-•	this does not apply or
-•	you forgot to include the section in the first place.
+| 기기 모델                           | 화면 크기 (인치) | 실제 해상도   | 개발 기준 해상도 |
+|------------------------------------|-------------------|-----------------|------------------------|
+| iPhone 6, 6s, 7, 8, SE2, SE3       | 4.7               | 750 x 1334       | 375 x 667              |
+| iPhone 12 mini, 13 mini            | 5.4               | 1080 x 2340      | 375 x 812              |
+| iPhone 6+, 6s+, 7+, 8+             | 5.5               | 1242 x 2208      | 414 x 736              |
+| iPhone X, XS, 11 Pro              | 5.8               | 1125 x 2436      | 375 x 812              |
+| iPhone Xr, 11                     | 6.1               | 828 x 1792       | 414 x 896              |
+| iPhone 12, 12 Pro, 13, 13 Pro, 14 | 6.1               | 1170 x 2532      | 390 x 844              |
+| iPhone 14 Pro                     | 6.1               | 1179 x 2556      | 393 x 852              |
+| iPhone Xs Max, 11 Pro Max         | 6.5               | 1242 x 2688      | 414 x 896              |
+| iPhone 12 Pro Max, 13 Pro Max, 14 Plus | 6.7         | 1284 x 2778      | 428 x 926              |
+| iPhone 14 Pro Max                 | 6.7               | 1290 x 2796      | 430 x 932              |
 
+### 4.3.2 Server Hardware Interface (서버 하드웨어 인터페이스)
+이 시스템에는 하드웨어 인터페이스 요구 사항이 없습니다.
 
+### 4.3.3 Admin Web Hardware Interface (서버 하드웨어 인터페이스)
+- Admin 웹페이지의 경우, 데스크톱이나 노트북등에서의 화면사이즈를 지원합니다.
+- 모바일 화면사이즈의 경우는 지원하지 않습니다.
 
 ## 4.4	Software Interface (소프트웨어 인터페이스)
 Describe the connections between this product and other specific software components (name and version), including databases, operating systems, tools, libraries, and integrated commercial components. Identify the data items or messages coming into the system and going out and describe the purpose of each.
@@ -80,13 +94,15 @@ Here we document the APIs, versions of software that we do not have to write, bu
 
 
 ## 4.5	Communication Interface (통신 인터페이스)
-Describe the requirements associated with any communications functions required by this product, including e-mail, web browser, network server communications protocols, electronic forms, and so on.
-Define any pertinent message formatting.
-Identify any communication standards that will be used, such as FTP or HTTP.
 
-Specify any communication security or encryption issues, data transfer rates, and synchronization mechanisms.
+### 4.5.1 클라이언트 - 서버 통신
+**통신 프로토콜**: 제품은 클라이언트와 API 서버 간의 통신에 HTTPS 프로토콜을 사용합니다. 특히 RESTful API를 구현하여 자원을 표현하고 관리합니다.
+- Referecne : https://datatracker.ietf.org/doc/html/rfc2818
 
-If you are using a custom protocol to communicate between systems, then document that protocol here so designers know what to design.  If it is a standard protocol, you can reference an existing document or RFC.
+**메시지 포맷**: API 요청 및 응답은 JSON (JavaScript Object Notation) 형식으로 구성됩니다. 요청 및 응답 메시지는 가독성과 확장성을 고려하여 명확하게 정의되어야 합니다.
+
+**통신 보안**: 데이터의 기밀성과 무결성을 보장하기 위해 TLS (Transport Layer Security)를 사용하여 통신을 암호화합니다.
 
 
-## 4.6	Other Interface (기타 인터페이스)
+### 4.5.2 서버 - 서버 통신
+**통신 프로토콜**: 서버와 서버 통신간에는 Http 프로토콜을 사용하거나 Message Queue를 사용하여 비동기 통신을 할 수 있습니다. 구현 난이도에 따라서, 알파버전에서는 Https 프로토콜을 사용하여 통신을 하고, 베타버전에서는 Message Queue를 사용하여 통신을 할 수 있습니다.

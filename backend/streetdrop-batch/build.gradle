@@ -9,6 +9,10 @@ repositories {
     mavenCentral()
 }
 
+jar {
+    enabled = false
+}
+
 dependencies {
     implementation project(':streetdrop-domain')
     implementation project(':streetdrop-common')

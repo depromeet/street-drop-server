@@ -9,6 +9,10 @@ repositories {
     mavenCentral()
 }
 
+jar {
+    enabled = false
+}
+
 dependencies {
     implementation project(':streetdrop-domain')
     implementation project(':streetdrop-common')
@@ -26,7 +30,7 @@ dependencies {
     implementation 'io.micrometer:micrometer-core'
     implementation "com.slack.api:bolt:1.29.2"
     implementation "com.slack.api:bolt-servlet:1.29.2"
-    implementation "com.slack.api:bolt-jetty:1.29.2"
+    implementation "com.slack.api:bolt-jetty:1.30.0"
 
     implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
     annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
@@ -34,12 +38,47 @@ dependencies {
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.3.1'
+    implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.4.4'
 
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.flywaydb:flyway-mysql'
 }
 
+
+jacocoTestReport {
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+        csv.required.set(false)
+        xml.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
+    }
+    def QueryDslDomains = []
+    for (qPattern in '**/QA'..'**/QZ') {
+        QueryDslDomains.add(qPattern + '*')
+    }
+    afterEvaluate {
+        classDirectories.setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it, excludes: [
+                            "**/*Application*",
+                            "**/*Config*",
+                            "**/*Dto*",
+                            "**/*Request*",
+                            "**/*Response*",
+                            "**/*Interceptor*",
+                            "**/*Exception*"
+                    ] + QueryDslDomains)
+                })
+        )
+    }
+    finalizedBy jacocoTestCoverageVerification
+}
+
 test {
     useJUnitPlatform()
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
