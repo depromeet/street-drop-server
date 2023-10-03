@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users/me/items")
-@Tag(name = "User Item", description = "User Item API")
+@Tag(name = "🏃User Item", description = "User Item API")
 public class UserItemController {
 
     private final UserItemService userItemService;
