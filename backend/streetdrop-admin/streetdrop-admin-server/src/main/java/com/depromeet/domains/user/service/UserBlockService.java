@@ -39,7 +39,7 @@ public class UserBlockService {
                 {
                     User blockerUser = userRepository.findById(userBlock.getBlockerId())
                             .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
-                    User blockedUser = userRepository.findById(userBlock.getBlockerId())
+                    User blockedUser = userRepository.findById(userBlock.getBlockedId())
                             .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND));
                     return UserBlockResponseDto.builder()
                             .id(userBlock.getId())
