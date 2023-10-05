@@ -1,6 +1,7 @@
 package com.depromeet.domains.item.controller;
 
 import com.depromeet.domains.item.dto.ItemAllResponseDto;
+import com.depromeet.domains.item.dto.ItemDetailResponseDto;
 import com.depromeet.domains.user.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -30,5 +31,13 @@ public class ItemController {
     ) {
         itemService.deleteItem(itemId);
         return ResponseDto.noContent();
+    }
+
+    @GetMapping("/{itemId}")
+    public ResponseEntity<ItemDetailResponseDto> getItem(
+            @PathVariable(value = "itemId") Long itemId
+    ) {
+        var response = itemService.getItem(itemId);
+        return ResponseDto.ok(response);
     }
 }
