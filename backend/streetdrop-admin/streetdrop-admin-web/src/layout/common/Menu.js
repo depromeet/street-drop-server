@@ -37,6 +37,9 @@ const MenuComponent = () => {
                 <Menu.Item key="user-menu-2">
                     <Link to="/user/signup-graph">• 유저가입 분석</Link>
                 </Menu.Item>
+                <Menu.Item key="user-menu-3">
+                    <Link to="/user/block">• 유저 차단내역</Link>
+                </Menu.Item>
             </Menu.SubMenu>
             <Menu.SubMenu key="sub4" icon={<BellOutlined/>} title="푸시알림 관리">
                 <Menu.Item key="9">

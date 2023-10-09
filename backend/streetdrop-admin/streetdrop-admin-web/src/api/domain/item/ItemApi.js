@@ -17,6 +17,16 @@ const ItemApi = {
         })
     },
 
+    getItem: (itemId) => {
+        return axios.get(ADMIN_SERVER_URL+'/items/' + itemId, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': 'Bearer ' + authService.getToken()
+            }
+        })
+    },
+
     deleteItem: (itemId) => {
         return axios.delete(ADMIN_SERVER_URL + '/items/' + itemId, {
             headers: {

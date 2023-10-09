@@ -47,6 +47,10 @@ public enum ErrorCode {
 
 	INVALID_INPUT_EXCEPTION(HttpStatus.BAD_REQUEST, "C-0015", "Nickname must be at least 1 character and not more than 10 characters"),
 
+	CAN_NOT_BLOCK_SELF(HttpStatus.BAD_REQUEST, "C-0016", "Can not block myself");
+
+	INVALID_INPUT_EXCEPTION(HttpStatus.BAD_REQUEST, "C-0015", "Nickname must be at least 1 character and not more than 10 characters"),
+
 	INVALID_FILE_UPLOAD(HttpStatus.INTERNAL_SERVER_ERROR, "C-0016" , "Failed File Upload To S3");
 
 	private final HttpStatus status;

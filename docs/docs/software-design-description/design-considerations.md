@@ -1,5 +1,5 @@
 ---
-title: 2. Design Considerations (설계 고려사항)
+title: 2. Design Considerations (설계 고려사항)(작성중)
 sidebar_position: 2
 ---
 # 2. Design Considerations

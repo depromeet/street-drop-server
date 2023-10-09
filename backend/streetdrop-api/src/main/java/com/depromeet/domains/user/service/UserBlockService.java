@@ -1,6 +1,7 @@
 package com.depromeet.domains.user.service;
 
 import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.common.error.exception.common.BusinessException;
 import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.user.dto.response.BlockUserResponseDto;
 import com.depromeet.domains.user.repository.BlockUserRepository;
@@ -18,14 +19,19 @@ public class UserBlockService {
 	private final UserRepository userRepository;
 	private final BlockUserRepository blockUserRepository;
 
+	/*
+	 * blockerId : 차단한 사용자 아이디
+	 * blockedId : 차단된 사용자 아이디
+	 */
 	@Transactional
 	public BlockUserResponseDto blockUser(User user, Long blockUserID) {
 		var blockUser  = userRepository.findUserById(blockUserID)
 				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, user.getId()));
-		/*
-		 * blockerId : 차단한 사용자 아이디
-		 * blockedId : 차단된 사용자 아이디
-		 */
+
+		if (blockUser.getId().equals(user.getId())) {
+			throw new BusinessException(ErrorCode.CAN_NOT_BLOCK_SELF);
+		}
+
 		BlockUser block = BlockUser.builder()
 				.blockerId(user.getId())
 				.blockedId(blockUserID)

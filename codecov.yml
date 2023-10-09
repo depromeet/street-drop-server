@@ -4,10 +4,3 @@ comment:
   require_changes: false
   require_base: no
   require_head: yes
-component_management:
-  individual_components:
-    - component_id: streetdrop-admin
-    - component_id: streetdrop-api
-    - component_id: streetdrop-batch
-    - component_id: streetdrop-core
-    - component_id: streetdrop-search

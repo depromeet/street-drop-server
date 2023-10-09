@@ -11,7 +11,6 @@ function UserListPage() {
     const [clickedUserId, setClickedUserId] = useState(1);
     const showDrawer = (id) => {
         setClickedUserId(id);
-        console.log(id);
         setOpenDrawer(true);
     };
 

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/items")
 @RequiredArgsConstructor
-@Tag(name = "Items", description = "Item API")
+@Tag(name = "📍Items", description = "Item API")
 public class ItemController {
     private final ItemService itemService;
 

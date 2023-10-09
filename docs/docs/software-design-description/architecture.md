@@ -1,5 +1,5 @@
 ---
-title: 3. Architecture (아키텍처)
+title: 3. Architecture (아키텍처)(작성중)
 sidebar_position: 3
 ---
 

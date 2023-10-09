@@ -6,7 +6,7 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 app.use(express.json());
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, '../streetdrop-admin-web/build')));
+app.use(express.static(path.join(__dirname, './build')));
 
 app.use(
     "/search",
@@ -31,7 +31,7 @@ app.use(
 );
 
 app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, '../streetdrop-admin-web/build/index.html'));
+    res.sendFile(path.join(__dirname, './build/index.html'));
 });
 
 app.listen(3030, function () {

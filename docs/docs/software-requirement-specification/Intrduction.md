@@ -1,10 +1,10 @@
 ---
-title: 1. Introduction (개요)
+title: 1. 개요
 sidebar_position: 2
 ---
 
-# 1	Introduction (개요)
-## 1.1	Purpose (목표)
+# 1	개요
+## 1.1	목표
 •  위치 기반 음악 공유 소셜 서비스, Street Drop의 SRS 문서입니다.
 
 
@@ -14,7 +14,7 @@ sidebar_position: 2
 •  독자는 Street Drop 개발팀, 디자인팀이며, 외부 독자 또한 포함합니다.
 
 
-## 1.2	Product Scope (범위)
+## 1.2	범위
 
 • 애플리케이션은 위치 기반 서비스를 활용하여 사용자들이 음악을 공유하고, 다른 사용자들과 상호작용할 수 있는 소셜 서비스를 제공합니다.
 
@@ -26,14 +26,14 @@ sidebar_position: 2
 
 
 
-## 1.3	Document Conventions (문서규칙)
+## 1.3	문서규칙
 • 특별한 의미가 있거나 강조되어야 할 부분은 **굵게** 표시하였습니다.
 
 • 인쇄를 위해 참조이외의 경우에는 링크를 사용하지 않았습니다.
 
 
 
-## 1.4	Terms and Abbreviations (정의 및 약어)
+## 1.4	정의 및 약어
 
 
 • SRS (Software Requirements Specification): 소프트웨어 요구사항 명세서의 약어로, Street Drop의 요구사항을 문서화한 것입니다.
@@ -43,10 +43,10 @@ sidebar_position: 2
 
 
 • 소셜 서비스 (Social Service): 사용자들 간에 소통하고 커뮤니케이션할 수 있는 온라인 플랫폼을 말합니다.
-## 1.5	Related Documents (관련문서)
+## 1.5	관련문서
 • 추후 추가 예정입니다.
 
-## 1.6	Intended Audience and Reading Suggestions (대상 및 읽는 방법)
+## 1.6	대상 및 읽는 방법
 이 문서는 Street Drop 애플리케이션을 개발하고 디자인하는 데 관여하는 모든 팀원들과 외부 이해관계자들을 대상으로 합니다.
 
 개발팀: 이 문서는 애플리케이션의 요구사항을 정확히 이해하고 구현하는 데 필요한 정보를 제공합니다.
@@ -61,12 +61,12 @@ sidebar_position: 2
 독자들은 전체 문서를 읽는 것을 권장하며, 필요한 경우 관심 있는 부분을 세부적으로 탐색할 수 있습니다.
 
 
-## 1.7	Project Output (프로젝트 산출물)
+## 1.7프로젝트 산출물
 
 
-### 1.7.1 	Output Format (산출물 형태)
+### 1.7.1 	산출물 형태
 • 최종 산출물은 IOS 애플리케이션과 AWS에 배포된 서버로 구성됩니다.
 
 
-### 1.7.2 	Output Name and Version (산출물명(가칭) 및 버전)
-• 프로젝트 산출물의 명칭은 "Street Drop (스트릿 드랍)"이며, 현재 버전은 1.0입니다.
+### 1.7.2 	산출물명(가칭) 및 버전
+• 프로젝트 산출물의 명칭은 "Street Drop (스트릿 드랍)"이며, 현재 버전은 1.X.X 입니다.
