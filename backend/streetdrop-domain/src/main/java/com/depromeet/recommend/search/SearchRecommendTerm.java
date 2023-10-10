@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
@@ -38,6 +39,7 @@ public class SearchRecommendTerm {
     @Column(nullable = false)
     private boolean active;
 
+    @Builder
     public SearchRecommendTerm(String title, List<TextColorVo> description, List<TextColorVo> terms) {
         this.title = title;
         this.description = description;
