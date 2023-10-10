@@ -1,11 +1,11 @@
 package com.depromeet.auth.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
+import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -14,27 +14,28 @@ import static lombok.AccessLevel.PROTECTED;
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
 @Entity
-public class Member {
+public class MemberLoginLog {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Setter
     private Long id;
 
-    @Column(nullable = false)
-    private String username;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member member;
 
     @Column(nullable = false)
-    private String email;
+    private String loginIp;
 
     @Column(nullable = false)
-    private String name;
+    private String userAgent;
 
     @Column(nullable = false)
-    private String part;
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    @Setter
-    private String password;
+    private String loginResult;
+
 
 }

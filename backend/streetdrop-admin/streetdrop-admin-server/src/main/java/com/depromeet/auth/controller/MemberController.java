@@ -1,13 +1,13 @@
 package com.depromeet.auth.controller;
 
+import com.depromeet.auth.dto.request.ChangePasswordRequestDto;
 import com.depromeet.auth.entity.Member;
 import com.depromeet.auth.service.MemberService;
+import com.depromeet.domains.user.dto.ResponseDto;
 import com.depromeet.global.annotation.ReqMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,4 +20,16 @@ public class MemberController {
         return ResponseEntity.ok(memberService.getMyInfo(member));
     }
 
+    @GetMapping
+    public ResponseEntity<?> getAllMembers(){
+        var response = memberService.getAllMembers();
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/me/change-password")
+    public ResponseEntity<Void> changePassword(@ReqMember Member member,
+                                            @RequestBody ChangePasswordRequestDto changePasswordRequestDto){
+        memberService.changePassword(member, changePasswordRequestDto.getPrevPassword(), changePasswordRequestDto.getNewPassword());
+        return ResponseDto.noContent();
+    }
 }

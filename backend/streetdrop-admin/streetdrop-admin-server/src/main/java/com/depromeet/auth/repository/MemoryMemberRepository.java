@@ -128,7 +128,7 @@ public class MemoryMemberRepository implements MemberRepository {
 
     @Override
     public List<Member> findAll() {
-        return null;
+        return members;
     }
 
     @Override
