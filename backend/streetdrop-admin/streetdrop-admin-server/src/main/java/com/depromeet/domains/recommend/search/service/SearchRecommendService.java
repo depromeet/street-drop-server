@@ -22,7 +22,7 @@ public class SearchRecommendService {
         var terms = createSearchRecommendDto.getTerms().stream()
                 .map(textColorDto -> new TextColorVo(textColorDto.getText(), textColorDto.getColor()))
                 .toList();
-        SearchRecommendTerm searchRecommendTerm = new SearchRecommendTerm(title, description, terms);
+        var searchRecommendTerm = new SearchRecommendTerm(title, description, terms);
         var result = searchRecommendTermRepository.save(searchRecommendTerm);
         return result.getId().intValue();
     }
