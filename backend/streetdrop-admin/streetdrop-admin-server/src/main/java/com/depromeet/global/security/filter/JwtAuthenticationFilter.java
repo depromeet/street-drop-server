@@ -42,7 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String token = resolveToken.get();
 
             var id = jwtTokenUtil.getId(token);
-            System.out.println(id);
+
             Member member = memberRepository.findById(Long.valueOf(id))
                     .orElseThrow(() ->
                             new RuntimeException("Invalid member")

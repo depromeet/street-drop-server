@@ -15,6 +15,9 @@ import UserSignUpGraph from "./components/user/UserSignUpGraph";
 import LocationAnalysis from "./components/location/LocationAnalysis";
 import PrivateRoute from "./route/PrivateRoute";
 import UserBlockPage from "./components/user/UserBlockPage";
+import MemberListPage from "./components/member/MemberListPage";
+import MemberLoginLogPage from "./components/member/MemberLoginLogPage";
+import MemberSecuritySettingPage from "./components/member/MemberSecuritySettingPage";
 import ItemReportPage from "./components/items/ItemReportPage";
 
 const App = () => {
@@ -37,6 +40,9 @@ const App = () => {
                         <Route path='/user/block' element={<UserBlockPage/>}/>
                         <Route path='/user/signup-graph' element={<UserSignUpGraph/>}/>
                         <Route path='/notification/create' element={<CreateNotification/>}/>
+                        <Route path='/members/list' element={<MemberListPage/>}/>
+                        <Route path='/members/login-log' element={<MemberLoginLogPage/>}/>
+                        <Route path='/members/security' element={<MemberSecuritySettingPage/>}/>
                     </Route>
                 </Routes>
             </Router>

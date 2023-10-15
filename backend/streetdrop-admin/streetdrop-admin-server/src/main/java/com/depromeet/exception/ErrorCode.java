@@ -25,6 +25,7 @@ public enum ErrorCode {
     UNAUTHORIZED_PHONE_NUMBER(HttpStatus.UNAUTHORIZED, "AUTH-0009", "Unauthorized Phone Number"),
     NOT_EXIST_PART_OR_UNIT(HttpStatus.BAD_REQUEST, "AUTH-0010", "Not Exist Part Or Unit"),
     INVALID_ID_OR_PASSWORD(HttpStatus.UNAUTHORIZED, "AUTH-0011", "Invalid Id or Password"),
+    PASSWORD_NOT_MATCH(HttpStatus.BAD_REQUEST, "AUTH-0012", "Previous Password Not Match"),
 
     // Token
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "TOKEN-0001", "Invalid token");

@@ -1,4 +1,11 @@
-import {BellOutlined, DingtalkOutlined, PieChartOutlined, UserOutlined, EnvironmentOutlined} from '@ant-design/icons';
+import {
+    BellOutlined,
+    DingtalkOutlined,
+    EnvironmentOutlined,
+    PartitionOutlined,
+    PieChartOutlined,
+    UserOutlined
+} from '@ant-design/icons';
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Menu} from 'antd';
@@ -48,6 +55,17 @@ const MenuComponent = () => {
                 <Menu.Item key="9">
                     <Link to="/notification/create">• 푸시알림 생성</Link></Menu.Item>
                 <Menu.Item key="10">• 푸시알림 기록</Menu.Item>
+            </Menu.SubMenu>
+            <Menu.SubMenu key="sub5" icon={<PartitionOutlined/>} title="어드민 관리">
+                <Menu.Item key="9">
+                    <Link to="/members/list">• 어드민 유저 관리</Link>
+                </Menu.Item>
+                <Menu.Item key="12">
+                    <Link to="/members/login-log">• 어드민 로그인 기록</Link>
+                </Menu.Item>
+                <Menu.Item key="13">
+                    <Link to="/members/security">• 게정 보안 관리</Link>
+                </Menu.Item>
             </Menu.SubMenu>
         </Menu>
     );
