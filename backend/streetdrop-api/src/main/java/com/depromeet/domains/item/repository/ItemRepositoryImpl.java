@@ -1,7 +1,6 @@
 package com.depromeet.domains.item.repository;
 
 import com.depromeet.domains.item.dao.ItemDao;
-import com.depromeet.domains.user.dao.UserItemPointDao;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.DateExpression;
 import com.querydsl.core.types.dsl.DateTimePath;
@@ -58,24 +57,6 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
                 .where(item.user.id.eq(userId))
                 .groupBy(item.id, item.content, item.createdAt, itemLocation.name, song.name, album.name, artist.name, albumCover.albumThumbnail)
                 .orderBy(item.createdAt.desc())
-                .fetch();
-    }
-
-    @Override
-    public List<UserItemPointDao> findByUserId(Long userId) {
-        return queryFactory.select(
-                        Projections.fields(
-                                UserItemPointDao.class,
-                                itemLocation.point,
-                                item.id,
-                                albumCover.albumThumbnail
-                        ))
-                .from(itemLocation)
-                .join(itemLocation.item, item)
-                .on(itemLocation.item.id.eq(item.id))
-                .join(itemLocation.item.albumCover, albumCover)
-                .on(item.albumCover.id.eq(albumCover.id))
-                .where(item.user.id.eq(userId))
                 .fetch();
     }
 

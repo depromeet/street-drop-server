@@ -7,6 +7,7 @@ import com.depromeet.domains.item.dto.response.ItemGroupByDateResponseDto;
 import com.depromeet.domains.item.dto.response.ItemGroupResponseDto;
 import com.depromeet.domains.item.dto.response.ItemLocationResponseDto;
 import com.depromeet.domains.item.repository.ItemLikeRepository;
+import com.depromeet.domains.item.repository.ItemLocationRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.music.dto.response.MusicResponseDto;
 import com.depromeet.domains.user.dto.response.UserPoiResponseDto;
@@ -33,6 +34,7 @@ public class UserItemService {
 
     private final ItemRepository itemRepository;
     private final ItemLikeRepository itemLikeRepository;
+    private final ItemLocationRepository itemLocationRepository;
 
 
     @Getter
@@ -68,7 +70,7 @@ public class UserItemService {
 
     @Transactional(readOnly = true)
     public UserPoiResponseDto getDropItemsPoints(User user) {
-        var userPoiDtoList = itemRepository.findByUserId(user.getId())
+        var userPoiDtoList = itemLocationRepository.findByUserId(user.getId())
                 .stream()
                 .map(UserPoiResponseDto.UserPoiDto::from).toList();
         return new UserPoiResponseDto(userPoiDtoList);
