@@ -42,7 +42,7 @@ public class ItemLocationRepository {
                 .fetch();
     }
 
-    public List<UserItemPointDao> findByUserId(Long userId) {
+    public List<UserItemPointDao> findUserDropItemsPoints(Long userId) {
         return queryFactory.select(
                         Projections.fields(
                                 UserItemPointDao.class,

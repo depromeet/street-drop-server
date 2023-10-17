@@ -70,7 +70,7 @@ public class UserItemService {
 
     @Transactional(readOnly = true)
     public UserPoiResponseDto getDropItemsPoints(User user) {
-        var userPoiDtoList = itemLocationRepository.findByUserId(user.getId())
+        var userPoiDtoList = itemLocationRepository.findUserDropItemsPoints(user.getId())
                 .stream()
                 .map(UserPoiResponseDto.UserPoiDto::from).toList();
         return new UserPoiResponseDto(userPoiDtoList);
