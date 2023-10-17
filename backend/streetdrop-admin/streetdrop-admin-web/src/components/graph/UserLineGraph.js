@@ -3,72 +3,47 @@ import { ResponsiveLine } from '@nivo/line'
 
 function UserLineGraph({data}) {
     return (
-        <div style={{height: '330px'}}>
+        <div style={{height: '300px'}}>
             <ResponsiveLine
                 data={[
                     {
-                      id: '일자별 가입 유저',
-                      color: 'hsl(210,98%,37%)',
-                      data: data,
+                        id: '일자별 가입 유저',
+                        color: 'hsl(208,100%,26%)',
+                        data: data,
                     }
                 ]}
-                margin={{top: 50, right: 50, bottom: 50, left: 50}}
-                xScale={{type: 'point'}}
+                margin={{ top: 10, right: 30, bottom: 30, left: 30 }}
+                xScale={{ type: 'point' }}
                 yScale={{
                     type: 'linear',
-                    min: 'auto',
-                    max: 'auto',
+                    min: '0',
+                    max: '100',
+                    reverse: false
                 }}
-                yFormat=" >-.2f"
+                curve="natural"
                 axisTop={null}
                 axisRight={null}
                 axisBottom={{
                     tickSize: 5,
-                    tickPadding: 5,
+                    tickPadding: 6,
                     tickRotation: 0,
-                    legend: '일자별',
-                    legendOffset: 36,
-                    legendPosition: 'middle'
                 }}
-                axisLeft={{
-                    tickSize: 5,
-                    tickPadding: 5,
-                    tickRotation: 0,
-                    legend: '유저수',
-                    legendOffset: -40,
-                    legendPosition: 'middle'
-                }}
-                pointSize={6}
-                pointColor={{theme: 'background'}}
-                pointBorderWidth={1}
-                pointBorderColor={{from: 'serieColor'}}
+                axisLeft={null}
+                enableGridY={false}
+                colors={{ scheme: 'category10' }}
+                pointColor={{ from: 'color', modifiers: [] }}
+                pointBorderWidth={2}
+                pointBorderColor={{ from: 'serieColor' }}
                 pointLabelYOffset={-12}
-                legends={[
-                    {
-                        anchor: 'bottom',
-                        direction: 'row',
-                        justify: false,
-                        translateX: 100,
-                        translateY: 55,
-                        itemsSpacing: 0,
-                        itemDirection: 'left-to-right',
-                        itemWidth: 80,
-                        itemHeight: 20,
-                        itemOpacity: 0.75,
-                        symbolSize: 12,
-                        symbolShape: 'circle',
-                        symbolBorderColor: 'rgba(0, 0, 0, .5)',
-                        effects: [
-                            {
-                                on: 'hover',
-                                style: {
-                                    itemBackground: 'rgba(0, 0, 0, .03)',
-                                    itemOpacity: 1
-                                }
-                            }
-                        ]
-                    }
-                ]}
+                enablePointLabel={true}
+                pointLabel="y"
+                enableArea={true}
+                enableSlices="x"
+                crosshairType="top-left"
+                areaBaselineValue={0}
+                useMesh={true}
+                legends={[]}
+                motionConfig="default"
             />
         </div>
 
