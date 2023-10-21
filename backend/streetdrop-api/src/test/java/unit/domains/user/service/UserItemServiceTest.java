@@ -81,7 +81,8 @@ class UserItemServiceTest {
                 ReflectionTestUtils.setField(user, "id", 1L);
 
                 List<UserItemPointDao> userItemPointDaos = List.of(
-                        new UserItemPointDao(gf.createPoint(new Coordinate(127.123, 37.123)), 1L, "/image1.jpg")
+                        new UserItemPointDao(gf.createPoint(new Coordinate(127.123, 37.123)), 1L, "/image1.jpg"),
+                        new UserItemPointDao(gf.createPoint(new Coordinate(127.123, 37.123)), 2L, "/image2.jpg")
                 );
 
                 when(itemLocationRepository.findUserDropItemsPoints(user.getId())).thenReturn(userItemPointDaos);
@@ -89,7 +90,8 @@ class UserItemServiceTest {
                 var result = userItemService.getDropItemsPoints(user);
                 var expected = new UserPoiResponseDto(
                         List.of(
-                                new UserPoiResponseDto.UserPoiDto(1L, "/image1.jpg", 37.123, 127.123)
+                                new UserPoiResponseDto.UserPoiDto(1L, "/image1.jpg", 37.123, 127.123),
+                                new UserPoiResponseDto.UserPoiDto(2L, "/image2.jpg", 37.123, 127.123)
                         )
                 );
 
