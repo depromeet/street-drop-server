@@ -97,4 +97,68 @@ class UserItemServiceTest {
             }
         }
     }
+
+    @DisplayName("[GET] 사용자가 찜한 아이템 poi 조회")
+    @Nested
+    class GetUserLikedItemPointsTest {
+        @Nested
+        @DisplayName("사용자가 찜한 아이템 poi 조회 성공")
+        class Success {
+            @DisplayName("사용자가 찜한 아이템 poi 조회 - 조회 아이템이 없는 경우")
+            @Test
+            void getUserLikedItemsZeroPointTest() {
+                User user = User.builder().build();
+                when(itemLocationRepository.findUserLikedItemsPoints(user.getId())).thenReturn(List.of());
+
+                var result = userItemService.getLikedItemsPoints(user);
+                var expected = new UserPoiResponseDto(List.of());
+
+                assertThat(result).isEqualTo(expected);
+            }
+
+            @DisplayName("사용자가 찜한 아이템 poi 조회 - 조회 아이템이 1개 있는 경우")
+            @Test
+            void getUserLikedItemsOnePointTest() {
+                User user = User.builder().build();
+                ReflectionTestUtils.setField(user, "id", 1L);
+
+                List<UserItemPointDao> userItemPointDaos = List.of(
+                        new UserItemPointDao(gf.createPoint(new Coordinate(127.123, 37.123)), 1L, "/image1.jpg")
+                );
+
+                when(itemLocationRepository.findUserLikedItemsPoints(user.getId())).thenReturn(userItemPointDaos);
+
+                var result = userItemService.getLikedItemsPoints(user);
+                var expected = new UserPoiResponseDto(
+                        List.of(
+                                new UserPoiResponseDto.UserPoiDto(1L, "/image1.jpg", 37.123, 127.123)
+                        )
+                );
+
+                assertThat(result).isEqualTo(expected);
+            }
+
+            @DisplayName("사용자가 찜한 아이템 poi 조회 - 조회 아이템이 2개 있는 경우")
+            @Test
+            void getUserLikedItemsTwoPointsTest() {
+                User user = User.builder().build();
+                ReflectionTestUtils.setField(user, "id", 1L);
+
+                List<UserItemPointDao> userItemPointDaos = List.of(
+                        new UserItemPointDao(gf.createPoint(new Coordinate(127.123, 37.123)), 1L, "/image1.jpg")
+                );
+
+                when(itemLocationRepository.findUserLikedItemsPoints(user.getId())).thenReturn(userItemPointDaos);
+
+                var result = userItemService.getLikedItemsPoints(user);
+                var expected = new UserPoiResponseDto(
+                        List.of(
+                                new UserPoiResponseDto.UserPoiDto(1L, "/image1.jpg", 37.123, 127.123)
+                        )
+                );
+
+                assertThat(result).isEqualTo(expected);
+            }
+        }
+    }
 }
