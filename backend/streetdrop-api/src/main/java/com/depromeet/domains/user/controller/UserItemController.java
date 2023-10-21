@@ -56,5 +56,14 @@ public class UserItemController {
         return ResponseDto.ok(response);
     }
 
+    @Operation(summary = "사용자가 찜한 아이템 조회 - POI")
+    @ApiResponse(responseCode = "200", description = "사용자가 찜한 아이템 POI 조회 성공")
+    @GetMapping("/like/points")
+    public ResponseEntity<UserPoiResponseDto> getUserLikedItemsPoints(
+            @ReqUser User user
+    ) {
+        var response = userItemService.getLikedItemsPoints(user);
+        return ResponseDto.ok(response);
+    }
 
 }

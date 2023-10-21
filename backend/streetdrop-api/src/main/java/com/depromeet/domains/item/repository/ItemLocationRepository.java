@@ -12,6 +12,7 @@ import java.util.List;
 
 import static com.depromeet.external.querydsl.mysql.spatial.MySqlSpatialFunction.mySqlDistanceSphereFunction;
 import static com.depromeet.item.QItem.item;
+import static com.depromeet.item.QItemLike.itemLike;
 import static com.depromeet.item.QItemLocation.itemLocation;
 import static com.depromeet.music.album.QAlbumCover.albumCover;
 
@@ -56,6 +57,25 @@ public class ItemLocationRepository {
                 .join(itemLocation.item.albumCover, albumCover)
                 .on(item.albumCover.id.eq(albumCover.id))
                 .where(item.user.id.eq(userId))
+                .fetch();
+    }
+
+    public List<UserItemPointDao> findUserLikedItemsPoints(Long userId) {
+        return queryFactory.select(
+                        Projections.fields(
+                                UserItemPointDao.class,
+                                itemLocation.point,
+                                item.id,
+                                albumCover.albumThumbnail
+                        ))
+                .from(itemLocation)
+                .join(itemLocation.item, item)
+                .on(itemLocation.item.id.eq(item.id))
+                .join(itemLocation.item.albumCover, albumCover)
+                .on(item.albumCover.id.eq(albumCover.id))
+                .join(itemLike.item, item)
+                .on(item.albumCover.id.eq(albumCover.id))
+                .where(itemLike.item.user.id.eq(userId))
                 .fetch();
     }
 

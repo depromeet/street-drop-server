@@ -10,7 +10,6 @@ import com.depromeet.domains.item.repository.ItemLikeRepository;
 import com.depromeet.domains.item.repository.ItemLocationRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.music.dto.response.MusicResponseDto;
-import com.depromeet.domains.user.dao.UserItemPointDao;
 import com.depromeet.domains.user.dto.response.UserPoiResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.item.Item;
@@ -134,6 +133,15 @@ public class UserItemService {
         var meta = new InfiniteScrollMetaResponseDto(itemLikeList.size(), -1);
 
         return new InfiniteScrollResponseDto<>(itemGroupByDateResponseDtoList, meta);
+    }
+
+    @Transactional(readOnly = true)
+    public UserPoiResponseDto getLikedItemsPoints(User user) {
+        var userPoiDtoList = itemLocationRepository.findUserLikedItemsPoints(user.getId())
+                .stream()
+                .map(UserPoiResponseDto.UserPoiDto::from)
+                .toList();
+        return new UserPoiResponseDto(userPoiDtoList);
     }
 
 }
