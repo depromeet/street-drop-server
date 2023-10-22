@@ -46,7 +46,7 @@ public class UserItemController {
     }
 
     @Operation(summary = "사용자가 찜한 아이템 조회")
-    @ApiResponse(responseCode = "200", description = "사용자가 찜한 아이템 POI 조회 성공")
+    @ApiResponse(responseCode = "200", description = "사용자가 찜한 아이템 조회 성공")
     @GetMapping("/like")
     public ResponseEntity<InfiniteScrollResponseDto<?, ?>> getUserLikedItems(
             @ReqUser User user,
