@@ -1,5 +1,6 @@
 package unit.domains.user.service;
 
+import com.depromeet.domains.item.repository.ItemLikeRepository;
 import com.depromeet.domains.item.repository.ItemLocationRepository;
 import com.depromeet.domains.user.dao.UserItemPointDao;
 import com.depromeet.domains.user.dto.response.UserPoiResponseDto;
@@ -31,6 +32,9 @@ class UserItemServiceTest {
 
     @Mock
     ItemLocationRepository itemLocationRepository;
+
+    @Mock
+    ItemLikeRepository itemLikeRepository;
 
     private final GeometryFactory gf = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
 
@@ -110,7 +114,7 @@ class UserItemServiceTest {
             @Test
             void getUserLikedItemsZeroPointTest() {
                 User user = User.builder().build();
-                when(itemLocationRepository.findUserLikedItemsPoints(user.getId())).thenReturn(List.of());
+                when(itemLikeRepository.findUserLikedItemsPoints(user.getId())).thenReturn(List.of());
 
                 var result = userItemService.getLikedItemsPoints(user);
                 var expected = new UserPoiResponseDto(List.of());
@@ -128,7 +132,7 @@ class UserItemServiceTest {
                         new UserItemPointDao(gf.createPoint(new Coordinate(127.123, 37.123)), 1L, "/image1.jpg")
                 );
 
-                when(itemLocationRepository.findUserLikedItemsPoints(user.getId())).thenReturn(userItemPointDaos);
+                when(itemLikeRepository.findUserLikedItemsPoints(user.getId())).thenReturn(userItemPointDaos);
 
                 var result = userItemService.getLikedItemsPoints(user);
                 var expected = new UserPoiResponseDto(
@@ -151,7 +155,7 @@ class UserItemServiceTest {
                         new UserItemPointDao(gf.createPoint(new Coordinate(127.123, 37.123)), 2L, "/image2.jpg")
                 );
 
-                when(itemLocationRepository.findUserLikedItemsPoints(user.getId())).thenReturn(userItemPointDaos);
+                when(itemLikeRepository.findUserLikedItemsPoints(user.getId())).thenReturn(userItemPointDaos);
 
                 var result = userItemService.getLikedItemsPoints(user);
                 var expected = new UserPoiResponseDto(

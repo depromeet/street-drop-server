@@ -137,7 +137,7 @@ public class UserItemService {
 
     @Transactional(readOnly = true)
     public UserPoiResponseDto getLikedItemsPoints(User user) {
-        var userPoiDtoList = itemLocationRepository.findUserLikedItemsPoints(user.getId())
+        var userPoiDtoList = itemLikeRepository.findUserLikedItemsPoints(user.getId())
                 .stream()
                 .map(UserPoiResponseDto.UserPoiDto::from)
                 .toList();

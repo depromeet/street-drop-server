@@ -60,23 +60,4 @@ public class ItemLocationRepository {
                 .fetch();
     }
 
-    public List<UserItemPointDao> findUserLikedItemsPoints(Long userId) {
-        return queryFactory.select(
-                        Projections.fields(
-                                UserItemPointDao.class,
-                                itemLocation.point,
-                                item.id,
-                                albumCover.albumThumbnail
-                        ))
-                .from(itemLocation)
-                .join(itemLocation.item, item)
-                .on(itemLocation.item.id.eq(item.id))
-                .join(itemLocation.item.albumCover, albumCover)
-                .on(item.albumCover.id.eq(albumCover.id))
-                .join(itemLike.item, item)
-                .on(item.albumCover.id.eq(albumCover.id))
-                .where(itemLike.item.user.id.eq(userId))
-                .fetch();
-    }
-
 }
