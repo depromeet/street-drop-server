@@ -34,6 +34,7 @@ public class Member {
     private String part;
 
     @Column(nullable = false)
+    @Setter
     private String password;
 
 }

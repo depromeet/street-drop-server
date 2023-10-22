@@ -2,6 +2,7 @@ package com.depromeet.domains.user.controller;
 
 import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.domains.user.dto.request.NicknameChangeDto;
 import com.depromeet.domains.user.dto.response.UserLevelResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.domains.user.service.UserLevelService;
@@ -13,10 +14,10 @@ import com.depromeet.user.vo.MusicApp;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -42,10 +43,9 @@ public class UserController {
     @PatchMapping("/me/nickname")
     public ResponseEntity<UserResponseDto> changeNickname(
             @ReqUser User user,
-            @RequestParam("nickname") @NotNull(message = "Nickname is required")
-            @Size(min = 1, max = 10, message = "닉네임은 한글자 이상 10글자 이하입니다.") String nickname
+            @Valid NicknameChangeDto nicknameChangeDto
     ) {
-        var response = userService.changeNickname(user, nickname);
+        var response = userService.changeNickname(user, nicknameChangeDto.getNickname());
         return ResponseDto.ok(response);
     }
 
