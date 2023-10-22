@@ -25,6 +25,7 @@ import static com.querydsl.core.types.dsl.Expressions.currentDate;
 @RequiredArgsConstructor
 public class ItemRepositoryImpl implements QueryDslItemRepository {
 
+
     private final JPAQueryFactory queryFactory;
 
     @Override
