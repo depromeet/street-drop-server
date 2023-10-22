@@ -60,5 +60,4 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
                 .orderBy(item.createdAt.desc())
                 .fetch();
     }
-
 }
