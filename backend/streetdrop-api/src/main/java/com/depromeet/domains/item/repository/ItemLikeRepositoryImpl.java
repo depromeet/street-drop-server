@@ -15,7 +15,7 @@ import static com.depromeet.music.album.QAlbumCover.albumCover;
 
 @Repository
 @RequiredArgsConstructor
-public class ItemLikeRepositoryImpl implements QueryDelItemLikeRepository {
+public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
 
     private final JPAQueryFactory queryFactory;
 

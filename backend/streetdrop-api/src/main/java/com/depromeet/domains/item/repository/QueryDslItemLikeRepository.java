@@ -4,6 +4,6 @@ import com.depromeet.domains.user.dao.UserItemPointDao;
 
 import java.util.List;
 
-public interface QueryDelItemLikeRepository {
+public interface QueryDslItemLikeRepository {
     List<UserItemPointDao> findUserLikedItemsPoints(Long userId);
 }
