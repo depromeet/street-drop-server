@@ -12,7 +12,6 @@ import java.util.List;
 
 import static com.depromeet.external.querydsl.mysql.spatial.MySqlSpatialFunction.mySqlDistanceSphereFunction;
 import static com.depromeet.item.QItem.item;
-import static com.depromeet.item.QItemLike.itemLike;
 import static com.depromeet.item.QItemLocation.itemLocation;
 import static com.depromeet.music.album.QAlbumCover.albumCover;
 
