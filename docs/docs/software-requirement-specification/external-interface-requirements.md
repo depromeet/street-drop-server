@@ -1,10 +1,10 @@
 ---
-title: 4. External Interface Requirements (외부 인터페이스 요구사항)(작성중)
+title: 4. 외부 인터페이스 요구사항
 sidebar_position: 5
 ---
 
-# 4	External Interface Requirements (외부 인터페이스 요구사항)
-이 제품과 연결되어 있는 모든 종류의 인터페이스를 기술한다. ( 추후 작성한다 )
+# 4	외부 인터페이스 요구사항
+
 
 [[ If the external interfaces are complicated, the separate IRS can replaces this chapter. ]]
 
@@ -31,12 +31,12 @@ It contains both content and format as follows:
 
 If the external interfaces are complicated , you may write a separate ‘Interface Requirement Specification’ document for all or any of the following interfaces.
 
-## 4.1	System Interfaces (시스템 인터페이스)
+## 4.1	시스템 인터페이스
 List each system interface and identify the functionality of the software to accomplish the system requirement and the interface description to match the system. These are external systems that you have to interact with. For instance, if you are building a business application that interfaces with the existing employee payroll system, what is the API to that system that designers will need to use?
 
 [[ Means existing systems that company currently uses. Software systems(e.g. DB) to be installed with this SRS will be explained in Software Interface section ]]
 
-## 4.2	User Interface (사용자 인터페이스)
+## 4.2	사용자 인터페이스
 This is a description of how the system will interact with its users.
 Describe the logical characteristics of each interface between the software product and the users. This may include sample screen images, any GUI standards or product family style guides that are to be followed, screen layout constraints, standard buttons and functions (e.g., help) that will appear on every screen, keyboard shortcuts, error message display standards, and so on.
 
@@ -45,8 +45,8 @@ Is there a GUI, a command line or some other type of interface?  Are there speci
 Details of the user interface design should be documented in a separate user interface specification.
 
 
-## 4.3	Hardware Interface (하드웨어 인터페이스)
-### 4.3.1 Client Hardware Interface (클라이언트 하드웨어 인터페이스)
+## 4.3	하드웨어 인터페이스
+### 4.3.1 클라이언트 하드웨어 인터페이스
 - 아래와 같은 ios 디바이스의 개발 기준 해상도를 지원해야합니다.
   
 
@@ -63,10 +63,10 @@ Details of the user interface design should be documented in a separate user int
 | iPhone 12 Pro Max, 13 Pro Max, 14 Plus | 6.7         | 1284 x 2778      | 428 x 926              |
 | iPhone 14 Pro Max                 | 6.7               | 1290 x 2796      | 430 x 932              |
 
-### 4.3.2 Server Hardware Interface (서버 하드웨어 인터페이스)
+### 4.3.2 서버 하드웨어 인터페이스
 이 시스템에는 하드웨어 인터페이스 요구 사항이 없습니다.
 
-### 4.3.3 Admin Web Hardware Interface (서버 하드웨어 인터페이스)
+### 4.3.3 Admin Web 인터페이스
 - Admin 웹페이지의 경우, 데스크톱이나 노트북등에서의 화면사이즈를 지원합니다.
 - 모바일 화면사이즈의 경우는 지원하지 않습니다.
 
@@ -93,7 +93,7 @@ Here we document the APIs, versions of software that we do not have to write, bu
 ‘Microsoft SQL Server 7’.  The system must use SQL Server as its database component.  Communication with the DB is through ODBC connections.  The system must provide SQL data table definintions to be provided to the company DBA for setup. A key point to remember is that you do NOT want to specify software here that you think would be good to use.  This is only for customer-specified systems that you have to interact with.  Choosing SQL Server 7 as a DB without a customer requirement is a Design choice, not a requirement. This is a subtle but important point to writing good requirements and not over-constraining the design.
 
 
-## 4.5	Communication Interface (통신 인터페이스)
+## 4.5	통신 인터페이스
 
 ### 4.5.1 클라이언트 - 서버 통신
 **통신 프로토콜**: 제품은 클라이언트와 API 서버 간의 통신에 HTTPS 프로토콜을 사용합니다. 특히 RESTful API를 구현하여 자원을 표현하고 관리합니다.
