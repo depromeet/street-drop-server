@@ -1,26 +1,35 @@
 import React, {useEffect, useState} from "react"
-import {Drawer, Table} from 'antd';
-import axios from "axios";
+import {Button, Drawer, Modal, Table} from 'antd';
 import BasicLayout from "../../layout/BasicLayout";
 import ItemApi from "../../api/domain/item/ItemApi";
-
+import ItemDetailPage from "./ItemDetailPage";
 
 function ItemListPage() {
     const [data, setData] = useState([]);
     const [openDrawer, setOpenDrawer] = useState(false);
+    const [clickedItemId, setClickedItemId] = useState(1);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-    const showDrawer = () => {
+    const showDeleteModal = () => {
+        setIsDeleteModalOpen(true);
+    };
+
+    const handleDeleteOk = async () => {
+        await ItemApi.deleteItem(clickedItemId);
+        setIsDeleteModalOpen(false);
+        setOpenDrawer(false);
+        await fetchData()
+    };
+
+
+    const showDrawer = (itemId) => {
+        setClickedItemId(itemId)
         setOpenDrawer(true);
     };
 
     const onClose = () => {
         setOpenDrawer(false);
     };
-
-    const deleteItem = async (itemId) => {
-        await ItemApi.deleteItem(itemId);
-        fetchData();
-    }
 
     const [tableParams, setTableParams] = useState({
         pagination: {
@@ -66,9 +75,9 @@ function ItemListPage() {
             dataIndex: 'id',
             render: (text, record) => (
                 <>
-                    <a onClick={showDrawer}>More</a>
-                    <br/>
-                    <a onClick={() => {deleteItem(record.id)}}>Delete</a>
+                    <a onClick={() => {
+                        showDrawer(record.id)
+                    }}>More</a>
                 </>
             )
         }
@@ -103,6 +112,19 @@ function ItemListPage() {
         });
     }
 
+    const DeleteModal = () => {
+        return (
+            <Modal title="아이템을 삭제하시겠습니까?"
+                   open={isDeleteModalOpen}
+                   onOk={handleDeleteOk}
+                   onCancel={() => {
+                       setIsDeleteModalOpen(false)
+                   }}>
+                <p>아이템을 삭제합니다. 복구할 수 없습니다.</p>
+            </Modal>
+        )
+    }
+
 
     return (
         <>
@@ -117,8 +139,17 @@ function ItemListPage() {
                     dataSource={data}
                     onChange={handleTableChange}
                 />
-                <Drawer title="아이템 상세조회" placement="right" onClose={onClose} open={openDrawer}>
+                <Drawer title="아이템 상세조회"
+                        placement="right"
+                        onClose={onClose}
+                        open={openDrawer}
+                        extra={
+                            <Button onClick={showDeleteModal}>삭제하기</Button>
+                        }
+                >
+                    <ItemDetailPage itemId={clickedItemId}/>
                 </Drawer>
+                <DeleteModal/>
             </BasicLayout>
         </>
     )

@@ -47,9 +47,11 @@ public enum ErrorCode {
 
 	INVALID_INPUT_EXCEPTION(HttpStatus.BAD_REQUEST, "C-0015", "Nickname must be at least 1 character and not more than 10 characters"),
 
-	CANNOT_USE_BANNED_WORD(HttpStatus.BAD_REQUEST, "C-0010", "Cannot Use Banned Word"),
+	CAN_NOT_BLOCK_SELF(HttpStatus.BAD_REQUEST, "C-0016", "Can not block myself"),
 
-	CAN_NOT_BLOCK_SELF(HttpStatus.BAD_REQUEST, "C-0016", "Can not block myself");
+	SEARCH_TERM_NOT_FOUND(HttpStatus.NOT_FOUND, "C-0010", "Search Term Not Found"),
+
+	CANNOT_USE_BANNED_WORD(HttpStatus.BAD_REQUEST, "C-0010", "Cannot Use Banned Word");
 
 	private final HttpStatus status;
 	private final String code;

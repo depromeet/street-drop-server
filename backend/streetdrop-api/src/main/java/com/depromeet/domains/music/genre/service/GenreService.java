@@ -1,45 +1,29 @@
 package com.depromeet.domains.music.genre.service;
 
-import com.depromeet.music.genre.Genre;
-import com.depromeet.music.genre.SongGenre;
-import com.depromeet.domains.music.genre.repository.SongGenreRepository;
 import com.depromeet.domains.music.genre.repository.GenreRepository;
+import com.depromeet.music.genre.Genre;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class GenreService {
 	private final GenreRepository genreRepository;
-	private final SongGenreRepository songGenreRepository;
 
-	public List<SongGenre> createSongGenres(List<String> genres) {
-		List<SongGenre> songGenres = genres.stream()
-				.map(this::getOrCreateGenre)
-				.map(this::createSongGenre)
-				.collect(Collectors.toList());
-
-		return songGenres;
+	@Transactional
+	public List<Genre> getGenreList(List<String> genreNameList) {
+		List<Genre> genreList = genreRepository.findAllByNameIn(genreNameList);
+		List<String> existGenreNameList = genreList.stream().map(Genre::getName).toList();
+		genreNameList.removeAll(existGenreNameList);
+		if (!genreNameList.isEmpty()) {
+			List<Genre> newGenreList = genreNameList.stream().map(Genre::new).toList();
+			genreRepository.saveAll(newGenreList);
+			genreList.addAll(newGenreList);
+		}
+		return genreList;
 	}
 
-	public Genre getOrCreateGenre(String name) {
-		Genre genre = genreRepository.findGenreByName(name)
-				.orElseGet(() -> Genre.builder()
-						.name(name)
-						.build()
-				);
-
-		return genreRepository.save(genre);
-	}
-
-	private SongGenre createSongGenre(Genre genre) {
-		SongGenre songGenre = SongGenre.builder()
-				.genre(genre)
-				.build();
-
-		return songGenreRepository.save(songGenre);
-	}
 }

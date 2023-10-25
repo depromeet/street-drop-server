@@ -1,6 +1,7 @@
 package com.depromeet.domains.item.repository;
 
 import com.depromeet.domains.item.dao.ItemPointDao;
+import com.depromeet.domains.user.dao.UserItemPointDao;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -40,4 +41,22 @@ public class ItemLocationRepository {
                 .where(itemLocation.item.user.id.notIn(blockedUserIds))
                 .fetch();
     }
+
+    public List<UserItemPointDao> findUserDropItemsPoints(Long userId) {
+        return queryFactory.select(
+                        Projections.fields(
+                                UserItemPointDao.class,
+                                itemLocation.point,
+                                item.id,
+                                albumCover.albumThumbnail
+                        ))
+                .from(itemLocation)
+                .join(itemLocation.item, item)
+                .on(itemLocation.item.id.eq(item.id))
+                .join(itemLocation.item.albumCover, albumCover)
+                .on(item.albumCover.id.eq(albumCover.id))
+                .where(item.user.id.eq(userId))
+                .fetch();
+    }
+
 }
