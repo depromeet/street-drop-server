@@ -1,5 +1,5 @@
 ---
-title: 4. Database Schema (데이터베이스 스키마)
+title: 4. 데이터베이스 스키마
 sidebar_position: 4
 ---
 

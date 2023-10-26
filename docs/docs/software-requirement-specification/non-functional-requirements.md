@@ -1,21 +1,31 @@
 ---
-title: 6. Non-Functional Requirements (기능 이외의 요구사항)(작성중)
+title: 6. 기능 이외의 요구사항
 sidebar_position: 7
 ---
 
 
-# 6	Non-Functional Requirements (기능 이외의 요구사항)
+# 6	기능 이외의 요구사항
 
-## 6.1	Safety requirements (안전성 요구사항)
-Specify those requirements that are concerned with possible loss, damage, or harm that could result from the use of the product.
+## 6.1	안전성 요구사항
 
-Define any safeguards or actions that must be taken, as well as actions that must be prevented. Refer to any external policies or regulations that state safety issues that affect the product’s design or use.
+- 실서비스는 AWS 상에서 서울 리전에서 운영되고 있으며, 현재는 비용 문제와 관리 용이성을 위해 천재지변이 발생할 경우를 대비하여 데이터 백업을 진행하고 있지 않습니다.
 
-Define any safety certifications that must be satisfied.
+  - 안전성 조치(예정): 비즈니스 모델 발굴 이후, AWS의 다른 리전에 데이터 백업을 진행할 예정입니다.
 
-천제지변의 경우에 어떻게 할 것인지 명시한다.
-무엇이 누락되었는지 모른다는 것이 Risk.
-휴대폰을 잃어버렸을 경우, 물에 빠졌을 경우에 대한 대응  data backup 등.
+- 기기의 고유값을 활용해서 유저를 구분하고 있기 때문에, 휴대폰을 분실하거나 변경할 경우 데이터가 손실될 수 있습니다.
+
+  - 데이터 복구 계획(예정) : 휴대폰 분실 또는 변경 시 데이터 손실을 최소화하기 위해, 향후 로그인을 통해서 데이터 동기화를 지원할 예정입니다. 사용자가 새 기기에 로그인하면 데이터를 복구할 수 있도록 할 것입니다.
+
+- 보안 강화: 분기별로 서버 라이브러리의 보안 취약점을 확인하고 업데이트를 진행하고 있습니다. 또한, 서버 보안 향상을 위해서, 접근가능한 IP를 제한하고 있습니다.
+  - admin 서버의 경우, 로그인을 통해서 인증받은 사용자만 데이터에 접근할 수 있도록 설정하고 있습니다.
+
+- 응급 상황 대응: 서비스 이용 중 서버에 문제가 발생할 경우, 서버 관리자에게 알림이 전송되고 있습니다. 또한, 서버 관리자는 서버에 문제가 발생할 경우, 즉각적으로 대응하고 있습니다.
+  - Prometheus와 Grafana를 통해서 실시간 서버의 상태를 모니터링하고 있습니다.
+  - Http Status Code 500 에러 발생 시, 서버 관리자에게 알림이 전송됩니다.
+  - Slow Query 발생으로 인한 서비스 지연 시, 서버 관리자에게 알림이 전송됩니다.
+  - 자동화된 On Call 대기 (예정) : 서버 관리자가 응급 상황에 대응하기 위해서, On Call 대기를 진행할 예정입니다.
+
+      
 ## 6.2	Security Requirements (보안 요구사항)
 Specify any requirements regarding security or privacy issues surrounding use of the product or protection of the data used or created by the product.
 Specify the factors that would protect the software from accidental or malicious access, use, modification, destruction, or disclosure. Specific requirements in this area could include the need to:
@@ -32,10 +42,7 @@ Confidentiality  내용을 다른 사람이 볼 수 있게 할 것이냐…�
 Integration  내용을 누가 조작을 했을 때
 Key 암호화 하는 부분에 대한 설명이 필요하다. 키를 어디에 놓을 것인가? 어떤 알고리즘을 사용할 것인가?
 ## 6.3	Software System Attributes (소프트웨어 시스템 특성)
-There are a number of attributes of software that can serve as requirements.  It is important that required attributes are  specified so that their achievement can be objectively verified. Attributes may include availability, correctness, flexibility, interoperability, maintainability, portability, reliability, reusability, robustness, testability, and usability. The following items provide a partial list of examples.  These are also known as non-functional requirements or quality attributes.
 
-These are characteristics the system must possess, but that pervade (or cross-cut) the design.  
-These requirements have to be testable just like the functional requirements.  Its easy to start philosophizing here, but keep it specific.
 
 ### 6.3.1 	Availability (가용성)
 Specify the factors required to guarantee a defined availability level for the entire system such as checkpoint, recovery, and restart.  This is somewhat related to reliability.  Some systems run only infrequently on-demand (like MS Word).  Some systems have to run 24/7 (like an e-commerce web site).  The required availability will greatly impact the design.  What are the requirements for system recovery from a failure?  “The system shall allow users to restart the application after failure with the loss of at most 12 characters of input”.   
@@ -43,10 +50,12 @@ Specify the factors required to guarantee a defined availability level for the e
 유저가 사용할 때 켰다가 사용하지 않을 때 끈다.
 Restart 할 때 cool boot? Hot boot?
 
+
 ### 6.3.2 	Maintainability (유지보수성)
 Specify attributes of software that relate to the ease of maintenance of the software itself.  There may be some requirement for certain modularity, interfaces, complexity, etc.
 이 제품이 유지보수가 중요한 지 아닌지..
 주력 제품이라면 유지보수가 중요하게 된다.
+
 
 ### 6.3.3 	Portability (이식성)
 Specify attributes of software that relate to the ease of porting the software to other host machines and/or operating systems.  This may include:
@@ -149,29 +158,24 @@ Specify the normal and special operations required by the user such as:
 If you separate this from the UI stuff earlier, then cover business process type stuff that would impact the design.  For instance, if the company brings all their systems down at midnight for data backup that might impact the design. These are all the work tasks that impact the design of an application, but which might not be located in software.
 
 해당사항 없음
-## 6.9	Site Adaptation Requirements (사이트 적용 요구사항)
-In this section:
-(1)	Define the requirements for any data or initialization sequences that are specific to a given site, mission, or operational mode
-(2)	Specify the site or mission-related features that should be modified to adapt the software to a particular installation
 
-If any modifications to the customer’s work area would be required by your system, then document that here.  For instance, “A 100Kw backup generator and 10000 BTU air conditioning system must be installed at the user site prior to software installation”.
-This could also be software-specific like, “New data tables created for this system must be installed on the company’s existing DB server and populated prior to system activation.”  
-Any equipment the customer would need to buy or any software setup that needs to be done so that your system will install and operate correctly should be documented here.
+## 6.9	사이트 적용 요구사항
+해당 사항 없습니다.
 
-해당 사항 없음
-## 6.10	Internationalization Requirements (다국어 지원 요구사항)
+## 6.10	다국어 지원 요구사항
 현재 1.X.X 버전에서는 한국어만 지원할 예정입니다.
 
-## 6.11	Unicode Support (유니코드 지원)
+## 6.11	유니코드 지원
 현재 Street Drop은 유니코드를 지원합니다.
 
-## 6.12	64bit Support (64비트 지원)
+## 6.12	64비트 지원
 현재 Street Drop은 64비트를 지원합니다.
 
-## 6.13	Certification (제품 인증)
+## 6.13	제품 인증
 해당 사항 없습니다.
 
-## 6.14	Field Test (필드 테스트)
+## 6.14	필드 테스트
 해당 사항 없습니다.
-## 6.15	Other Requirements (기타 요구 사항)
+
+## 6.15	기타 요구 사항
 해당 사항 없습니다.
