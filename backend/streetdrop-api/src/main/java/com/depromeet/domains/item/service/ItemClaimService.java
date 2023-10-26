@@ -8,6 +8,7 @@ import com.depromeet.domains.item.repository.ItemClaimRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.item.ItemClaim;
 import com.depromeet.report.dto.ItemClaimReportDto;
+import com.depromeet.report.service.DiscordItemClaimReportService;
 import com.depromeet.report.service.SlackItemClaimReportService;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class ItemClaimService {
     private final ItemClaimRepository itemClaimRepository;
     private final ItemRepository itemRepository;
     private final SlackItemClaimReportService slackItemClaimReportService;
+    private final DiscordItemClaimReportService discordItemClaimReportService;
 
     @Transactional
     public void claimItem(User user, ItemClaimRequestDto itemClaimRequestDto) {
@@ -48,7 +50,8 @@ public class ItemClaimService {
                 .itemContent(item.getContent())
                 .build();
 
-        slackItemClaimReportService.sendReport(itemClaimReportDto);
+//        slackItemClaimReportService.sendReport(itemClaimReportDto);
+        discordItemClaimReportService.sendReport(itemClaimReportDto);
     }
 
     private void checkUserAlreadyReport(Long userId, Long itemId) {
