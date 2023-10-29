@@ -45,3 +45,12 @@ cloud:
         auto: false
 notification:
   noti-server-url: ${NOTI_SERVER_URL}
+discord:
+  webhook:
+    alert:
+      claim:
+        url: ${WEBHOOK_CLAIM_URL}
+        report-channel: claim
+      block:
+        url: ${WEBHOOK_BLOCK_URL}
+        report-channel: block

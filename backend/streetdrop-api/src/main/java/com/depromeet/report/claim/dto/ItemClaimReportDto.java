@@ -1,4 +1,4 @@
-package com.depromeet.report.dto;
+package com.depromeet.report.claim.dto;
 
 import lombok.Builder;
 import com.depromeet.item.ItemClaim;

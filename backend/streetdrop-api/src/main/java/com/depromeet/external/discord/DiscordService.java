@@ -11,10 +11,7 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class DiscordService {
 
-	@Value("${discord.webhook.alert.url}")
-	private String webhookUrl;
-
-	public void sendMessages(String content, String discordReportingChannel) {
+	public void sendMessages(String webhookUrl, String content, String discordReportingChannel) {
 		try {
 			log.info("**Discord Webhook URl call!!**");
 

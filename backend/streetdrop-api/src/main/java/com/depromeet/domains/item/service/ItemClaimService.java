@@ -7,9 +7,9 @@ import com.depromeet.domains.item.dto.request.ItemClaimRequestDto;
 import com.depromeet.domains.item.repository.ItemClaimRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.item.ItemClaim;
-import com.depromeet.report.dto.ItemClaimReportDto;
-import com.depromeet.report.service.DiscordItemClaimReportService;
-import com.depromeet.report.service.SlackItemClaimReportService;
+import com.depromeet.report.claim.dto.ItemClaimReportDto;
+import com.depromeet.report.claim.service.DiscordItemClaimReportService;
+import com.depromeet.report.claim.service.SlackItemClaimReportService;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -50,7 +50,10 @@ public class ItemClaimService {
                 .itemContent(item.getContent())
                 .build();
 
-//        slackItemClaimReportService.sendReport(itemClaimReportDto); Slack에서 Discord로 변경
+        /**
+         * Slack에서 Discord로 변경. Slack으로 복귀 시 주석 해제
+         */
+//        slackItemClaimReportService.sendReport(itemClaimReportDto);
         discordItemClaimReportService.sendReport(itemClaimReportDto);
     }
 

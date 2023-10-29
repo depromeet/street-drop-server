@@ -6,6 +6,8 @@ import com.depromeet.common.error.exception.common.NotFoundException;
 import com.depromeet.domains.user.dto.response.BlockUserResponseDto;
 import com.depromeet.domains.user.repository.BlockUserRepository;
 import com.depromeet.domains.user.repository.UserRepository;
+import com.depromeet.report.block.dto.UserBlockReportDto;
+import com.depromeet.report.block.service.DiscordUserBlockReportService;
 import com.depromeet.user.BlockUser;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ public class UserBlockService {
 
 	private final UserRepository userRepository;
 	private final BlockUserRepository blockUserRepository;
+	private final DiscordUserBlockReportService discordUserBlockReportService;
 
 	/*
 	 * blockerId : 차단한 사용자 아이디
@@ -36,7 +39,17 @@ public class UserBlockService {
 				.blockerId(user.getId())
 				.blockedId(blockUserID)
 				.build();
-		blockUserRepository.save(block);
+
+		var savedBlockUser = blockUserRepository.save(block);
+
+		UserBlockReportDto userBlockReportDto = UserBlockReportDto.builder()
+				.id(savedBlockUser.getId())
+				.blockedId(savedBlockUser.getBlockedId())
+				.blockerId(savedBlockUser.getBlockerId())
+				.build();
+
+		discordUserBlockReportService.sendReport(userBlockReportDto);
+
 		return new BlockUserResponseDto(blockUser);
 	}
 

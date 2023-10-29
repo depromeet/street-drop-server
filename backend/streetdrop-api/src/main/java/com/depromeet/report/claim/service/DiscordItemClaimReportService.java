@@ -1,7 +1,7 @@
-package com.depromeet.report.service;
+package com.depromeet.report.claim.service;
 
 import com.depromeet.external.discord.DiscordService;
-import com.depromeet.report.dto.ItemClaimReportDto;
+import com.depromeet.report.claim.dto.ItemClaimReportDto;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -12,15 +12,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DiscordItemClaimReportService implements ItemClaimReportService {
 
-	@Value("${discord.webhook.alert.report-channel}")
-	private String discordReportingChannel;
+	@Value("${discord.webhook.alert.claim.report-channel}")
+	private String channel;
+
+	@Value("${discord.webhook.alert.claim.url}")
+	private String url;
 
 	private final DiscordService discordService;
-
 	public static final String DISCORD_REPORTING_CHANNEL = "claim";
-
 	private static final String TITLE = "Item Claim Report";
-
 
 	@Override
 	public void sendReport(ItemClaimReportDto itemClaimReportDto) {
@@ -33,6 +33,6 @@ public class DiscordItemClaimReportService implements ItemClaimReportService {
 				+ "\n*Item Content:* " + itemClaimReportDto.itemContent()
 				+ "\n*Claim Time:* " + itemClaimReportDto.claimTime();
 
-		discordService.sendMessages(msg, DISCORD_REPORTING_CHANNEL);
+		discordService.sendMessages(url, msg, DISCORD_REPORTING_CHANNEL);
 	}
 }
