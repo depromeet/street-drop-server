@@ -1,5 +1,6 @@
 package com.depromeet.domains.item.dto.request;
 
+import com.depromeet.common.annotation.NotBannedWord;
 import com.depromeet.domains.music.dto.request.MusicRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
@@ -25,5 +26,6 @@ public class ItemCreateRequestDto {
 
 	@Schema(description = "콘텐츠", example = "블라블라")
 	@NotNull(message = "Content is required")
+	@NotBannedWord
 	private String content;
 }

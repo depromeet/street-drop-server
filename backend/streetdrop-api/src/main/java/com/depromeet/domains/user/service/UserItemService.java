@@ -7,8 +7,10 @@ import com.depromeet.domains.item.dto.response.ItemGroupByDateResponseDto;
 import com.depromeet.domains.item.dto.response.ItemGroupResponseDto;
 import com.depromeet.domains.item.dto.response.ItemLocationResponseDto;
 import com.depromeet.domains.item.repository.ItemLikeRepository;
+import com.depromeet.domains.item.repository.ItemLocationRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.music.dto.response.MusicResponseDto;
+import com.depromeet.domains.user.dto.response.UserPoiResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.item.Item;
 import com.depromeet.item.ItemLike;
@@ -32,7 +34,7 @@ public class UserItemService {
 
     private final ItemRepository itemRepository;
     private final ItemLikeRepository itemLikeRepository;
-
+    private final ItemLocationRepository itemLocationRepository;
 
     @Getter
     @AllArgsConstructor
@@ -63,6 +65,15 @@ public class UserItemService {
                 .nextCursor(-1).build();
 
         return new InfiniteScrollResponseDto<>(itemGroupByDateResponseDto, meta);
+    }
+
+    @Transactional(readOnly = true)
+    public UserPoiResponseDto getDropItemsPoints(User user) {
+        var userPoiDtoList = itemLocationRepository.findUserDropItemsPoints(user.getId())
+                .stream()
+                .map(UserPoiResponseDto.UserPoiDto::from)
+                .toList();
+        return new UserPoiResponseDto(userPoiDtoList);
     }
 
     private ItemGroupResponseDto itemDaotoItemGroupResponseDto(User user, ItemDao itemDao) {
@@ -122,6 +133,15 @@ public class UserItemService {
         var meta = new InfiniteScrollMetaResponseDto(itemLikeList.size(), -1);
 
         return new InfiniteScrollResponseDto<>(itemGroupByDateResponseDtoList, meta);
+    }
+
+    @Transactional(readOnly = true)
+    public UserPoiResponseDto getLikedItemsPoints(User user) {
+        var userPoiDtoList = itemLikeRepository.findUserLikedItemsPoints(user.getId())
+                .stream()
+                .map(UserPoiResponseDto.UserPoiDto::from)
+                .toList();
+        return new UserPoiResponseDto(userPoiDtoList);
     }
 
 }

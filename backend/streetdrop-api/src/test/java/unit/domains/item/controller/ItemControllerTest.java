@@ -1,7 +1,9 @@
 package unit.domains.item.controller;
 
-import com.depromeet.domains.item.controller.ItemController;
+import com.depromeet.common.annotation.validator.BannedWordValidator;
 import com.depromeet.common.error.GlobalExceptionHandler;
+import com.depromeet.common.repository.BannedWordRepository;
+import com.depromeet.domains.item.controller.ItemController;
 import com.depromeet.domains.item.dto.request.ItemCreateRequestDto;
 import com.depromeet.domains.item.dto.request.ItemLocationRequestDto;
 import com.depromeet.domains.item.dto.request.NearItemPointRequestDto;
@@ -24,6 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -41,7 +44,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ContextConfiguration(classes = ItemController.class)
+@ContextConfiguration(classes = {ItemController.class, ValidationAutoConfiguration.class})
 @WebMvcTest(controllers = {ItemController.class}, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 @Import({ItemController.class, GlobalExceptionHandler.class})
 @DisplayName("[API][Controller] ItemController 테스트")
@@ -55,6 +58,12 @@ public class ItemControllerTest {
 
     @MockBean
     ItemService itemService;
+
+    @MockBean
+    BannedWordRepository bannedWordRepository;
+
+    @MockBean
+    BannedWordValidator bannedWordValidator;
 
     @MockBean
     ItemLikeService itemLikeService;
@@ -76,7 +85,9 @@ public class ItemControllerTest {
                 ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
+                given(bannedWordRepository.findBannedWordsInWordList(any())).willReturn(List.of());
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
+
 
                 var response = mvc.perform(
                         post("/items")
@@ -97,6 +108,7 @@ public class ItemControllerTest {
                 ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
+                given(bannedWordRepository.findBannedWordsInWordList(any())).willReturn(List.of());
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
 
                 var response = mvc.perform(
@@ -116,6 +128,7 @@ public class ItemControllerTest {
                 ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
+                given(bannedWordRepository.findBannedWordsInWordList(any())).willReturn(List.of());
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
 
                 var response = mvc.perform(
@@ -135,6 +148,7 @@ public class ItemControllerTest {
                 ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
+                given(bannedWordRepository.findBannedWordsInWordList(any())).willReturn(List.of());
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
 
                 var response = mvc.perform(
@@ -154,6 +168,7 @@ public class ItemControllerTest {
                 ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
+                given(bannedWordRepository.findBannedWordsInWordList(any())).willReturn(List.of());
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
 
                 var response = mvc.perform(
@@ -173,6 +188,7 @@ public class ItemControllerTest {
                 ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
+                given(bannedWordRepository.findBannedWordsInWordList(any())).willReturn(List.of());
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
 
                 var response = mvc.perform(
@@ -192,6 +208,7 @@ public class ItemControllerTest {
                 ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
+                given(bannedWordRepository.findBannedWordsInWordList(any())).willReturn(List.of());
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
 
                 var response = mvc.perform(
@@ -211,6 +228,7 @@ public class ItemControllerTest {
                 ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "블라블라");
                 ItemResponseDto itemResponseDto = createValidItemResponseDto();
 
+                given(bannedWordRepository.findBannedWordsInWordList(any())).willReturn(List.of());
                 given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
 
                 var response = mvc.perform(
@@ -237,8 +255,29 @@ public class ItemControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(itemRequestDto)));
 
-                response.andExpect(status().isBadRequest())
-                        .andExpect(jsonPath("$.message").value("Content is required"));
+
+                System.out.println(response.andReturn().getResponse().getContentAsString());
+                response.andExpect(jsonPath("$.message").value("Content is required")).andExpect(status().isBadRequest())
+                ;
+            }
+
+            @DisplayName("컨텐츠 유효성 검사 실패 - 금칙어 사용된 경우")
+            @Test
+            void createItem_BannedWordInclude_ReturnsBadRequest() throws Exception {
+                MusicRequestDto musicRequestDto = new MusicRequestDto("Love Dive", "IVE", "1st EP IVE", "https://www.youtube.com/watch?v=YGieI3KoeZk", List.of("K-POP", "HipHop"));
+                ItemLocationRequestDto itemLocationRequestDto = new ItemLocationRequestDto(37.123456, 127.123456, "서울시 성수동 성수 1가");
+                ItemCreateRequestDto itemRequestDto = new ItemCreateRequestDto(itemLocationRequestDto, musicRequestDto, "나쁜 말");
+                ItemResponseDto itemResponseDto = createValidItemResponseDto();
+
+                given(bannedWordRepository.findBannedWordsInWordList(any())).willReturn(List.of("나쁜"));
+                given(itemService.create(mockUser, itemRequestDto)).willReturn(itemResponseDto);
+
+                var response = mvc.perform(
+                        post("/items")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(itemRequestDto)));
+
+                response.andExpect(status().isBadRequest());
             }
         }
 

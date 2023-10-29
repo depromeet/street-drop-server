@@ -2,9 +2,8 @@ package com.depromeet.domains.user.controller;
 
 import com.depromeet.common.dto.InfiniteScrollResponseDto;
 import com.depromeet.common.dto.ResponseDto;
-import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.domains.user.dto.response.UserPoiResponseDto;
 import com.depromeet.domains.user.service.UserItemService;
-import com.depromeet.external.swagger.annotation.ApiErrorResponse;
 import com.depromeet.security.annotation.ReqUser;
 import com.depromeet.user.User;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,6 +35,16 @@ public class UserItemController {
         return ResponseDto.ok(response);
     }
 
+    @Operation(summary = "사용자가 드랍한 아이템 조회 - POI")
+    @ApiResponse(responseCode = "200", description = "사용자가 드랍한 아이템 조회 성공")
+    @GetMapping("/drop/points")
+    public ResponseEntity<UserPoiResponseDto> getUserDropItemsPoints(
+            @ReqUser User user
+    ) {
+        var response = userItemService.getDropItemsPoints(user);
+        return ResponseDto.ok(response);
+    }
+
     @Operation(summary = "사용자가 찜한 아이템 조회")
     @ApiResponse(responseCode = "200", description = "사용자가 찜한 아이템 조회 성공")
     @GetMapping("/like")
@@ -47,5 +56,14 @@ public class UserItemController {
         return ResponseDto.ok(response);
     }
 
+    @Operation(summary = "사용자가 찜한 아이템 조회 - POI")
+    @ApiResponse(responseCode = "200", description = "사용자가 찜한 아이템 POI 조회 성공")
+    @GetMapping("/like/points")
+    public ResponseEntity<UserPoiResponseDto> getUserLikedItemsPoints(
+            @ReqUser User user
+    ) {
+        var response = userItemService.getLikedItemsPoints(user);
+        return ResponseDto.ok(response);
+    }
 
 }
