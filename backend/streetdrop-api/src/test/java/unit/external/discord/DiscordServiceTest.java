@@ -17,6 +17,6 @@ public class DiscordServiceTest {
 	@Test
 	public void messageTest() throws Exception {
 		DiscordService discordService = new DiscordService();
-		discordService.sendMessages(WEB_HOOK_URL,"테스트 입니다", CHANNEL);
+		discordService.sendMessages("테스트 입니다", CHANNEL);
 	}
 }

@@ -12,21 +12,20 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DiscordItemClaimReportService implements ItemClaimReportService {
 
-	public static final String DISCORD_REPORTING_CHANNEL = "claim";
-	private DiscordService discordService;
-
 	@Value("${discord.webhook.alert.report-channel}")
 	private String discordReportingChannel;
 
-	@Value("${discord.webhook.alert.url}")
-	private String url;
+	private final DiscordService discordService;
+
+	public static final String DISCORD_REPORTING_CHANNEL = "claim";
 
 	private static final String TITLE = "Item Claim Report";
 
 
 	@Override
 	public void sendReport(ItemClaimReportDto itemClaimReportDto) {
-		var msg = "Item Claim ID:* " + itemClaimReportDto.itemClaimId()
+		var msg = TITLE
+				+ "\n*Item Claim ID:* " + itemClaimReportDto.itemClaimId()
 				+ "\n*Item Claim Reason:* " + itemClaimReportDto.itemClaimReason()
 				+ "\n*Item Claim Status:* " + itemClaimReportDto.itemClaimStatus()
 				+ "\n*Reporter:* " + itemClaimReportDto.reportUserId()
@@ -34,6 +33,6 @@ public class DiscordItemClaimReportService implements ItemClaimReportService {
 				+ "\n*Item Content:* " + itemClaimReportDto.itemContent()
 				+ "\n*Claim Time:* " + itemClaimReportDto.claimTime();
 
-		discordService.sendMessages(url, msg, DISCORD_REPORTING_CHANNEL);
+		discordService.sendMessages(msg, DISCORD_REPORTING_CHANNEL);
 	}
 }
