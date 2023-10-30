@@ -1,5 +1,7 @@
 package com.depromeet.external.fcm;
 
+import com.depromeet.error.exceptions.BusinessException;
+import com.depromeet.error.code.GlobalErrorCode;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -29,8 +31,7 @@ public class FcmConfig {
                 FirebaseApp.initializeApp(options);
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Firebase initialization failed");
+            throw new BusinessException(GlobalErrorCode.BAD_REQUEST);
         }
     }
 }

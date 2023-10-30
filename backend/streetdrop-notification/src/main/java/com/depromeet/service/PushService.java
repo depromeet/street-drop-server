@@ -4,8 +4,12 @@ import com.depromeet.domain.UserDevice;
 import com.depromeet.dto.request.AllPushRequestDto;
 import com.depromeet.dto.request.PushRequestDto;
 import com.depromeet.dto.request.TopicPushRequestDto;
+import com.depromeet.error.ErrorCode;
+import com.depromeet.error.code.FireBaseErrorCode;
+import com.depromeet.error.exceptions.ExternalServerException;
 import com.depromeet.external.fcm.FcmService;
 import com.depromeet.repository.UserDeviceRepository;
+import com.google.firebase.FirebaseException;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,6 +44,7 @@ public class PushService {
                 }
             }
         } catch (FirebaseMessagingException e) {
+            throw new ExternalServerException(FireBaseErrorCode.FIRE_BASE_INTERNAL_SERVER_ERROR);
         }
 
         notificationService.save(pushRequestDto);
@@ -58,6 +63,7 @@ public class PushService {
                 fcmService.sendMulticastMessageSync(tokens, pushRequestDto.getContent());
             }
         } catch (FirebaseMessagingException e) {
+            throw new ExternalServerException(FireBaseErrorCode.FIRE_BASE_INTERNAL_SERVER_ERROR);
         }
 
         notificationService.save(pushRequestDto);
@@ -72,6 +78,7 @@ public class PushService {
                 fcmService.sendTopicMessageSync(tokenPushRequestDto.getTopic(), tokenPushRequestDto.getContent());
             }
         } catch (FirebaseMessagingException e) {
+            throw new ExternalServerException(FireBaseErrorCode.FIRE_BASE_INTERNAL_SERVER_ERROR);
         }
 
         notificationService.save(tokenPushRequestDto);
