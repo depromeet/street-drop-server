@@ -46,9 +46,6 @@ public class ItemClaimServiceTest {
     @Mock
     ItemClaimRepository itemClaimRepository;
 
-//    @Mock
-//    SlackItemClaimReportService slackItemClaimReportService;
-
     @Mock
     DiscordItemClaimReportService discordItemClaimReportService;
 
@@ -108,7 +105,6 @@ public class ItemClaimServiceTest {
 
                 itemClaimService.claimItem(user, itemClaimRequestDto);
 
-                //verify(slackItemClaimReportService).sendReport(any(ItemClaimReportDto.class));
                 verify(discordItemClaimReportService).sendReport(any(ItemClaimReportDto.class));
             }
 
