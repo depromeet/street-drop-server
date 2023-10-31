@@ -7,6 +7,8 @@ import com.depromeet.domains.user.dto.response.BlockUserResponseDto;
 import com.depromeet.domains.user.repository.BlockUserRepository;
 import com.depromeet.domains.user.repository.UserRepository;
 import com.depromeet.domains.user.service.UserBlockService;
+import com.depromeet.report.block.dto.UserBlockReportDto;
+import com.depromeet.report.block.service.DiscordUserBlockReportService;
 import com.depromeet.user.BlockUser;
 import com.depromeet.user.User;
 import com.depromeet.user.vo.MusicApp;
@@ -43,6 +45,9 @@ public class UserBlockServiceTest {
 
     @Mock
     BlockUserRepository blockUserRepository;
+
+    @Mock
+    DiscordUserBlockReportService discordUserBlockReportService;
 
 
     @DisplayName("유저 차단")
@@ -114,6 +119,7 @@ public class UserBlockServiceTest {
 
                 assertThat(response).isEqualTo(blockUserResponseDto);
                 verify(blockUserRepository).save(any());
+                verify(discordUserBlockReportService).sendReport((any(UserBlockReportDto.class)));
             }
         }
 
