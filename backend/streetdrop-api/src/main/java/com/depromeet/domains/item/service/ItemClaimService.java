@@ -50,10 +50,6 @@ public class ItemClaimService {
                 .itemContent(item.getContent())
                 .build();
 
-        /**
-         * Slack에서 Discord로 변경. Slack으로 복귀 시 주석 해제
-         */
-//        slackItemClaimReportService.sendReport(itemClaimReportDto);
         discordItemClaimReportService.sendReport(itemClaimReportDto);
     }
 
