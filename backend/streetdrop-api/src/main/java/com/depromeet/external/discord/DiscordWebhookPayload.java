@@ -1,13 +1,8 @@
 package com.depromeet.external.discord;
 
-public class DiscordWebhookPayload {
-	private final String content;
+import lombok.NonNull;
 
-	public DiscordWebhookPayload(String content) {
-		this.content = content;
-	}
-
-	public String getContent() {
-		return content;
-	}
+public record DiscordWebhookPayload(
+		@NonNull String content
+) {
 }
