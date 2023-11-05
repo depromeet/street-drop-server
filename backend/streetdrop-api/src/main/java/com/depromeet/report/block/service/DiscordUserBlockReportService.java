@@ -18,7 +18,6 @@ public class DiscordUserBlockReportService implements UserBlockReportService {
 	private String url;
 
 	private final DiscordService discordService;
-	private static final String DISCORD_REPORTING_CHANNEL = "block";
 	private static final String TITLE = "User Block Report";
 
 	@Override
@@ -28,6 +27,6 @@ public class DiscordUserBlockReportService implements UserBlockReportService {
 				+ "\n*차단한 사용자 아이디:* " + userBlockReportDto.blockerId()
 				+ "\n*차단된 사용자 아이디:* " + userBlockReportDto.blockedId();
 
-		discordService.sendMessages(url, msg, DISCORD_REPORTING_CHANNEL);
+		discordService.sendMessages(url, msg, channel);
 	}
 }
