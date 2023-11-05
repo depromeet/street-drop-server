@@ -2,6 +2,9 @@ package com.depromeet.service;
 
 import com.depromeet.domain.UserDevice;
 import com.depromeet.dto.request.TokenRequestDto;
+import com.depromeet.error.code.TokenErrorCode;
+import com.depromeet.error.exceptions.BusinessException;
+import com.depromeet.error.exceptions.NotFoundException;
 import com.depromeet.repository.UserDeviceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +36,7 @@ public class TokenService {
     @Transactional
     public void deleteToken(Long userId) {
         var userDevice = userDeviceRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Token not found for userId: " + userId));
+                .orElseThrow(() -> new NotFoundException(TokenErrorCode.TOKEN_NOT_FOUND));
         userDeviceRepository.delete(userDevice);
     }
 }
