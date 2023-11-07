@@ -10,7 +10,7 @@ import com.depromeet.domains.item.repository.ItemLikeRepository;
 import com.depromeet.domains.item.repository.ItemLocationRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.music.service.MusicService;
-import com.depromeet.domains.user.dto.response.UserProfileResponseDto;
+import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.domains.user.repository.BlockUserRepository;
 import com.depromeet.domains.village.service.VillageAreaService;
 import com.depromeet.item.Item;
@@ -86,13 +86,13 @@ public class ItemService {
 		var isLiked = itemLikeRepository.existsByUserIdAndItemId(user.getId(), itemId);
 
 		var musicResponseDto = musicService.getMusic(item.getSong().getId());
-		var userProfileResponseDto = new UserProfileResponseDto(item.getUser().getId(), item.getUser().getNickname());
+		var userResponseDto = new UserResponseDto(item.getUser());
 		var itemLocationResponseDto = new ItemLocationResponseDto(item.getItemLocation().getName());
 
 		return ItemDetailResponseDto.builder()
 				.itemId(item.getId())
 				.music(musicResponseDto)
-				.user(userProfileResponseDto)
+				.user(userResponseDto)
 				.location(itemLocationResponseDto)
 				.content(item.getContent())
 				.createdAt(item.getCreatedAt())
