@@ -2,6 +2,7 @@ package com.depromeet.domains.item.dto.response;
 
 import com.depromeet.domains.music.dto.response.MusicResponseDto;
 import com.depromeet.domains.user.dto.response.UserProfileResponseDto;
+import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -13,7 +14,7 @@ public record ItemDetailResponseDto(
         Long itemId,
         
         @Schema(description = "사용자 정보")
-        UserProfileResponseDto user,
+        UserResponseDto user,
 
         @Schema(description = "사용자 위치", example = "성동구 성수1가 1동")
         ItemLocationResponseDto location,
@@ -42,7 +43,7 @@ public record ItemDetailResponseDto(
     @Builder
     public ItemDetailResponseDto(
             Long itemId,
-            UserProfileResponseDto user,
+            UserResponseDto user,
             ItemLocationResponseDto location,
             MusicResponseDto music,
             String content,
