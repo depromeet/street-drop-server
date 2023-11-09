@@ -15,6 +15,10 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @Entity
+@Table(indexes = {
+		@Index(name = "idx__item_like_item_id", columnList = "item_id"),
+		@Index(name = "idx__item_like_user_id", columnList = "user_id")
+})
 public class ItemLike extends BaseTimeEntity {
 
 	@Id
@@ -27,7 +31,7 @@ public class ItemLike extends BaseTimeEntity {
 	private Item item;
 
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "user_Id", nullable = true, foreignKey = @ForeignKey(NO_CONSTRAINT))
+	@JoinColumn(name = "user_id", nullable = true, foreignKey = @ForeignKey(NO_CONSTRAINT))
 	private User user;
 
 	@Builder
