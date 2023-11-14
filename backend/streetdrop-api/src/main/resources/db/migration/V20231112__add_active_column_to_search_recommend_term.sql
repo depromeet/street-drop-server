@@ -1,0 +1,1 @@
+ALTER TABLE search_recommend_term ADD active TINYINT NOT NULL DEFAULT 1;
