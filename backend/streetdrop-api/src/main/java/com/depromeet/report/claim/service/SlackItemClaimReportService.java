@@ -1,8 +1,8 @@
-package com.depromeet.report.service;
+package com.depromeet.report.claim.service;
 
 import com.depromeet.external.slack.SlackService;
-import com.depromeet.item.ItemClaim;
-import com.depromeet.report.dto.ItemClaimReportDto;
+import com.depromeet.report.claim.dto.ItemClaimReportDto;
+import com.depromeet.report.claim.service.ItemClaimReportService;
 import com.slack.api.model.block.LayoutBlock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

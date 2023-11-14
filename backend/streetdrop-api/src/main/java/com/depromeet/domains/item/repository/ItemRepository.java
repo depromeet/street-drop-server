@@ -19,6 +19,6 @@ public interface ItemRepository extends JpaRepository<Item, Long>, QueryDslItemR
     List<Item> findNearItemsByDistance(@Param("point") Point point, @Param("distance") Double distance);
 
     @Query("SELECT i FROM Item i JOIN FETCH i.itemLocation JOIN FETCH i.user JOIN FETCH i.song WHERE i.id = :itemId")
-    Optional<Item> findById(Long itemId);
+    Optional<Item> findById(@Param("itemId") Long itemId);
 
 }

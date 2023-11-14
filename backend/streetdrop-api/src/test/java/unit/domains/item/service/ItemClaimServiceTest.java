@@ -10,8 +10,8 @@ import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.item.service.ItemClaimService;
 import com.depromeet.item.Item;
 import com.depromeet.item.ItemClaim;
-import com.depromeet.report.dto.ItemClaimReportDto;
-import com.depromeet.report.service.SlackItemClaimReportService;
+import com.depromeet.report.claim.dto.ItemClaimReportDto;
+import com.depromeet.report.claim.service.DiscordItemClaimReportService;
 import com.depromeet.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -47,7 +47,7 @@ public class ItemClaimServiceTest {
     ItemClaimRepository itemClaimRepository;
 
     @Mock
-    SlackItemClaimReportService slackItemClaimReportService;
+    DiscordItemClaimReportService discordItemClaimReportService;
 
     @DisplayName("아이템 신고")
     @Nested
@@ -105,7 +105,7 @@ public class ItemClaimServiceTest {
 
                 itemClaimService.claimItem(user, itemClaimRequestDto);
 
-                verify(slackItemClaimReportService).sendReport(any(ItemClaimReportDto.class));
+                verify(discordItemClaimReportService).sendReport(any(ItemClaimReportDto.class));
             }
 
         }

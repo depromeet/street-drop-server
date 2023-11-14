@@ -7,8 +7,10 @@ import com.depromeet.domains.item.dto.request.ItemClaimRequestDto;
 import com.depromeet.domains.item.repository.ItemClaimRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.item.ItemClaim;
-import com.depromeet.report.dto.ItemClaimReportDto;
-import com.depromeet.report.service.SlackItemClaimReportService;
+import com.depromeet.report.claim.dto.ItemClaimReportDto;
+import com.depromeet.report.claim.service.DiscordItemClaimReportService;
+import com.depromeet.report.claim.service.ItemClaimReportService;
+import com.depromeet.report.claim.service.SlackItemClaimReportService;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,7 @@ import static com.depromeet.item.vo.ItemClaimStatus.WAITING;
 public class ItemClaimService {
     private final ItemClaimRepository itemClaimRepository;
     private final ItemRepository itemRepository;
-    private final SlackItemClaimReportService slackItemClaimReportService;
+    private final ItemClaimReportService itemClaimReportService;
 
     @Transactional
     public void claimItem(User user, ItemClaimRequestDto itemClaimRequestDto) {
@@ -48,7 +50,7 @@ public class ItemClaimService {
                 .itemContent(item.getContent())
                 .build();
 
-        slackItemClaimReportService.sendReport(itemClaimReportDto);
+        itemClaimReportService.sendReport(itemClaimReportDto);
     }
 
     private void checkUserAlreadyReport(Long userId, Long itemId) {
