@@ -13,3 +13,7 @@
 .ant-layout-content {
     height: 100%;
 }
+
+@media (max-width: 767px) {
+    /* 화면 너비가 768px 미만인 경우 아무 스타일도 적용하지 않음 */
+}

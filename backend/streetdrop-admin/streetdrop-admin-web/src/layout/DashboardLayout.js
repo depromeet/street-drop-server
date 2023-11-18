@@ -1,101 +1,128 @@
-import React, {useState} from "react";
-import {Col, Layout, Row, theme} from "antd";
-import Sider from "antd/es/layout/Sider";
-import MenuComponent from "./common/Menu";
+import React from "react";
+import {theme} from "antd";
 import {Content} from "antd/es/layout/layout";
-import CommonHeader from "./common/CommonHeader";
+import DefaultLayout from "./DefaultLayout";
 
-function DashboardLayout({children, children2, children3, children4}) {
+function DashboardLayout({indexContentList, longContent, graphContent, firstHalfContent, secondHalfContent}) {
     const {
-        token: {colorBgContainer},
+        token: { colorBgContainer },
     } = theme.useToken();
-    const [collapsed, setCollapsed] = useState(false);
+
+    const indexContents = (indexContentList) => (
+        <>
+            {indexContentList.slice(0, 4).map(content => (
+                <React.Fragment key={content.id}>
+                    <div
+                        style={{
+                            background: colorBgContainer,
+                            gridColumn: 'span 6', // 3쿼터 콘텐츠
+                            borderRadius: '0.6rem',
+                            boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
+                            gridRow: 'span 1', // 2행 차지 (높이 조절)
+                        }}
+                    >
+                        {content}
+                    </div>
+                </React.Fragment>
+            ))}
+        </>
+    );
+
+
+    const fifteenSizeContent = (content) => (
+        <>
+            <div
+                style={{
+                    background: colorBgContainer,
+                    gridColumn: 'span 15',
+                    borderRadius: '0.6rem',
+                    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
+                    gridRow: 'span 6',
+                }}
+            >
+                {content}
+            </div>
+        </>
+    );
+
+    const nineSizeHalfContent = (content) => (
+        <>
+            <div
+                style={{
+                    background: colorBgContainer,
+                    gridColumn: 'span 9',
+                    borderRadius: '0.6rem',
+                    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
+                    gridRow: 'span 3',
+                }}
+            >
+                {content}
+            </div>
+        </>
+    );
+
+    const twelveSizeContent = (content)  => (
+        <>
+            <div
+                style={{
+                    background: colorBgContainer,
+                    gridColumn: 'span 12', // 1쿼터 콘텐츠
+                    borderRadius: '0.6rem',
+                    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
+                    gridRow: 'span 4', // 2행 차지 (높이 조절)
+                }}
+            >
+                {content}
+            </div>
+        </>
+    );
 
     return (
         <>
-            <Layout className="view-container">
-                <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-                    <div className="demo-logo-vertical"/>
-                    <MenuComponent/>
-                </Sider>
-                <Layout>
-                    <CommonHeader/>
-                    <Row>
-                        <Col span={12}>
-                            <Content
+            <DefaultLayout
+                content={
+                    <>
+                        <Content style={{
+                            margin: '20px 16px',
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(24, 1fr)' ,
+                            gridGap: '20px'
+                        }}>
+                            <div
                                 style={{
-                                    marginTop: '24px',
-                                    marginBottom: '8px',
-                                    marginLeft: '16px',
-                                    marginRight: '8px',
-                                    padding: 24,
-                                    minHeight: 350,
-                                    background: colorBgContainer,
+                                    gridColumn: 'span 18',
+                                    display: 'grid',
+                                    gridTemplateColumns: 'repeat(24, 1fr)' ,
+                                    gridRow: "auto",
+                                    gridGap: '20px'
                                 }}
                             >
-                                <div>
-                                    {children}
-                                </div>
-                            </Content>
-                        </Col>
-                        <Col span={12}>
-                            <Content
+                                {indexContents(indexContentList)}
+                                {fifteenSizeContent(graphContent)}
+                                {nineSizeHalfContent(firstHalfContent)}
+                                {nineSizeHalfContent(firstHalfContent)}
+                                {twelveSizeContent(firstHalfContent)}
+                                {twelveSizeContent(secondHalfContent)}
+                            </div>
+                            <div
                                 style={{
-                                    marginTop: '24px',
-                                    marginBottom: '8px',
-                                    marginLeft: '8px',
-                                    marginRight: '16px',
-                                    padding: 24,
-                                    minHeight: 350,
+                                    gridColumn: 'span 6',
                                     background: colorBgContainer,
+                                    borderRadius: '0.6rem',
+                                    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
                                 }}
                             >
-                                <div>
-                                    {children2}
-                                </div>
-                            </Content>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={12}>
-                            <Content
-                                style={{
-                                    marginTop: '8px',
-                                    marginBottom: '16px',
-                                    marginLeft: '16px',
-                                    marginRight: '8px',
-                                    padding: 24,
-                                    minHeight: 400,
-                                    background: colorBgContainer,
-                                }}
-                            >
-                                <div>
-                                    {children3}
-                                </div>
-                            </Content>
-                        </Col>
-                        <Col span={12}>
-                            <Content
-                                style={{
-                                    marginTop: '8px',
-                                    marginBottom: '16px',
-                                    marginLeft: '8px',
-                                    marginRight: '16px',
-                                    padding: 24,
-                                    minHeight: 400,
-                                    background: colorBgContainer,
-                                }}
-                            >
-                                <div>
-                                    {children4}
-                                </div>
-                            </Content>
-                        </Col>
-                    </Row>
-                </Layout>
-            </Layout>
+                                {longContent()}
+                            </div>
+
+
+
+                        </Content>
+                    </>
+                }
+            />
         </>
-    )
+    );
 }
 
 export default DashboardLayout;

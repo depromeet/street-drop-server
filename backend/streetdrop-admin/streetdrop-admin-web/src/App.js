@@ -18,6 +18,7 @@ import UserBlockPage from "./components/user/UserBlockPage";
 import MemberListPage from "./components/member/MemberListPage";
 import MemberLoginLogPage from "./components/member/MemberLoginLogPage";
 import MemberSecuritySettingPage from "./components/member/MemberSecuritySettingPage";
+import ItemReportPage from "./components/items/ItemReportPage";
 
 const App = () => {
     return (
@@ -28,6 +29,7 @@ const App = () => {
                     <Route element={<PrivateRoute/>}>
                         <Route exact path="/" element={<Dashboard/>}/>
                         <Route path="/items" element={<ItemListPage/>}/>
+                        <Route path="/items/report" element={<ItemReportPage/>}/>
                         <Route path="/drop-music" element={<SearchDropMusic/>}/>
                         <Route path="/drop-music/details" element={<DropSingleMusic/>}/>
                         <Route path='/drop-music/result/success' element={<DropMusicSuccess/>}/>

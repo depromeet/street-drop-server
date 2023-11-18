@@ -29,6 +29,9 @@ const MenuComponent = () => {
                     <Link to="/drop-music">• 아이템 드랍</Link>
                 </Menu.Item>
                 <Menu.Item key="dropitem-menu-3">
+                    <Link to="/items/report">• 아이템 신고</Link>
+                </Menu.Item>
+                <Menu.Item key="dropitem-menu-4">
                     <Link to="/music/recommend">• 음악 검색어 추천</Link>
                 </Menu.Item>
             </Menu.SubMenu>

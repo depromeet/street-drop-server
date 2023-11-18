@@ -8,7 +8,6 @@ import MemberApi from "../../api/domain/member/MemberApi";
 
 
 function CommonHeader() {
-    const {token: {colorBgContainer},} = theme.useToken();
     const navigate = useNavigate();
     const [memberName, setMemberName] = React.useState('');
     const [memberPart, setMemberPart] = React.useState('');
@@ -41,8 +40,13 @@ function CommonHeader() {
 
     return (
         <>
-            <Header style={{padding: 0, background: colorBgContainer}}>
-                <span style={{marginLeft: 30, fontWeight: "bold"}}>Street Drop Admin</span>
+            <Header
+                style={{
+                    padding: 0,
+                }}>
+                <a
+                    href="/"
+                    style={{marginLeft: 30, fontWeight: "bold", color: "white"}}>Street Drop Admin</a>
 
                 <Dropdown menu={{items}} placement="bottomRight" arrow>
                     <Button
@@ -53,16 +57,18 @@ function CommonHeader() {
                             width: 64,
                             height: 64,
                             display: 'inline-block',
-                            float: 'right'
+                            float: 'right',
+                            color: 'whitesmoke'
                         }}/>
                 </Dropdown>
                 <div
                     style={{
                         float: 'right',
                         flexDirection: 'row',
+                        color : 'white'
                     }}>
                     <span>{memberName}</span>
-                    <span style={{color: 'gray', marginLeft: 5}}>
+                    <span style={{color: 'white', marginLeft: 5}}>
                         <small>{memberPart}</small>
                     </span>
                 </div>
