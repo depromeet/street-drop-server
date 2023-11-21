@@ -5,9 +5,10 @@ import com.depromeet.report.claim.dto.ItemClaimReportDto;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
-
+@Primary
 @Component
 @RequiredArgsConstructor
 public class DiscordItemClaimReportService implements ItemClaimReportService {
