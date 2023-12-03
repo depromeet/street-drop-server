@@ -1,14 +1,14 @@
 package unit.domains.item.service;
 
-import com.depromeet.common.error.dto.ErrorCode;
-import com.depromeet.common.error.exception.common.BusinessException;
-import com.depromeet.common.error.exception.common.NotFoundException;
-import com.depromeet.item.Item;
-import com.depromeet.item.ItemLike;
+import com.depromeet.common.error.exception.internal.BusinessException;
+import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.item.dto.response.ItemLikeResponseDto;
+import com.depromeet.domains.item.error.ItemErrorCode;
 import com.depromeet.domains.item.repository.ItemLikeRepository;
 import com.depromeet.domains.item.service.ItemLikeService;
 import com.depromeet.domains.item.service.ItemService;
+import com.depromeet.item.Item;
+import com.depromeet.item.ItemLike;
 import com.depromeet.user.User;
 import com.depromeet.user.vo.MusicApp;
 import org.junit.jupiter.api.DisplayName;
@@ -21,9 +21,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.BDDMockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[Service] ItemLikeService 테스트")
@@ -106,7 +108,7 @@ public class ItemLikeServiceTest {
 
 				// Then
 				assertThat(thrown).isInstanceOf(BusinessException.class)
-						.hasMessageContaining(ErrorCode.ALREADY_ITEM_LIKED_ERROR.getMessage());
+						.hasMessageContaining(ItemErrorCode.ITEM_ALREADY_LIKED.getMessage());
 			}
 
 			@Test

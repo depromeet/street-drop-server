@@ -2,19 +2,19 @@ package com.depromeet.domains.item.service;
 
 import com.depromeet.common.dto.InfiniteScrollMetaResponseDto;
 import com.depromeet.common.dto.InfiniteScrollResponseDto;
-import com.depromeet.common.error.dto.ErrorCode;
-import com.depromeet.common.error.exception.common.BusinessException;
+import com.depromeet.common.error.exception.internal.BusinessException;
+import com.depromeet.domains.item.dao.UserItemLikeDao;
 import com.depromeet.domains.item.dto.response.ItemGroupByDateResponseDto;
 import com.depromeet.domains.item.dto.response.ItemGroupResponseDto;
+import com.depromeet.domains.item.dto.response.ItemLikeResponseDto;
 import com.depromeet.domains.item.dto.response.ItemLocationResponseDto;
-import com.depromeet.domains.item.dao.UserItemLikeDao;
+import com.depromeet.domains.item.error.ItemErrorCode;
+import com.depromeet.domains.item.repository.ItemLikeRepository;
 import com.depromeet.domains.music.dto.response.MusicResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.item.Item;
 import com.depromeet.item.ItemLike;
-import com.depromeet.domains.item.dto.response.ItemLikeResponseDto;
 import com.depromeet.user.User;
-import com.depromeet.domains.item.repository.ItemLikeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +45,7 @@ public class ItemLikeService {
 	private void checkUserAlreadyLike(User user, Item item) {
 		boolean alreadyLiked = itemLikeRepository.existsByUserIdAndItemId(user.getId(), item.getId());
 		if (alreadyLiked) {
-			throw new BusinessException(ErrorCode.ALREADY_ITEM_LIKED_ERROR);
+			throw new BusinessException(ItemErrorCode.ITEM_ALREADY_LIKED);
 		}
 	}
 

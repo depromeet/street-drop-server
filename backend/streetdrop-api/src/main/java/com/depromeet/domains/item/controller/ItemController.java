@@ -10,6 +10,8 @@ import com.depromeet.domains.item.dto.response.ItemResponseDto;
 import com.depromeet.domains.item.dto.response.ItemsResponseDto;
 import com.depromeet.domains.item.dto.response.PoiResponseDto;
 import com.depromeet.domains.item.service.ItemService;
+import com.depromeet.external.swagger.annotation.ApiErrorResponse;
+import com.depromeet.external.swagger.annotation.ApiErrorResponses;
 import com.depromeet.security.annotation.ReqUser;
 import com.depromeet.user.User;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,6 +30,7 @@ public class ItemController {
 
     @Operation(summary = "주변 아이템 조회 - POI")
     @GetMapping("/points")
+	@ApiErrorResponse(errorCode = "GEO_NOT_SUPPORT_LOCATION", description = "현재 서비스가 제공되지 않는 지역입니다.")
     public ResponseEntity<PoiResponseDto> findNearItemsPoints(
 			@ReqUser User user,
 			@Valid NearItemPointRequestDto nearItemPointRequestDto) {
@@ -37,6 +40,10 @@ public class ItemController {
 
 	@Operation(summary = "아이템 드랍 - 등록")
 	@PostMapping
+	@ApiErrorResponses(value = {
+			@ApiErrorResponse(errorCode = "GEO_NOT_SUPPORT_LOCATION", description = "현재 서비스가 제공되지 않는 지역입니다."),
+			@ApiErrorResponse(errorCode = "COMMON_CAN_NOT_USE_BANNED_WORD", description = "사용할 수 없는 금칙어가 포함되어 있습니다.")
+	})
 	public ResponseEntity<ItemResponseDto> create(
             @ReqUser User user,
             @Valid @RequestBody ItemCreateRequestDto itemRequestDto) {
@@ -46,6 +53,7 @@ public class ItemController {
 
     @Operation(summary = "아이템 드랍 - 단건조회")
     @GetMapping("/{itemId}")
+	@ApiErrorResponse(errorCode = "ITEM_NOT_FOUND", description = "아이템을 찾을 수 없습니다.")
     public ResponseEntity<ItemDetailResponseDto> findOneItem(
             @ReqUser User user,
             @PathVariable(value = "itemId") Long itemId
@@ -56,6 +64,7 @@ public class ItemController {
 
 	@Operation(summary = "아이템 드랍 - 수정")
 	@PatchMapping("/{itemId}")
+	@ApiErrorResponse(errorCode = "ITEM_NOT_FOUND", description = "아이템을 찾을 수 없습니다.")
 	public ResponseEntity<ItemResponseDto> update(
 			@ReqUser User user,
 			@PathVariable(value = "itemId") Long itemId,
@@ -67,6 +76,7 @@ public class ItemController {
 
 	@Operation(summary = "드랍 아이템 삭제")
 	@DeleteMapping("/{itemId}")
+	@ApiErrorResponse(errorCode = "ITEM_NOT_FOUND", description = "아이템을 찾을 수 없습니다.")
 	public ResponseEntity<Void> delete(
 			@ReqUser User user,
 			@PathVariable(value = "itemId") Long itemId
@@ -77,6 +87,7 @@ public class ItemController {
 
     @Operation(summary = "주변 아이템 상세 조회")
     @GetMapping
+	@ApiErrorResponse(errorCode = "GEO_NOT_SUPPORT_LOCATION", description = "현재 서비스가 제공되지 않는 지역입니다.")
     public ResponseEntity<ItemsResponseDto> findNearItems(
 			@ReqUser User user,
             @Valid NearItemRequestDto nearItemRequestDto

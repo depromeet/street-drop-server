@@ -1,16 +1,18 @@
 package com.depromeet.domains.item.service;
 
 import com.depromeet.area.village.VillageArea;
-import com.depromeet.common.error.dto.ErrorCode;
-import com.depromeet.common.error.exception.common.BusinessException;
-import com.depromeet.common.error.exception.common.NotFoundException;
+import com.depromeet.common.error.dto.CommonErrorCode;
+import com.depromeet.common.error.exception.internal.BusinessException;
+import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.item.dto.request.*;
 import com.depromeet.domains.item.dto.response.*;
+import com.depromeet.domains.item.error.ItemErrorCode;
 import com.depromeet.domains.item.repository.ItemLikeRepository;
 import com.depromeet.domains.item.repository.ItemLocationRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.music.service.MusicService;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
+import com.depromeet.domains.user.error.UserErrorCode;
 import com.depromeet.domains.user.repository.BlockUserRepository;
 import com.depromeet.domains.village.service.VillageAreaService;
 import com.depromeet.item.Item;
@@ -81,7 +83,7 @@ public class ItemService {
 	@Transactional(readOnly = true)
 	public ItemDetailResponseDto findOneItem(User user, Long itemId) {
 		var item = itemRepository.findById(itemId)
-				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, itemId));
+				.orElseThrow(() -> new NotFoundException(ItemErrorCode.ITEM_NOT_FOUND, itemId));
 		var itemLikeCount = itemLikeRepository.countByItemId(itemId);
 		var isLiked = itemLikeRepository.existsByUserIdAndItemId(user.getId(), itemId);
 
@@ -125,17 +127,17 @@ public class ItemService {
 	@Transactional(readOnly = true)
 	public Item getItem(Long itemId) {
 		return itemRepository.findById(itemId)
-				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, String.valueOf(itemId)));
+				.orElseThrow(() -> new NotFoundException(CommonErrorCode.NOT_FOUND, String.valueOf(itemId)));
 	}
 
 	@Transactional
 	public void delete(User user, Long itemId) {
 		var item = itemRepository.findById(itemId)
-				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, itemId));
+				.orElseThrow(() -> new NotFoundException(CommonErrorCode.NOT_FOUND, itemId));
 		var userIdfv = item.getUser().getIdfv();
 
 		if (!userIdfv.equals(user.getIdfv())) {
-			throw new BusinessException(ErrorCode.INVALID_USER_EXCEPTION);
+			throw new BusinessException(UserErrorCode.INVALID_USER_EXCEPTION);
 		}
 		itemRepository.deleteById(itemId);
 	}
@@ -143,10 +145,10 @@ public class ItemService {
 	@Transactional
 	public ItemResponseDto update(User user, Long itemId, ItemUpdateRequestDto itemRequestDto) {
 		var item = itemRepository.findById(itemId)
-				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, itemId));
+				.orElseThrow(() -> new NotFoundException(CommonErrorCode.NOT_FOUND, itemId));
 
 		if (!item.getUser().getIdfv().equals(user.getIdfv())) {
-			throw new BusinessException(ErrorCode.INVALID_USER_EXCEPTION);
+			throw new BusinessException(UserErrorCode.INVALID_USER_EXCEPTION);
 		}
 		item.updateContent(itemRequestDto.getContent());
 		return new ItemResponseDto(item);

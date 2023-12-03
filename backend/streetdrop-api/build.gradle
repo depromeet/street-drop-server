@@ -42,6 +42,8 @@ dependencies {
 
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.flywaydb:flyway-mysql'
+
+    implementation 'org.reflections:reflections:0.10.2'
 }
 
 

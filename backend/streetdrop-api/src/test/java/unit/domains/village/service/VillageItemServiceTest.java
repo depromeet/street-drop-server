@@ -1,7 +1,7 @@
 package unit.domains.village.service;
 
 import com.depromeet.area.village.VillageArea;
-import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.domains.geo.error.GeoErrorCode;
 import com.depromeet.domains.village.dto.request.VillageItemsRequestDto;
 import com.depromeet.domains.village.dto.response.VillageItemsCountResponseDto;
 import com.depromeet.domains.village.repository.VillageAreaRepository;
@@ -111,7 +111,7 @@ public class VillageItemServiceTest {
                 Throwable thrown = catchThrowable(() -> villageItemService.countItemsInVillageByLocation(villageItemsRequestDto));
 
                 assertThat(thrown).isInstanceOf(RuntimeException.class)
-                        .hasMessageContaining(ErrorCode.NOT_SUPPORT_LOCATION.getMessage());
+                        .hasMessageContaining(GeoErrorCode.NOT_SUPPORT_LOCATION.getMessage());
             }
 
         }

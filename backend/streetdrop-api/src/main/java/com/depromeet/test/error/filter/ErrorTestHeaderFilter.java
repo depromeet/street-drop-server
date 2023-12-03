@@ -1,8 +1,9 @@
 package com.depromeet.test.error.filter;
 
-import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.common.error.dto.ErrorCodeMapper;
-import com.depromeet.common.error.dto.ErrorResponseDto;
+import com.depromeet.common.error.dto.interfaces.ErrorCode;
+import com.depromeet.common.error.dto.interfaces.ErrorCodeInterface;
+import com.depromeet.common.error.http.dto.HttpErrorResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -44,12 +45,12 @@ public class ErrorTestHeaderFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private void throwErrorResponse(HttpServletResponse response, ErrorCode errorCode) throws IOException {
+    private <T extends ErrorCodeInterface> void throwErrorResponse(HttpServletResponse response, T errorCode) throws IOException {
         response.setContentType(APPLICATION_JSON_VALUE);
         response.setStatus(errorCode.getStatus().value());
 
-        ErrorResponseDto errorResponseDto = new ErrorResponseDto(errorCode);
-        String errorResponseJson = objectMapper.writeValueAsString(errorResponseDto);
+        HttpErrorResponseDto httpErrorResponseDto = HttpErrorResponseDto.from(errorCode);
+        String errorResponseJson = objectMapper.writeValueAsString(httpErrorResponseDto);
 
         response.getWriter().write(errorResponseJson);
     }
