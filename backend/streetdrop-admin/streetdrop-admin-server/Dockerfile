@@ -9,4 +9,6 @@ ARG JAR_FILE=./build/libs/streetdrop-admin-server-0.0.1-SNAPSHOT.jar
 COPY ${JAR_FILE} app.jar
 ENV	USE_PROFILE prod
 
+EXPOSE 8080
+
 ENTRYPOINT ["java","-Dspring.profiles.active=${USE_PROFILE}", "-jar","app.jar"]
