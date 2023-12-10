@@ -7,7 +7,7 @@ services:
       context: ./streetdrop-admin-server
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3000:8080"
 
   web-server:
     container_name: street-drop-admin-web-server
