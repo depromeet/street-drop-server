@@ -1,5 +1,11 @@
 # React Build Stage
 FROM node:20.0-alpine as build-stage
+ENV REACT_APP_ALLOW ALLOW
+
+ENV REACT_APP_BASE_URL https://admin-server.street-drop.com
+ENV REACT_APP_API_URL /api
+ENV REACT_APP_SEARCH_URL=/search
+ENV REACT_APP_NODE_ENV=prod
 
 WORKDIR /app/streetdrop-admin-web
 
