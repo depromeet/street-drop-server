@@ -3,22 +3,29 @@ import {theme} from "antd";
 import {Content} from "antd/es/layout/layout";
 import DefaultLayout from "./DefaultLayout";
 
-function DashboardLayout({indexContentList, longContent, graphContent, firstHalfContent, secondHalfContent}) {
+function DashboardLayout({
+                             indicatorContentList,
+                             graphContent,
+                             graphContent2,
+                             basicContent1,
+                             basicContent2,
+                             basicContent3,
+                         }) {
     const {
         token: { colorBgContainer },
     } = theme.useToken();
 
-    const indexContents = (indexContentList) => (
+    const indicatorContentsLayout = (contentList) => (
         <>
-            {indexContentList.slice(0, 4).map(content => (
-                <React.Fragment key={content.id}>
+            {contentList.map((content, index) => (
+                <React.Fragment key={index}>
                     <div
                         style={{
                             background: colorBgContainer,
-                            gridColumn: 'span 6', // 3쿼터 콘텐츠
+                            gridColumn: 'span 4',
                             borderRadius: '0.6rem',
                             boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
-                            gridRow: 'span 1', // 2행 차지 (높이 조절)
+                            gridRow: 'span 1',
                         }}
                     >
                         {content}
@@ -27,7 +34,6 @@ function DashboardLayout({indexContentList, longContent, graphContent, firstHalf
             ))}
         </>
     );
-
 
     const fifteenSizeContent = (content) => (
         <>
@@ -53,7 +59,23 @@ function DashboardLayout({indexContentList, longContent, graphContent, firstHalf
                     gridColumn: 'span 9',
                     borderRadius: '0.6rem',
                     boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
-                    gridRow: 'span 3',
+                    gridRow: 'span 6',
+                }}
+            >
+                {content}
+            </div>
+        </>
+    );
+
+    const eightSizeContent = (content) => (
+        <>
+            <div
+                style={{
+                    background: colorBgContainer,
+                    gridColumn: 'span 8',
+                    borderRadius: '0.6rem',
+                    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
+                    gridRow: 'span 6',
                 }}
             >
                 {content}
@@ -88,22 +110,12 @@ function DashboardLayout({indexContentList, longContent, graphContent, firstHalf
                             gridTemplateColumns: 'repeat(24, 1fr)' ,
                             gridGap: '20px'
                         }}>
-                            <div
-                                style={{
-                                    gridColumn: 'span 18',
-                                    display: 'grid',
-                                    gridTemplateColumns: 'repeat(24, 1fr)' ,
-                                    gridRow: "auto",
-                                    gridGap: '20px'
-                                }}
-                            >
-                                {indexContents(indexContentList)}
-                                {fifteenSizeContent(graphContent)}
-                                {nineSizeHalfContent(firstHalfContent)}
-                                {nineSizeHalfContent(firstHalfContent)}
-                                {twelveSizeContent(firstHalfContent)}
-                                {twelveSizeContent(secondHalfContent)}
-                            </div>
+                            {indicatorContentsLayout(indicatorContentList)}
+                            {fifteenSizeContent(graphContent)}
+                            {nineSizeHalfContent(graphContent2)}
+                            {eightSizeContent(basicContent1)}
+                            {eightSizeContent(basicContent2)}
+                            {eightSizeContent(basicContent3)}
                             <div
                                 style={{
                                     gridColumn: 'span 6',
@@ -112,10 +124,7 @@ function DashboardLayout({indexContentList, longContent, graphContent, firstHalf
                                     boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
                                 }}
                             >
-                                {longContent()}
                             </div>
-
-
 
                         </Content>
                     </>

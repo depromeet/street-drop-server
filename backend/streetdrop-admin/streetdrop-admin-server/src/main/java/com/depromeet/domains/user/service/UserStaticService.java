@@ -8,8 +8,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -25,13 +30,22 @@ public class UserStaticService {
         if (startDate.isBefore(serviceStartDate)) {
             startDate = serviceStartDate;
         }
-        return userRepository.countUserByCreatedAt(startDate, endDate)
-                .stream()
-                .map(row -> {
-                    String joinDate = (String) row[0];
-                    Long count = (Long) row[1];
-                    return new UserSignUpCountResponseDto(joinDate, count);
-                }).toList();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM.dd");
+
+        List<Object[]> countResults = userRepository.countUserByCreatedAt(startDate, endDate);
+
+
+        Map<String, Long> countMap = countResults.stream()
+                .collect(Collectors.toMap(row -> (String) row[0], row -> (Long) row[1]));
+
+
+        List<LocalDate> dateRange = Stream.iterate(startDate.toLocalDate(), date ->
+                !date.isAfter(endDate.toLocalDate()), date -> date.plusDays(1)).toList();
+
+        return dateRange.stream()
+                .map(date -> new UserSignUpCountResponseDto(date.format(formatter), countMap.getOrDefault(date.toString(), 0L)))
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)

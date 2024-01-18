@@ -17,4 +17,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Query(value = "select i from Item i join fetch i.song s join fetch s.album a join fetch a.artist ar join fetch i.itemLocation il join fetch il.villageArea va join fetch i.user u where u = :user order by i.createdAt desc ")
     List<Item> findByUser(User user);
+
 }
