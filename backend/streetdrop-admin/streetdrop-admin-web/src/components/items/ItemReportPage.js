@@ -1,14 +1,11 @@
 import React, {useEffect, useState} from "react";
-import UserBlockApi from "../../api/domain/user/UserBlockApi";
 import BasicLayout from "../../layout/BasicLayout";
-import {Table} from "antd";
+import {Button, Modal, Select, Table} from "antd";
+import ItemClaimApi from "../../api/domain/item/ItemClaimApi";
 
 function ItemReportPage() {
     const [data, setData] = useState([]);
 
-    const exampleData  ={
-
-    }
 
     const [tableParams, setTableParams] = useState({
         pagination: {
@@ -23,7 +20,7 @@ function ItemReportPage() {
 
 
     const fetchData = async () => {
-        const response = await UserBlockApi.getAllBlockList(tableParams.pagination.current - 1, tableParams.pagination.pageSize);
+        const response = await ItemClaimApi.getItemClaim(tableParams.pagination.current - 1, tableParams.pagination.pageSize);
         setData(response.data['data']);
         setTableParams({
             ...tableParams,
@@ -34,33 +31,62 @@ function ItemReportPage() {
         });
     }
 
+    const handleClaimStatusChange = (itemId, status) => {
+        ItemClaimApi.updateItemStatus(itemId, status);
+        if (status === 'ACCEPTED') {
+            Modal.success({
+                content: '신고가 처리되었습니다.',
+            });
+        } else if (status === 'REJECTED') {
+            Modal.success({
+                content: '신고가 거절되었습니다.',
+            });
+        }
+    }
+
     const columns = [
         {
-            title: 'ID',
-            dataIndex: 'id',
-            key: 'id',
+            title: '신고 ID',
+            dataIndex: 'itemClaimId',
+            key: 'itemClaimId',
         },
         {
-            title: '차단 요청 유저 ID',
-            dataIndex: 'userId',
+            title: '아이템 ID',
+            dataIndex: 'itemId',
         },
         {
-            title: '차단 요청 유저 닉네임',
-            dataIndex: 'userNickname',
+            title: '신고 사유',
+            dataIndex: 'reason',
         },
         {
-            title: '아이템 정보',
-            dataIndex: 'blockUserId',
+            title: '아이템 내용',
+            dataIndex: 'itemContent',
         },
         {
-            title: '차단 대상 유저 닉네임',
-            dataIndex: 'blockUserNickname',
+            title: '신고 일자',
+            dataIndex: 'reportAt',
         },
         {
-            title: '차단 일자',
-            dataIndex: 'createdAt',
+            title: '처리 상태',
+            dataIndex: 'status',
+            render: (status, record) => (
+                <>
+                    <Select
+                        defaultValue={status}
+                        disabled={status !== 'WAITING'}
+                        style={{ width: 120 }}
+                        onChange={(selectedStatus) => handleClaimStatusChange(record.itemClaimId, selectedStatus)}
+                        options={[
+                            { value: 'WAITING', label: '대기중' },
+                            { value: 'ACCEPTED', label: '처리완료' },
+                            { value: 'REJECTED', label: '신고거절' },
+                        ]}
+                    />
+                </>
+            ),
         }
     ];
+
 
     const handleTableChange = (
         pagination,
