@@ -32,6 +32,9 @@ const MenuComponent = () => {
                     <Link to="/items/report">• 아이템 신고</Link>
                 </Menu.Item>
                 <Menu.Item key="dropitem-menu-4">
+                    <Link to="/banned-words">• 금칙어 관리</Link>
+                </Menu.Item>
+                <Menu.Item key="dropitem-menu-5">
                     <Link to="/music/recommend">• 음악 검색어 추천</Link>
                 </Menu.Item>
             </Menu.SubMenu>
