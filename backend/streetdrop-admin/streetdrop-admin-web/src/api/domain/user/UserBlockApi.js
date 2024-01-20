@@ -1,17 +1,13 @@
-import authService from "../../../service/AuthService";
-import axios from "axios";
-import {ADMIN_SERVER_URL} from "../../DefaultSetUp";
+import {axiosAuthInstance} from "../../AxiosInstance";
 
 const UserBlockApi = {
     getAllBlockList: (page, size) => {
-        return axios.get(ADMIN_SERVER_URL+'/users/blocks' + '?page=' + page + '&size=' + size,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                    'Authorization': 'Bearer ' + authService.getToken()
-                }
-            });
+        return axiosAuthInstance.get('/users/blocks', {
+            params: {
+                page: page,
+                size: size
+            }
+        });
     }
 }
 export default UserBlockApi;

@@ -1,9 +1,8 @@
-import axios from "axios";
-import {ADMIN_SERVER_URL} from "../../DefaultSetUp";
+import {axiosInstance} from "../../AxiosInstance";
 
 
 function LoginApi(username, password) {
-    return axios.post(ADMIN_SERVER_URL + '/login', {
+    return axiosInstance.post('/login', {
         username: username,
         password: password
     });
