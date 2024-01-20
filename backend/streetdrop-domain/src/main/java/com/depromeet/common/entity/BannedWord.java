@@ -20,4 +20,8 @@ public class BannedWord {
 
     @Column(length = 20, nullable = false)
     private String word;
+
+    public BannedWord(String word) {
+        this.word = word;
+    }
 }

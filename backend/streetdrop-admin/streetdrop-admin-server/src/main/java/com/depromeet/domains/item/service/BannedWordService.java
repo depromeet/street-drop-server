@@ -1,6 +1,7 @@
 package com.depromeet.domains.item.service;
 
 import com.depromeet.common.dto.PageMetaData;
+import com.depromeet.common.entity.BannedWord;
 import com.depromeet.domains.item.dto.BannedWordAllResponseDto;
 import com.depromeet.domains.item.dto.BannedWordResponseDto;
 import com.depromeet.domains.item.repository.BannedWordRepository;
@@ -35,5 +36,18 @@ public class BannedWordService {
                 }).toList();
 
         return new BannedWordAllResponseDto(bannedWords, pageMetaData);
+    }
+
+    public BannedWordResponseDto createBannedWord(String word) {
+        BannedWord bannedWord = new BannedWord(word);
+        var bannedWordResult = bannedWordRepository.save(bannedWord);
+        return BannedWordResponseDto.builder()
+                .id(bannedWordResult.getId())
+                .word(bannedWordResult.getWord())
+                .build();
+    }
+
+    public void deleteBannedWord(Long bannedWordId) {
+        bannedWordRepository.deleteById(bannedWordId);
     }
 }
