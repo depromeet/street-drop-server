@@ -1,29 +1,13 @@
-import axios from "axios";
-import authService from "../../../service/AuthService";
-import {ADMIN_SERVER_URL} from "../../DefaultSetUp";
+import {axiosAuthInstance} from "../../AxiosInstance";
 
 
 const VillageApi = {
     getVillageItemCountRecent: () => {
-        return axios.get(ADMIN_SERVER_URL + '/villages/items/count/recent',
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                    'Authorization': 'Bearer ' + authService.getToken()
-                }
-            })
+        return axiosAuthInstance.get('/villages/items/count/recent');
     },
 
     getVillageItemCountAll: () => {
-        return axios.get(ADMIN_SERVER_URL + '/villages/items/count',
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                    'Authorization': 'Bearer ' + authService.getToken()
-                }
-            });
+        return axiosAuthInstance.get('/villages/items/count');
     }
 }
 

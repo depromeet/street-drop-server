@@ -1,40 +1,19 @@
-import axios from "axios";
-import authService from "../../../service/AuthService";
-import {ADMIN_SERVER_URL} from "../../DefaultSetUp";
+import {axiosAuthInstance} from "../../AxiosInstance";
 
 const ItemApi = {
     getItems: (page, size) => {
-        return axios.get(ADMIN_SERVER_URL+'/items', {
+        return axiosAuthInstance.get('/items', {
             params: {
                 page: page,
                 size: size
-            },
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Bearer ' + authService.getToken()
             }
         })
     },
-
     getItem: (itemId) => {
-        return axios.get(ADMIN_SERVER_URL+'/items/' + itemId, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Bearer ' + authService.getToken()
-            }
-        })
+        return axiosAuthInstance.get('/items/' + itemId)
     },
-
     deleteItem: (itemId) => {
-        return axios.delete(ADMIN_SERVER_URL + '/items/' + itemId, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Bearer ' + authService.getToken()
-            }
-        });
+        return axiosAuthInstance.delete('/items/' + itemId)
     }
 }
 export default ItemApi;

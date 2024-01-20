@@ -1,57 +1,21 @@
-import axios from "axios";
-import {ADMIN_SERVER_URL} from "../../DefaultSetUp";
-import authService from "../../../service/AuthService";
+import {axiosAuthInstance} from "../../AxiosInstance";
 
 
 const DashboardApi = {
-  getIndicators: () => {
-      return axios.get(ADMIN_SERVER_URL + '/dashboard/indicators', {
-          headers: {
-              'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': '*',
-              'Authorization': 'Bearer ' + authService.getToken()
-          }
-      });
-  },
-
+    getIndicators: () => {
+        return axiosAuthInstance.get('/dashboard/indicators');
+    },
     getRecentReports: () => {
-        return axios.get(ADMIN_SERVER_URL + '/dashboard/reports', {
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Bearer ' + authService.getToken()
-            }
-        });
+        return axiosAuthInstance.get('/dashboard/reports');
     },
-
     getVersions: () => {
-        return axios.get(ADMIN_SERVER_URL + '/dashboard/versions', {
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Bearer ' + authService.getToken()
-            }
-        });
+        return axiosAuthInstance.get('/dashboard/versions');
     },
-
     getAppStoreIndicators: () => {
-        return axios.get(ADMIN_SERVER_URL + '/dashboard/appstore-indicators', {
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Bearer ' + authService.getToken()
-            }
-        });
+        return axiosAuthInstance.get('/dashboard/appstore-indicators');
     },
-
     getRegionalAnalysis: () => {
-        return axios.get(ADMIN_SERVER_URL + '/dashboard/regional-analysis', {
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Bearer ' + authService.getToken()
-            }
-        });
+        return axiosAuthInstance.get('/dashboard/regional-analysis');
     },
 };
 

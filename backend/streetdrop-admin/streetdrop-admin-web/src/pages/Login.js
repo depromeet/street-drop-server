@@ -1,18 +1,15 @@
 import {Button, Form, Input, Tooltip} from "antd";
 import '../styles/Login.css';
 import React from 'react';
-import {useNavigate} from "react-router-dom";
 import LoginApi from "../api/domain/auth/LoginApi";
 import authService from "../service/AuthService";
 
 function Login() {
-
-    const navigate = useNavigate();
     const onLoginClick = async ({username, password}) => {
         try {
             const result = await LoginApi(username, password);
-            authService.saveToken(result.data.accessToken)
-            navigate('/')
+            await authService.saveToken(result.data.accessToken, result.data.refreshToken)
+            window.location.href = '/';
         } catch (error) {
             const {status} = error.response;
             if (status === 400) {
