@@ -19,6 +19,7 @@ import MemberListPage from "./components/member/MemberListPage";
 import MemberLoginLogPage from "./components/member/MemberLoginLogPage";
 import MemberSecuritySettingPage from "./components/member/MemberSecuritySettingPage";
 import ItemReportPage from "./components/items/ItemReportPage";
+import BannedWordPage from "./components/items/BannedWordPage";
 
 const App = () => {
     return (
@@ -30,6 +31,7 @@ const App = () => {
                         <Route exact path="/" element={<Dashboard/>}/>
                         <Route path="/items" element={<ItemListPage/>}/>
                         <Route path="/items/report" element={<ItemReportPage/>}/>
+                        <Route path='/banned-words' element={<BannedWordPage/>}/>
                         <Route path="/drop-music" element={<SearchDropMusic/>}/>
                         <Route path="/drop-music/details" element={<DropSingleMusic/>}/>
                         <Route path='/drop-music/result/success' element={<DropMusicSuccess/>}/>
