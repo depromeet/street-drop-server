@@ -10,6 +10,14 @@ const BannedWordApi = {
             }
         })
     },
+    createBannedWord: (bannedWord) => {
+        return axiosAuthInstance.post('/banned-words', {
+            word: bannedWord
+        })
+    },
+    deleteBannedWord: (id) => {
+        return axiosAuthInstance.delete('/banned-words/' + id)
+    }
 }
 
 export default BannedWordApi;
