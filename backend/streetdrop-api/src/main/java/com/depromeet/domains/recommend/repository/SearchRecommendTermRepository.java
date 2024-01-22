@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface SearchRecommendTermRepository extends JpaRepository<SearchRecommendTerm, Long> {
-    @Query(value = "SELECT s FROM SearchRecommendTerm s ORDER BY RAND() LIMIT 1")
+    @Query(value = "SELECT s FROM SearchRecommendTerm s WHERE s.active = true ORDER BY RAND() LIMIT 1")
     Optional<SearchRecommendTerm> getRandomSearchRecommendTerm();
 }
