@@ -1,11 +1,56 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {Button, Modal, Table, Tag} from 'antd';
 import MusicRecommendEventCreate from "./MusicRecommendEventCreate";
 import BasicLayout from "../../../../layout/BasicLayout";
+import RecommendApi from "../../../../api/domain/music/RecommendApi";
 
 
 function MusicRecommend() {
+    const [data, setData] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [tableParams, setTableParams] = useState({
+        pagination: {
+            current: 1,
+            pageSize: 30
+        },
+    });
+
+    useEffect(() => {
+        fetchData();
+    }, [JSON.stringify(tableParams)]);
+
+    const fetchData = async () => {
+        const response = await RecommendApi.getMusicKeywordRecommend(tableParams.pagination.current - 1, tableParams.pagination.pageSize);
+        setData(response.data['data']);
+        setTableParams({
+            ...tableParams,
+            pagination: {
+                ...tableParams.pagination,
+                total: response.data['meta']['totalElements'],
+            },
+        });
+    }
+
+    const descriptionRender = (text) => {
+        return text.map((item, index) => {
+            const textColor = item.color === 'RecommendTitleHighLight' ? '#1677ff' : 'black';
+            const textBold = item.color === 'RecommendTitleHighLight' ? 'bold' : 'normal';
+            return (
+                <span key={index} style={{color: textColor, fontWeight: textBold,}}>
+        {item.text}
+      </span>
+            );
+        });
+    }
+
+    const termsRender = (text) => {
+        return text.map((item, index) => {
+            const textColor = item.color === 'RecommendKeywordHighLight' ? 'blue' : 'default';
+            return (
+                <Tag key={index} bordered={false} color={textColor}>{item.text}</Tag>
+            );
+        });
+    }
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -23,70 +68,37 @@ function MusicRecommend() {
     const columns = [
 
         {
-            title: '이벤트 명',
-            dataIndex: 'eventName',
+            title: 'ID',
+            dataIndex: 'id',
         },
         {
-            title: '이벤트 문구',
-            dataIndex: 'eventText',
+            title: '제목',
+            dataIndex: 'title',
         },
         {
-            title: '범위',
-            dataIndex: 'eventRange',
-            redner: (text) => <Tag color="gray">{text}</Tag>
+            title: '노출되는 설명',
+            dataIndex: 'description',
+            render: (text) => descriptionRender(text)
         },
         {
-            title: '타입',
-            dataIndex: 'eventType',
-            redner: (text) => <Tag color="gray">{text}</Tag>
+            title: '추천 검색어',
+            dataIndex: 'terms',
+            render: (text) => termsRender(text)
         },
         {
-            title: '작성자',
-            dataIndex: 'writer',
-        },
-        {
-            title: '이벤트 태그',
-            dataIndex: 'eventTag',
-            render: (text) => text.map((genre) => <Tag color="blue" key={genre}>{genre}</Tag>)
-        },
-        {
-            title: '상세보기',
-            render: () => <Button type="primary" size='small'>상세보기</Button>
+            title: '활성화',
+            dataIndex: 'active',
+            render: (text) => {
+                if (text === true) {
+                    return <Tag color="green">활성화</Tag>
+                } else {
+                    return <Tag color="red">비활성화</Tag>
+                }
+
+            }
         }
     ]
 
-    const songs = [
-        {
-            key: '1',
-            eventName: '날씨 관련 이벤트',
-            eventText: '날씨가 청량하고 맑다면?',
-            writer: '성훈',
-            eventRange: '전체',
-            eventType: '기본',
-            eventTag: [
-                'Aespa',
-                '(여자)아이들',
-                'Spicy',
-                '벚꽃 엔딩',
-                '...'
-            ]
-        },
-        {
-            key: '2',
-            eventName: '한강 이벤트 이벤트',
-            eventText: '지금 한강에 있다면?',
-            writer: '성훈',
-            eventRange: '그룹',
-            eventType: '위치',
-            eventTag: [
-                'Beautiful',
-                '한강',
-                '봄날',
-                '빈지노',
-                '...'
-            ]
-        }
-    ]
 
     return (
         <>
@@ -98,7 +110,7 @@ function MusicRecommend() {
                             style={{marginTop: '20px', marginBottom: '10px', float: 'right'}}
                             onClick={showModal}>생성하기</Button>
                 </div>
-                <Table columns={columns} dataSource={songs}/>
+                <Table columns={columns} dataSource={data}/>
 
                 <Modal title="음악 추천 이벤트 등록" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText='등록'
                        cancelText='취소'>
