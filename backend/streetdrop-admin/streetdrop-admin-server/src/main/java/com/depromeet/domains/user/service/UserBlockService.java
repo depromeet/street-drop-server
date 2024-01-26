@@ -1,7 +1,7 @@
 package com.depromeet.domains.user.service;
 
 import com.depromeet.common.dto.PageMetaData;
-import com.depromeet.domains.user.dto.UserBlockAllResponseDto;
+import com.depromeet.common.dto.PageResponseDto;
 import com.depromeet.domains.user.dto.UserBlockResponseDto;
 import com.depromeet.domains.user.repository.UserBlockRepository;
 import com.depromeet.domains.user.repository.UserRepository;
@@ -24,7 +24,7 @@ public class UserBlockService {
     private final UserBlockRepository userBlockRepository;
     private final UserRepository userRepository;
     @Transactional(readOnly = true)
-    public UserBlockAllResponseDto getUserBlockList(Pageable pageable) {
+    public PageResponseDto<UserBlockResponseDto> getUserBlockList(Pageable pageable) {
         Page<BlockUser> userBlockResult = userBlockRepository.findAll(pageable);
         PageMetaData pageMetaData = new PageMetaData(
                 userBlockResult.getNumber(),
@@ -50,6 +50,7 @@ public class UserBlockService {
                             .createdAt(userBlock.getCreatedAt())
                             .build();
                 }).toList();
-        return new UserBlockAllResponseDto(data, pageMetaData);
+
+        return new PageResponseDto<>(data, pageMetaData);
     }
 }

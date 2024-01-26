@@ -1,6 +1,7 @@
 package com.depromeet.domains.user.service;
 
 import com.depromeet.common.dto.PageMetaData;
+import com.depromeet.common.dto.PageResponseDto;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.user.dto.*;
 import com.depromeet.domains.user.repository.UserRepository;
@@ -20,7 +21,7 @@ public class UserService {
     private final ItemRepository itemRepository;
 
     @Transactional(readOnly = true)
-    public UserAllResponseDto getAllUsers(Pageable pageable) {
+    public PageResponseDto<UserResponseDto> getAllUsers(Pageable pageable) {
         Page<User> user = userRepository.findAll(pageable);
         PageMetaData pageMetaData = new PageMetaData(
                 user.getNumber(),
@@ -39,7 +40,7 @@ public class UserService {
                         )
                 )
                 .toList();
-        return new UserAllResponseDto(users, pageMetaData);
+        return new PageResponseDto<>(users, pageMetaData);
     }
 
 

@@ -3,7 +3,7 @@ package com.depromeet.auth.controller;
 import com.depromeet.auth.dto.request.ChangePasswordRequestDto;
 import com.depromeet.auth.entity.Member;
 import com.depromeet.auth.service.MemberService;
-import com.depromeet.domains.user.dto.ResponseDto;
+import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.global.annotation.ReqMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
+
     private final MemberService memberService;
 
     @GetMapping("/me")
@@ -27,9 +28,12 @@ public class MemberController {
     }
 
     @PatchMapping("/me/change-password")
-    public ResponseEntity<Void> changePassword(@ReqMember Member member,
-                                            @RequestBody ChangePasswordRequestDto changePasswordRequestDto){
+    public ResponseEntity<?> changePassword(
+            @ReqMember Member member,
+            @RequestBody ChangePasswordRequestDto changePasswordRequestDto
+    ){
         memberService.changePassword(member, changePasswordRequestDto.getPrevPassword(), changePasswordRequestDto.getNewPassword());
         return ResponseDto.noContent();
     }
+
 }

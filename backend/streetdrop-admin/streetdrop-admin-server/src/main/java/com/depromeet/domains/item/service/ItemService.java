@@ -1,7 +1,7 @@
-package com.depromeet.domains.item.controller;
+package com.depromeet.domains.item.service;
 
 import com.depromeet.common.dto.PageMetaData;
-import com.depromeet.domains.item.dto.ItemAllResponseDto;
+import com.depromeet.common.dto.PageResponseDto;
 import com.depromeet.domains.item.dto.ItemDetailResponseDto;
 import com.depromeet.domains.item.dto.ItemResponseDto;
 import com.depromeet.domains.item.dto.detail.ItemBasicInfoDto;
@@ -26,7 +26,7 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     @Transactional(readOnly = true)
-    public ItemAllResponseDto getAllItems(Pageable pageable) {
+    public PageResponseDto<?> getAllItems(Pageable pageable) {
         Page<Item> itemPage = itemRepository.findAll(pageable);
         PageMetaData pageMetaData = new PageMetaData(
                 itemPage.getNumber(),
@@ -57,8 +57,7 @@ public class ItemService {
                 }).toList();
 
 
-
-        return new ItemAllResponseDto(items, pageMetaData);
+        return new PageResponseDto<>(items, pageMetaData);
     }
 
     @Transactional
@@ -94,9 +93,9 @@ public class ItemService {
         );
 
         ItemLocationInfoDto itemLocationInfoDto = new ItemLocationInfoDto(
-            item.getItemLocation().getPoint().getY(),
-            item.getItemLocation().getPoint().getX(),
-            item.getItemLocation().getVillageArea().getVillageName()
+                item.getItemLocation().getPoint().getY(),
+                item.getItemLocation().getPoint().getX(),
+                item.getItemLocation().getVillageArea().getVillageName()
         );
 
         return new ItemDetailResponseDto(

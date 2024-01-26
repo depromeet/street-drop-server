@@ -1,7 +1,7 @@
 package com.depromeet.auth.controller;
 
 import com.depromeet.auth.service.LoginLogService;
-import com.depromeet.domains.user.dto.ResponseDto;
+import com.depromeet.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

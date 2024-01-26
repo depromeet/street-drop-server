@@ -2,7 +2,7 @@ package com.depromeet.domains.recommend.search.controller;
 
 import com.depromeet.domains.recommend.search.dto.CreateSearchRecommendDto;
 import com.depromeet.domains.recommend.search.service.SearchRecommendService;
-import com.depromeet.domains.user.dto.ResponseDto;
+import com.depromeet.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

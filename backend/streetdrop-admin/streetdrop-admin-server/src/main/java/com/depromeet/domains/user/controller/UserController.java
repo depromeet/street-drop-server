@@ -1,9 +1,7 @@
 package com.depromeet.domains.user.controller;
 
 
-import com.depromeet.domains.user.dto.ResponseDto;
-import com.depromeet.domains.user.dto.UserAllResponseDto;
-import com.depromeet.domains.user.dto.UserDetailResponseDto;
+import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.domains.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +20,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<UserAllResponseDto> getAllUsers(
+    public ResponseEntity<?> getAllUsers(
             @PageableDefault(size = 20, page = 0, sort = "createdAt",
                     direction = Sort.Direction.DESC) Pageable pageable
     ) {
@@ -32,7 +30,7 @@ public class UserController {
 
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDetailResponseDto> getUserDetail(
+    public ResponseEntity<?> getUserDetail(
             @PathVariable("userId") Long userId
     ) {
         var response = userService.getUserDetail(userId);

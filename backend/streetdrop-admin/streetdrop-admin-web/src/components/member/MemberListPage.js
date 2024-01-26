@@ -4,9 +4,11 @@ import {Button, Drawer, Table} from "antd";
 import MemberApi from "../../api/domain/member/MemberApi";
 import {PlusOutlined} from '@ant-design/icons';
 import CreateMemberPage from "./CreateMemberPage";
+import {InitialPagination} from "../../constant/PaginationConstant";
 
 function MemberListPage() {
     const [data, setData] = useState([]);
+    const [tableParams, setTableParams] = useState({pagination: InitialPagination});
     const [openDrawer, setOpenDrawer] = useState(false);
 
     const showDrawer = () => {
@@ -17,13 +19,6 @@ function MemberListPage() {
         setOpenDrawer(false);
     };
 
-    const [tableParams, setTableParams] = useState({
-        pagination: {
-            current: 1,
-            pageSize: 30
-        },
-    });
-
     useEffect(() => {
         fetchData();
     }, [JSON.stringify(tableParams)]);
@@ -31,12 +26,12 @@ function MemberListPage() {
 
     const fetchData = async () => {
         const response = await MemberApi.getAllMembers(tableParams.pagination.current - 1, tableParams.pagination.pageSize);
-        setData(response.data['members']);
+        setData(response.data.data);
         setTableParams({
             ...tableParams,
             pagination: {
                 ...tableParams.pagination,
-                total: response.data['meta']['totalElements'],
+                total: response.data.meta.totalElements,
             },
         });
     }

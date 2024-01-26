@@ -2,16 +2,11 @@ import React, {useEffect, useState} from "react"
 import BasicLayout from "../../layout/BasicLayout";
 import {Table} from "antd";
 import UserBlockApi from "../../api/domain/user/UserBlockApi";
+import {InitialPagination} from "../../constant/PaginationConstant";
 
 function UserBlockPage() {
     const [data, setData] = useState([]);
-
-    const [tableParams, setTableParams] = useState({
-        pagination: {
-            current: 1,
-            pageSize: 30
-        },
-    });
+    const [tableParams, setTableParams] = useState({pagination: InitialPagination});
 
     useEffect(() => {
         fetchData();
@@ -20,7 +15,7 @@ function UserBlockPage() {
 
     const fetchData = async () => {
         const response = await UserBlockApi.getAllBlockList(tableParams.pagination.current - 1, tableParams.pagination.pageSize);
-        setData(response.data['data']);
+        setData(response.data.data);
         setTableParams({
             ...tableParams,
             pagination: {

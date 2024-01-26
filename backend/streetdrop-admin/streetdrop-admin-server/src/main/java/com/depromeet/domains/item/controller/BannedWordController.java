@@ -1,15 +1,16 @@
 package com.depromeet.domains.item.controller;
 
 
-import com.depromeet.domains.item.dto.BannedWordRequestDto;
+import com.depromeet.common.dto.ResponseDto;
+import com.depromeet.domains.item.dto.request.BannedWordRequestDto;
 import com.depromeet.domains.item.service.BannedWordService;
-import com.depromeet.domains.user.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,8 +20,12 @@ public class BannedWordController {
 
     @GetMapping
     public ResponseEntity<?> getBannedWords(
-            @PageableDefault(size = 20, page = 0, sort = "id",
-                    direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(
+                    size = 20,
+                    page = 0,
+                    sort = "id",
+                    direction = DESC
+            ) Pageable pageable
     ) {
         var result = bannedWordService.getBannedWords(pageable);
         return ResponseDto.ok(result);

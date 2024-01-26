@@ -1,7 +1,7 @@
 package com.depromeet.domains.item.service;
 
 import com.depromeet.common.dto.PageMetaData;
-import com.depromeet.domains.item.dto.ItemClaimAllResponseDto;
+import com.depromeet.common.dto.PageResponseDto;
 import com.depromeet.domains.item.dto.ItemClaimResponseDto;
 import com.depromeet.domains.item.repository.ItemClaimRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
@@ -19,7 +19,7 @@ public class ItemClaimService {
     private final ItemRepository itemRepository;
 
     @Transactional(readOnly = true)
-    public ItemClaimAllResponseDto getClaimItem(Pageable pageable) {
+    public PageResponseDto<ItemClaimResponseDto> getClaimItem(Pageable pageable) {
         var itemClaimPage = itemClaimRepository.findAll(pageable);
         PageMetaData pageMetaData = new PageMetaData(
                 itemClaimPage.getNumber(),
@@ -43,7 +43,7 @@ public class ItemClaimService {
                             .build();
                 }).toList();
 
-        return new ItemClaimAllResponseDto(itemPageData, pageMetaData);
+        return new PageResponseDto<>(itemPageData, pageMetaData);
     }
 
     @Transactional

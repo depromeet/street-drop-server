@@ -4,6 +4,7 @@ import {Drawer, Table} from 'antd';
 import BasicLayout from "../../layout/BasicLayout";
 import UserDetailPage from "./UserDetailPage";
 import UserApi from "../../api/domain/user/UserApi";
+import {InitialPagination} from "../../constant/PaginationConstant";
 
 function UserListPage() {
     const [users, setUsers] = useState([]);
@@ -18,12 +19,7 @@ function UserListPage() {
         setOpenDrawer(false);
     };
 
-    const [tableParams, setTableParams] = useState({
-        pagination: {
-            current: 1,
-            pageSize: 30
-        },
-    });
+    const [tableParams, setTableParams] = useState({pagination: InitialPagination});
 
     const columns = [
         {
@@ -75,7 +71,7 @@ function UserListPage() {
 
     const fetchUser = async () => {
         const response = await UserApi.getAllUser(tableParams.pagination.current - 1, tableParams.pagination.pageSize);
-        setUsers(response.data['users']);
+        setUsers(response.data.data);
         setTableParams({
             ...tableParams,
             pagination: {

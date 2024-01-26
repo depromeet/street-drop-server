@@ -18,7 +18,9 @@ public class SignUpController {
     private final MemberService memberService;
 
     @PostMapping
-    public ResponseEntity<JwtTokenResponseDto> signUp(@RequestBody SignupRequestDto signupRequestDto) {
+    public ResponseEntity<JwtTokenResponseDto> signUp(
+            @RequestBody SignupRequestDto signupRequestDto
+    ) {
         var response = memberService.signUp(signupRequestDto);
         return ResponseEntity.ok(response);
     }

@@ -1,8 +1,8 @@
 package com.depromeet.domains.item.service;
 
 import com.depromeet.common.dto.PageMetaData;
+import com.depromeet.common.dto.PageResponseDto;
 import com.depromeet.common.entity.BannedWord;
-import com.depromeet.domains.item.dto.BannedWordAllResponseDto;
 import com.depromeet.domains.item.dto.BannedWordResponseDto;
 import com.depromeet.domains.item.repository.BannedWordRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class BannedWordService {
 
     private final BannedWordRepository bannedWordRepository;
 
-    public BannedWordAllResponseDto getBannedWords(Pageable pageable) {
+    public PageResponseDto<BannedWordResponseDto> getBannedWords(Pageable pageable) {
         var bannedWord = bannedWordRepository.findAll(pageable);
         PageMetaData pageMetaData = new PageMetaData(
                 bannedWord.getNumber(),
@@ -35,7 +35,7 @@ public class BannedWordService {
                             .build();
                 }).toList();
 
-        return new BannedWordAllResponseDto(bannedWords, pageMetaData);
+        return new PageResponseDto<>(bannedWords, pageMetaData);
     }
 
     public BannedWordResponseDto createBannedWord(String word) {

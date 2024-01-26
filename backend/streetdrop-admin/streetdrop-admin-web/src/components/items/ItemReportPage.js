@@ -2,17 +2,11 @@ import React, {useEffect, useState} from "react";
 import BasicLayout from "../../layout/BasicLayout";
 import {Button, Modal, Select, Table} from "antd";
 import ItemClaimApi from "../../api/domain/item/ItemClaimApi";
+import {InitialPagination} from "../../constant/PaginationConstant";
 
 function ItemReportPage() {
     const [data, setData] = useState([]);
-
-
-    const [tableParams, setTableParams] = useState({
-        pagination: {
-            current: 1,
-            pageSize: 30
-        },
-    });
+    const [tableParams, setTableParams] = useState({pagination: InitialPagination});
 
     useEffect(() => {
         fetchData();

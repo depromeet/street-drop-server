@@ -4,6 +4,7 @@ import com.depromeet.auth.dto.resonse.MemberLoginLogAllResponseDto;
 import com.depromeet.auth.dto.resonse.MemberLoginLogResponseDto;
 import com.depromeet.auth.repository.MemoryMemberLoginLogRepository;
 import com.depromeet.common.dto.PageMetaData;
+import com.depromeet.common.dto.PageResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class LoginLogService {
 
     private final MemoryMemberLoginLogRepository memberLoginLogRepository;
 
-    public MemberLoginLogAllResponseDto getAllLoginLog() {
+    public PageResponseDto<MemberLoginLogResponseDto> getAllLoginLog() {
         var memberLoginLogList = memberLoginLogRepository.findAll();
         List<MemberLoginLogResponseDto> loginLogResponseDtoList = memberLoginLogList.stream().map(
                 memberLoginLog -> MemberLoginLogResponseDto.builder()
@@ -37,6 +38,6 @@ public class LoginLogService {
         );
 
 
-        return new MemberLoginLogAllResponseDto(loginLogResponseDtoList, pageMetaData);
+        return new PageResponseDto<>(loginLogResponseDtoList, pageMetaData);
     }
 }

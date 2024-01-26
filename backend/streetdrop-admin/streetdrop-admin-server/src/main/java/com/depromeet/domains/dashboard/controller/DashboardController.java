@@ -1,7 +1,7 @@
 package com.depromeet.domains.dashboard.controller;
 
 import com.depromeet.domains.dashboard.service.DashboardService;
-import com.depromeet.domains.user.dto.ResponseDto;
+import com.depromeet.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

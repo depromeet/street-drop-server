@@ -20,7 +20,6 @@ public class MemoryMemberRepository implements MemberRepository {
 
     @Override
     public Optional<Member> findByUsername(String username) {
-        // members에서 찾음
         return members.stream().filter(member -> member.getUsername().equals(username)).findFirst();
     }
 
