@@ -1,8 +1,8 @@
 package com.depromeet.domains.recommend.search.service;
 
 import com.depromeet.common.dto.PageMetaData;
+import com.depromeet.common.dto.PageResponseDto;
 import com.depromeet.domains.recommend.search.dto.CreateSearchRecommendDto;
-import com.depromeet.domains.recommend.search.dto.SearchRecommendAllResponseDto;
 import com.depromeet.domains.recommend.search.dto.SearchRecommendResponseDto;
 import com.depromeet.domains.recommend.search.repository.SearchRecommendTermRepository;
 import com.depromeet.recommend.search.SearchRecommendTerm;
@@ -34,7 +34,7 @@ public class SearchRecommendService {
     }
 
     @Transactional(readOnly = true)
-    public SearchRecommendAllResponseDto getRecommendSearchTerm(Pageable pageable) {
+    public PageResponseDto<SearchRecommendResponseDto> getRecommendSearchTerm(Pageable pageable) {
         var searchRecommendTerms = searchRecommendTermRepository.findAll(pageable);
         PageMetaData pageMetaData = new PageMetaData(
                 searchRecommendTerms.getNumber(),
@@ -60,7 +60,6 @@ public class SearchRecommendService {
                 )
                 .toList();
 
-        return new SearchRecommendAllResponseDto(searchRecommendResponseDtos, pageMetaData);
-
+        return new PageResponseDto<>(searchRecommendResponseDtos, pageMetaData);
     }
 }

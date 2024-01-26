@@ -1,4 +1,4 @@
-import {Button, Form, Input, message, Select} from "antd";
+import {Button, Form, Input, Select} from "antd";
 import React from "react"
 import SignUpApi from "../../api/domain/auth/SignUpApi";
 

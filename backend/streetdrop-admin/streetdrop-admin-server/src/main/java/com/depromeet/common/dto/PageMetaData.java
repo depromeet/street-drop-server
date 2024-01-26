@@ -1,15 +1,4 @@
 package com.depromeet.common.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-public class PageMetaData {
-    private int page;
-    private int size;
-    private int totalElements;
-    private int totalPages;
+public record PageMetaData(int page, int size, int totalElements, int totalPages) {
 }

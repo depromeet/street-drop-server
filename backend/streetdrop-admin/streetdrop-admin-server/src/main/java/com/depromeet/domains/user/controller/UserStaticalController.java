@@ -20,7 +20,7 @@ public class UserStaticalController {
     private final UserStaticService userService;
 
     @GetMapping("/signup/count")
-    public ResponseEntity<List<UserSignUpCountResponseDto>> getUserSignUpCount(
+    public ResponseEntity<?> getUserSignUpCount(
             UserSignUpCountRequestDto userSignUpCountRequestDto
     ) {
         var response = userService.getUserSignUpCount(userSignUpCountRequestDto);
@@ -28,7 +28,7 @@ public class UserStaticalController {
     }
 
     @GetMapping("/all/count")
-    public ResponseEntity<UserAllStaticCountDto> getAllUserCount() {
+    public ResponseEntity<?> getAllUserCount() {
         var response = userService.getAllUserCount();
         return ResponseEntity.ok(response);
     }

@@ -1,4 +1,4 @@
-package com.depromeet.domains.user.dto;
+package com.depromeet.common.dto;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

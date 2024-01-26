@@ -3,6 +3,7 @@ import {Button, Drawer, Modal, Table} from 'antd';
 import BasicLayout from "../../layout/BasicLayout";
 import ItemApi from "../../api/domain/item/ItemApi";
 import ItemDetailPage from "./ItemDetailPage";
+import {InitialPagination} from "../../constant/PaginationConstant";
 
 function ItemListPage() {
     const [data, setData] = useState([]);
@@ -31,12 +32,7 @@ function ItemListPage() {
         setOpenDrawer(false);
     };
 
-    const [tableParams, setTableParams] = useState({
-        pagination: {
-            current: 1,
-            pageSize: 30
-        },
-    });
+    const [tableParams, setTableParams] = useState({pagination: InitialPagination});
 
     const columns = [
         {
@@ -102,7 +98,7 @@ function ItemListPage() {
 
     const fetchData = async () => {
         const response = await ItemApi.getItems(tableParams.pagination.current - 1, tableParams.pagination.pageSize);
-        setData(response.data['items']);
+        setData(response.data['data']);
         setTableParams({
             ...tableParams,
             pagination: {

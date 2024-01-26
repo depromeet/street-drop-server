@@ -1,6 +1,6 @@
 package com.depromeet.domains.user.controller;
 
-import com.depromeet.domains.user.dto.ResponseDto;
+import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.domains.user.service.UserBlockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

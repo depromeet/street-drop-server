@@ -16,7 +16,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/reissue")
-    public ResponseEntity<JwtTokenResponseDto> reissueToken(
+    public ResponseEntity<?> reissueToken(
             @RequestBody ReissueTokenRequestDto reissueTokenDto
     ) {
         var response = authService.reissueToken(reissueTokenDto.getRefreshToken());

@@ -1,4 +1,4 @@
-package com.depromeet.domains.item.dto;
+package com.depromeet.domains.item.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

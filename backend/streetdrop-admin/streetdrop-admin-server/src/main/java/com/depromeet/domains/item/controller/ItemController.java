@@ -1,8 +1,7 @@
 package com.depromeet.domains.item.controller;
 
-import com.depromeet.domains.item.dto.ItemAllResponseDto;
-import com.depromeet.domains.item.dto.ItemDetailResponseDto;
-import com.depromeet.domains.user.dto.ResponseDto;
+import com.depromeet.common.dto.ResponseDto;
+import com.depromeet.domains.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,7 +16,7 @@ public class ItemController {
 
     private final ItemService itemService;
     @GetMapping
-    public ResponseEntity<ItemAllResponseDto> getAllItems(
+    public ResponseEntity<?> getAllItems(
             @PageableDefault(size = 20, page = 0, sort = "createdAt",
                     direction = Sort.Direction.DESC) Pageable pageable
     ) {
@@ -26,7 +25,7 @@ public class ItemController {
     }
 
     @DeleteMapping("/{itemId}")
-    public ResponseEntity<Void> deleteItem(
+    public ResponseEntity<?> deleteItem(
             @PathVariable(value = "itemId") Long itemId
     ) {
         itemService.deleteItem(itemId);
@@ -34,7 +33,7 @@ public class ItemController {
     }
 
     @GetMapping("/{itemId}")
-    public ResponseEntity<ItemDetailResponseDto> getItem(
+    public ResponseEntity<?> getItem(
             @PathVariable(value = "itemId") Long itemId
     ) {
         var response = itemService.getItem(itemId);
