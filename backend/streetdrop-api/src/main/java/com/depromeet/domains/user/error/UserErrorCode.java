@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 public enum UserErrorCode implements ErrorCodeInterface {
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "USER_NOT_FOUND", "User Not Found", "User with the corresponding id could not be found"),
     INVALID_USER_EXCEPTION(HttpStatus.FORBIDDEN, "USER_FORBIDDEN", "User does not have permission", "Modify or Delete Not Permitted"),
-    INVALID_INPUT_EXCEPTION(HttpStatus.BAD_REQUEST, "USER_NOT_FOUND", "C-0015", "Nickname must be at least 1 character and not more than 10 characters"),
+    USER_NICKNAME_INVALID(HttpStatus.BAD_REQUEST, "USER_NICKNAME_INVALID", "User nickname is invalid", "Nickname must be at least 1 character and not more than 10 characters"),
     USER_CAN_NOT_BLOCK_SELF(HttpStatus.BAD_REQUEST, "USER_CAN_NOT_BLOCK_SELF", "Can Not Block Myself", "You can't block yourself");
 
     private final HttpStatus status;

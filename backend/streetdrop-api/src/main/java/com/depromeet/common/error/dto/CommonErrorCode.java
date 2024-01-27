@@ -29,7 +29,7 @@ public enum CommonErrorCode implements ErrorCodeInterface {
 	 * Basic Server Error
 	 */
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON_INTERNAL_SERVER_ERROR", "Internal Server Error", "An unexpected error occurred"),
-	NOT_IMPLEMENTED(HttpStatus.NOT_IMPLEMENTED, "COMMON_INTERNAL_SERVER_ERROR", "Not Implemented", "The server does not support the functionality required to fulfill the request.");
+	NOT_IMPLEMENTED(HttpStatus.NOT_IMPLEMENTED, "COMMON_NOT_IMPLEMENTED", "Not Implemented", "The server does not support the functionality required to fulfill the request.");
 
 
 	private final HttpStatus status;
