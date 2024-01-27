@@ -1,7 +1,7 @@
 package unit.domains.village.service;
 
 import com.depromeet.area.village.VillageArea;
-import com.depromeet.common.error.dto.ErrorCode;
+import com.depromeet.domains.geo.error.GeoErrorCode;
 import com.depromeet.domains.village.repository.VillageAreaRepository;
 import com.depromeet.domains.village.service.VillageAreaService;
 import com.depromeet.util.GeomUtil;
@@ -94,7 +94,7 @@ public class VillageAreaServiceTest {
                 Throwable thrown = catchThrowable(() -> villageAreaService.getVillageByLocationPoint(invalidPoint));
 
                 assertThat(thrown).isInstanceOf(RuntimeException.class)
-                        .hasMessageContaining(ErrorCode.NOT_SUPPORT_LOCATION.getMessage());
+                        .hasMessageContaining(GeoErrorCode.NOT_SUPPORT_LOCATION.getMessage());
             }
         }
     }

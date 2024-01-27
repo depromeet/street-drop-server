@@ -1,7 +1,7 @@
 package com.depromeet.domains.user.service;
 
-import com.depromeet.common.error.dto.ErrorCode;
-import com.depromeet.common.error.exception.common.NotFoundException;
+import com.depromeet.common.error.dto.CommonErrorCode;
+import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.user.dto.response.UserLevelResponseDto;
 import com.depromeet.domains.user.repository.UserLevelRepository;
 import com.depromeet.user.User;
@@ -18,7 +18,7 @@ public class UserLevelService {
 	@Transactional(readOnly = true)
 	public UserLevelResponseDto getUserLevel(User user) {
 		var level = userLevelRepository.findById(user.getUserLevelId())
-				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, user.getUserLevelId()));
+				.orElseThrow(() -> new NotFoundException(CommonErrorCode.NOT_FOUND, user.getUserLevelId()));
 		return new UserLevelResponseDto(user, level);
 	}
 }

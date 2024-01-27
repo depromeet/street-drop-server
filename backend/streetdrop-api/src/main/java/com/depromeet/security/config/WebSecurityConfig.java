@@ -2,6 +2,8 @@ package com.depromeet.security.config;
 
 import com.depromeet.domains.user.service.UserService;
 import com.depromeet.security.filter.IdfvAuthenticationFilter;
+import com.depromeet.security.handler.CustomAccessDeniedHandler;
+import com.depromeet.security.handler.CustomAuthenticationEntryPoint;
 import com.depromeet.security.provider.IdfvUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +22,8 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 public class WebSecurityConfig {
 
     private final UserService userService;
-
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -31,7 +34,11 @@ public class WebSecurityConfig {
                 .requestMatchers("/users/**").authenticated()
                 .requestMatchers("/items/**").authenticated()
                 .requestMatchers(HttpMethod.POST, "notifications/tokens").authenticated()
-                .anyRequest().permitAll().and()
+                .anyRequest().permitAll()
+                .and().exceptionHandling()
+                .authenticationEntryPoint(customAuthenticationEntryPoint)
+                .accessDeniedHandler(customAccessDeniedHandler)
+                .and()
                 .anonymous().and()
                 .formLogin().disable()
                 .apply(new IdfvFilter());

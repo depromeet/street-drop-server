@@ -1,7 +1,7 @@
 package com.depromeet.domains.recommend.service;
 
-import com.depromeet.common.error.dto.ErrorCode;
-import com.depromeet.common.error.exception.common.BusinessException;
+import com.depromeet.common.error.dto.CommonErrorCode;
+import com.depromeet.common.error.exception.internal.BusinessException;
 import com.depromeet.domains.recommend.dto.response.SearchTermRecommendResponseDto;
 import com.depromeet.domains.recommend.dto.response.TextColorDto;
 import com.depromeet.domains.recommend.repository.SearchRecommendTermRepository;
@@ -16,7 +16,7 @@ public class SearchRecommendService {
 
     public SearchTermRecommendResponseDto recommendSearchTerm() {
         var recommendTerm = searchRecommendTermRepository.getRandomSearchRecommendTerm()
-                .orElseThrow(() -> new BusinessException(ErrorCode.SEARCH_TERM_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(CommonErrorCode.INTERNAL_SERVER_ERROR));
 
         var description = recommendTerm.getDescription().stream()
                 .map((textColorVo) ->

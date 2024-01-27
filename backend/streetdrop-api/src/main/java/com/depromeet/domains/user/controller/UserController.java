@@ -1,7 +1,6 @@
 package com.depromeet.domains.user.controller;
 
 import com.depromeet.common.dto.ResponseDto;
-import com.depromeet.common.error.dto.ErrorCode;
 import com.depromeet.domains.user.dto.request.NicknameChangeDto;
 import com.depromeet.domains.user.dto.response.UserLevelResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
@@ -17,7 +16,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -62,7 +60,7 @@ public class UserController {
 
     @Operation(summary = "사용자 레벨 조회")
     @ApiResponse(responseCode = "200", description = "사용자 레벨 조회 성공")
-    @ApiErrorResponse(errorCode = ErrorCode.NOT_FOUND, description = "사용자 유저 레벨이 존재하지 않음")
+    @ApiErrorResponse(errorCode = "COMMON_NOT_FOUND", description = "사용자 유저 레벨이 존재하지 않음")
     @GetMapping("/me/level")
     public ResponseEntity<UserLevelResponseDto> getUserLevel(@ReqUser User user) {
         var response = userLevelService.getUserLevel(user);

@@ -1,16 +1,15 @@
 package com.depromeet.domains.item.service;
 
-import com.depromeet.common.error.dto.ErrorCode;
-import com.depromeet.common.error.exception.common.BusinessException;
-import com.depromeet.common.error.exception.common.NotFoundException;
+import com.depromeet.common.error.dto.CommonErrorCode;
+import com.depromeet.common.error.exception.internal.BusinessException;
+import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.item.dto.request.ItemClaimRequestDto;
+import com.depromeet.domains.item.error.ItemErrorCode;
 import com.depromeet.domains.item.repository.ItemClaimRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.item.ItemClaim;
 import com.depromeet.report.claim.dto.ItemClaimReportDto;
-import com.depromeet.report.claim.service.DiscordItemClaimReportService;
 import com.depromeet.report.claim.service.ItemClaimReportService;
-import com.depromeet.report.claim.service.SlackItemClaimReportService;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,7 @@ public class ItemClaimService {
     public void claimItem(User user, ItemClaimRequestDto itemClaimRequestDto) {
         var itemId = itemClaimRequestDto.getItemId();
         var item = itemRepository.findById(itemId)
-                .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, String.valueOf(itemId)));
+                .orElseThrow(() -> new NotFoundException(CommonErrorCode.NOT_FOUND, String.valueOf(itemId)));
         checkUserAlreadyReport(user.getId(), itemId);
 
         var itemClaim = ItemClaim.builder()
@@ -56,7 +55,7 @@ public class ItemClaimService {
     private void checkUserAlreadyReport(Long userId, Long itemId) {
         boolean alreadyReported = itemClaimRepository.existsByUserIdAndItemId(userId, itemId);
         if (alreadyReported) {
-            throw new BusinessException(ErrorCode.ALREADY_ITEM_REPORTED_ERROR);
+            throw new BusinessException(ItemErrorCode.ITEM_ALREADY_REPORTED);
         }
     }
 }

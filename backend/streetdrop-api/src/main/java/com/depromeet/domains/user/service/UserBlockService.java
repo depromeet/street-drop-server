@@ -1,9 +1,10 @@
 package com.depromeet.domains.user.service;
 
-import com.depromeet.common.error.dto.ErrorCode;
-import com.depromeet.common.error.exception.common.BusinessException;
-import com.depromeet.common.error.exception.common.NotFoundException;
+import com.depromeet.common.error.dto.CommonErrorCode;
+import com.depromeet.common.error.exception.internal.BusinessException;
+import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.user.dto.response.BlockUserResponseDto;
+import com.depromeet.domains.user.error.UserErrorCode;
 import com.depromeet.domains.user.repository.BlockUserRepository;
 import com.depromeet.domains.user.repository.UserRepository;
 import com.depromeet.report.block.dto.UserBlockReportDto;
@@ -29,10 +30,10 @@ public class UserBlockService {
 	@Transactional
 	public BlockUserResponseDto blockUser(User user, Long blockUserID) {
 		var blockUser  = userRepository.findUserById(blockUserID)
-				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, user.getId()));
+				.orElseThrow(() -> new NotFoundException(CommonErrorCode.NOT_FOUND, user.getId()));
 
 		if (blockUser.getId().equals(user.getId())) {
-			throw new BusinessException(ErrorCode.CAN_NOT_BLOCK_SELF);
+			throw new BusinessException(UserErrorCode.USER_CAN_NOT_BLOCK_SELF);
 		}
 
 		BlockUser block = BlockUser.builder()
@@ -57,7 +58,7 @@ public class UserBlockService {
 	public void unBlockUser(User user, Long unblockUserId) {
 		var userId = user.getId();
 		var blockedUser = blockUserRepository.findBlockUserByBlockerIdAndBlockedId(userId, unblockUserId)
-				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, unblockUserId));
+				.orElseThrow(() -> new NotFoundException(CommonErrorCode.NOT_FOUND, unblockUserId));
 		blockUserRepository.delete(blockedUser);
 	}
 }

@@ -1,9 +1,9 @@
 package unit.domains.user.service;
 
-import com.depromeet.common.error.dto.ErrorCode;
-import com.depromeet.common.error.exception.common.BusinessException;
-import com.depromeet.common.error.exception.common.NotFoundException;
+import com.depromeet.common.error.exception.internal.BusinessException;
+import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.user.dto.response.BlockUserResponseDto;
+import com.depromeet.domains.user.error.UserErrorCode;
 import com.depromeet.domains.user.repository.BlockUserRepository;
 import com.depromeet.domains.user.repository.UserRepository;
 import com.depromeet.domains.user.service.UserBlockService;
@@ -146,7 +146,7 @@ public class UserBlockServiceTest {
                 Throwable thrown = catchThrowable(() -> userBlockService.blockUser(requestUser, requestUserId));
 
                 Assertions.assertThat(thrown).isInstanceOf(BusinessException.class)
-                        .hasMessageContaining(ErrorCode.CAN_NOT_BLOCK_SELF.getMessage());
+                        .hasMessageContaining(UserErrorCode.USER_CAN_NOT_BLOCK_SELF.getMessage());
 
             }
         }

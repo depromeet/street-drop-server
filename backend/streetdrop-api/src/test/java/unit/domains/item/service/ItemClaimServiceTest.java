@@ -1,10 +1,10 @@
 package unit.domains.item.service;
 
 
-import com.depromeet.common.error.dto.ErrorCode;
-import com.depromeet.common.error.exception.common.BusinessException;
-import com.depromeet.common.error.exception.common.NotFoundException;
+import com.depromeet.common.error.exception.internal.BusinessException;
+import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.item.dto.request.ItemClaimRequestDto;
+import com.depromeet.domains.item.error.ItemErrorCode;
 import com.depromeet.domains.item.repository.ItemClaimRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.item.service.ItemClaimService;
@@ -136,7 +136,7 @@ public class ItemClaimServiceTest {
 
                 assertThat(thrown)
                         .isInstanceOf(BusinessException.class)
-                        .hasMessageContaining(ErrorCode.ALREADY_ITEM_REPORTED_ERROR.getMessage());
+                        .hasMessageContaining(ItemErrorCode.ITEM_ALREADY_REPORTED.getMessage());
             }
 
         }

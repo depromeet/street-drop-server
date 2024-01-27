@@ -1,7 +1,7 @@
 package com.depromeet.domains.music.service;
 
-import com.depromeet.common.error.dto.ErrorCode;
-import com.depromeet.common.error.exception.common.NotFoundException;
+import com.depromeet.common.error.dto.CommonErrorCode;
+import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.music.album.repository.AlbumRepository;
 import com.depromeet.domains.music.artist.repository.ArtistRepository;
 import com.depromeet.domains.music.dto.request.MusicRequestDto;
@@ -118,6 +118,6 @@ public class MusicService {
 	public MusicResponseDto getMusic(Long songId) {
 		return songRepository.findSongById(songId)
 				.map(MusicResponseDto::new)
-				.orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND, songId));
+				.orElseThrow(() -> new NotFoundException(CommonErrorCode.NOT_FOUND, songId));
 	}
 }
