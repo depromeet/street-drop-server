@@ -35,6 +35,7 @@ public class ItemClaimService {
                 .reason(itemClaimRequestDto.getReason())
                 .itemId(itemId)
                 .userId(user.getId())
+                .itemContent(item.getContent())
                 .status(WAITING)
                 .build();
 
