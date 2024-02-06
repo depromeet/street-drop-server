@@ -1,0 +1,1 @@
+ALTER TABLE users_level ADD distance INT NOT NULL DEFAULT 0;

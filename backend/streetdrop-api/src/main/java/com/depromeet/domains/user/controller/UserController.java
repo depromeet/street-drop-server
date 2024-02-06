@@ -2,6 +2,7 @@ package com.depromeet.domains.user.controller;
 
 import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.domains.user.dto.request.NicknameChangeDto;
+import com.depromeet.domains.user.dto.response.UserDistanceResponseDto;
 import com.depromeet.domains.user.dto.response.UserLevelResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.domains.user.service.UserLevelService;
@@ -66,4 +67,13 @@ public class UserController {
         var response = userLevelService.getUserLevel(user);
         return ResponseDto.ok(response);
     }
+
+    @Operation(summary = "사용자 반경 조회")
+    @ApiResponse(responseCode = "200", description = "사용자 반경 조회 성공")
+    @GetMapping("/me/distance")
+    public ResponseEntity<UserDistanceResponseDto> getUserDistance(@ReqUser User user) {
+        var response = userService.getUserDistance(user);
+        return ResponseDto.ok(response);
+    }
+
 }
