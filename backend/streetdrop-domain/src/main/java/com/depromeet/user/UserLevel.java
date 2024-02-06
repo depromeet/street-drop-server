@@ -25,10 +25,14 @@ public class UserLevel {
 	@Column(nullable = false)
 	private String image;
 
+	@Column(nullable = false)
+	private Integer distance;
+
 	@Builder
-	public UserLevel(String name, String description, String image) {
+	public UserLevel(String name, String description, String image, Integer distance) {
 		this.name = name;
 		this.description = description;
 		this.image = image;
+		this.distance = distance;
 	}
 }
