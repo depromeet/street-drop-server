@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {Button, Modal, Table, Tag} from 'antd';
+import {Button, Form, Modal, Table, Tag} from 'antd';
 import MusicRecommendEventCreate from "./MusicRecommendEventCreate";
 import BasicLayout from "../../../../layout/BasicLayout";
 import RecommendApi from "../../../../api/domain/music/RecommendApi";
@@ -14,6 +14,7 @@ function MusicRecommend() {
             pageSize: 30
         },
     });
+    const [form, setForm] = Form.useForm();
 
     useEffect(() => {
         fetchData();
@@ -56,10 +57,22 @@ function MusicRecommend() {
         setIsModalOpen(true);
     };
 
+    const createMusicRecommend = async () => {
+        const formValue = form.getFieldsValue();
+        const title = formValue.title;
+        const description = formValue.description;
+        const terms = formValue.terms;
+        if (title && description && terms) {
+            await RecommendApi.createMusicKeywordRecommend(title, description, terms);
+            await fetchData();
+        }
+    }
 
     const handleOk = () => {
+        createMusicRecommend()
         setIsModalOpen(false);
     };
+
 
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -112,9 +125,15 @@ function MusicRecommend() {
                 </div>
                 <Table columns={columns} dataSource={data}/>
 
-                <Modal title="음악 추천 이벤트 등록" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText='등록'
-                       cancelText='취소'>
-                    <MusicRecommendEventCreate/>
+                <Modal title="음악 추천 이벤트 등록"
+                       open={isModalOpen}
+                       onOk={handleOk}
+                       onCancel={handleCancel}
+                       okText='등록'
+                       cancelText='취소'
+                       bodyStyle={{overflowY: 'auto', maxHeight: 'calc(70vh)'}}
+                >
+                    <MusicRecommendEventCreate form={form}/>
                 </Modal>
             </BasicLayout>
         </>
