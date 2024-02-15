@@ -1,73 +1,117 @@
-import React, {useState} from "react"
-import {DatePicker, Divider, Form, Input, Radio, Select, TimePicker,} from 'antd';
+import React from "react"
+import {Button, Checkbox, Divider, Form, Input, Select, Space,} from 'antd';
+import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
 
-const options = [];
+function MusicRecommendEventCreate({form}) {
 
-const {RangePicker} = DatePicker;
-const {TextArea} = Input;
-
-
-function MusicRecommendEventCreate() {
-    const [form] = Form.useForm();
-    const [showDurationFields, setShowDurationFields] = useState(false);
-
-    const onFormEventTypeChange = (changedValues) => {
-        if (changedValues.eventTypeValue === 'duration') {
-            setShowDurationFields(true);
-        } else {
-            setShowDurationFields(false);
-        }
-    };
 
     return (
         <>
             <Form
                 form={form}
-                labelCol={{span: 4}}
-                wrapperCol={{span: 16}}
                 layout="horizontal"
-                onValuesChange={onFormEventTypeChange}
-                style={{maxWidth: 800}}
+                style={{maxWidth: 1800}}
             >
-                <Form.Item label="진행 범위">
-                    <Radio.Group>
-                        <Radio.Button value="all">전체</Radio.Button>
-                        <Radio.Button value="group">그룹</Radio.Button>
-                    </Radio.Group>
-                </Form.Item>
-                <Form.Item label="타입">
-                    <Radio.Group name="eventTypeValue">
-                        <Radio.Button value="basic">기본</Radio.Button>
-                        <Radio.Button value="duration">기간</Radio.Button>
-                        <Radio.Button value="location">장소</Radio.Button>
-                    </Radio.Group>
-                </Form.Item>
-                <Form.Item label="이벤트 명">
+                <h4>제목</h4>
+                <Form.Item
+                    name="title"
+                >
                     <Input/>
                 </Form.Item>
-                <Form.Item label="이벤트 설명">
-                    <TextArea rows={1}/>
-                </Form.Item>
+
+                <h4>노출되는 설명 (필드를 추가하면 하나의 문장으로 연결됩니다.)</h4>
+                <Form.List name="description">
+                    {(fields, {add, remove}) => (
+                        <>
+                            {fields.map(({key, name, ...restField}) => (
+                                <Space key={key} style={{display: 'flex'}} align="baseline">
+                                    <Form.Item
+                                        {...restField}
+                                        name={[name, 'text']}
+                                        label="설명"
+                                        rules={[{required: true}]}
+                                    >
+                                        <Input placeholder="설명"/>
+                                    </Form.Item>
+                                    <Form.Item
+                                        {...restField}
+                                        name={[name, 'color']}
+                                        label="색상"
+                                        initialValue={"RecommendTitleBasic"}
+                                        rules={[{required: true}]}
+                                    >
+                                        <Select
+                                            defaultValue="RecommendTitleBasic"
+                                            style={{width: 120}}
+                                            options={[
+                                                {value: 'RecommendTitleBasic', label: '기본'},
+                                                {value: 'RecommendTitleHighLight', label: '강조'},
+                                            ]}
+                                        />
+                                    </Form.Item>
+                                    <MinusCircleOutlined onClick={() => remove(name)}/>
+                                </Space>
+                            ))}
+                            <Form.Item>
+                                <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined/>}>추가하기
+                                </Button>
+                            </Form.Item>
+                        </>
+                    )}
+                </Form.List>
+
+                <h4>추천 검색어</h4>
+                <Form.List name="terms">
+                    {(fields, {add, remove}) => (
+                        <>
+                            {fields.map(({key, name, ...restField}) => (
+                                <Space key={key} style={{display: 'flex'}} align="baseline">
+                                    <Form.Item
+                                        {...restField}
+                                        name={[name, 'text']}
+                                        label="검색어"
+                                        rules={[{required: true, message: 'Missing first name'}]}
+                                    >
+                                        <Input placeholder="검색어"/>
+                                    </Form.Item>
+                                    <Form.Item
+                                        {...restField}
+                                        name={[name, 'color']}
+                                        label="색상"
+                                        initialValue={"RecommendKeywordBasic"}
+                                        rules={[{required: true}]}
+                                    >
+                                        <Select
+                                            defaultValue="RecommendKeywordBasic"
+                                            style={{width: 100}}
+                                            options={[
+                                                {value: 'RecommendKeywordBasic', label: '기본'},
+                                                {value: 'RecommendKeywordHighLight', label: '강조'},
+                                            ]}
+                                        />
+                                    </Form.Item>
+                                    <MinusCircleOutlined onClick={() => remove(name)}/>
+                                </Space>
+                            ))}
+                            <Form.Item>
+                                <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined/>}>추가하기
+                                </Button>
+                            </Form.Item>
+                        </>
+                    )}
+                </Form.List>
 
                 <Divider/>
-                <Form.Item label="이벤트 문구">
-                    <Input/>
-                </Form.Item>
-                <Form.Item label="이벤트 태그">
-                    <Select mode="tags" placeholder="Search Tag" options={options}/>
+                <Form.Item
+                    name="active"
+                    initialValue={true}
+                >
+                    <Checkbox
+                        defaultChecked={false}
+                    >비활성화하려면 체크하세요</Checkbox>
                 </Form.Item>
 
-                {showDurationFields && (
-                    <>
-                        <Divider/>
-                        <Form.Item label="진행 일자">
-                            <RangePicker/>
-                        </Form.Item>
-                        <Form.Item label="진행 시간">
-                            <TimePicker.RangePicker/>
-                        </Form.Item>
-                    </>
-                )}
+
             </Form>
         </>
     );

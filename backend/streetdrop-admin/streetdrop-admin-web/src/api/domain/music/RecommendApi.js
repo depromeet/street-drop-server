@@ -9,6 +9,15 @@ const RecommendApi = {
                 size: size
             }
         })
+    },
+    createMusicKeywordRecommend: (
+        title, description, terms
+    ) => {
+        return axiosAuthInstance.post('/search-term/recommend', {
+            title: title,
+            description: description,
+            terms: terms
+        })
     }
 }
 
