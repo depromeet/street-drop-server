@@ -18,12 +18,22 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(STATELESS)
                 .and().cors()
                 .and().csrf().disable()
-                .addFilter(new ApiKeyAuthFilter(new ApiKeyAuthProvider()))
+                .addFilter(apiKeyAuthFilter())
                 .authorizeHttpRequests()
                 .anyRequest()
                 .authenticated()
                 .and().formLogin().disable();
         return http.build();
+    }
+
+    @Bean
+    public ApiKeyAuthFilter apiKeyAuthFilter() {
+        return new ApiKeyAuthFilter(apiKeyAuthProvider());
+    }
+
+    @Bean
+    public ApiKeyAuthProvider apiKeyAuthProvider() {
+        return new ApiKeyAuthProvider();
     }
 
 }
