@@ -1,8 +1,9 @@
 package com.depromeet.security.provider;
 
+import com.depromeet.error.code.GlobalErrorCode;
+import com.depromeet.error.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
@@ -15,8 +16,8 @@ public class ApiKeyAuthProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String principal = (String) authentication.getPrincipal();
-        if (!secretKey.equals(principal))  // TODO: custom exception
-            throw new BadCredentialsException("Authentication is required and has failed or has not been provided.");
+        if (!secretKey.equals(principal))
+            throw new UnauthorizedException(GlobalErrorCode.UNAUTHORIZED);
         authentication.setAuthenticated(true);
         return authentication;
     }

@@ -14,7 +14,8 @@ public enum GlobalErrorCode implements ErrorCodeInterface {
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "Bad Request", "This Request BadRequest"),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error", "Internal Server Error"),
     INVALID_INPUT_VALUE(HttpStatus.BAD_REQUEST, "Invalid Input Value", "Invalid Input Value"),
-    EXTERNAL_SERVER_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "External Sever Error","Invalid Input Value");
+    EXTERNAL_SERVER_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "External Sever Error","Invalid Input Value"),
+    UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED", "Authentication is required and has failed or has not been provided.");
 
     private final HttpStatus status;
     private final String code = name().toUpperCase();
