@@ -1,0 +1,1 @@
+ALTER TABLE item_claim ADD item_content VARCHAR(500) NOT NULL DEFAULT '';
