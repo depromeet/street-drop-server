@@ -83,6 +83,7 @@ public class ItemClaimServiceTest {
                     .itemId(item.getId())
                     .userId(user.getId())
                     .reason(itemClaimRequestDto.getReason())
+                    .itemContent("TEST")
                     .status(WAITING)
                     .build();
 
