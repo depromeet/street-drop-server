@@ -12,7 +12,7 @@ dependencies {
     implementation 'org.locationtech.jts:jts-core'
     implementation 'io.hypersistence:hypersistence-utils-hibernate-60:3.5.1'
     implementation 'com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations:2.15.2'
-
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
     annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
