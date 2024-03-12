@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import com.depromeet.security.provider.ApiKeyAuthProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,9 @@ class ApiKeyAuthFilterTest {
 
     @Mock
     private HttpServletRequest request;
+
+    @Mock
+    private ApiKeyAuthProvider apiKeyAuthProvider;
 
     @InjectMocks
     private ApiKeyAuthFilter apiKeyAuthFilter;
