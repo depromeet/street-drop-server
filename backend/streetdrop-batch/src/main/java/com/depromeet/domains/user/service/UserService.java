@@ -3,6 +3,7 @@ package com.depromeet.domains.user.service;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.level.LevelUpdatePolicy;
 import com.depromeet.domains.level.LevelUpdatePolicyImpl;
+import com.depromeet.domains.popup.service.PopupService;
 import com.depromeet.domains.user.UserItemDto;
 import com.depromeet.domains.user.repository.UserLevelRepository;
 import com.depromeet.domains.user.repository.UserRepository;
@@ -12,7 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -27,12 +31,14 @@ public class UserService {
 	private final UserLevelRepository userLevelRepository;
 	private final ItemRepository itemRepository;
 	private final Map<Integer, LevelUpdatePolicy> levelUpdatePolicies;
+	private final PopupService popupService;
 
-	public UserService(UserRepository userRepository, UserLevelRepository userLevelRepository, ItemRepository itemRepository) {
+	public UserService(UserRepository userRepository, UserLevelRepository userLevelRepository, ItemRepository itemRepository, PopupService popupService) {
 		this.userRepository = userRepository;
 		this.userLevelRepository = userLevelRepository;
 		this.itemRepository = itemRepository;
 		levelUpdatePolicies = createLevelUpdatePolicies();
+		this.popupService = popupService;
 	}
 
 	private Map<Integer, LevelUpdatePolicy> createLevelUpdatePolicies() {
@@ -69,6 +75,7 @@ public class UserService {
 			LevelUpdatePolicy policy = entry.getValue();
 			if (policy.isAcceptable(itemCount)) {
 				user.changeLevel(policy.getNewLevel().getId());
+				popupService.createLevelUpPopup(user, policy.getNewLevel().getId());
 				usersToUpdateLevel.add(user);
 				break;
 			}
