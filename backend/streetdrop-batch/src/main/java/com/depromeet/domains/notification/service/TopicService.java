@@ -7,7 +7,7 @@ import com.depromeet.common.error.exceptions.ExternalServerException;
 import com.depromeet.common.error.exceptions.NotFoundException;
 import com.depromeet.domains.notification.fcm.FcmService;
 import com.depromeet.domains.notification.repository.UserDeviceRepository;
-import com.depromeet.notification.UserDevice;
+import com.depromeet.domains.notification.domain.UserDevice;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

@@ -4,7 +4,7 @@ import com.depromeet.domains.notification.dto.request.TokenRequestDto;
 import com.depromeet.common.error.code.TokenErrorCode;
 import com.depromeet.common.error.exceptions.NotFoundException;
 import com.depromeet.domains.notification.repository.UserDeviceRepository;
-import com.depromeet.notification.UserDevice;
+import com.depromeet.domains.notification.domain.UserDevice;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

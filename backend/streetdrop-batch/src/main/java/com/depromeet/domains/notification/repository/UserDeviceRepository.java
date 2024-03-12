@@ -1,6 +1,6 @@
 package com.depromeet.domains.notification.repository;
 
-import com.depromeet.notification.UserDevice;
+import com.depromeet.domains.notification.domain.UserDevice;
 import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

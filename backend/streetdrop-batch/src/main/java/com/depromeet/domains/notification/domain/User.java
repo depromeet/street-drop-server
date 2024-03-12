@@ -1,4 +1,4 @@
-package com.depromeet.notification;
+package com.depromeet.domains.notification.domain;
 
 import lombok.Builder;
 

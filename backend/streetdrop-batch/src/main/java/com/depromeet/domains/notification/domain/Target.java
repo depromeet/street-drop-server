@@ -1,6 +1,6 @@
-package com.depromeet.notification;
+package com.depromeet.domains.notification.domain;
 
-import com.depromeet.notification.vo.Channel;
+import com.depromeet.domains.notification.domain.vo.Channel;
 import lombok.Builder;
 
 @Builder
