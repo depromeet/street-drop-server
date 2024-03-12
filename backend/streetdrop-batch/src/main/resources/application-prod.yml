@@ -10,9 +10,17 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+  data:
+    mongodb:
+      uri: ${MONGO_DB_URL}
+auth:
+  header: ${AUTH_HEADER}
+  secret-key: ${AUTH_SECRET_KEY}
 slack:
   token: ${slack.token}
   monitoring-channel: error
   report-channel: report
 notification:
   noti-server-url: ${NOTI_SERVER_URL}
+fcm:
+  value: streetdrop-notification-fcm.json

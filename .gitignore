@@ -45,5 +45,5 @@ src/**/resources/schema.sql
 src/main/generated/
 
 
-### Notification ###
-backend/streetdrop-notification/src/main/resources/streetdrop-notification-fcm.json
+### FCM ###
+backend/streetdrop-batch/src/main/resources/streetdrop-notification-fcm.json
