@@ -1,9 +1,0 @@
-spring:
-  data:
-    mongodb:
-      uri: ${MONGO_DB_URL}
-fcm:
-  value: streetdrop-notification-fcm.json
-auth:
-  header: ${AUTH_HEADER}
-  secret-key: ${AUTH_SECRET_KEY}
