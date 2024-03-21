@@ -64,49 +64,63 @@ const config = {
           src: 'img/logo.svg',
         },
         items: [
-          {to: '/blog', label: 'Blog', position: 'left'}
+          {to: '/blog', label: 'Blog', position: 'left'},
+          {
+            href: 'https://street-drop.com/',
+            label: "Download",
+            position: 'right'
+          },
+          {
+            href: 'https://github.com/depromeet/street-drop-server',
+            position: 'right',
+            className: 'header-github-link',
+            'aria-label': 'GitHub repository',
+          },
         ],
       },
       footer: {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Web Site',
             items: [
               {
                 label: 'Document',
                 to: '/docs/intro',
               },
-            ],
-          },
-          {
-            title: 'Community',
-            items: [
               {
-                label: 'Mail',
-                href: 'https://discordapp.com/invite/docusaurus',
-              }
+                label: 'Blog',
+                to: '/blog',
+              },
             ],
           },
           {
             title: 'Channel',
             items: [
               {
-                label: 'Behance',
-                href: 'https://www.behance.net/gallery/175696753/Street-Drop-Location-based-music-community-services',
-              },
+                label: 'Instagram',
+                href: 'https://www.instagram.com/streetdrop_official',
+              }
+            ],
+          },
+          {
+            title: 'Development',
+            items: [
               {
-                label: 'GitHub(Server)',
+                label: 'GitHub - Server',
                 href: 'https://github.com/depromeet/street-drop-server',
               },
               {
-                label: 'GitHub(Client)',
+                label: 'GitHub - Client',
                 href: 'https://github.com/depromeet/street-drop-iOS',
               },
+              {
+                label: 'Behance',
+                href: 'https://www.behance.net/gallery/175696753/Street-Drop-Location-based-music-community-services',
+              },
             ],
-          },
+          }
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} StreetDrop.`,
       },
       prism: {
         theme: lightCodeTheme,
