@@ -1,6 +1,6 @@
 package com.depromeet.domains.level.service;
 
-import com.depromeet.domains.level.data.LevelPolicy;
+import com.depromeet.level.data.LevelPolicy;
 import com.depromeet.domains.level.dto.LevelPolicyDataDto;
 import com.depromeet.domains.level.dto.LevelPolicyResponseDto;
 import lombok.RequiredArgsConstructor;
