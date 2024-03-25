@@ -1,4 +1,4 @@
-package com.depromeet.domains.level.data;
+package com.depromeet.level.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
