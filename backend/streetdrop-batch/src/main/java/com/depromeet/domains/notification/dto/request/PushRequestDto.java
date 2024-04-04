@@ -1,5 +1,6 @@
 package com.depromeet.domains.notification.dto.request;
 
+import com.depromeet.notification.vo.NotificationType;
 import com.google.firebase.database.annotations.NotNull;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -17,4 +18,10 @@ public class PushRequestDto {
 
     @NotNull
     private String content;
+
+    private NotificationType notificationType;
+
+    private String path;
+
+    private String pid;
 }
