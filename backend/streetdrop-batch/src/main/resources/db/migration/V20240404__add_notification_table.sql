@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS users_device (
 
 CREATE TABLE IF NOT EXISTS notification_action (
     notification_action_id BIGINT NOT NULL AUTO_INCREMENT,
-    path VARCHAR(255),
-    pid VARCHAR(255),
+    path VARCHAR(255) NOT NULL,
+    pid VARCHAR(255) NOT NULL,
     PRIMARY KEY(notification_action_id)
 );
 
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS notification (
     notification_type VARCHAR(255) NOT NULL,
     is_viewed BIT NOT NULL,
     user_device_id BIGINT NOT NULL,
-    notification_action_id BIGINT NULL,
+    notification_action_id BIGINT NOT NULL,
     created_at DATETIME(6) NOT NULL,
     modified_at DATETIME(6) NOT NULL,
     PRIMARY KEY(notification_id),

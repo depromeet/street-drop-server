@@ -21,8 +21,10 @@ public class NotificationAction {
     @Column(name = "notification_action_id")
     private Long id;
 
+    @Column(nullable = false)
     private String path;
 
+    @Column(nullable = false)
     private String pid;
 
     @Builder

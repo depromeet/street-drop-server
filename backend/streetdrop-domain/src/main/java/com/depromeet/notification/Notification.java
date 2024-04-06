@@ -42,7 +42,7 @@ public class Notification extends BaseTimeEntity {
     private UserDevice userDevice;
 
     @OneToOne(fetch = LAZY, cascade = ALL)
-    @JoinColumn(name = "notification_action_id")
+    @JoinColumn(name = "notification_action_id", nullable = false)
     private NotificationAction notificationAction;
 
     @Builder
