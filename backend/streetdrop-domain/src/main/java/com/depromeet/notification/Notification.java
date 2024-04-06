@@ -34,7 +34,7 @@ public class Notification extends BaseTimeEntity {
     private NotificationType notificationType;
 
     @Column(nullable = false)
-    private boolean isVeiwed;
+    private boolean isViewed;
 
     @ManyToOne(fetch = LAZY, optional = false)
     @JoinColumn(name = "user_device_id", insertable = false, updatable = false, nullable = false)
@@ -50,7 +50,7 @@ public class Notification extends BaseTimeEntity {
         this.title = title;
         this.content = content;
         this.notificationType = notificationType;
-        this.isVeiwed = false;
+        this.isViewed = false;
         this.userDevice = userDevice;
         this.notificationAction = notificationAction;
     }
