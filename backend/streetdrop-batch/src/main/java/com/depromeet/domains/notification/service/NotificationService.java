@@ -29,7 +29,7 @@ public class NotificationService {
         for (Long userId : pushRequestDto.getUserIds()) {
             var userDevice = userDeviceRepository.findByUserId(userId)
                     .orElseThrow(() -> new RuntimeException("Token not found for userId: " + userId));
-            if (userDevice.isAlertOn()) {  // AlertOn 필드가 추가되면서 알람을 킨 사용자만 알림을 전송하도록 변경
+            if (userDevice.isAlertOn()) {
                 var notificationAction = NotificationAction.builder()
                         .path(pushRequestDto.getPath())
                         .pid(pushRequestDto.getPid())
