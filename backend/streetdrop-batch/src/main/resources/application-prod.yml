@@ -9,7 +9,11 @@ spring:
       maximum-pool-size: 20
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    ignore-migration-patterns: "*:missing"
 auth:
   header: ${AUTH_HEADER}
   secret-key: ${AUTH_SECRET_KEY}
