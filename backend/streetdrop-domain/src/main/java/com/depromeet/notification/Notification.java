@@ -1,5 +1,6 @@
 package com.depromeet.notification;
 
+import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -37,10 +38,10 @@ public class Notification extends BaseTimeEntity {
     private boolean isViewed;
 
     @ManyToOne(fetch = LAZY, optional = false)
-    @JoinColumn(name = "user_device_id", insertable = false, updatable = false, nullable = false)
+    @JoinColumn(name = "user_device_id", nullable = false)
     private UserDevice userDevice;
 
-    @OneToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY, cascade = ALL)
     @JoinColumn(name = "notification_action_id")
     private NotificationAction notificationAction;
 
