@@ -3,6 +3,7 @@ package com.depromeet.domains.user.controller;
 import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.domains.user.dto.request.NicknameChangeDto;
 import com.depromeet.domains.user.dto.response.UserDistanceResponseDto;
+import com.depromeet.domains.user.dto.response.UserLevelProgressDto;
 import com.depromeet.domains.user.dto.response.UserLevelResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.domains.user.service.UserLevelService;
@@ -65,6 +66,15 @@ public class UserController {
     @GetMapping("/me/level")
     public ResponseEntity<UserLevelResponseDto> getUserLevel(@ReqUser User user) {
         var response = userLevelService.getUserLevel(user);
+        return ResponseDto.ok(response);
+    }
+
+    @Operation(summary = "사용자 레벨 진행사항 조회")
+    @ApiResponse(responseCode = "200", description = "사용자 레벨 진행사항 조회 성공")
+    @ApiErrorResponse(errorCode = "COMMON_NOT_FOUND", description = "사용자 유저 레벨이 존재하지 않음")
+    @GetMapping("/me/level/progress")
+    public ResponseEntity<UserLevelProgressDto> getUserLevelProgress(@ReqUser User user) {
+        var response = userLevelService.getUserLevelProgress(user);
         return ResponseDto.ok(response);
     }
 
