@@ -1,5 +1,8 @@
 package com.depromeet.domains.notification.service;
 
+import static com.depromeet.common.error.code.TokenErrorCode.TOKEN_NOT_FOUND;
+
+import com.depromeet.common.error.exceptions.NotFoundException;
 import com.depromeet.domains.notification.dto.request.AllPushRequestDto;
 import com.depromeet.domains.notification.dto.request.PushRequestDto;
 import com.depromeet.domains.notification.dto.request.TopicPushRequestDto;
@@ -28,7 +31,7 @@ public class NotificationService {
 
         for (Long userId : pushRequestDto.getUserIds()) {
             var userDevice = userDeviceRepository.findByUserId(userId)
-                    .orElseThrow(() -> new RuntimeException("Token not found for userId: " + userId));
+                    .orElseThrow(() -> new NotFoundException(TOKEN_NOT_FOUND));
             if (userDevice.isAlertOn()) {
                 var notificationAction = NotificationAction.builder()
                         .path(pushRequestDto.getPath())
