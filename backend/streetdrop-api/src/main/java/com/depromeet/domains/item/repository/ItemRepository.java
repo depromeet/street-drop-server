@@ -1,6 +1,7 @@
 package com.depromeet.domains.item.repository;
 
 import com.depromeet.item.Item;
+import com.depromeet.user.User;
 import org.locationtech.jts.geom.Point;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +22,5 @@ public interface ItemRepository extends JpaRepository<Item, Long>, QueryDslItemR
     @Query("SELECT i FROM Item i JOIN FETCH i.itemLocation JOIN FETCH i.user JOIN FETCH i.song WHERE i.id = :itemId")
     Optional<Item> findById(@Param("itemId") Long itemId);
 
+    Long countByUser(User user);
 }
