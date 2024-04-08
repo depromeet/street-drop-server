@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 
+import static com.depromeet.domains.level.data.LevelPolicy.getNextLevel;
+
 @RequiredArgsConstructor
 @Service
 public class UserLevelService {
@@ -40,16 +42,7 @@ public class UserLevelService {
 		var isShow = !(currentLevel == LevelPolicy.LEVEL_3);
 		var tipMessage = "레벨업하면 음악을 들을 수 있는 반경이 넓어져요!";
 		return new UserLevelProgressDto(isShow, remainCount, dropCount, nextLevel.getDropCountStart(), tipMessage);
-
 	}
 
-	private LevelPolicy getNextLevel(LevelPolicy currentLevel) {
-		int nextIndex = currentLevel.ordinal() + 1;
-		if (nextIndex < LevelPolicy.values().length) {
-			return LevelPolicy.values()[nextIndex];
-		} else {
-			return currentLevel;
-		}
-	}
 }
 
