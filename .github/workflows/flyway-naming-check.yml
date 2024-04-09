@@ -23,4 +23,4 @@ jobs:
       - name: flyway-naming-checker
         uses: seonghun-dev/flyway-naming-checker@v0.1.0
         with:
-          path: '/backend/streetdrop-api/src/main/resources/db/migration'
+          path: 'backend/streetdrop-api/src/main/resources/db/migration'
