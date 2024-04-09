@@ -1,15 +1,17 @@
 package com.depromeet.domains.notification.service;
 
+import static com.depromeet.common.error.code.TokenErrorCode.TOKEN_NOT_FOUND;
+
+import com.depromeet.common.error.exceptions.NotFoundException;
 import com.depromeet.domains.notification.dto.request.AllPushRequestDto;
 import com.depromeet.domains.notification.dto.request.PushRequestDto;
 import com.depromeet.domains.notification.dto.request.TopicPushRequestDto;
 import com.depromeet.domains.notification.repository.NotificationRepository;
-import com.depromeet.domains.notification.repository.UserDeviceRepository;
-import com.depromeet.domains.notification.domain.Notification;
-import com.depromeet.domains.notification.domain.Target;
-import com.depromeet.domains.notification.domain.User;
-import com.depromeet.domains.notification.domain.UserDevice;
-import com.depromeet.domains.notification.domain.vo.Channel;
+import com.depromeet.domains.user.repository.UserDeviceRepository;
+import com.depromeet.notification.Notification;
+import com.depromeet.notification.NotificationAction;
+import com.depromeet.notification.vo.NotificationType;
+import com.depromeet.user.UserDevice;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -29,24 +31,21 @@ public class NotificationService {
 
         for (Long userId : pushRequestDto.getUserIds()) {
             var userDevice = userDeviceRepository.findByUserId(userId)
-                    .orElseThrow(() -> new RuntimeException("Token not found for userId: " + userId));
-            User user = User.builder()
-                    .userId(userId)
-                    .deviceToken(userDevice.getDeviceToken())
-                    .build();
-
-            Target target = Target.builder()
-                    .channel(Channel.GENERAL)
-                    .build();
-
-            Notification notification = Notification.builder()
-                    .user(user)
-                    .target(target)
-                    .title(pushRequestDto.getTitle())
-                    .content(pushRequestDto.getContent())
-                    .build();
-
-            notificationList.add(notification);
+                    .orElseThrow(() -> new NotFoundException(TOKEN_NOT_FOUND));
+            if (userDevice.isAlertOn()) {
+                var notificationAction = NotificationAction.builder()
+                        .path(pushRequestDto.getPath())
+                        .pid(pushRequestDto.getPid())
+                        .build();
+                var notification = Notification.builder()
+                        .title(pushRequestDto.getTitle())
+                        .content(pushRequestDto.getContent())
+                        .notificationType(pushRequestDto.getNotificationType())
+                        .userDevice(userDevice)
+                        .notificationAction(notificationAction)
+                        .build();
+                notificationList.add(notification);
+            }
         }
 
         notificationRepository.saveAll(notificationList);
@@ -57,25 +56,23 @@ public class NotificationService {
     public void save(AllPushRequestDto pushRequestDto) {
         List<Notification> notificationList = new ArrayList<>();
 
-        List<UserDevice> userDevices = userDeviceRepository.findAll();
+        var userDevices = userDeviceRepository.findAll();
+        var notificationAction = NotificationAction.builder()
+                .path(pushRequestDto.getPath())
+                .pid(pushRequestDto.getPid())
+                .build();
+
         for (UserDevice userDevice : userDevices) {
-            User user = User.builder()
-                    .userId(userDevice.getUserId())
-                    .deviceToken(userDevice.getDeviceToken())
-                    .build();
-
-            Target target = Target.builder()
-                    .channel(Channel.GENERAL)
-                    .build();
-
-            Notification notification = Notification.builder()
-                    .user(user)
-                    .target(target)
-                    .title(pushRequestDto.getTitle())
-                    .content(pushRequestDto.getContent())
-                    .build();
-
-            notificationList.add(notification);
+            if (userDevice.isAlertOn()) {
+                var notification = Notification.builder()
+                        .title(pushRequestDto.getTitle())
+                        .content(pushRequestDto.getContent())
+                        .notificationType(NotificationType.ALL)
+                        .userDevice(userDevice)
+                        .notificationAction(notificationAction)
+                        .build();
+                notificationList.add(notification);
+            }
         }
 
         notificationRepository.saveAll(notificationList);
