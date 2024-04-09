@@ -17,7 +17,6 @@ dependencies {
     implementation project(':streetdrop-domain')
     implementation project(':streetdrop-common')
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    runtimeOnly 'com.mysql:mysql-connector-j'
     implementation 'org.hibernate:hibernate-spatial:6.2.2.Final'
     implementation 'org.locationtech.jts:jts-core'
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -39,9 +38,6 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.4.4'
-
-    implementation 'org.flywaydb:flyway-core'
-    implementation 'org.flywaydb:flyway-mysql'
 }
 
 
