@@ -31,7 +31,7 @@ public class AppleMusicService implements MusicService {
                 .uri(uriBuilder -> uriBuilder
                         .path("/v1/catalog/kr/search")
                         .queryParam("types", "songs")
-                        .queryParam("limit", 10)
+                        .queryParam("limit", 20)
                         .queryParam("term", keyword)
                         .build())
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + appleMusicApiKey)
