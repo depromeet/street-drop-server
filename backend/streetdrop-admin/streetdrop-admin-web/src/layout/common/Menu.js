@@ -57,7 +57,12 @@ const MenuComponent = () => {
             <Menu.SubMenu key="sub4" icon={<BellOutlined/>} title="푸시알림 관리">
                 <Menu.Item key="9">
                     <Link to="/notification/create">• 푸시알림 생성</Link></Menu.Item>
-                <Menu.Item key="10">• 푸시알림 기록</Menu.Item>
+                <Menu.Item key="10">
+                    <Link to="/notification/list">• 푸시알림 기록</Link>
+
+                    </Menu.Item>
+
+
             </Menu.SubMenu>
             <Menu.SubMenu key="sub5" icon={<PartitionOutlined/>} title="어드민 관리">
                 <Menu.Item key="9">

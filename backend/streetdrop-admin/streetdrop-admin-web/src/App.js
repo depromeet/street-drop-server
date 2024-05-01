@@ -9,7 +9,7 @@ import DropMusicFail from './components/items/drop/result/DropMusicFail';
 import Login from './pages/Login';
 import MusicRecommend from './components/items/music/recommend/MusicRecommend';
 import UserListPage from "./components/user/UserListPage";
-import CreateNotification from "./components/notification/CreateNotification";
+import CreateNotificationPage from "./pages/notification/CreateNotificationPage";
 import ItemListPage from "./components/items/ItemListPage";
 import UserSignUpGraph from "./components/user/UserSignUpGraph";
 import LocationAnalysis from "./components/location/LocationAnalysis";
@@ -20,6 +20,7 @@ import MemberLoginLogPage from "./components/member/MemberLoginLogPage";
 import MemberSecuritySettingPage from "./components/member/MemberSecuritySettingPage";
 import ItemReportPage from "./components/items/ItemReportPage";
 import BannedWordPage from "./components/items/BannedWordPage";
+import NotitificationListPage from "./pages/notification/NotificationListPage";
 
 const App = () => {
     return (
@@ -41,7 +42,8 @@ const App = () => {
                         <Route path='/user/list' element={<UserListPage/>}/>
                         <Route path='/user/block' element={<UserBlockPage/>}/>
                         <Route path='/user/signup-graph' element={<UserSignUpGraph/>}/>
-                        <Route path='/notification/create' element={<CreateNotification/>}/>
+                        <Route path='/notification/create' element={<CreateNotificationPage/>}/>
+                        <Route path='/notification/list' element={<NotitificationListPage/>}/>
                         <Route path='/members/list' element={<MemberListPage/>}/>
                         <Route path='/members/login-log' element={<MemberLoginLogPage/>}/>
                         <Route path='/members/security' element={<MemberSecuritySettingPage/>}/>
