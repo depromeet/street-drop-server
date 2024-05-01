@@ -6,7 +6,7 @@ import NotificationApi from "../../api/domain/notification/NotificationApi";
 const {TextArea} = Input;
 
 
-function CreateNotification() {
+function CreateNotificationPage() {
     const [form] = Form.useForm();
     const [pushType, setPushType] = useState('all');
     const [messageApi, contextHolder] = message.useMessage();
@@ -130,4 +130,4 @@ function CreateNotification() {
     )
 }
 
-export default CreateNotification;
+export default CreateNotificationPage;
