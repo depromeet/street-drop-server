@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import {Drawer, Table} from 'antd';
 
 import BasicLayout from "../../layout/BasicLayout";
-import UserDetailPage from "./UserDetailPage";
+import UserDetailPage from "../location/user/UserDetailPage";
 import UserApi from "../../api/domain/user/UserApi";
 import {InitialPagination} from "../../constant/PaginationConstant";
 

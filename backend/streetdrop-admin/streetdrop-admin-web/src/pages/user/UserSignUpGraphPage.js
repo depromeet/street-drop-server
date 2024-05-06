@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 
 import BasicLayout from "../../layout/BasicLayout";
-import UserLineGraph from "../graph/UserLineGraph";
+import UserLineGraph from "../../components/graph/UserLineGraph";
 import {Button, Col, DatePicker, Form, Row, Space, Table} from "antd";
 import * as PropTypes from "prop-types";
 
@@ -16,7 +16,7 @@ RangePicker.propTypes = {
     onChange: PropTypes.any
 };
 
-function UserSignUpGraph() {
+function UserSignUpGraphPage() {
 
     const [data, setData] = useState([]);
     const [dayRange, setDayRange] = useState([dayjs().add(-30, 'day'), dayjs()]);
@@ -130,4 +130,4 @@ function UserSignUpGraph() {
     )
 }
 
-export default UserSignUpGraph;
+export default UserSignUpGraphPage;

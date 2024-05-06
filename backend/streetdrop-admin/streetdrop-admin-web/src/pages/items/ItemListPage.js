@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import {Button, Drawer, Modal, Table} from 'antd';
 import BasicLayout from "../../layout/BasicLayout";
 import ItemApi from "../../api/domain/item/ItemApi";
-import ItemDetailPage from "./ItemDetailPage";
+import ItemDetailPage from "../../components/items/ItemDetailPage";
 import {InitialPagination} from "../../constant/PaginationConstant";
 
 function ItemListPage() {
