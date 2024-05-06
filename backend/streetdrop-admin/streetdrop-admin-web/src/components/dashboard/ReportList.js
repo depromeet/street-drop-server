@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {List, Tag, Typography} from "antd";
 import DashboardApi from "../../api/domain/dashboard/DashboardApi";
+import ItemApi from "../../api/domain/item/ItemApi";
+import ItemClaimApi from "../../api/domain/item/ItemClaimApi";
 
 const {Title} = Typography;
 
@@ -12,8 +14,8 @@ function ReportListDashboard () {
     }, []);
 
     const fetchData = async () => {
-        const response = await DashboardApi.getRecentReports()
-        setContentList(response.data);
+        const response = await ItemClaimApi.getItemClaim(0,5)
+        setContentList(response.data['data']);
     }
 
 
@@ -28,12 +30,12 @@ function ReportListDashboard () {
                         <List.Item>
                             <List.Item.Meta
                                 style={{
-                                    color: item.status === "Open" ? "black" : "gray",
+                                    color: item.status === "WAITING" ? "black" : "gray",
                                 }}
-                                title={item.title}
-                                description={item.content}
+                                title={item.reason}
+                                description={item.itemContent}
                             />
-                            <Tag color={item.status === "Open" ? "blue" : "gray"}>{item.status}</Tag>
+                            <Tag color={item.status === "WAITING" ? "blue" : "gray"}>{item.status}</Tag>
 
                         </List.Item>
                     )}

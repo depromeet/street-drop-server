@@ -3,7 +3,6 @@ import DropKakaoMap from "./DropKakaoMap";
 import {Button, Form, Input} from 'antd';
 import {useLocation, useNavigate} from "react-router-dom";
 import SelectedMusicView from "./SelectedMusicView";
-import MapLayout from "../../../layout/MapLayout";
 import DropApi from "../../../api/domain/music/DropApi";
 
 
@@ -82,8 +81,8 @@ function DropSingleMusic() {
 
     return (
         <>
-            <MapLayout>
-                <DropKakaoMap onMapClick={handleMapClick}/>
+
+            <DropKakaoMap onMapClick={handleMapClick}/>
                 <div style={{margin: '10px 10px 10px 10px'}}>
                 </div>
                 <div style={{padding: 48}}>
@@ -108,7 +107,7 @@ function DropSingleMusic() {
                     </Form>
                 </div>
 
-            </MapLayout>
+
         </>
     );
 }

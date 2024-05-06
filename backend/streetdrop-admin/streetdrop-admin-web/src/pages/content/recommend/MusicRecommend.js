@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react"
 import {Button, Form, Modal, Table, Tag} from 'antd';
 import MusicRecommendEventCreate from "./MusicRecommendEventCreate";
-import BasicLayout from "../../../../layout/BasicLayout";
-import RecommendApi from "../../../../api/domain/music/RecommendApi";
+import BasicLayout from "../../../layout/BasicLayout";
+import RecommendApi from "../../../api/domain/music/RecommendApi";
 
 
 function MusicRecommend() {
