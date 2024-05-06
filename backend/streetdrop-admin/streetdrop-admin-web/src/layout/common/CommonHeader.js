@@ -17,6 +17,10 @@ function CommonHeader(props) {
     });
     const fetchMemberName = async () => {
         try {
+            if (window.location.pathname === '/login') {
+                return;
+            }
+
             const response = await MemberApi.getMemberInfo();
             setMemberName(response.data.name);
             setMemberPart(response.data.part);
