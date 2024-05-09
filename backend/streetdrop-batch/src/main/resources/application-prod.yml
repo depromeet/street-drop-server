@@ -20,6 +20,6 @@ auth:
 fcm:
   value: streetdrop-notification-fcm.json
 open-api:
-  secret-key: ${OPEN_API_KEY}
-  base-url: ${OPEN_API_URL}
+  secret-key: ${OPEN_API_SECRET_KEY}
+  base-url: ${OPEN_API_BASE_URL}
   weather-api-url: ${WEATHER_API_URL}
