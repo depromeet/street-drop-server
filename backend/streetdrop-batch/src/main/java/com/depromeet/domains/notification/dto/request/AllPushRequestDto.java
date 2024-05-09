@@ -13,4 +13,10 @@ public class AllPushRequestDto {
 
     @NotNull
     private String content;
+
+    @NotNull
+    private String path;
+
+    @NotNull
+    private String pid;
 }

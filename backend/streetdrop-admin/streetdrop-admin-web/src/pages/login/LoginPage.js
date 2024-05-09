@@ -1,10 +1,10 @@
 import {Button, Form, Input, Tooltip} from "antd";
-import '../styles/Login.css';
+import '../../styles/Login.css';
 import React from 'react';
-import LoginApi from "../api/domain/auth/LoginApi";
-import authService from "../service/AuthService";
+import LoginApi from "../../api/domain/auth/LoginApi";
+import authService from "../../service/AuthService";
 
-function Login() {
+function LoginPage() {
     const onLoginClick = async ({username, password}) => {
         try {
             const result = await LoginApi(username, password);
@@ -81,4 +81,4 @@ function Login() {
     )
 }
 
-export default Login;
+export default LoginPage;

@@ -1,0 +1,24 @@
+name: Flyway Naming Check
+
+on:
+  push:
+    branches: [ "*" ]
+    paths:
+      - "backend/streetdrop-domain/**"
+      - "backend/streetdrop-common/**"
+  pull_request:
+    branches: [ "main", "dev" ]
+    paths:
+      - "backend/streetdrop-domain/**"
+      - "backend/streetdrop-common/**"
+      - ".github/workflows/flyway-naming-check.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: flyway-naming-checker
+        uses: seonghun-dev/flyway-naming-checker@v0.1.0
+        with:
+          path: 'backend/streetdrop-domain/src/main/resources/db/migration'

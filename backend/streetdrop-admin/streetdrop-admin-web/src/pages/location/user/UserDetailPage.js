@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {Divider, List, Skeleton} from "antd";
-import UserApi from "../../api/domain/user/UserApi";
+import UserApi from "../../../api/domain/user/UserApi";
 
 function UserDetailPage({userId}) {
     const [userBasicInfo, setUserBasicInfo] = useState(null);

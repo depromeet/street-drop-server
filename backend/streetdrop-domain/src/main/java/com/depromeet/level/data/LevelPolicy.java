@@ -16,4 +16,13 @@ public enum LevelPolicy {
     private final Long level;
     private final Long dropCountStart;
     private final Long dropCountEnd;
+
+    public static LevelPolicy getNextLevel(LevelPolicy currentLevel){
+        int nextIndex = currentLevel.ordinal() + 1;
+        if (nextIndex < LevelPolicy.values().length) {
+            return LevelPolicy.values()[nextIndex];
+        } else {
+            return currentLevel;
+        }
+    }
 }

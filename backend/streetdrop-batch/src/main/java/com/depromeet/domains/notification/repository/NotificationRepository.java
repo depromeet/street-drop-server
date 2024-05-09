@@ -1,7 +1,7 @@
 package com.depromeet.domains.notification.repository;
 
-import com.depromeet.domains.notification.domain.Notification;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import com.depromeet.notification.Notification;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface NotificationRepository extends MongoRepository<Notification, String> {
+public interface NotificationRepository extends JpaRepository<Notification, String> {
 }
