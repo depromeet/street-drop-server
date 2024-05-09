@@ -24,6 +24,13 @@ public class UserService {
 	private final ItemRepository itemRepository;
 	private final PopupService popupService;
 
+
+	@Transactional
+	public void createGuidePopup() {
+		var signUpUsers = userRepository.findAllByCreatedAtBefore(LocalDateTime.now().minusMinutes(30));
+		signUpUsers.forEach(popupService::createGuidePopup);
+	}
+
 	@Transactional
 	public void updateLevel() {
 		var itemUpdateUsers = itemRepository.findAllItemUpdateUser(LocalDateTime.now().minusMinutes(30)).stream().distinct().toList();

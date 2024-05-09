@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class LevelUpdater {
 	public static LevelPolicy getUpdateLevel(Long dropCount) {
 		return Arrays.stream(LevelPolicy.values())
-				.filter(policy -> dropCount >= policy.getDropCountStart() && dropCount <= policy.getDropCountEnd())
+				.filter(policy -> dropCount >= policy.getDropCountStart() && dropCount < policy.getDropCountEnd())
 				.findFirst()
 				.orElse(LevelPolicy.LEVEL_1);
 	}

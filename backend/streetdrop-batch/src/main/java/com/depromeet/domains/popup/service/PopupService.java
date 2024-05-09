@@ -16,4 +16,9 @@ public class PopupService {
         Popup popup = new Popup(user.getId(), "LEVEL_" + newLevel);
         popupRepository.save(popup);
     }
+
+    public void createGuidePopup(User user) {
+        Popup popup = new Popup(user.getId(), "GUIDE_1");
+        popupRepository.save(popup);
+    }
 }
