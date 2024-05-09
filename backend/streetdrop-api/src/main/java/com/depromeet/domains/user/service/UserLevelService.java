@@ -3,10 +3,10 @@ package com.depromeet.domains.user.service;
 import com.depromeet.common.error.dto.CommonErrorCode;
 import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.item.repository.ItemRepository;
-import com.depromeet.domains.level.data.LevelPolicy;
 import com.depromeet.domains.user.dto.response.UserLevelProgressDto;
 import com.depromeet.domains.user.dto.response.UserLevelResponseDto;
 import com.depromeet.domains.user.repository.UserLevelRepository;
+import com.depromeet.level.data.LevelPolicy;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 
-import static com.depromeet.domains.level.data.LevelPolicy.getNextLevel;
+import static com.depromeet.level.data.LevelPolicy.getNextLevel;
+
 
 @RequiredArgsConstructor
 @Service
