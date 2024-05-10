@@ -1,5 +1,7 @@
 package com.depromeet.domains.level;
 
+import com.depromeet.common.error.code.GlobalErrorCode;
+import com.depromeet.common.error.exceptions.BusinessException;
 import com.depromeet.level.data.LevelPolicy;
 import lombok.AllArgsConstructor;
 
@@ -11,6 +13,7 @@ public class LevelUpdater {
 		return Arrays.stream(LevelPolicy.values())
 				.filter(policy -> dropCount >= policy.getDropCountStart() && dropCount < policy.getDropCountEnd())
 				.findFirst()
-				.orElse(LevelPolicy.LEVEL_1);
+				.orElseThrow(() -> new BusinessException(GlobalErrorCode.INTERNAL_SERVER_ERROR));
+
 	}
 }

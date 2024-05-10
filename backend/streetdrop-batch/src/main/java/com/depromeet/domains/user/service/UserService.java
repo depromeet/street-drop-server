@@ -1,5 +1,7 @@
 package com.depromeet.domains.user.service;
 
+import com.depromeet.common.error.code.GlobalErrorCode;
+import com.depromeet.common.error.exceptions.BusinessException;
 import com.depromeet.domains.item.dto.UserItemCount;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.level.LevelUpdater;
@@ -46,7 +48,10 @@ public class UserService {
 							.filter(dto -> dto.getUserId().equals(userId))
 							.map(UserItemCount::getItemCount)
 							.findFirst()
-							.orElse(null);
+							.orElseThrow(
+									() -> new BusinessException(GlobalErrorCode.INTERNAL_SERVER_ERROR)
+							);
+
 
 					LevelPolicy newLevel = LevelUpdater.getUpdateLevel(itemCount);
 					if (newLevel.getLevel() > user.getUserLevel().getId()) {
