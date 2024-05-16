@@ -1,5 +1,6 @@
 package com.depromeet.auth.dto.resonse;
 
+import com.depromeet.entity.Part;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MemberResponseDto {
 
-    private Long id;
+    private String id;
 
     private String email;
 
@@ -19,6 +20,6 @@ public class MemberResponseDto {
 
     private String name;
 
-    private String part;
+    private Part part;
 
 }

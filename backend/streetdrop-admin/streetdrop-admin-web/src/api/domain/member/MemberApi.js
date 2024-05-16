@@ -19,7 +19,11 @@ const MemberApi = {
             newPassword: newPassword
         }
         return axiosAuthInstance.patch('/member/me/change-password', data);
-    }
+    },
+    getPartList: () => {
+        return axiosAuthInstance.get('/member/part');
+    },
+
 }
 
 export default MemberApi;

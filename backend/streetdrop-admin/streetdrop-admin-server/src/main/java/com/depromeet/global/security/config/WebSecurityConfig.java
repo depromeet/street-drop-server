@@ -1,7 +1,7 @@
 package com.depromeet.global.security.config;
 
 
-import com.depromeet.auth.repository.MemoryMemberRepository;
+import com.depromeet.auth.repository.MemberRepository;
 import com.depromeet.global.security.filter.CustomUsernamePasswordAuthenticationFilter;
 import com.depromeet.global.security.filter.JwtAuthenticationFilter;
 import com.depromeet.global.security.provider.InvalidTokenAuthenticationEntryPoint;
@@ -36,7 +36,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class WebSecurityConfig {
 
     private final JwtTokenUtil jwtTokenUtil;
-    private final MemoryMemberRepository memberRepository;
+    private final MemberRepository memberRepository;
     private final ObjectMapper objectMapper;
     private final CustomLoginSuccessHandler successHandler;
     private final CustomLoginFailureHandler failureHandler;

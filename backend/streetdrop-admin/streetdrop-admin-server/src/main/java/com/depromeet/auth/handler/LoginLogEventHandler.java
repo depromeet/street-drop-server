@@ -1,8 +1,8 @@
 package com.depromeet.auth.handler;
 
-import com.depromeet.auth.entity.MemberLoginLog;
 import com.depromeet.auth.event.LoginLogEvent;
-import com.depromeet.auth.repository.MemoryMemberLoginLogRepository;
+import com.depromeet.auth.repository.MemberLoginLogRepository;
+import com.depromeet.entity.MemberLoginLog;
 import com.depromeet.global.security.provider.SecurityUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class LoginLogEventHandler {
 
-    private final MemoryMemberLoginLogRepository memberLoginLogRepository;
+    private final MemberLoginLogRepository memberLoginLogRepository;
 
     @EventListener
     public void createLoginLog(LoginLogEvent loginLogEvent) {
@@ -24,14 +24,14 @@ public class LoginLogEventHandler {
         SecurityUserDetails userDetails = (SecurityUserDetails) authentication.getPrincipal();
 
         var memberLoginLog = MemberLoginLog.builder()
-                .member(userDetails.getMember())
+
                 .loginIp(getRemoteAddr(request))
                 .userAgent(getUserAgent(request))
                 .createdAt(LocalDateTime.now())
                 .loginResult("Success")
                 .build();
 
-        memberLoginLogRepository.save(memberLoginLog);
+        memberLoginLogRepository.insert(memberLoginLog);
     }
 
     private String getRemoteAddr(HttpServletRequest request) {

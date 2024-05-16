@@ -4,6 +4,7 @@ import com.depromeet.auth.config.AdministratorConfig;
 import com.depromeet.auth.dto.request.SignupRequestDto;
 import com.depromeet.auth.event.CreateAdministratorEvent;
 import com.depromeet.auth.service.MemberService;
+import com.depromeet.entity.Part;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -20,12 +21,13 @@ public class AdministratorEventHandler {
         var signUpRequestDto = SignupRequestDto.builder()
                 .username(administratorConfig.getId())
                 .email("")
-                .part("Admin")
+                .part(Part.Admin)
                 .name("관리자")
                 .password(administratorConfig.getPassword())
                 .build();
-
-        memberService.signUp(signUpRequestDto);
+        if (!memberService.existsByUsername(signUpRequestDto.getUsername())) {
+            memberService.signUp(signUpRequestDto);
+        }
     }
 
 

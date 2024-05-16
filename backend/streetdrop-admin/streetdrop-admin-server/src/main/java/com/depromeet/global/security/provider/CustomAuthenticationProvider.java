@@ -23,10 +23,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String phoneNumber = authentication.getPrincipal().toString();
+        String username = authentication.getPrincipal().toString();
         String password = authentication.getCredentials().toString();
 
-        var userDetails = userDetailsService.loadUserByUsername(phoneNumber);
+        var userDetails = userDetailsService.loadUserByUsername(username);
 
         if (passwordEncoder.matches(password, userDetails.getPassword())) {
             return new UsernamePasswordAuthenticationToken(userDetails, null, null);

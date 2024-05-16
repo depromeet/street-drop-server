@@ -1,7 +1,7 @@
 package com.depromeet.auth.repository;
 
-import com.depromeet.auth.entity.MemberLoginLog;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.depromeet.entity.MemberLoginLog;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface MemberLoginLogRepository extends JpaRepository<MemberLoginLog, Long> {
+public interface MemberLoginLogRepository extends MongoRepository<MemberLoginLog, Long> {
 }

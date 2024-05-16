@@ -1,5 +1,6 @@
 package com.depromeet.auth.dto.request;
 
+import com.depromeet.entity.Part;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +16,7 @@ public class SignupRequestDto {
 
     String email;
 
-    String part;
+    Part part;
 
     String name;
 

@@ -5,9 +5,10 @@ import com.depromeet.auth.dto.resonse.JwtTokenResponseDto;
 import com.depromeet.auth.dto.resonse.MemberAllResponseDto;
 import com.depromeet.auth.dto.resonse.MemberInfoResponseDto;
 import com.depromeet.auth.dto.resonse.MemberResponseDto;
-import com.depromeet.auth.entity.Member;
-import com.depromeet.auth.repository.MemoryMemberRepository;
+import com.depromeet.auth.repository.MemberRepository;
 import com.depromeet.common.dto.PageMetaData;
+import com.depromeet.entity.Member;
+import com.depromeet.entity.Part;
 import com.depromeet.exception.BusinessException;
 import com.depromeet.exception.ErrorCode;
 import com.depromeet.global.security.token.JwtTokenProvider;
@@ -16,12 +17,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final MemoryMemberRepository memberRepository;
+    private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
@@ -35,7 +37,7 @@ public class MemberService {
                 .password(passwordEncoder.encode(signupRequestDto.getPassword()))
                 .build();
 
-        Member newMember = memberRepository.save(member);
+        Member newMember = memberRepository.insert(member);
         String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(newMember.getId()));
         String refreshToken = jwtTokenProvider.createRefreshToken(String.valueOf(newMember.getId()));
         return new JwtTokenResponseDto(accessToken, refreshToken);
@@ -76,5 +78,14 @@ public class MemberService {
         else {
             throw new BusinessException(ErrorCode.PASSWORD_NOT_MATCH);
         }
+    }
+
+    public boolean existsByUsername(String username) {
+        return memberRepository.findByUsername(username).isPresent();
+    }
+
+    public List<String> getPartList(){
+        var partList = Part.class.getEnumConstants();
+        return Stream.of(partList).map(Enum::name).toList();
     }
 }
