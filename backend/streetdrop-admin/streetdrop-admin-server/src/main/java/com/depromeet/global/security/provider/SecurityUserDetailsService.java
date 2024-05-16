@@ -1,6 +1,6 @@
 package com.depromeet.global.security.provider;
 
-import com.depromeet.auth.repository.MemoryMemberRepository;
+import com.depromeet.auth.repository.MemberRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,13 +13,14 @@ import org.springframework.stereotype.Service;
 public class SecurityUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private MemoryMemberRepository memberRepository;
+    private MemberRepository memberRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
-        return memberRepository.findByUsername(phoneNumber)
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return memberRepository.findByUsername(username)
                 .map(SecurityUserDetails::new)
                 .orElseThrow(() ->
-                        new UsernameNotFoundException("User not found"));
+                        new UsernameNotFoundException("User not found")
+                );
     }
 }

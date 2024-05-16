@@ -1,8 +1,7 @@
 package com.depromeet.auth.service;
 
-import com.depromeet.auth.dto.resonse.MemberLoginLogAllResponseDto;
 import com.depromeet.auth.dto.resonse.MemberLoginLogResponseDto;
-import com.depromeet.auth.repository.MemoryMemberLoginLogRepository;
+import com.depromeet.auth.repository.MemberLoginLogRepository;
 import com.depromeet.common.dto.PageMetaData;
 import com.depromeet.common.dto.PageResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -14,16 +13,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoginLogService {
 
-    private final MemoryMemberLoginLogRepository memberLoginLogRepository;
+    private final MemberLoginLogRepository memberLoginLogRepository;
 
     public PageResponseDto<MemberLoginLogResponseDto> getAllLoginLog() {
         var memberLoginLogList = memberLoginLogRepository.findAll();
         List<MemberLoginLogResponseDto> loginLogResponseDtoList = memberLoginLogList.stream().map(
                 memberLoginLog -> MemberLoginLogResponseDto.builder()
                         .id(memberLoginLog.getId())
-                        .userId(memberLoginLog.getMember().getUsername())
                         .userAgent(memberLoginLog.getUserAgent())
-                        .name(memberLoginLog.getMember().getName())
                         .loginIp(memberLoginLog.getLoginIp())
                         .loginAt(memberLoginLog.getCreatedAt())
                         .loginResult(memberLoginLog.getLoginResult())

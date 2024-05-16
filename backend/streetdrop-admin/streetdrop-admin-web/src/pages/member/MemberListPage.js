@@ -26,27 +26,23 @@ function MemberListPage() {
 
     const fetchData = async () => {
         const response = await MemberApi.getAllMembers(tableParams.pagination.current - 1, tableParams.pagination.pageSize);
-        setData(response.data.data);
+        setData(response.data.members);
         setTableParams({
             ...tableParams,
             pagination: {
                 ...tableParams.pagination,
-                total: response.data.meta.totalElements,
+                total: response.data['meta']['totalElements'],
             },
         });
     }
 
     const columns = [
-        {
-            title: 'ID',
-            dataIndex: 'id',
-            key: 'id',
-        }, {
+{
             title: '유저 아이디',
             dataIndex: 'userId'
         },
         {
-            title: '이름',
+            title: '멤버명',
             dataIndex: 'name',
         },
         {

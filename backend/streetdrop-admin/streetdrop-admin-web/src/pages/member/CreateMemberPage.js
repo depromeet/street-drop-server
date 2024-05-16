@@ -1,13 +1,24 @@
 import {Button, Form, Input, Select} from "antd";
-import React from "react"
+import React, {useEffect} from "react"
 import SignUpApi from "../../api/domain/auth/SignUpApi";
+import MemberApi from "../../api/domain/member/MemberApi";
 
 const {Option} = Select;
 
 function CreateMemberPage({refreshFunction, closeFunction}) {
     const [form] = Form.useForm();
     const formRef = React.useRef();
+    const [partList, setPartList] = React.useState([]);
 
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        const response = await MemberApi.getPartList();
+        setPartList(response.data);
+    }
 
     const createMember = async () => {
         const id = await form.getFieldValue("id");
@@ -15,7 +26,7 @@ function CreateMemberPage({refreshFunction, closeFunction}) {
         const email = await form.getFieldValue("email");
         const name = await form.getFieldValue("name");
         const part = await form.getFieldValue("part");
-        const response = await SignUpApi.signUp(id, password, email, name, part);
+        const response = await SignUpApi.signUp(id, email, part, name, password);
         if (response.status === 200) {
             alert("계정 생성에 성공했습니다")
             refreshFunction();
@@ -49,9 +60,9 @@ function CreateMemberPage({refreshFunction, closeFunction}) {
                 rules={[{required: true, message: '파트를 필수로 선택해주세요.'}]}
             >
                 <Select placeholder="파트를 선택해주세요">
-                    <Option value="backend">Backend</Option>
-                    <Option value="ios">iOS</Option>
-                    <Option value="design">Design</Option>
+                    {partList.map((part) => {
+                        return <Option value={part}>{part}</Option>
+                    })}
                 </Select>
             </Form.Item>
             <Form.Item

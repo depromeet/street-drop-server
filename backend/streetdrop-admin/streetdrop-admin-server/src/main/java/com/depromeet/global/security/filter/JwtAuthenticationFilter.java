@@ -1,8 +1,9 @@
 package com.depromeet.global.security.filter;
 
 
-import com.depromeet.auth.entity.Member;
-import com.depromeet.auth.repository.MemoryMemberRepository;
+import com.depromeet.auth.repository.MemberRepository;
+import com.depromeet.entity.Member;
+
 import com.depromeet.exception.BusinessException;
 import com.depromeet.exception.ErrorResponse;
 import com.depromeet.global.security.provider.SecurityUserDetails;
@@ -28,7 +29,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenUtil jwtTokenUtil;
-    private final MemoryMemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
 
     @Override
@@ -43,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             var id = jwtTokenUtil.getId(token);
 
-            Member member = memberRepository.findById(Long.valueOf(id))
+            Member member = memberRepository.findById(id)
                     .orElseThrow(() ->
                             new RuntimeException("Invalid member")
                     );
