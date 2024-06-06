@@ -22,10 +22,10 @@ public class Announcement extends BaseTimeEntity {
     @Column(name = "announcement_id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 200)
     private String title;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, length = 3000)
     private String content;
 
     @Builder
