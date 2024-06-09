@@ -71,4 +71,41 @@ class AnnouncementServiceTest {
         }
     }
 
+    @DisplayName("공지사항 단건 조회")
+    @Nested
+    class GetAnnouncementTest {
+        @Nested
+        @DisplayName("성공")
+        class Success {
+            @DisplayName("id가 일치하는 경우")
+            @Test
+            void getAnnouncementTestSuccess1() {
+                var announcement = new Announcement("Title 1", "Content 1");
+                when(announcementRepository.findById(1L)).thenReturn(Optional.of(announcement));
+
+                var result = announcementService.getAnnouncement(1L);
+
+                assertThat(result).isEqualTo(
+                        new AnnouncementResponseDto(announcement)
+                );
+            }
+        }
+
+        @Nested
+        @DisplayName("실패")
+        class Fail {
+            @DisplayName("id가 일치하지 않는 경우")
+            @Test
+            void getAnnouncementTestFail1() {
+                var announcementId = 1L;
+
+                when(announcementRepository.findById(announcementId)).thenReturn(Optional.empty());
+                when(announcementRepository.findById(1L)).thenReturn(Optional.empty());
+
+                assertThatThrownBy(() -> announcementService.getAnnouncement(announcementId))
+                        .isInstanceOf(NotFoundException.class);
+            }
+        }
+    }
+
 }

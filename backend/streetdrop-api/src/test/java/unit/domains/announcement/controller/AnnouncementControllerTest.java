@@ -77,4 +77,40 @@ public class AnnouncementControllerTest {
         }
     }
 
+    @DisplayName("[GET] 공지사항 단건 조회")
+    @Nested
+    class GetAnnouncementTest {
+        @Nested
+        @DisplayName("성공")
+        class Success {
+            @DisplayName("id가 일치하는 경우")
+            @Test
+            void getAnnouncementTestSuccess1() throws Exception {
+                var announcementId = 1L;
+                var announcementResponseDto = new AnnouncementResponseDto(new Announcement("Title 1", "Content 1"));
+                when(announcementService.getAnnouncement(announcementId)).thenReturn(announcementResponseDto);
+
+                var response = mvc.perform(get("/announcements/{announcementId}", announcementId));
+                response.andExpect(status().isOk())
+                        .andExpect(jsonPath("$.title").value("Title 1"))
+                        .andExpect(jsonPath("$.content").value("Content 1"));
+            }
+        }
+
+        @Nested
+        @DisplayName("실패")
+        class Fail {
+            @DisplayName("id가 일치하지 않는 경우")
+            @Test
+            void getAnnouncementTestFail1() throws Exception {
+                var announcementId = 1L;
+                when(announcementService.getAnnouncement(announcementId))
+                        .thenThrow(new NotFoundException(CommonErrorCode.NOT_FOUND, announcementId));
+
+                var response = mvc.perform(get("/announcements/{announcementId}", announcementId));
+                response.andExpect(status().isNotFound());
+            }
+        }
+    }
+
 }

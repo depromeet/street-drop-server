@@ -24,4 +24,11 @@ public class AnnouncementService {
         return new AnnouncementsResponseDto(announcements);
     }
 
+    @Transactional(readOnly = true)
+    public AnnouncementResponseDto getAnnouncement(Long announcementId) {
+        return announcementRepository.findById(announcementId)
+                .map(AnnouncementResponseDto::new)
+                .orElseThrow(() -> new NotFoundException(CommonErrorCode.NOT_FOUND, announcementId));
+    }
+
 }

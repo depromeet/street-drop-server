@@ -30,4 +30,13 @@ public class AnnouncementController {
         return ResponseDto.ok(response);
     }
 
+    @Operation(summary = "공지사항 단건 조회")
+    @GetMapping("{announcementId}")
+    public ResponseEntity<AnnouncementResponseDto> getAnnouncement(
+            @PathVariable(value = "announcementId") Long announcementId
+    ) {
+        var response = announcementService.getAnnouncement(announcementId);
+        return ResponseDto.ok(response);
+    }
+
 }
