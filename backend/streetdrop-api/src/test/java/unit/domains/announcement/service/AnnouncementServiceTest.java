@@ -1,0 +1,74 @@
+package unit.domains.announcement.service;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.mockito.Mockito.when;
+
+import com.depromeet.announcement.Announcement;
+import com.depromeet.common.error.exception.internal.NotFoundException;
+import com.depromeet.domains.announcement.dto.response.AnnouncementResponseDto;
+import com.depromeet.domains.announcement.dto.response.AnnouncementsResponseDto;
+import com.depromeet.domains.announcement.repository.AnnouncementRepository;
+import com.depromeet.domains.announcement.service.AnnouncementService;
+import java.util.List;
+import java.util.Optional;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+@ExtendWith(MockitoExtension.class)
+@DisplayName("[Service] AnnouncementService 테스트")
+class AnnouncementServiceTest {
+
+    @InjectMocks
+    AnnouncementService announcementService;
+
+    @Mock
+    AnnouncementRepository announcementRepository;
+
+    @DisplayName("공지사항 전체 조회")
+    @Nested
+    class GetAnnouncementsTest {
+        @Nested
+        @DisplayName("성공")
+        class Success {
+            @DisplayName("공지사항 0개 조회")
+            @Test
+            void getAnnouncementsTestSuccess1() {
+                when(announcementRepository.findAll()).thenReturn(List.of());
+
+                var result = announcementService.getAnnouncements();
+
+                assertThat(result).isEqualTo(
+                        new AnnouncementsResponseDto(List.of())
+                );
+            }
+
+            @DisplayName("공지사항 2개 조회")
+            @Test
+            void getAnnouncementsTestSuccess2() {
+                List<Announcement> announcements = List.of(
+                        new Announcement("Title 1", "Content 1"),
+                        new Announcement("Title 2", "Content 2")
+                );
+                when(announcementRepository.findAll()).thenReturn(announcements);
+
+                var result = announcementService.getAnnouncements();
+
+                assertThat(result).isEqualTo(
+                        new AnnouncementsResponseDto(
+                                List.of(
+                                        new AnnouncementResponseDto(announcements.get(0)),
+                                        new AnnouncementResponseDto(announcements.get(1))
+                                )
+                        )
+                );
+            }
+        }
+    }
+
+}
