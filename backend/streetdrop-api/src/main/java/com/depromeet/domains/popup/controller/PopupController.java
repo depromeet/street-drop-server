@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/pop-up")
 @RequiredArgsConstructor
-@Tag(name = "Pop Up", description = "Pop Up API")
+@Tag(name = "🫧Pop Up", description = "Pop Up API")
 public class PopupController {
     private final PopupService popupService;
 
 
-    @Operation(summary = "Get User Popup")
+    @Operation(summary = "사용자 팝업 조회")
     @GetMapping
     public ResponseEntity<PopupResponseDto> getUserPopup(
             @ReqUser User user
@@ -29,7 +29,7 @@ public class PopupController {
         return ResponseDto.ok(response);
     }
 
-    @Operation(summary = "user Popup to Read")
+    @Operation(summary = "팝업 읽음")
     @PostMapping("/read")
     public ResponseEntity<Void> readUserPopup(
             @ReqUser User user,

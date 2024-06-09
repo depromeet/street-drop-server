@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/search-term/recommend")
 @RequiredArgsConstructor
-@Tag(name = "SearchRecommend", description = "Search Recommend API")
+@Tag(name = "💁Search Recommend", description = "Search Recommend API")
 public class SearchRecommendController {
     private final SearchRecommendService searchRecommendService;
 
-    @Operation(summary = "Recommend Search Term")
+    @Operation(summary = "검색어 추천")
     @GetMapping
     public ResponseEntity<SearchTermRecommendResponseDto> recommendSearchTerm() {
         var response = searchRecommendService.recommendSearchTerm();

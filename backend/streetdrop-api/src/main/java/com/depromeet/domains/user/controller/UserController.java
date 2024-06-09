@@ -38,7 +38,7 @@ public class UserController {
         return ResponseDto.ok(response);
     }
 
-    @Operation(summary = "닉네임 변경하기")
+    @Operation(summary = "닉네임 변경")
     @ApiResponse(responseCode = "200", description = "닉네임 변경 성공")
     @PatchMapping("/me/nickname")
     public ResponseEntity<UserResponseDto> changeNickname(
