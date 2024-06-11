@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/level")
 @RequiredArgsConstructor
-@Tag(name = "Level Controller", description = "Level API")
+@Tag(name = "🪜Level", description = "Level API")
 public class LevelController {
 
     private final LevelService levelService;
