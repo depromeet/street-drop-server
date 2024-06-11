@@ -1,7 +1,7 @@
 package com.depromeet.domains.item.service;
 
 import com.depromeet.common.dto.InfiniteScrollMetaResponseDto;
-import com.depromeet.common.dto.InfiniteScrollResponseDto;
+import com.depromeet.common.dto.PaginationResponseDto;
 import com.depromeet.common.error.exception.internal.BusinessException;
 import com.depromeet.domains.item.dao.UserItemLikeDao;
 import com.depromeet.domains.item.dto.response.ItemGroupByDateResponseDto;
@@ -56,7 +56,7 @@ public class ItemLikeService {
 	}
 
 	@Transactional(readOnly = true)
-	public InfiniteScrollResponseDto<?,?> getLikedItemsByUser(User user, long lastCursor) {
+	public PaginationResponseDto<?,?> getLikedItemsByUser(User user, long lastCursor) {
 
 		List<UserItemLikeDao> itemLikeDaoList = itemLikeRepository.findByUserId(user.getId(),lastCursor);
 
@@ -75,7 +75,7 @@ public class ItemLikeService {
 
 		var meta = new InfiniteScrollMetaResponseDto(itemLikeDaoList.size(), -1);
 
-		return new InfiniteScrollResponseDto<>(itemGroupByDateResponseDto, meta);
+		return new PaginationResponseDto<>(itemGroupByDateResponseDto, meta);
 	}
 
 	private ItemGroupResponseDto userItemLikeDaotoItemGroupResponseDto(UserItemLikeDao userItemLikeDao) {

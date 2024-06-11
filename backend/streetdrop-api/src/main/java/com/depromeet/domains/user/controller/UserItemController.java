@@ -1,6 +1,6 @@
 package com.depromeet.domains.user.controller;
 
-import com.depromeet.common.dto.InfiniteScrollResponseDto;
+import com.depromeet.common.dto.PaginationResponseDto;
 import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.domains.user.dto.response.UserPoiResponseDto;
 import com.depromeet.domains.user.service.UserItemService;
@@ -27,7 +27,7 @@ public class UserItemController {
     @Operation(summary = "사용자가 드랍한 아이템 조회")
     @ApiResponse(responseCode = "200", description = "사용자가 드랍한 아이템 조회 성공")
     @GetMapping("/drop")
-    public ResponseEntity<InfiniteScrollResponseDto<?, ?>> getUserDropItems(
+    public ResponseEntity<PaginationResponseDto<?, ?>> getUserDropItems(
             @ReqUser User user,
             @RequestParam(defaultValue = "9223372036854775000") long lastCursor
     ) {
@@ -48,7 +48,7 @@ public class UserItemController {
     @Operation(summary = "사용자가 찜한 아이템 조회")
     @ApiResponse(responseCode = "200", description = "사용자가 찜한 아이템 조회 성공")
     @GetMapping("/like")
-    public ResponseEntity<InfiniteScrollResponseDto<?, ?>> getUserLikedItems(
+    public ResponseEntity<PaginationResponseDto<?, ?>> getUserLikedItems(
             @ReqUser User user,
             @RequestParam(defaultValue = "9223372036854775000") long lastCursor
     ) {
