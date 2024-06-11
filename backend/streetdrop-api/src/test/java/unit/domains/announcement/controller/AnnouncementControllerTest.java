@@ -6,12 +6,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.depromeet.announcement.Announcement;
+import com.depromeet.common.dto.MetaInterface;
+import com.depromeet.common.dto.PageMetaResponseDto;
+import com.depromeet.common.dto.PaginationResponseDto;
 import com.depromeet.common.error.GlobalExceptionHandler;
 import com.depromeet.common.error.dto.CommonErrorCode;
 import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.announcement.controller.AnnouncementController;
 import com.depromeet.domains.announcement.dto.response.AnnouncementResponseDto;
-import com.depromeet.domains.announcement.dto.response.AnnouncementsResponseDto;
 import com.depromeet.domains.announcement.service.AnnouncementService;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -46,24 +48,43 @@ public class AnnouncementControllerTest {
             @DisplayName("공지사항 0개 조회")
             @Test
             void getAnnouncementsTestSuccess1() throws Exception {
-                var announcementsResponseDto = new AnnouncementsResponseDto(List.of());
-                when(announcementService.getAnnouncements()).thenReturn(announcementsResponseDto);
+                var meta = PageMetaResponseDto.builder()
+                        .page(0)
+                        .size(0)
+                        .totalPage(0)
+                        .firstPage(true)
+                        .lastPage(true)
+                        .build();
+                PaginationResponseDto<AnnouncementResponseDto, MetaInterface> paginationResponseDto = new PaginationResponseDto<>(List.of(), meta);
+                when(announcementService.getAnnouncements()).thenReturn(paginationResponseDto);
 
-                var response = mvc.perform(
-                        get("/announcements")
-                );
+                var response = mvc.perform(get("/announcements"));
                 response.andExpect(status().isOk())
                         .andExpect(jsonPath("$.data").isArray())
-                        .andExpect(jsonPath("$.data.length()").value(0));
+                        .andExpect(jsonPath("$.data.length()").value(0))
+                        .andExpect(jsonPath("$.meta.page").value(0))
+                        .andExpect(jsonPath("$.meta.size").value(0))
+                        .andExpect(jsonPath("$.meta.totalPage").value(0))
+                        .andExpect(jsonPath("$.meta.firstPage").value(true))
+                        .andExpect(jsonPath("$.meta.lastPage").value(true));
             }
 
             @DisplayName("공지사항 2개 조회")
             @Test
             void getAnnouncementsTestSuccess2() throws Exception {
-                var announcementResponseDto1 = new AnnouncementResponseDto(new Announcement("Title 1", "Content 1"));
-                var announcementResponseDto2 = new AnnouncementResponseDto(new Announcement("Title 2", "Content 2"));
-                var announcementsResponseDto = new AnnouncementsResponseDto(List.of(announcementResponseDto1, announcementResponseDto2));
-                when(announcementService.getAnnouncements()).thenReturn(announcementsResponseDto);
+                var announcementResponseDto = List.of(
+                        new AnnouncementResponseDto(new Announcement("Title 1", "Content 1")),
+                        new AnnouncementResponseDto(new Announcement("Title 2", "Content 2"))
+                );
+                var meta = PageMetaResponseDto.builder()
+                        .page(0)
+                        .size(0)
+                        .totalPage(0)
+                        .firstPage(true)
+                        .lastPage(true)
+                        .build();
+                PaginationResponseDto<AnnouncementResponseDto, MetaInterface> paginationResponseDto = new PaginationResponseDto<>(announcementResponseDto, meta);
+                when(announcementService.getAnnouncements()).thenReturn(paginationResponseDto);
 
                 var response = mvc.perform(get("/announcements"));
                 response.andExpect(status().isOk())

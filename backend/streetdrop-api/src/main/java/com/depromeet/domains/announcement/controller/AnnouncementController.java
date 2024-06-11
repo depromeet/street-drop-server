@@ -1,11 +1,9 @@
 package com.depromeet.domains.announcement.controller;
 
+import com.depromeet.common.dto.PaginationResponseDto;
 import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.domains.announcement.dto.response.AnnouncementResponseDto;
-import com.depromeet.domains.announcement.dto.response.AnnouncementsResponseDto;
 import com.depromeet.domains.announcement.service.AnnouncementService;
-import com.depromeet.security.annotation.ReqUser;
-import com.depromeet.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +23,7 @@ public class AnnouncementController {
 
     @Operation(summary = "공지사항 전체 조회")
     @GetMapping
-    public ResponseEntity<AnnouncementsResponseDto> getAnnouncements() {
+    public ResponseEntity<PaginationResponseDto<?, ?>> getAnnouncements() {
         var response = announcementService.getAnnouncements();
         return ResponseDto.ok(response);
     }

@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 import com.depromeet.announcement.Announcement;
 import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.announcement.dto.response.AnnouncementResponseDto;
-import com.depromeet.domains.announcement.dto.response.AnnouncementsResponseDto;
 import com.depromeet.domains.announcement.repository.AnnouncementRepository;
 import com.depromeet.domains.announcement.service.AnnouncementService;
 import java.util.List;
@@ -43,9 +42,7 @@ class AnnouncementServiceTest {
 
                 var result = announcementService.getAnnouncements();
 
-                assertThat(result).isEqualTo(
-                        new AnnouncementsResponseDto(List.of())
-                );
+                assertThat(result.getData()).isEmpty();
             }
 
             @DisplayName("공지사항 2개 조회")
@@ -59,12 +56,10 @@ class AnnouncementServiceTest {
 
                 var result = announcementService.getAnnouncements();
 
-                assertThat(result).isEqualTo(
-                        new AnnouncementsResponseDto(
-                                List.of(
-                                        new AnnouncementResponseDto(announcements.get(0)),
-                                        new AnnouncementResponseDto(announcements.get(1))
-                                )
+                assertThat(result.getData()).isEqualTo(
+                        List.of(
+                                new AnnouncementResponseDto(announcements.get(0)),
+                                new AnnouncementResponseDto(announcements.get(1))
                         )
                 );
             }

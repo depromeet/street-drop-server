@@ -1,9 +1,11 @@
 package com.depromeet.domains.announcement.service;
 
+import com.depromeet.common.dto.MetaInterface;
+import com.depromeet.common.dto.PageMetaResponseDto;
+import com.depromeet.common.dto.PaginationResponseDto;
 import com.depromeet.common.error.dto.CommonErrorCode;
 import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.announcement.dto.response.AnnouncementResponseDto;
-import com.depromeet.domains.announcement.dto.response.AnnouncementsResponseDto;
 import com.depromeet.domains.announcement.repository.AnnouncementRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,12 +18,19 @@ public class AnnouncementService {
     private final AnnouncementRepository announcementRepository;
 
     @Transactional(readOnly = true)
-    public AnnouncementsResponseDto getAnnouncements() {
+    public PaginationResponseDto<AnnouncementResponseDto, MetaInterface> getAnnouncements() {
         var announcements = announcementRepository.findAll()
                 .stream()
                 .map(AnnouncementResponseDto::new)
                 .toList();
-        return new AnnouncementsResponseDto(announcements);
+        var meta = PageMetaResponseDto.builder()
+                .page(1)
+                .size(announcements.size())
+                .totalPage(1)
+                .firstPage(true)
+                .lastPage(true)
+                .build();
+        return new PaginationResponseDto<>(announcements, meta);
     }
 
     @Transactional(readOnly = true)
