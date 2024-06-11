@@ -9,7 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class InfiniteScrollResponseDto<T, U> {
+public class PaginationResponseDto<T, U extends MetaInterface> {
 
     private List<T> data;
 

@@ -1,7 +1,7 @@
 package com.depromeet.domains.user.service;
 
 import com.depromeet.common.dto.InfiniteScrollMetaResponseDto;
-import com.depromeet.common.dto.InfiniteScrollResponseDto;
+
 import com.depromeet.domains.item.dao.ItemDao;
 import com.depromeet.domains.item.dto.response.ItemGroupByDateResponseDto;
 import com.depromeet.domains.item.dto.response.ItemGroupResponseDto;
@@ -17,7 +17,7 @@ import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.depromeet.common.dto.PaginationResponseDto;
 import java.util.List;
 
 import static com.depromeet.util.WeekUtil.getWeeksAgo;
@@ -32,7 +32,7 @@ public class UserItemService {
     private final ItemLikeService itemLikeService;
 
     @Transactional(readOnly = true)
-    public InfiniteScrollResponseDto<?, ?> getDropItems(User user, long nextCursor) {
+    public PaginationResponseDto<?, ?> getDropItems(User user, long nextCursor) {
         List<ItemDao> itemList = itemRepository.findByUserId(user.getId(), nextCursor);
         List<ItemGroupByDateResponseDto> itemGroupByDateResponseDto = itemList
                 .stream()
@@ -52,7 +52,7 @@ public class UserItemService {
                 .totalCount(itemList.size())
                 .nextCursor(-1).build();
 
-        return new InfiniteScrollResponseDto<>(itemGroupByDateResponseDto, meta);
+        return new PaginationResponseDto<>(itemGroupByDateResponseDto, meta);
     }
 
     @Transactional(readOnly = true)
@@ -86,7 +86,7 @@ public class UserItemService {
 
 
     @Transactional(readOnly = true)
-    public InfiniteScrollResponseDto<?, ?> getLikedItems(User user, long nextCursor) {
+    public PaginationResponseDto<?, ?> getLikedItems(User user, long nextCursor) {
         return itemLikeService.getLikedItemsByUser(user, nextCursor);
     }
 
