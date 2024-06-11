@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserBlockController {
 	private final UserBlockService userBlockService;
 
-	@Operation(summary = "사용자 차단하기")
+	@Operation(summary = "사용자 차단")
 	@ApiResponse(responseCode = "200", description = "차단 성공")
 	@ApiErrorResponses(value = {
 			@ApiErrorResponse(errorCode = "USER_NOT_FOUND", description = "차단하려는 사용자가 존재하지 않음"),
@@ -38,7 +38,7 @@ public class UserBlockController {
 		return ResponseDto.ok(response);
 	}
 
-	@Operation(summary = "사용자 차단 해제하기")
+	@Operation(summary = "사용자 차단 해제")
 	@ApiResponse(responseCode = "204", description = "차단 해제 성공")
 	@ApiErrorResponse(errorCode = "USER_NOT_FOUND", description = "차단 해제하려는 사용자가 존재하지 않음")
 	@DeleteMapping("/users/unblock")

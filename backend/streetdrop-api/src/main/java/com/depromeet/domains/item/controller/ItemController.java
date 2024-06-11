@@ -51,7 +51,7 @@ public class ItemController {
 		return ResponseDto.created(response);
 	}
 
-    @Operation(summary = "아이템 드랍 - 단건조회")
+    @Operation(summary = "아이템 드랍 - 단건 조회")
     @GetMapping("/{itemId}")
 	@ApiErrorResponse(errorCode = "ITEM_NOT_FOUND", description = "아이템을 찾을 수 없습니다.")
     public ResponseEntity<ItemDetailResponseDto> findOneItem(

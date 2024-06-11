@@ -24,7 +24,7 @@ public class GeoController {
 
     private final GeoService geoService;
 
-    @Operation(summary = "Reverse Geocoding")
+    @Operation(summary = "좌표 주소 변환")
     @ApiResponse(responseCode = "200", description = "좌표 주소 변환 성공")
     @ApiErrorResponse(errorCode = "GEO_NOT_SUPPORT_LOCATION", description = "유효하지 않은 좌표 입니다")
     @GetMapping("/reverse-geocode")

@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ItemClaimController {
     private final ItemClaimService itemClaimService;
 
-    @Operation(summary = "아이템 신고하기")
+    @Operation(summary = "아이템 신고")
     @ApiResponse(responseCode = "204", description = "신고 성공")
     @ApiErrorResponses(value = {
             @ApiErrorResponse(errorCode = "ITEM_NOT_FOUND", description = "아이템을 찾을 수 없습니다."),
