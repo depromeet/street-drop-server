@@ -25,6 +25,8 @@ import UserSignUpGraphPage from "./pages/user/UserSignUpGraphPage";
 import CommonHeader from "./layout/common/CommonHeader";
 import Sider from "antd/es/layout/Sider";
 import MenuComponent from "./layout/common/Menu";
+import AnnouncementPage from "./pages/content/announcement/AnnouncementPage";
+import AnnouncementCreatePage from "./pages/content/announcement/AnnouncementCreatePage";
 
 const App = () => {
     return (
@@ -56,6 +58,8 @@ const App = () => {
                         <Route path='/members/list' element={<MemberListPage/>}/>
                         <Route path='/members/login-log' element={<MemberLoginLogPage/>}/>
                         <Route path='/members/security' element={<MemberSecuritySettingPage/>}/>
+                        <Route path='/announcement' element={<AnnouncementPage/>}/>
+                        <Route path='/announcement/create' element={<AnnouncementCreatePage/>}/>
                     </Route>
                 </Routes>
                 </Layout>
