@@ -36,6 +36,7 @@ const MENU_ITEMS = [
         children: [
             {key: 'content-menu-1', title: '• 음악 검색어 추천', link: '/music/recommend'},
             {key: 'content-menu-2', title: '• 금칙어 관리', link: '/banned-words', element: <ItemListPage/>},
+            {key: 'content-menu-3', title: '• 공지사항 관리', link: '/announcement'}
         ]
     },
     {
