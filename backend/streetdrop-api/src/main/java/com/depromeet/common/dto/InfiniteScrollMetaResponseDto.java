@@ -3,7 +3,9 @@ package com.depromeet.common.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 @Builder
 @AllArgsConstructor
 public class InfiniteScrollMetaResponseDto implements MetaInterface {
