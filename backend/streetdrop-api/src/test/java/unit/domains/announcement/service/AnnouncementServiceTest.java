@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import com.depromeet.announcement.Announcement;
 import com.depromeet.common.error.exception.internal.NotFoundException;
+import com.depromeet.domains.announcement.dto.response.AnnouncementListResponseDto;
 import com.depromeet.domains.announcement.dto.response.AnnouncementResponseDto;
 import com.depromeet.domains.announcement.repository.AnnouncementRepository;
 import com.depromeet.domains.announcement.service.AnnouncementService;
@@ -58,8 +59,8 @@ class AnnouncementServiceTest {
 
                 assertThat(result.getData()).isEqualTo(
                         List.of(
-                                new AnnouncementResponseDto(announcements.get(0)),
-                                new AnnouncementResponseDto(announcements.get(1))
+                                new AnnouncementListResponseDto(announcements.get(0)),
+                                new AnnouncementListResponseDto(announcements.get(1))
                         )
                 );
             }
