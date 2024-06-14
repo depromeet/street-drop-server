@@ -13,6 +13,7 @@ import com.depromeet.common.error.GlobalExceptionHandler;
 import com.depromeet.common.error.dto.CommonErrorCode;
 import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.announcement.controller.AnnouncementController;
+import com.depromeet.domains.announcement.dto.response.AnnouncementListResponseDto;
 import com.depromeet.domains.announcement.dto.response.AnnouncementResponseDto;
 import com.depromeet.domains.announcement.service.AnnouncementService;
 import java.util.List;
@@ -55,7 +56,7 @@ public class AnnouncementControllerTest {
                         .firstPage(true)
                         .lastPage(true)
                         .build();
-                PaginationResponseDto<AnnouncementResponseDto, MetaInterface> paginationResponseDto = new PaginationResponseDto<>(List.of(), meta);
+                PaginationResponseDto<AnnouncementListResponseDto, MetaInterface> paginationResponseDto = new PaginationResponseDto<>(List.of(), meta);
                 when(announcementService.getAnnouncements()).thenReturn(paginationResponseDto);
 
                 var response = mvc.perform(get("/announcements"));
@@ -73,8 +74,8 @@ public class AnnouncementControllerTest {
             @Test
             void getAnnouncementsTestSuccess2() throws Exception {
                 var announcementResponseDto = List.of(
-                        new AnnouncementResponseDto(new Announcement("Title 1", "Content 1")),
-                        new AnnouncementResponseDto(new Announcement("Title 2", "Content 2"))
+                        new AnnouncementListResponseDto(new Announcement("Title 1", "Content 1")),
+                        new AnnouncementListResponseDto(new Announcement("Title 2", "Content 2"))
                 );
                 var meta = PageMetaResponseDto.builder()
                         .page(0)
@@ -83,7 +84,7 @@ public class AnnouncementControllerTest {
                         .firstPage(true)
                         .lastPage(true)
                         .build();
-                PaginationResponseDto<AnnouncementResponseDto, MetaInterface> paginationResponseDto = new PaginationResponseDto<>(announcementResponseDto, meta);
+                PaginationResponseDto<AnnouncementListResponseDto, MetaInterface> paginationResponseDto = new PaginationResponseDto<>(announcementResponseDto, meta);
                 when(announcementService.getAnnouncements()).thenReturn(paginationResponseDto);
 
                 var response = mvc.perform(get("/announcements"));
@@ -91,9 +92,7 @@ public class AnnouncementControllerTest {
                         .andExpect(jsonPath("$.data").isArray())
                         .andExpect(jsonPath("$.data.length()").value(2))
                         .andExpect(jsonPath("$.data[0].title").value("Title 1"))
-                        .andExpect(jsonPath("$.data[0].content").value("Content 1"))
-                        .andExpect(jsonPath("$.data[1].title").value("Title 2"))
-                        .andExpect(jsonPath("$.data[1].content").value("Content 2"));
+                        .andExpect(jsonPath("$.data[1].title").value("Title 2"));
             }
         }
     }

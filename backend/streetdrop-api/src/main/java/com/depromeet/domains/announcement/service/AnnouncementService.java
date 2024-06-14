@@ -5,6 +5,7 @@ import com.depromeet.common.dto.PageMetaResponseDto;
 import com.depromeet.common.dto.PaginationResponseDto;
 import com.depromeet.common.error.dto.CommonErrorCode;
 import com.depromeet.common.error.exception.internal.NotFoundException;
+import com.depromeet.domains.announcement.dto.response.AnnouncementListResponseDto;
 import com.depromeet.domains.announcement.dto.response.AnnouncementResponseDto;
 import com.depromeet.domains.announcement.repository.AnnouncementRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +19,10 @@ public class AnnouncementService {
     private final AnnouncementRepository announcementRepository;
 
     @Transactional(readOnly = true)
-    public PaginationResponseDto<AnnouncementResponseDto, MetaInterface> getAnnouncements() {
+    public PaginationResponseDto<AnnouncementListResponseDto, MetaInterface> getAnnouncements() {
         var announcements = announcementRepository.findAll()
                 .stream()
-                .map(AnnouncementResponseDto::new)
+                .map(AnnouncementListResponseDto::new)
                 .toList();
         var meta = PageMetaResponseDto.builder()
                 .page(1)
