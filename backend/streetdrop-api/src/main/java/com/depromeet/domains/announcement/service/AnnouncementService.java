@@ -7,6 +7,7 @@ import com.depromeet.common.error.dto.CommonErrorCode;
 import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.announcement.dto.response.AnnouncementListResponseDto;
 import com.depromeet.domains.announcement.dto.response.AnnouncementResponseDto;
+import com.depromeet.domains.announcement.dto.response.NewAnnouncementResponseDto;
 import com.depromeet.domains.announcement.repository.AnnouncementRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,13 @@ public class AnnouncementService {
         return announcementRepository.findById(announcementId)
                 .map(AnnouncementResponseDto::new)
                 .orElseThrow(() -> new NotFoundException(CommonErrorCode.NOT_FOUND, announcementId));
+    }
+
+
+    @Transactional(readOnly = true)
+    public NewAnnouncementResponseDto hasNewAnnouncement(Long lastAnnouncementId) {
+        var isExist = announcementRepository.existsByIdGreaterThan(lastAnnouncementId);
+        return new NewAnnouncementResponseDto(isExist);
     }
 
 }
