@@ -1,17 +1,12 @@
 package unit.domains.announcement.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.mockito.Mockito.when;
-
 import com.depromeet.announcement.Announcement;
 import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.announcement.dto.response.AnnouncementListResponseDto;
 import com.depromeet.domains.announcement.dto.response.AnnouncementResponseDto;
+import com.depromeet.domains.announcement.dto.response.NewAnnouncementResponseDto;
 import com.depromeet.domains.announcement.repository.AnnouncementRepository;
 import com.depromeet.domains.announcement.service.AnnouncementService;
-import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -19,6 +14,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[Service] AnnouncementService 테스트")
@@ -104,4 +106,32 @@ class AnnouncementServiceTest {
         }
     }
 
+
+    @DisplayName("신규 공지사항 여부 조회")
+    @Nested
+    class HasNewAnnouncementTest {
+        @DisplayName("조회할 공지사항 있는 경우")
+        @Test
+        void hasNewAnnouncementTestSuccess1() {
+            var expectedResponse = new NewAnnouncementResponseDto(true);
+
+            when(announcementRepository.existsByIdGreaterThan(-1L)).thenReturn(true);
+
+            var result = announcementService.hasNewAnnouncement(-1L);
+
+            assertThat(result).isEqualTo(expectedResponse);
+        }
+
+        @DisplayName("조회할 공지사항 없는 경우")
+        @Test
+        void hasNewAnnouncementTestSuccess2() {
+            var expectedResponse = new NewAnnouncementResponseDto(false);
+
+            when(announcementRepository.existsByIdGreaterThan(-1L)).thenReturn(false);
+
+            var result = announcementService.hasNewAnnouncement(-1L);
+
+            assertThat(result).isEqualTo(expectedResponse);
+        }
+    }
 }
