@@ -23,4 +23,9 @@ public class DefaultNickName {
         @Column(length = 5, nullable = false)
         private String postNickName;
 
+        public DefaultNickName(String preNickName, String postNickName) {
+                this.preNickName = preNickName;
+                this.postNickName = postNickName;
+        }
+
 }

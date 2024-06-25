@@ -27,6 +27,7 @@ import Sider from "antd/es/layout/Sider";
 import MenuComponent from "./layout/common/Menu";
 import AnnouncementPage from "./pages/content/announcement/AnnouncementPage";
 import AnnouncementCreatePage from "./pages/content/announcement/AnnouncementCreatePage";
+import NicknamePage from "./pages/content/nickname/Nickname";
 
 const App = () => {
     return (
@@ -60,6 +61,7 @@ const App = () => {
                         <Route path='/members/security' element={<MemberSecuritySettingPage/>}/>
                         <Route path='/announcement' element={<AnnouncementPage/>}/>
                         <Route path='/announcement/create' element={<AnnouncementCreatePage/>}/>
+                        <Route path='/nickname' element={<NicknamePage/>}/>
                     </Route>
                 </Routes>
                 </Layout>
