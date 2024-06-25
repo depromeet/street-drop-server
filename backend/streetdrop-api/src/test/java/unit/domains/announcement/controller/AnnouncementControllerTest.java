@@ -1,10 +1,5 @@
 package unit.domains.announcement.controller;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.depromeet.announcement.Announcement;
 import com.depromeet.common.dto.MetaInterface;
 import com.depromeet.common.dto.PageMetaResponseDto;
@@ -15,8 +10,8 @@ import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.announcement.controller.AnnouncementController;
 import com.depromeet.domains.announcement.dto.response.AnnouncementListResponseDto;
 import com.depromeet.domains.announcement.dto.response.AnnouncementResponseDto;
+import com.depromeet.domains.announcement.dto.response.NewAnnouncementResponseDto;
 import com.depromeet.domains.announcement.service.AnnouncementService;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -27,6 +22,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ContextConfiguration(classes = AnnouncementController.class)
 @WebMvcTest(controllers = {AnnouncementController.class}, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
@@ -133,4 +135,38 @@ public class AnnouncementControllerTest {
         }
     }
 
+
+    @DisplayName("[GET] 신규 공지사항 여부 조회")
+    @Nested
+    class HasNewAnnouncementTest {
+        @Nested
+        @DisplayName("성공")
+        class Success {
+            @DisplayName("신규 공지사항이 없는 경우")
+            @Test
+            void hasNewAnnouncementTestSuccess1() throws Exception {
+                var lastAnnouncementId = 1L;
+                var announcementResponseDto = new NewAnnouncementResponseDto(false);
+                when(announcementService.hasNewAnnouncement(lastAnnouncementId)).thenReturn(announcementResponseDto);
+
+                var response = mvc.perform(get("/announcements/new?lastAnnouncementId={lastAnnouncementId}", lastAnnouncementId));
+                response.andExpect(status().isOk())
+                        .andExpect(jsonPath("$.hasNewAnnouncement").value(false));
+
+            }
+
+            @DisplayName("신규 공지사항이 있는 경우")
+            @Test
+            void hasNewAnnouncementTestSuccess2() throws Exception {
+                var lastAnnouncementId = 1L;
+                var announcementResponseDto = new NewAnnouncementResponseDto(true);
+                when(announcementService.hasNewAnnouncement(lastAnnouncementId)).thenReturn(announcementResponseDto);
+
+                var response = mvc.perform(get("/announcements/new?lastAnnouncementId={lastAnnouncementId}", lastAnnouncementId));
+                response.andExpect(status().isOk())
+                        .andExpect(jsonPath("$.hasNewAnnouncement").value(true));
+            }
+        }
+
+    }
 }
