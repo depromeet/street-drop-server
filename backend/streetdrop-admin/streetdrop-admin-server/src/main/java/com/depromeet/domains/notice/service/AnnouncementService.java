@@ -1,11 +1,11 @@
-package com.depromeet.domains.announcement.service;
+package com.depromeet.domains.notice.service;
 
 import com.depromeet.announcement.Announcement;
 import com.depromeet.common.dto.PageMetaData;
 import com.depromeet.common.dto.PageResponseDto;
-import com.depromeet.domains.announcement.dto.request.AnnouncementRequestDto;
-import com.depromeet.domains.announcement.dto.response.AnnouncementResponseDto;
-import com.depromeet.domains.announcement.repository.AnnouncementRepository;
+import com.depromeet.domains.notice.dto.request.AnnouncementRequestDto;
+import com.depromeet.domains.notice.dto.response.AnnouncementResponseDto;
+import com.depromeet.domains.notice.repository.AnnouncementRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

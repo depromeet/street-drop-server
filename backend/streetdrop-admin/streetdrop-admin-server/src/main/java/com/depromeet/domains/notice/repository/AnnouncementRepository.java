@@ -1,4 +1,4 @@
-package com.depromeet.domains.announcement.repository;
+package com.depromeet.domains.notice.repository;
 
 import com.depromeet.announcement.Announcement;
 import org.springframework.data.domain.Page;
