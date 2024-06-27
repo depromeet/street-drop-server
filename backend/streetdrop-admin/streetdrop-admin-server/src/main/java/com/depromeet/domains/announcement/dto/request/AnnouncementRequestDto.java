@@ -1,4 +1,4 @@
-package com.depromeet.domains.notice.dto.request;
+package com.depromeet.domains.announcement.dto.request;
 
 
 import lombok.AllArgsConstructor;

@@ -1,9 +1,9 @@
-package com.depromeet.domains.notice.controller;
+package com.depromeet.domains.announcement.controller;
 
 
 import com.depromeet.common.dto.ResponseDto;
-import com.depromeet.domains.notice.dto.request.AnnouncementRequestDto;
-import com.depromeet.domains.notice.service.AnnouncementService;
+import com.depromeet.domains.announcement.dto.request.AnnouncementRequestDto;
+import com.depromeet.domains.announcement.service.AnnouncementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
