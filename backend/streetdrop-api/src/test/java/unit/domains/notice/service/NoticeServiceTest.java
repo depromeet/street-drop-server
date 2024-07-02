@@ -1,6 +1,6 @@
 package unit.domains.notice.service;
 
-import com.depromeet.announcement.Announcement;
+import com.depromeet.notice.Notice;
 import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.notice.dto.response.NoticeListResponseDto;
 import com.depromeet.domains.notice.dto.response.NoticeResponseDto;
@@ -51,9 +51,9 @@ class NoticeServiceTest {
             @DisplayName("공지사항 2개 조회")
             @Test
             void getNoticesTestSuccess2() {
-                List<Announcement> notices = List.of(
-                        new Announcement("Title 1", "Content 1"),
-                        new Announcement("Title 2", "Content 2")
+                List<Notice> notices = List.of(
+                        new Notice("Title 1", "Content 1"),
+                        new Notice("Title 2", "Content 2")
                 );
                 when(noticeRepository.findAll()).thenReturn(notices);
 
@@ -78,7 +78,7 @@ class NoticeServiceTest {
             @DisplayName("id가 일치하는 경우")
             @Test
             void getNoticeTestSuccess1() {
-                var notice = new Announcement("Title 1", "Content 1");
+                var notice = new Notice("Title 1", "Content 1");
                 when(noticeRepository.findById(1L)).thenReturn(Optional.of(notice));
 
                 var result = noticeService.getNotice(1L);
