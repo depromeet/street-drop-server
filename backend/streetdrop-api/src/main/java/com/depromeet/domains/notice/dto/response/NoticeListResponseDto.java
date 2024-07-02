@@ -1,6 +1,6 @@
 package com.depromeet.domains.notice.dto.response;
 
-import com.depromeet.announcement.Announcement;
+import com.depromeet.notice.Notice;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
@@ -15,11 +15,11 @@ public record NoticeListResponseDto(
         @Schema(description = "생성시간", example = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime createdAt
 ) {
-    public NoticeListResponseDto(Announcement announcement) {
+    public NoticeListResponseDto(Notice notice) {
         this(
-                announcement.getId(),
-                announcement.getTitle(),
-                announcement.getCreatedAt()
+                notice.getId(),
+                notice.getTitle(),
+                notice.getCreatedAt()
         );
     }
 }

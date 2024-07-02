@@ -1,6 +1,6 @@
 package com.depromeet.domains.announcement.service;
 
-import com.depromeet.announcement.Announcement;
+import com.depromeet.notice.Notice;
 import com.depromeet.common.dto.PageMetaData;
 import com.depromeet.common.dto.PageResponseDto;
 import com.depromeet.domains.announcement.dto.request.AnnouncementRequestDto;
@@ -60,9 +60,9 @@ public class AnnouncementService {
 
     public AnnouncementResponseDto createAnnouncement(AnnouncementRequestDto requestDto) {
 
-        Announcement announcement = new Announcement(requestDto.getTitle(), requestDto.getContent());
+        Notice notice = new Notice(requestDto.getTitle(), requestDto.getContent());
 
-        var announcementResult = announcementRepository.save(announcement);
+        var announcementResult = announcementRepository.save(notice);
         return AnnouncementResponseDto.builder()
                 .id(announcementResult.getId())
                 .title(announcementResult.getTitle())

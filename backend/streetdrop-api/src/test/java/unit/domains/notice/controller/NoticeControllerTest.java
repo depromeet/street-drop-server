@@ -1,6 +1,6 @@
 package unit.domains.notice.controller;
 
-import com.depromeet.announcement.Announcement;
+import com.depromeet.notice.Notice;
 import com.depromeet.common.dto.MetaInterface;
 import com.depromeet.common.dto.PageMetaResponseDto;
 import com.depromeet.common.dto.PaginationResponseDto;
@@ -76,8 +76,8 @@ public class NoticeControllerTest {
             @Test
             void getNoticesTestSuccess2() throws Exception {
                 var noticeResponseDto = List.of(
-                        new NoticeListResponseDto(new Announcement("Title 1", "Content 1")),
-                        new NoticeListResponseDto(new Announcement("Title 2", "Content 2"))
+                        new NoticeListResponseDto(new Notice("Title 1", "Content 1")),
+                        new NoticeListResponseDto(new Notice("Title 2", "Content 2"))
                 );
                 var meta = PageMetaResponseDto.builder()
                         .page(0)
@@ -109,7 +109,7 @@ public class NoticeControllerTest {
             @Test
             void getNoticeTestSuccess1() throws Exception {
                 var noticeId = 1L;
-                var noticeResponseDto = new NoticeResponseDto(new Announcement("Title 1", "Content 1"));
+                var noticeResponseDto = new NoticeResponseDto(new Notice("Title 1", "Content 1"));
                 when(noticeService.getNotice(noticeId)).thenReturn(noticeResponseDto);
 
                 var response = mvc.perform(get("/notices/{noticeId}", noticeId));

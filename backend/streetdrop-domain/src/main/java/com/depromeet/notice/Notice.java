@@ -1,4 +1,4 @@
-package com.depromeet.announcement;
+package com.depromeet.notice;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -15,11 +15,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @Entity
-public class Announcement extends BaseTimeEntity {
+public class Notice extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "announcement_id")
+    @Column(name = "notice_id")
     private Long id;
 
     @Column(nullable = false, length = 200)
@@ -29,7 +29,7 @@ public class Announcement extends BaseTimeEntity {
     private String content;
 
     @Builder
-    public Announcement(String title, String content) {
+    public Notice(String title, String content) {
         this.title = title;
         this.content = content;
     }
