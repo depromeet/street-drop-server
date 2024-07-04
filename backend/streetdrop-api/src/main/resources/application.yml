@@ -12,3 +12,8 @@ server:
     enabled: true
     mime-types: text/html,text/plain,text/css,application/javascript,application/json
     min-response-size: 500
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
