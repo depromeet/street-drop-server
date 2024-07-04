@@ -7,3 +7,9 @@ logging:
   level:
     root: INFO
     org.springframework.web: INFO
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
