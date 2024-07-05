@@ -11,6 +11,7 @@ import com.depromeet.domains.item.repository.ItemLocationRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.item.service.ItemLikeService;
 import com.depromeet.domains.music.dto.response.MusicResponseDto;
+import com.depromeet.domains.user.dto.request.ItemOrderType;
 import com.depromeet.domains.user.dto.response.UserPoiResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.user.User;
@@ -32,8 +33,8 @@ public class UserItemService {
     private final ItemLikeService itemLikeService;
 
     @Transactional(readOnly = true)
-    public PaginationResponseDto<?, ?> getDropItems(User user, long nextCursor) {
-        List<ItemDao> itemList = itemRepository.findByUserId(user.getId(), nextCursor);
+    public PaginationResponseDto<?, ?> getDropItems(User user, long nextCursor, ItemOrderType orderType) {
+        List<ItemDao> itemList = itemRepository.findByUserId(user.getId(), nextCursor, orderType);
         List<ItemGroupByDateResponseDto> itemGroupByDateResponseDto = itemList
                 .stream()
                 .map(ItemDao::getWeekAgo)

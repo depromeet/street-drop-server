@@ -2,6 +2,7 @@ package com.depromeet.domains.user.controller;
 
 import com.depromeet.common.dto.PaginationResponseDto;
 import com.depromeet.common.dto.ResponseDto;
+import com.depromeet.domains.user.dto.request.ItemOrderType;
 import com.depromeet.domains.user.dto.response.UserPoiResponseDto;
 import com.depromeet.domains.user.service.UserItemService;
 import com.depromeet.security.annotation.ReqUser;
@@ -29,9 +30,10 @@ public class UserItemController {
     @GetMapping("/drop")
     public ResponseEntity<PaginationResponseDto<?, ?>> getUserDropItems(
             @ReqUser User user,
-            @RequestParam(defaultValue = "9223372036854775000") long lastCursor
+            @RequestParam(defaultValue = "9223372036854775000") long lastCursor,
+            @RequestParam(defaultValue = "RECENT", required = false) ItemOrderType orderType
     ) {
-        var response = userItemService.getDropItems(user, lastCursor);
+        var response = userItemService.getDropItems(user, lastCursor, orderType);
         return ResponseDto.ok(response);
     }
 
