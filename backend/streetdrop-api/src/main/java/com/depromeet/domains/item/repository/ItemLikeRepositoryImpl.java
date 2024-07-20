@@ -2,6 +2,7 @@ package com.depromeet.domains.item.repository;
 
 import com.depromeet.domains.item.dao.UserItemLikeDao;
 import com.depromeet.domains.user.dao.UserItemPointDao;
+import com.depromeet.domains.user.dto.request.ItemOrderType;
 import com.depromeet.item.QItemLike;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.DateExpression;
@@ -32,13 +33,13 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
     private final JPAQueryFactory queryFactory;
 
 
-    public List<UserItemLikeDao> findByUserId(Long userId, Long lastCursor) {
+    public List<UserItemLikeDao> findByUserId(Long userId, Long lastCursor, ItemOrderType itemOrderType) {
 
         DateExpression<Date> currentWeekExpr = currentDate();
         DateTimePath<LocalDateTime> createdAtExpr = itemLike.createdAt;
         QItemLike innerItemLike = new QItemLike("innerItemLike");
 
-        return queryFactory.select(
+        var query = queryFactory.select(
                         Projections.constructor(
                                 UserItemLikeDao.class,
                                 createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
@@ -62,9 +63,15 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
                 .join(artist).on(album.artist.id.eq(artist.id))
                 .join(albumCover).on(item.albumCover.id.eq(albumCover.id))
                 .join(user).on(user.eq(item.user))
-                .where(itemLike.user.id.eq(userId))
-                .orderBy(itemLike.createdAt.desc())
-                .fetch();
+                .where(itemLike.user.id.eq(userId));
+
+
+        query = switch (itemOrderType) {
+            case RECENT -> query.orderBy(itemLike.createdAt.desc());
+            case OLDEST -> query.orderBy(itemLike.createdAt.asc());
+        };
+
+        return query.fetch();
     }
 
 

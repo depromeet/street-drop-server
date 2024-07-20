@@ -11,6 +11,7 @@ import com.depromeet.domains.item.dto.response.ItemLocationResponseDto;
 import com.depromeet.domains.item.error.ItemErrorCode;
 import com.depromeet.domains.item.repository.ItemLikeRepository;
 import com.depromeet.domains.music.dto.response.MusicResponseDto;
+import com.depromeet.domains.user.dto.request.ItemOrderType;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.item.Item;
 import com.depromeet.item.ItemLike;
@@ -56,9 +57,9 @@ public class ItemLikeService {
 	}
 
 	@Transactional(readOnly = true)
-	public PaginationResponseDto<?,?> getLikedItemsByUser(User user, long lastCursor) {
+	public PaginationResponseDto<?,?> getLikedItemsByUser(User user, long lastCursor, ItemOrderType itemOrderType) {
 
-		List<UserItemLikeDao> itemLikeDaoList = itemLikeRepository.findByUserId(user.getId(),lastCursor);
+		List<UserItemLikeDao> itemLikeDaoList = itemLikeRepository.findByUserId(user.getId(),lastCursor, itemOrderType);
 
 		List<ItemGroupByDateResponseDto> itemGroupByDateResponseDto = itemLikeDaoList
 				.stream()

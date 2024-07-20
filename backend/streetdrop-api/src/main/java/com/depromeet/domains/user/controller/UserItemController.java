@@ -52,9 +52,10 @@ public class UserItemController {
     @GetMapping("/like")
     public ResponseEntity<PaginationResponseDto<?, ?>> getUserLikedItems(
             @ReqUser User user,
-            @RequestParam(defaultValue = "9223372036854775000") long lastCursor
+            @RequestParam(defaultValue = "9223372036854775000") long lastCursor,
+            @RequestParam(defaultValue = "RECENT", required = false) ItemOrderType orderType
     ) {
-        var response = userItemService.getLikedItems(user, lastCursor);
+        var response = userItemService.getLikedItems(user, lastCursor, orderType);
         return ResponseDto.ok(response);
     }
 
