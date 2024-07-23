@@ -1,6 +1,7 @@
 package com.depromeet.domains.item.repository;
 
 import com.depromeet.domains.item.dao.ItemDao;
+import com.depromeet.domains.user.dto.request.ItemOrderType;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.DateExpression;
 import com.querydsl.core.types.dsl.DateTimePath;
@@ -29,12 +30,12 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<ItemDao> findByUserId(Long userId, long lastCursor) {
+    public List<ItemDao> findByUserId(Long userId, long lastCursor, ItemOrderType orderType) {
 
         DateExpression<Date> currentWeekExpr = currentDate();
         DateTimePath<LocalDateTime> createdAtExpr = item.createdAt;
 
-        return queryFactory.select(
+        var query = queryFactory.select(
                         Projections.constructor(
                                 ItemDao.class,
                                 createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
@@ -56,8 +57,14 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
                 .join(albumCover).on(item.albumCover.id.eq(albumCover.id))
                 .leftJoin(itemLike).on(item.id.eq(itemLike.item.id))
                 .where(item.user.id.eq(userId))
-                .groupBy(item.id, item.content, item.createdAt, itemLocation.name, song.name, album.name, artist.name, albumCover.albumThumbnail)
-                .orderBy(item.createdAt.desc())
-                .fetch();
+                .groupBy(item.id, item.content, item.createdAt, itemLocation.name, song.name, album.name, artist.name, albumCover.albumThumbnail);
+
+
+        query = switch (orderType) {
+            case RECENT -> query.orderBy(item.createdAt.desc());
+            case OLDEST -> query.orderBy(item.createdAt.asc());
+        };
+
+        return query.fetch();
     }
 }

@@ -14,7 +14,7 @@ repositories {
 subprojects {
     group = 'com.depromeet'
     version = '0.0.1-SNAPSHOT'
-    sourceCompatibility = '19'
+    sourceCompatibility = '21'
 
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
@@ -22,8 +22,8 @@ subprojects {
     apply plugin: 'jacoco'
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_19
-        targetCompatibility = JavaVersion.VERSION_19
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     configurations {
@@ -37,7 +37,7 @@ subprojects {
         developmentOnly 'org.springframework.boot:spring-boot-devtools'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         compileOnly 'org.projectlombok:lombok'
-        annotationProcessor 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok:1.18.34'
         testImplementation 'junit:junit:4.13.1'
     }
 }
