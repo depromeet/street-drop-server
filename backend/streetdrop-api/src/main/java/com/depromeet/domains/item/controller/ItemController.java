@@ -95,4 +95,15 @@ public class ItemController {
         var response = itemService.findNearItems(user, nearItemRequestDto);
         return ResponseEntity.ok(response);
     }
+
+
+	@Operation(summary = "주변 아이템 개수 조회")
+	@GetMapping("/count")
+	public ResponseEntity<Integer> countItemByLocation(
+			@RequestParam(value = "state", required = false) String state,
+			@RequestParam(value = "city", required = false) String city
+	) {
+		var response = itemService.countItemByLocation(state, city);
+		return ResponseEntity.ok(response);
+	}
 }

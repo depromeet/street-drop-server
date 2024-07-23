@@ -23,4 +23,13 @@ public interface ItemRepository extends JpaRepository<Item, Long>, QueryDslItemR
     Optional<Item> findById(@Param("itemId") Long itemId);
 
     Long countByUser(User user);
+
+    @Query("SELECT count(i) FROM Item i JOIN FETCH i.itemLocation il JOIN FETCH il.villageArea va WHERE va.cityArea.cityName = :city")
+    Integer countItemsByCity(String city);
+
+    @Query("SELECT count(i) FROM Item i JOIN FETCH i.itemLocation il JOIN FETCH il.villageArea va WHERE va.cityArea.stateArea.stateName = :state")
+    Integer countItemsByState(String state);
+
+    @Query("SELECT count(i) FROM Item i")
+    Integer countAll();
 }

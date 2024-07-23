@@ -153,4 +153,19 @@ public class ItemService {
 		item.updateContent(itemRequestDto.getContent());
 		return new ItemResponseDto(item);
 	}
+
+
+	@Transactional
+	public Integer countItemByLocation(String state, String city) {
+		if (state == null) {
+			if (city == null) {
+				return itemRepository.countAll();
+			} else {
+				return itemRepository.countItemsByCity(city);
+			}
+		} else {
+			return itemRepository.countItemsByState(state);
+		}
+
+	}
 }
