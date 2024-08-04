@@ -69,4 +69,14 @@ public class UserItemController {
         return ResponseDto.ok(response);
     }
 
+    @Operation(summary = "주변 아이템 개수 조회")
+    @GetMapping("/count")
+    public ResponseEntity<Integer> countItemByLocation(
+            @RequestParam(value = "state", required = false) String state,
+            @RequestParam(value = "city", required = false) String city
+    ) {
+        var response = userItemService.countItemByLocation(state, city);
+        return ResponseEntity.ok(response);
+    }
+
 }

@@ -100,4 +100,17 @@ public class UserItemService {
         return new UserPoiResponseDto(userPoiDtoList);
     }
 
+    @Transactional(readOnly = true)
+    public Integer countItemByLocation(String state, String city) {
+        if (state == null) {
+            if (city == null) {
+                return itemLocationRepository.countAll();
+            } else {
+                return itemLocationRepository.countItemsByCity(city);
+            }
+        } else {
+            return itemLocationRepository.countItemsByState(state);
+        }
+    }
+
 }
