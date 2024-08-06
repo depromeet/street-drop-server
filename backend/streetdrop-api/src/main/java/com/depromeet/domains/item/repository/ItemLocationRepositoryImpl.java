@@ -67,10 +67,8 @@ public class ItemLocationRepositoryImpl implements QueryDslItemLocationRepositor
         return queryFactory
                 .select(itemLocation.count())
                 .from(itemLocation)
-                .join(itemLocation.item, item)
-                .on(itemLocation.item.id.eq(item.id))
-                .join(itemLocation.villageArea, villageArea)
-                .on(itemLocation.villageArea.id.eq(villageArea.id))
+                .join(item).on(itemLocation.item.id.eq(item.id))
+                .join(villageArea).on(itemLocation.villageArea.id.eq(villageArea.id))
                 .where(item.user.id.eq(userId))
                 .where(villageArea.cityArea.cityName.eq(city))
                 .fetchFirst();
@@ -81,10 +79,8 @@ public class ItemLocationRepositoryImpl implements QueryDslItemLocationRepositor
         return queryFactory
                 .select(itemLocation.count())
                 .from(itemLocation)
-                .join(itemLocation.item, item)
-                .on(itemLocation.item.id.eq(item.id))
-                .join(itemLocation.villageArea, villageArea)
-                .on(itemLocation.villageArea.id.eq(villageArea.id))
+                .join(item).on(itemLocation.item.id.eq(item.id))
+                .join(villageArea).on(itemLocation.villageArea.id.eq(villageArea.id))
                 .where(item.user.id.eq(userId))
                 .where(villageArea.cityArea.stateArea.stateName.eq(state))
                 .fetchFirst();
@@ -95,8 +91,7 @@ public class ItemLocationRepositoryImpl implements QueryDslItemLocationRepositor
         return queryFactory
                 .select(itemLocation.count())
                 .from(itemLocation)
-                .join(itemLocation.item, item)
-                .on(itemLocation.item.id.eq(item.id))
+                .join(item).on(itemLocation.item.id.eq(item.id))
                 .where(item.user.id.eq(userId))
                 .fetchFirst();
     }
