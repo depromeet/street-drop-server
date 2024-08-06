@@ -3,6 +3,7 @@ package unit.domains.user.service;
 import com.depromeet.domains.item.repository.ItemLikeRepository;
 import com.depromeet.domains.item.repository.ItemLocationRepository;
 import com.depromeet.domains.user.dao.UserItemPointDao;
+import com.depromeet.domains.user.dto.response.UserItemLocationCountDto;
 import com.depromeet.domains.user.dto.response.UserPoiResponseDto;
 import com.depromeet.domains.user.service.UserItemService;
 import com.depromeet.user.User;
@@ -167,6 +168,55 @@ class UserItemServiceTest {
 
                 assertThat(result).isEqualTo(expected);
             }
+        }
+    }
+
+    @Nested
+    @DisplayName("사용자가 드랍한 아이템 개수 조회 성공")
+    class Success {
+        @DisplayName("사용자가 드랍한 아이템 개수 조회 - 시/군/구 필터링")
+        @Test
+        void getUserDropItemCountFilteredByCityTest() {
+            String state = "서울";
+            String city = "강남구";
+            User user = User.builder().build();
+            ReflectionTestUtils.setField(user, "id", 1L);
+            when(itemLocationRepository.countItemsByCity(user.getId(), city)).thenReturn(2L);
+
+            var result = userItemService.countItemsByLocation(user, state, city);
+            var expected = new UserItemLocationCountDto(2L, state, city);
+
+            assertThat(result).isEqualTo(expected);
+        }
+
+        @DisplayName("사용자가 드랍한 아이템 개수 조회 - 도/특별시/광역시 필터링")
+        @Test
+        void getUserDropItemCountFilteredByStateTest() {
+            String state = "서울";
+            String city = null;
+            User user = User.builder().build();
+            ReflectionTestUtils.setField(user, "id", 1L);
+            when(itemLocationRepository.countItemsByState(user.getId(), state)).thenReturn(2L);
+
+            var result = userItemService.countItemsByLocation(user, state, city);
+            var expected = new UserItemLocationCountDto(2L, state, null);
+
+            assertThat(result).isEqualTo(expected);
+        }
+
+        @DisplayName("사용자가 드랍한 아이템 개수 전체 조회 - 조회 아이템이 2개 있는 경우")
+        @Test
+        void getUserDropItemCountWithNoFilterTest() {
+            String state = null;
+            String city = null;
+            User user = User.builder().build();
+            ReflectionTestUtils.setField(user, "id", 1L);
+            when(itemLocationRepository.countItems(user.getId())).thenReturn(2L);
+
+            var result = userItemService.countItemsByLocation(user, state, city);
+            var expected = new UserItemLocationCountDto(2L, null, null);
+
+            assertThat(result).isEqualTo(expected);
         }
     }
 }

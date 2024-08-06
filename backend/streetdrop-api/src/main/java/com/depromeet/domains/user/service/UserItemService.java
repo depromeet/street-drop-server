@@ -12,6 +12,7 @@ import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.item.service.ItemLikeService;
 import com.depromeet.domains.music.dto.response.MusicResponseDto;
 import com.depromeet.domains.user.dto.request.ItemOrderType;
+import com.depromeet.domains.user.dto.response.UserItemLocationCountDto;
 import com.depromeet.domains.user.dto.response.UserPoiResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.user.User;
@@ -101,16 +102,18 @@ public class UserItemService {
     }
 
     @Transactional(readOnly = true)
-    public Integer countItemByLocation(String state, String city) {
+    public UserItemLocationCountDto countItemsByLocation(User user, String state, String city) {
+        Long count = 0L;
         if (state == null) {
-            if (city == null) {
-                return itemLocationRepository.countAll();
-            } else {
-                return itemLocationRepository.countItemsByCity(city);
-            }
-        } else {
-            return itemLocationRepository.countItemsByState(state);
+            count = itemLocationRepository.countItems(user.getId());
         }
+        else if (city == null) {
+            count = itemLocationRepository.countItemsByState(user.getId(), state);
+        }
+        else {
+            count = itemLocationRepository.countItemsByCity(user.getId(), city);
+        }
+        return new UserItemLocationCountDto(count, state, city);
     }
 
 }

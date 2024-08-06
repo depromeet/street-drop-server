@@ -3,6 +3,7 @@ package com.depromeet.domains.user.controller;
 import com.depromeet.common.dto.PaginationResponseDto;
 import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.domains.user.dto.request.ItemOrderType;
+import com.depromeet.domains.user.dto.response.UserItemLocationCountDto;
 import com.depromeet.domains.user.dto.response.UserPoiResponseDto;
 import com.depromeet.domains.user.service.UserItemService;
 import com.depromeet.security.annotation.ReqUser;
@@ -69,13 +70,15 @@ public class UserItemController {
         return ResponseDto.ok(response);
     }
 
-    @Operation(summary = "주변 아이템 개수 조회")
-    @GetMapping("/count")
-    public ResponseEntity<Integer> countItemByLocation(
+    @Operation(summary = "사용자가 드랍한 아이템 개수 조회")
+    @ApiResponse(responseCode = "200", description = "사용자가 드랍한 아이템 개수 조회 성공")
+    @GetMapping("/drop/count")
+    public ResponseEntity<UserItemLocationCountDto> countItemsByLocation(
+            @ReqUser User user,
             @RequestParam(value = "state", required = false) String state,
             @RequestParam(value = "city", required = false) String city
     ) {
-        var response = userItemService.countItemByLocation(state, city);
+        var response = userItemService.countItemsByLocation(user, state, city);
         return ResponseEntity.ok(response);
     }
 

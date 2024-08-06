@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static com.depromeet.area.village.QVillageArea.villageArea;
 import static com.depromeet.external.querydsl.mysql.spatial.MySqlSpatialFunction.mySqlDistanceSphereFunction;
 import static com.depromeet.item.QItem.item;
 import static com.depromeet.item.QItemLocation.itemLocation;
@@ -21,6 +22,7 @@ public class ItemLocationRepositoryImpl implements QueryDslItemLocationRepositor
 
     private final JPAQueryFactory queryFactory;
 
+    @Override
     public List<ItemPointDao> findNearItemsPointsByDistance(Point point, Double distance, Double innerDistance, List<Long> blockedUserIds) {
         return queryFactory.select(
                         Projections.fields(
@@ -42,6 +44,7 @@ public class ItemLocationRepositoryImpl implements QueryDslItemLocationRepositor
                 .fetch();
     }
 
+    @Override
     public List<UserItemPointDao> findUserDropItemsPoints(Long userId) {
         return queryFactory.select(
                         Projections.fields(
@@ -57,6 +60,45 @@ public class ItemLocationRepositoryImpl implements QueryDslItemLocationRepositor
                 .on(item.albumCover.id.eq(albumCover.id))
                 .where(item.user.id.eq(userId))
                 .fetch();
+    }
+
+    @Override
+    public Long countItemsByCity(Long userId, String city) {
+        return queryFactory
+                .select(itemLocation.count())
+                .from(itemLocation)
+                .join(itemLocation.item, item)
+                .on(itemLocation.item.id.eq(item.id))
+                .join(itemLocation.villageArea, villageArea)
+                .on(itemLocation.villageArea.id.eq(villageArea.id))
+                .where(item.user.id.eq(userId))
+                .where(villageArea.cityArea.cityName.eq(city))
+                .fetchFirst();
+    }
+
+    @Override
+    public Long countItemsByState(Long userId, String state) {
+        return queryFactory
+                .select(itemLocation.count())
+                .from(itemLocation)
+                .join(itemLocation.item, item)
+                .on(itemLocation.item.id.eq(item.id))
+                .join(itemLocation.villageArea, villageArea)
+                .on(itemLocation.villageArea.id.eq(villageArea.id))
+                .where(item.user.id.eq(userId))
+                .where(villageArea.cityArea.stateArea.stateName.eq(state))
+                .fetchFirst();
+    }
+
+    @Override
+    public Long countItems(Long userId) {
+        return queryFactory
+                .select(itemLocation.count())
+                .from(itemLocation)
+                .join(itemLocation.item, item)
+                .on(itemLocation.item.id.eq(item.id))
+                .where(item.user.id.eq(userId))
+                .fetchFirst();
     }
 
 }
