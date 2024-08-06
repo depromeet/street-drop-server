@@ -12,6 +12,7 @@ import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.item.service.ItemLikeService;
 import com.depromeet.domains.music.dto.response.MusicResponseDto;
 import com.depromeet.domains.user.dto.request.ItemOrderType;
+import com.depromeet.domains.user.dto.response.UserItemLocationCountDto;
 import com.depromeet.domains.user.dto.response.UserPoiResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
 import com.depromeet.user.User;
@@ -33,8 +34,8 @@ public class UserItemService {
     private final ItemLikeService itemLikeService;
 
     @Transactional(readOnly = true)
-    public PaginationResponseDto<?, ?> getDropItems(User user, long nextCursor, ItemOrderType orderType) {
-        List<ItemDao> itemList = itemRepository.findByUserId(user.getId(), nextCursor, orderType);
+    public PaginationResponseDto<?, ?> getDropItems(User user, long nextCursor, ItemOrderType orderType, String state, String city) {
+        List<ItemDao> itemList = getItemList(user, nextCursor, orderType, state, city);
         List<ItemGroupByDateResponseDto> itemGroupByDateResponseDto = itemList
                 .stream()
                 .map(ItemDao::getWeekAgo)
@@ -54,6 +55,18 @@ public class UserItemService {
                 .nextCursor(-1).build();
 
         return new PaginationResponseDto<>(itemGroupByDateResponseDto, meta);
+    }
+
+    private List<ItemDao> getItemList(User user, long nextCursor, ItemOrderType orderType, String state, String city) {
+        if (state == null) {
+            return itemRepository.findByUserId(user.getId(), nextCursor, orderType);
+        }
+        else if (city == null) {
+            return itemRepository.findByUserIdAndState(user.getId(), nextCursor, orderType, state);
+        }
+        else {
+            return itemRepository.findByUserIdAndCity(user.getId(), nextCursor, orderType, city);
+        }
     }
 
     @Transactional(readOnly = true)
@@ -98,6 +111,21 @@ public class UserItemService {
                 .map(UserPoiResponseDto.UserPoiDto::from)
                 .toList();
         return new UserPoiResponseDto(userPoiDtoList);
+    }
+
+    @Transactional(readOnly = true)
+    public UserItemLocationCountDto countItemsByLocation(User user, String state, String city) {
+        Long count = 0L;
+        if (state == null) {
+            count = itemLocationRepository.countItems(user.getId());
+        }
+        else if (city == null) {
+            count = itemLocationRepository.countItemsByState(user.getId(), state);
+        }
+        else {
+            count = itemLocationRepository.countItemsByCity(user.getId(), city);
+        }
+        return new UserItemLocationCountDto(count, state, city);
     }
 
 }

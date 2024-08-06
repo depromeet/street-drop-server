@@ -3,6 +3,7 @@ package com.depromeet.domains.user.controller;
 import com.depromeet.common.dto.PaginationResponseDto;
 import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.domains.user.dto.request.ItemOrderType;
+import com.depromeet.domains.user.dto.response.UserItemLocationCountDto;
 import com.depromeet.domains.user.dto.response.UserPoiResponseDto;
 import com.depromeet.domains.user.service.UserItemService;
 import com.depromeet.security.annotation.ReqUser;
@@ -30,10 +31,12 @@ public class UserItemController {
     @GetMapping("/drop")
     public ResponseEntity<PaginationResponseDto<?, ?>> getUserDropItems(
             @ReqUser User user,
-            @RequestParam(defaultValue = "9223372036854775000") long lastCursor,
-            @RequestParam(defaultValue = "RECENT", required = false) ItemOrderType orderType
+            @RequestParam(defaultValue = "RECENT", required = false) ItemOrderType orderType,
+            @RequestParam(value = "state", required = false) String state,
+            @RequestParam(value = "city", required = false) String city,
+            @RequestParam(defaultValue = "9223372036854775000") long lastCursor
     ) {
-        var response = userItemService.getDropItems(user, lastCursor, orderType);
+        var response = userItemService.getDropItems(user, lastCursor, orderType, state, city);
         return ResponseDto.ok(response);
     }
 
@@ -67,6 +70,18 @@ public class UserItemController {
     ) {
         var response = userItemService.getLikedItemsPoints(user);
         return ResponseDto.ok(response);
+    }
+
+    @Operation(summary = "사용자가 드랍한 아이템 개수 조회")
+    @ApiResponse(responseCode = "200", description = "사용자가 드랍한 아이템 개수 조회 성공")
+    @GetMapping("/drop/count")
+    public ResponseEntity<UserItemLocationCountDto> countItemsByLocation(
+            @ReqUser User user,
+            @RequestParam(value = "state", required = false) String state,
+            @RequestParam(value = "city", required = false) String city
+    ) {
+        var response = userItemService.countItemsByLocation(user, state, city);
+        return ResponseEntity.ok(response);
     }
 
 }
