@@ -34,8 +34,8 @@ public class UserItemService {
     private final ItemLikeService itemLikeService;
 
     @Transactional(readOnly = true)
-    public PaginationResponseDto<?, ?> getDropItems(User user, long nextCursor, ItemOrderType orderType) {
-        List<ItemDao> itemList = itemRepository.findByUserId(user.getId(), nextCursor, orderType);
+    public PaginationResponseDto<?, ?> getDropItems(User user, long nextCursor, ItemOrderType orderType, String state, String city) {
+        List<ItemDao> itemList = getItemList(user, nextCursor, orderType, state, city);
         List<ItemGroupByDateResponseDto> itemGroupByDateResponseDto = itemList
                 .stream()
                 .map(ItemDao::getWeekAgo)
@@ -55,6 +55,18 @@ public class UserItemService {
                 .nextCursor(-1).build();
 
         return new PaginationResponseDto<>(itemGroupByDateResponseDto, meta);
+    }
+
+    private List<ItemDao> getItemList(User user, long nextCursor, ItemOrderType orderType, String state, String city) {
+        if (state == null) {
+            return itemRepository.findByUserId(user.getId(), nextCursor, orderType);
+        }
+        else if (city == null) {
+            return itemRepository.findByUserIdAndState(user.getId(), nextCursor, orderType, state);
+        }
+        else {
+            return itemRepository.findByUserIdAndCity(user.getId(), nextCursor, orderType, city);
+        }
     }
 
     @Transactional(readOnly = true)

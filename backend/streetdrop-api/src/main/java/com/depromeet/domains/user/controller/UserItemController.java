@@ -31,10 +31,12 @@ public class UserItemController {
     @GetMapping("/drop")
     public ResponseEntity<PaginationResponseDto<?, ?>> getUserDropItems(
             @ReqUser User user,
-            @RequestParam(defaultValue = "9223372036854775000") long lastCursor,
-            @RequestParam(defaultValue = "RECENT", required = false) ItemOrderType orderType
+            @RequestParam(defaultValue = "RECENT", required = false) ItemOrderType orderType,
+            @RequestParam(value = "state", required = false) String state,
+            @RequestParam(value = "city", required = false) String city,
+            @RequestParam(defaultValue = "9223372036854775000") long lastCursor
     ) {
-        var response = userItemService.getDropItems(user, lastCursor, orderType);
+        var response = userItemService.getDropItems(user, lastCursor, orderType, state, city);
         return ResponseDto.ok(response);
     }
 
