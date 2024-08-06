@@ -23,5 +23,4 @@ public interface ItemRepository extends JpaRepository<Item, Long>, QueryDslItemR
     Optional<Item> findById(@Param("itemId") Long itemId);
 
     Long countByUser(User user);
-
 }
