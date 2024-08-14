@@ -21,15 +21,19 @@ import com.depromeet.user.User;
 import com.depromeet.util.GeomUtil;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Point;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
 public class ItemService {
+	private final RedissonClient redissonClient;
 	private final MusicService musicService;
 	private final ItemRepository itemRepository;
 	private final ItemLocationRepository itemLocationRepository;
@@ -53,30 +57,45 @@ public class ItemService {
 
 	@Transactional
 	public ItemResponseDto create(User user, ItemCreateRequestDto itemCreateRequestDto) {
-		var song = musicService.getOrCreateMusic(itemCreateRequestDto.getMusic());
+		String lockKey = "item:create" + user.getId();
+		RLock lock = redissonClient.getLock(lockKey);
 
-		var item = Item.builder()
-				.user(user)
-				.albumCover(song.getAlbum().getAlbumCover())
-				.song(song)
-				.content(itemCreateRequestDto.getContent())
-				.build();
+		try {
+			boolean creatable = lock.tryLock(5, 5, TimeUnit.SECONDS);
+			if (!creatable) {
+				throw new BusinessException(ItemErrorCode.ITEM_CREATE_PROCESSING);
+			}
 
-		ItemLocationRequestDto locationRequestDto = itemCreateRequestDto.getLocation();
-		Point point = GeomUtil.createPoint(locationRequestDto.getLongitude(), locationRequestDto.getLatitude());
+			var song = musicService.getOrCreateMusic(itemCreateRequestDto.getMusic());
+
+			var item = Item.builder()
+					.user(user)
+					.albumCover(song.getAlbum().getAlbumCover())
+					.song(song)
+					.content(itemCreateRequestDto.getContent())
+					.build();
+
+			ItemLocationRequestDto locationRequestDto = itemCreateRequestDto.getLocation();
+			Point point = GeomUtil.createPoint(locationRequestDto.getLongitude(), locationRequestDto.getLatitude());
 		VillageArea villageArea = villageAreaService.getVillageByLocationPoint(point);
 
-		ItemLocation itemLocation = ItemLocation.builder()
-				.name(locationRequestDto.getAddress())
-				.item(item)
+			ItemLocation itemLocation = ItemLocation.builder()
+					.name(locationRequestDto.getAddress())
+					.item(item)
 				.villageArea(villageArea)
-				.point(point)
-				.build();
+					.point(point)
+					.build();
 
-		item.setItemLocation(itemLocation);
-		var savedItem = itemRepository.save(item);
+			item.setItemLocation(itemLocation);
+			var savedItem = itemRepository.save(item);
 
-		return new ItemResponseDto(savedItem);
+			return new ItemResponseDto(savedItem);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			throw new BusinessException(ItemErrorCode.ITEM_CREATE_FAIL);
+		} finally {
+			lock.unlock();
+		}
 	}
 
 

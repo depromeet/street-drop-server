@@ -39,6 +39,8 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.4.4'
+    // redisson
+    implementation group: 'org.redisson', name: 'redisson-spring-boot-starter', version: '3.34.1'
 }
 
 
