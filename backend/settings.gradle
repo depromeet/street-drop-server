@@ -5,7 +5,6 @@ include (
         'streetdrop-batch',
         'streetdrop-common',
         'streetdrop-domain',
-        'streetdrop-search',
         'streetdrop-admin:streetdrop-admin-server',
 )
 findProject(':streetdrop-admin:streetdrop-admin-server')?.name = 'streetdrop-admin-server'
