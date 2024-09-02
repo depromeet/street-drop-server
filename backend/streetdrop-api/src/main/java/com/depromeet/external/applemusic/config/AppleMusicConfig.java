@@ -1,4 +1,4 @@
-package com.depromeet.domains.search.config;
+package com.depromeet.external.applemusic.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
