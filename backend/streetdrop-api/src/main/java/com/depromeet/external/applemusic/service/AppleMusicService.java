@@ -14,7 +14,7 @@ public class AppleMusicService {
     private final AppleMusicFeignClient appleMusicFeignClient;
 
     public MusicInfoListResponseDto getSongCharts() {
-        var response = appleMusicFeignClient.getCatalogCharts("songs", 50);
+        var response = appleMusicFeignClient.getCatalogCharts("songs", 30);
         return MusicInfoListResponseDto.ofAppleMusicResponseDto(response);
     }
 
