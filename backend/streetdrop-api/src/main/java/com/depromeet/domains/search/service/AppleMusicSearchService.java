@@ -1,9 +1,8 @@
 package com.depromeet.domains.search.service;
 
-
-import com.depromeet.domains.search.config.AppleMusicConfig;
 import com.depromeet.domains.search.response.MusicInfoListResponseDto;
 import com.depromeet.domains.search.response.apple.AppleMusicResponseDto;
+import com.depromeet.external.applemusic.config.AppleMusicConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpHeaders;
