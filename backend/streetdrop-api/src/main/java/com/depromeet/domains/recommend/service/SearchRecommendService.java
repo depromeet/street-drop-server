@@ -3,6 +3,7 @@ package com.depromeet.domains.recommend.service;
 import com.depromeet.common.error.dto.CommonErrorCode;
 import com.depromeet.common.error.exception.internal.BusinessException;
 import com.depromeet.domains.music.service.MusicService;
+import com.depromeet.domains.recommend.constant.RecommendType;
 import com.depromeet.domains.recommend.dto.response.*;
 import com.depromeet.domains.recommend.repository.SearchRecommendTermRepository;
 import com.depromeet.external.applemusic.service.AppleMusicService;
@@ -39,17 +40,12 @@ public class SearchRecommendService {
     }
 
     public RecommendResponseDto recommendSearchSongs() {
-        // 음악 추천 30개
-        RecommendCategoryDto chartMusicRecommend = appleMusicService.getSongCharts(30);
-
-        // 최근에 드롭된 음악 15개
-        RecommendCategoryDto recentMusicRecommend = musicService.getRecentMusic(15);
-
-        // 아티스트 추천 10개
-        RecommendCategoryDto chartArtistRecommend = appleMusicService.getArtistCharts(10);
-
         return new RecommendResponseDto(
-                List.of(chartMusicRecommend, recentMusicRecommend, chartArtistRecommend)
+                List.of(
+                        appleMusicService.getSongCharts(RecommendType.CHART_SONGS),
+                        musicService.getRecentMusic(RecommendType.RECENT_SONGS),
+                        appleMusicService.getArtistCharts(RecommendType.CHART_ARTIST)
+                )
         );
     }
 

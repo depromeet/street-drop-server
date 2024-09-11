@@ -1,5 +1,6 @@
 package com.depromeet.domains.recommend.dto.response;
 
+import com.depromeet.domains.recommend.constant.RecommendType;
 import com.depromeet.external.applemusic.dto.response.catalogchart.AppleMusicAlbumChartResponseDto;
 import com.depromeet.external.applemusic.dto.response.catalogchart.AppleMusicSongChartResponseDto;
 import lombok.AllArgsConstructor;
@@ -16,12 +17,12 @@ public class RecommendCategoryDto {
     private List<?> content;
     private boolean nextPage;
 
-    public static RecommendCategoryDto ofMusicInfoResponseDto(List<MusicInfoResponseDto> musicInfoResponseDto) {
-        return new RecommendCategoryDto("많이 드랍된 음악", musicInfoResponseDto, true);
+    public static RecommendCategoryDto ofMusicInfoResponseDto(RecommendType recommendType, List<MusicInfoResponseDto> musicInfoResponseDto) {
+        return new RecommendCategoryDto(recommendType.getTitle(), musicInfoResponseDto, recommendType.isNextPage());
     }
 
 
-    public static RecommendCategoryDto ofAppleMusicResponseDto(AppleMusicSongChartResponseDto appleMusicSongChartResponseDto) {
+    public static RecommendCategoryDto ofAppleMusicResponseDto(RecommendType recommendType, AppleMusicSongChartResponseDto appleMusicSongChartResponseDto) {
         List<MusicInfoResponseDto> musicInfoList = Optional.ofNullable(appleMusicSongChartResponseDto.results.songs)
                 .filter(songs -> !songs.isEmpty())
                 .map(songs -> songs.get(0).data.stream()
@@ -29,10 +30,10 @@ public class RecommendCategoryDto {
                         .toList()
                 )
                 .orElse(Collections.emptyList());
-        return new RecommendCategoryDto("인기 있는 음악", musicInfoList, true);
+        return new RecommendCategoryDto(recommendType.getTitle(), musicInfoList, recommendType.isNextPage());
     }
 
-    public static RecommendCategoryDto ofAppleMusicResponseDto(AppleMusicAlbumChartResponseDto appleMusicAlbumChartResponseDto) {
+    public static RecommendCategoryDto ofAppleMusicResponseDto(RecommendType recommendType, AppleMusicAlbumChartResponseDto appleMusicAlbumChartResponseDto) {
         List<ArtistInfoResponseDto> artistInfoList =
                 Optional.ofNullable(appleMusicAlbumChartResponseDto.results.albums)
                         .filter(albums -> !albums.isEmpty())
@@ -41,6 +42,6 @@ public class RecommendCategoryDto {
                                 .toList()
                         )
                         .orElse(Collections.emptyList());
-        return new RecommendCategoryDto("아티스트", artistInfoList, false);
+        return new RecommendCategoryDto(recommendType.getTitle(), artistInfoList, recommendType.isNextPage());
     }
 }
