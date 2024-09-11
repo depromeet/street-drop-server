@@ -1,21 +1,34 @@
-package com.depromeet.external.applemusic.dto.response;
+package com.depromeet.domains.recommend.dto.response;
 
-import com.depromeet.external.applemusic.dto.response.catalogchart.AppleMusicResponseDto;
+import com.depromeet.external.applemusic.dto.response.catalogchart.AppleMusicSongChartResponseDto;
+import com.depromeet.music.genre.Genre;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+@NoArgsConstructor
 public class MusicInfoResponseDto {
-    public String albumName;
-    public String artistName;
-    public String songName;
-    public String durationTime;
-    public String albumImage;
-    public String albumThumbnailImage;
-    public List<String> genre;
+    private String albumName;
+    private String artistName;
+    private String songName;
+    private String durationTime;
+    private String albumImage;
+    private String albumThumbnailImage;
+    private List<String> genre;
 
-    public static MusicInfoResponseDto fromAppleMusicResponse(AppleMusicResponseDto.SongData data) {
+    public MusicInfoResponseDto(String albumName, String artistName, String songName, String albumImage, String albumThumbnailImage, List<Genre> genre) {
+        this.albumName = albumName;
+        this.artistName = artistName;
+        this.songName = songName;
+        this.durationTime = "";  // TODO: DB에서 가져오는 음악 데이터는 durationTime이 없음
+        this.albumImage = albumImage;
+        this.albumThumbnailImage = albumThumbnailImage;
+        this.genre = genre.stream().map(Genre::getName).toList();
+    }
+
+    public static MusicInfoResponseDto fromAppleMusicResponse(AppleMusicSongChartResponseDto.SongData data) {
         final int MINUTES_PER_HOUR = 60;
         final int TO_SEC = 1000;
         final int ALBUM_IMAGE_SIZE = 500;

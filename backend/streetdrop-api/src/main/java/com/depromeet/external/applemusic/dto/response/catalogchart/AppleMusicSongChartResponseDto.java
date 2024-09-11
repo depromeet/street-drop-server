@@ -2,7 +2,7 @@ package com.depromeet.external.applemusic.dto.response.catalogchart;
 
 import java.util.List;
 
-public class AppleMusicResponseDto {
+public class AppleMusicSongChartResponseDto {
     public Results results;
     public Meta meta;
 

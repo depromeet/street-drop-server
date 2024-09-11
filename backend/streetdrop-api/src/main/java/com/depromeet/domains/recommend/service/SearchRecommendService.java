@@ -3,10 +3,8 @@ package com.depromeet.domains.recommend.service;
 import com.depromeet.common.error.dto.CommonErrorCode;
 import com.depromeet.common.error.exception.internal.BusinessException;
 import com.depromeet.domains.music.service.MusicService;
-import com.depromeet.domains.recommend.dto.response.SearchTermRecommendResponseDto;
-import com.depromeet.domains.recommend.dto.response.TextColorDto;
+import com.depromeet.domains.recommend.dto.response.*;
 import com.depromeet.domains.recommend.repository.SearchRecommendTermRepository;
-import com.depromeet.domains.recommend.dto.response.MusicInfoListResponseDto;
 import com.depromeet.external.applemusic.service.AppleMusicService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +42,9 @@ public class SearchRecommendService {
 
         // 최근에 드롭된 음악 15개
         MusicInfoListResponseDto recentMusicRecommend = musicService.getRecentMusic(15);
+
+        // 아티스트 추천 10개
+        ArtistInfoListResponseDto chartArtistRecommend = appleMusicService.getArtistCharts(10);
     }
 
 }
