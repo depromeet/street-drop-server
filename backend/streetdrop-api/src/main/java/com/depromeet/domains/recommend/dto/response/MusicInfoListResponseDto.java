@@ -20,7 +20,6 @@ public class MusicInfoListResponseDto {
                         .toList()
                 )
                 .orElse(Collections.emptyList());
-
         return new MusicInfoListResponseDto(musicInfoList);
     }
 
