@@ -2,8 +2,10 @@ package com.depromeet.domains.recommend.dto.response;
 
 import com.depromeet.external.applemusic.dto.response.catalogchart.AppleMusicAlbumChartResponseDto;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ArtistInfoResponseDto {

@@ -1,7 +1,6 @@
 package com.depromeet.external.applemusic.service;
 
-import com.depromeet.domains.recommend.dto.response.ArtistInfoListResponseDto;
-import com.depromeet.domains.recommend.dto.response.MusicInfoListResponseDto;
+import com.depromeet.domains.recommend.dto.response.RecommendCategoryDto;
 import com.depromeet.external.feign.client.AppleMusicFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,14 +11,14 @@ public class AppleMusicService {
 
     private final AppleMusicFeignClient appleMusicFeignClient;
 
-    public MusicInfoListResponseDto getSongCharts(int limit) {
+    public RecommendCategoryDto getSongCharts(int limit) {
         var response = appleMusicFeignClient.getSongCharts("songs", limit);
-        return MusicInfoListResponseDto.ofAppleMusicResponseDto(response);
+        return RecommendCategoryDto.ofAppleMusicResponseDto(response);
     }
 
-    public ArtistInfoListResponseDto getArtistCharts(int limit) {
+    public RecommendCategoryDto getArtistCharts(int limit) {
         var response = appleMusicFeignClient.getAlbumCharts("albums", limit);
-        return ArtistInfoListResponseDto.ofAppleMusicResponseDto(response);
+        return RecommendCategoryDto.ofAppleMusicResponseDto(response);
     }
 
 }

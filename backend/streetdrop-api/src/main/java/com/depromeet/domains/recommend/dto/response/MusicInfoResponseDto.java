@@ -2,12 +2,14 @@ package com.depromeet.domains.recommend.dto.response;
 
 import com.depromeet.external.applemusic.dto.response.catalogchart.AppleMusicSongChartResponseDto;
 import com.depromeet.music.genre.Genre;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+@Getter
 @NoArgsConstructor
 public class MusicInfoResponseDto {
     private String albumName;

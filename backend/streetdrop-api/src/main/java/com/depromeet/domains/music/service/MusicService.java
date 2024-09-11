@@ -8,7 +8,7 @@ import com.depromeet.domains.music.dto.request.MusicRequestDto;
 import com.depromeet.domains.music.dto.response.MusicResponseDto;
 import com.depromeet.domains.music.event.CreateSongGenreEvent;
 import com.depromeet.domains.music.song.repository.SongRepository;
-import com.depromeet.domains.recommend.dto.response.MusicInfoListResponseDto;
+import com.depromeet.domains.recommend.dto.response.RecommendCategoryDto;
 import com.depromeet.music.album.Album;
 import com.depromeet.music.album.AlbumCover;
 import com.depromeet.music.artist.Artist;
@@ -123,8 +123,8 @@ public class MusicService {
 	}
 
 	@Transactional(readOnly = true)
-	public MusicInfoListResponseDto getRecentMusic(int count) {
+	public RecommendCategoryDto getRecentMusic(int count) {
 		var recentSongs = songRepository.findRecentSongs(count);
-		return new MusicInfoListResponseDto(recentSongs);
+		return RecommendCategoryDto.ofMusicInfoResponseDto(recentSongs);
 	}
 }

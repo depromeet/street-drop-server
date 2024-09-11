@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -36,15 +38,19 @@ public class SearchRecommendService {
         return new SearchTermRecommendResponseDto(description, termList);
     }
 
-    public void recommendSearchSongs() {
+    public RecommendResponseDto recommendSearchSongs() {
         // 음악 추천 30개
-        MusicInfoListResponseDto chartMusicRecommend = appleMusicService.getSongCharts(30);
+        RecommendCategoryDto chartMusicRecommend = appleMusicService.getSongCharts(30);
 
         // 최근에 드롭된 음악 15개
-        MusicInfoListResponseDto recentMusicRecommend = musicService.getRecentMusic(15);
+        RecommendCategoryDto recentMusicRecommend = musicService.getRecentMusic(15);
 
         // 아티스트 추천 10개
-        ArtistInfoListResponseDto chartArtistRecommend = appleMusicService.getArtistCharts(10);
+        RecommendCategoryDto chartArtistRecommend = appleMusicService.getArtistCharts(10);
+
+        return new RecommendResponseDto(
+                List.of(chartMusicRecommend, recentMusicRecommend, chartArtistRecommend)
+        );
     }
 
 }
