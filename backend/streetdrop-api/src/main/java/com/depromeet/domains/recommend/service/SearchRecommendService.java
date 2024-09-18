@@ -42,9 +42,9 @@ public class SearchRecommendService {
     public RecommendResponseDto recommendSearchSongs() {
         return new RecommendResponseDto(
                 List.of(
-                        appleMusicService.getSongCharts(RecommendType.CHART_SONGS),
+                        appleMusicService.getCategoryChart(RecommendType.CHART_SONGS),
                         musicService.getRecentMusic(RecommendType.RECENT_SONGS),
-                        appleMusicService.getArtistCharts(RecommendType.CHART_ARTIST)
+                        appleMusicService.getCategoryChart(RecommendType.CHART_ARTIST)
                 )
         );
     }
