@@ -57,9 +57,9 @@ public class ItemLikeService {
 	}
 
 	@Transactional(readOnly = true)
-	public PaginationResponseDto<?,?> getLikedItemsByUser(User user, long lastCursor, ItemOrderType itemOrderType) {
+	public PaginationResponseDto<?,?> getLikedItemsByUser(User user, long lastCursor, ItemOrderType itemOrderType, String state, String city) {
 
-		List<UserItemLikeDao> itemLikeDaoList = itemLikeRepository.findByUserId(user.getId(),lastCursor, itemOrderType);
+		List<UserItemLikeDao> itemLikeDaoList = getLikedItemListByUser(user, lastCursor, itemOrderType, state, city);
 
 		List<ItemGroupByDateResponseDto> itemGroupByDateResponseDto = itemLikeDaoList
 				.stream()
@@ -77,6 +77,19 @@ public class ItemLikeService {
 		var meta = new InfiniteScrollMetaResponseDto(itemLikeDaoList.size(), -1);
 
 		return new PaginationResponseDto<>(itemGroupByDateResponseDto, meta);
+	}
+
+
+	private List<UserItemLikeDao> getLikedItemListByUser(User user, long lastCursor, ItemOrderType itemOrderType, String state, String city){
+		if (state == null) {
+			return itemLikeRepository.findByUserId(user.getId(), lastCursor, itemOrderType);
+		}
+		else if (city == null) {
+			return itemLikeRepository.findByUserIdAndState(user.getId(), lastCursor, itemOrderType, state);
+		}
+		else {
+			return itemLikeRepository.findByUserIdAndCity(user.getId(), lastCursor, itemOrderType, city);
+		}
 	}
 
 	private ItemGroupResponseDto userItemLikeDaotoItemGroupResponseDto(UserItemLikeDao userItemLikeDao) {
