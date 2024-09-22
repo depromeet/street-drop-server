@@ -100,8 +100,8 @@ public class UserItemService {
 
 
     @Transactional(readOnly = true)
-    public PaginationResponseDto<?, ?> getLikedItems(User user, long nextCursor, ItemOrderType itemOrderType) {
-        return itemLikeService.getLikedItemsByUser(user, nextCursor, itemOrderType);
+    public PaginationResponseDto<?, ?> getLikedItems(User user, long nextCursor, ItemOrderType itemOrderType, String state, String city) {
+        return itemLikeService.getLikedItemsByUser(user, nextCursor, itemOrderType, state, city);
     }
 
     @Transactional(readOnly = true)
