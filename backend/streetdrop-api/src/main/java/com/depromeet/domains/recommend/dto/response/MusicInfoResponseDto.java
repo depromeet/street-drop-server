@@ -1,7 +1,11 @@
 package com.depromeet.domains.recommend.dto.response;
 
 import com.depromeet.external.applemusic.dto.response.catalogchart.AppleMusicSongChartResponseDto;
-import com.depromeet.music.genre.Genre;
+import com.depromeet.music.album.Album;
+import com.depromeet.music.album.AlbumCover;
+import com.depromeet.music.genre.SongGenre;
+import com.depromeet.music.song.Song;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +15,7 @@ import java.util.function.Function;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class MusicInfoResponseDto {
     private String albumName;
     private String artistName;
@@ -20,14 +25,14 @@ public class MusicInfoResponseDto {
     private String albumThumbnailImage;
     private List<String> genre;
 
-    public MusicInfoResponseDto(String albumName, String artistName, String songName, String albumImage, String albumThumbnailImage, List<Genre> genre) {
+    public MusicInfoResponseDto(String albumName, String artistName, String songName, String albumImage, String albumThumbnailImage, List<String> genre) {
         this.albumName = albumName;
         this.artistName = artistName;
         this.songName = songName;
         this.durationTime = "";  // TODO: DB에서 가져오는 음악 데이터는 durationTime이 없음
         this.albumImage = albumImage;
         this.albumThumbnailImage = albumThumbnailImage;
-        this.genre = genre.stream().map(Genre::getName).toList();
+        this.genre = genre;
     }
 
     public static MusicInfoResponseDto fromAppleMusicResponse(AppleMusicSongChartResponseDto.SongData data) {
