@@ -13,6 +13,10 @@ jar {
     enabled = false
 }
 
+ext {
+    set('springCloudVersion', "2022.0.3")
+}
+
 dependencies {
     implementation project(':streetdrop-domain')
     implementation project(':streetdrop-common')
@@ -39,6 +43,13 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.4.4'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 
