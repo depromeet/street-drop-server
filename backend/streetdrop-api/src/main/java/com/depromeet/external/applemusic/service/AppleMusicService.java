@@ -15,17 +15,17 @@ public class AppleMusicService {
     private final AppleMusicFeignClient appleMusicFeignClient;
 
     public RecommendCategoryDto getCategoryChart(RecommendType recommendType) {
-        if (recommendType == RecommendType.POPULAR_CHART_SONG) {
-            var response = appleMusicFeignClient.getSongCharts("songs", recommendType.getLimit());
-            return RecommendCategoryDto.ofAppleMusicResponseDto(recommendType, response);
-        }
-        else if (recommendType == RecommendType.CHART_ARTIST) {
-            var response = appleMusicFeignClient.getAlbumCharts("albums", recommendType.getLimit());
-            return RecommendCategoryDto.ofAppleMusicResponseDto(recommendType, response);
-        }
-        else {
-            throw new BusinessException(CommonErrorCode.UNSUPPORTED_TYPE);
-        }
+        return switch (recommendType) {
+            case POPULAR_CHART_SONG -> {
+                var response = appleMusicFeignClient.getSongCharts("songs", recommendType.getLimit());
+                yield RecommendCategoryDto.ofAppleMusicResponseDto(recommendType, response);
+            }
+            case CHART_ARTIST -> {
+                var response = appleMusicFeignClient.getAlbumCharts("albums", recommendType.getLimit());
+                yield RecommendCategoryDto.ofAppleMusicResponseDto(recommendType, response);
+            }
+            default -> throw new BusinessException(CommonErrorCode.UNSUPPORTED_TYPE);
+        };
     }
 
 }
