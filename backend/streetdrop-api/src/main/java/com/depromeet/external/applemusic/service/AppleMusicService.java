@@ -15,7 +15,7 @@ public class AppleMusicService {
     private final AppleMusicFeignClient appleMusicFeignClient;
 
     public RecommendCategoryDto getCategoryChart(RecommendType recommendType) {
-        if (recommendType == RecommendType.CHART_SONGS) {
+        if (recommendType == RecommendType.POPULAR_CHART_SONG) {
             var response = appleMusicFeignClient.getSongCharts("songs", recommendType.getLimit());
             return RecommendCategoryDto.ofAppleMusicResponseDto(recommendType, response);
         }

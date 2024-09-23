@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum RecommendType {
-    CHART_SONGS("인기 있는 음악", 30, true),
+    POPULAR_CHART_SONG("인기 있는 음악", 30, true),
     RECENT_SONGS("많이 드랍된 음악", 15, true),
     CHART_ARTIST("아티스트", 10, false);
 
