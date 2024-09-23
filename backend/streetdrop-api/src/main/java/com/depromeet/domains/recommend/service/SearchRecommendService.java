@@ -8,12 +8,10 @@ import com.depromeet.domains.recommend.dto.response.*;
 import com.depromeet.domains.recommend.repository.SearchRecommendTermRepository;
 import com.depromeet.external.applemusic.service.AppleMusicService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SearchRecommendService {
