@@ -5,6 +5,7 @@ import com.depromeet.domains.user.dto.request.ItemOrderType;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.DateExpression;
 import com.querydsl.core.types.dsl.DateTimePath;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -39,7 +40,7 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
         var query = queryFactory.select(
                         Projections.constructor(
                                 ItemDao.class,
-                                createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
+                                orderType == ItemOrderType.MOST_LIKED ?  Expressions.constant(1): createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
                                 item.id,
                                 item.content,
                                 item.createdAt,
@@ -64,6 +65,7 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
         query = switch (orderType) {
             case RECENT -> query.orderBy(item.createdAt.desc());
             case OLDEST -> query.orderBy(item.createdAt.asc());
+            case MOST_LIKED -> query.orderBy(itemLike.count().desc());
         };
 
         return query.fetch();
@@ -78,7 +80,7 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
         var query = queryFactory.select(
                         Projections.constructor(
                                 ItemDao.class,
-                                createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
+                                orderType == ItemOrderType.MOST_LIKED ?  Expressions.constant(1): createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
                                 item.id,
                                 item.content,
                                 item.createdAt,
@@ -105,6 +107,7 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
         query = switch (orderType) {
             case RECENT -> query.orderBy(item.createdAt.desc());
             case OLDEST -> query.orderBy(item.createdAt.asc());
+            case MOST_LIKED -> query.orderBy(itemLike.count().desc());
         };
 
         return query.fetch();
@@ -119,7 +122,7 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
         var query = queryFactory.select(
                         Projections.constructor(
                                 ItemDao.class,
-                                createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
+                                orderType == ItemOrderType.MOST_LIKED ?  Expressions.constant(1): createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
                                 item.id,
                                 item.content,
                                 item.createdAt,
@@ -146,6 +149,7 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
         query = switch (orderType) {
             case RECENT -> query.orderBy(item.createdAt.desc());
             case OLDEST -> query.orderBy(item.createdAt.asc());
+            case MOST_LIKED -> query.orderBy(itemLike.count().desc());
         };
 
         return query.fetch();
