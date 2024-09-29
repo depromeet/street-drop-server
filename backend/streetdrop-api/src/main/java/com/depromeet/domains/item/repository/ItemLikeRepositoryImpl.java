@@ -4,9 +4,11 @@ import com.depromeet.domains.item.dao.UserItemLikeDao;
 import com.depromeet.domains.user.dao.UserItemPointDao;
 import com.depromeet.domains.user.dto.request.ItemOrderType;
 import com.depromeet.item.QItemLike;
+import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.DateExpression;
 import com.querydsl.core.types.dsl.DateTimePath;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -40,10 +42,14 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
         DateTimePath<LocalDateTime> createdAtExpr = itemLike.createdAt;
         QItemLike innerItemLike = new QItemLike("innerItemLike");
 
+        Expression<Long> likeCountExpr = select(innerItemLike.id.count())
+                .from(innerItemLike)
+                .where(innerItemLike.item.id.eq(item.id));
+
         var query = queryFactory.select(
                         Projections.constructor(
                                 UserItemLikeDao.class,
-                                createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
+                                itemOrderType == ItemOrderType.MOST_LIKED ?  Expressions.constant(1): createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
                                 item.id,
                                 item.content,
                                 itemLike.createdAt,
@@ -52,7 +58,7 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
                                 album.name.as("albumName"),
                                 artist.name.as("artistName"),
                                 albumCover.albumThumbnail.as("albumThumbnail"),
-                                select(innerItemLike.id.count()).from(innerItemLike).where(innerItemLike.item.id.eq(item.id)),
+                                likeCountExpr,
                                 item.user.id,
                                 item.user.nickname
                         )
@@ -70,6 +76,7 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
         query = switch (itemOrderType) {
             case RECENT -> query.orderBy(itemLike.createdAt.desc());
             case OLDEST -> query.orderBy(itemLike.createdAt.asc());
+            case MOST_LIKED -> query.orderBy(Expressions.numberTemplate(Long.class, "({0})", likeCountExpr).desc());
         };
 
         return query.fetch();
@@ -101,10 +108,14 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
         DateTimePath<LocalDateTime> createdAtExpr = itemLike.createdAt;
         QItemLike innerItemLike = new QItemLike("innerItemLike");
 
+        Expression<Long> likeCountExpr = select(innerItemLike.id.count())
+                .from(innerItemLike)
+                .where(innerItemLike.item.id.eq(item.id));
+
         var query = queryFactory.select(
                         Projections.constructor(
                                 UserItemLikeDao.class,
-                                createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
+                                itemOrderType == ItemOrderType.MOST_LIKED ?  Expressions.constant(1):createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
                                 item.id,
                                 item.content,
                                 itemLike.createdAt,
@@ -113,7 +124,7 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
                                 album.name.as("albumName"),
                                 artist.name.as("artistName"),
                                 albumCover.albumThumbnail.as("albumThumbnail"),
-                                select(innerItemLike.id.count()).from(innerItemLike).where(innerItemLike.item.id.eq(item.id)),
+                                likeCountExpr,
                                 item.user.id,
                                 item.user.nickname
                         )
@@ -133,6 +144,7 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
         query = switch (itemOrderType) {
             case RECENT -> query.orderBy(itemLike.createdAt.desc());
             case OLDEST -> query.orderBy(itemLike.createdAt.asc());
+            case MOST_LIKED -> query.orderBy(Expressions.numberTemplate(Long.class, "({0})", likeCountExpr).desc());
         };
 
         return query.fetch();
@@ -146,10 +158,14 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
         DateTimePath<LocalDateTime> createdAtExpr = itemLike.createdAt;
         QItemLike innerItemLike = new QItemLike("innerItemLike");
 
+        Expression<Long> likeCountExpr = select(innerItemLike.id.count())
+                .from(innerItemLike)
+                .where(innerItemLike.item.id.eq(item.id));
+
         var query = queryFactory.select(
                         Projections.constructor(
                                 UserItemLikeDao.class,
-                                createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
+                                itemOrderType == ItemOrderType.MOST_LIKED ?  Expressions.constant(1): createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
                                 item.id,
                                 item.content,
                                 itemLike.createdAt,
@@ -158,7 +174,7 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
                                 album.name.as("albumName"),
                                 artist.name.as("artistName"),
                                 albumCover.albumThumbnail.as("albumThumbnail"),
-                                select(innerItemLike.id.count()).from(innerItemLike).where(innerItemLike.item.id.eq(item.id)),
+                                likeCountExpr,
                                 item.user.id,
                                 item.user.nickname
                         )
@@ -178,6 +194,7 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
         query = switch (itemOrderType) {
             case RECENT -> query.orderBy(itemLike.createdAt.desc());
             case OLDEST -> query.orderBy(itemLike.createdAt.asc());
+            case MOST_LIKED -> query.orderBy(Expressions.numberTemplate(Long.class, "({0})", likeCountExpr).desc());
         };
 
         return query.fetch();
