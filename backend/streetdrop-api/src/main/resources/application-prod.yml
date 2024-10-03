@@ -55,3 +55,9 @@ discord:
       block:
         url: ${WEBHOOK_BLOCK_URL}
         report-channel: block
+apple:
+  music:
+    api:
+      key: ${APPLE_MUSIC_API_KEY}
+      base-url: ${APPLE_MUSIC_BASE_URL}
+      get-catalog-charts-url: ${APPLE_MUSIC_GET_CATALOG_CHARTS_URL}
