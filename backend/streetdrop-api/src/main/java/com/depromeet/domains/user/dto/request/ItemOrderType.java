@@ -1,5 +1,5 @@
 package com.depromeet.domains.user.dto.request;
 
 public enum ItemOrderType {
-    RECENT, OLDEST
+    RECENT, OLDEST, MOST_LIKED
 }
