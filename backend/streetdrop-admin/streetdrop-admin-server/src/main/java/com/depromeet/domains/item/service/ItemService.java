@@ -26,38 +26,75 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     @Transactional(readOnly = true)
-    public PageResponseDto<?> getAllItems(Pageable pageable) {
-        Page<Item> itemPage = itemRepository.findAll(pageable);
-        PageMetaData pageMetaData = new PageMetaData(
-                itemPage.getNumber(),
-                itemPage.getSize(),
-                (int) itemPage.getTotalElements(),
-                itemPage.getTotalPages()
-        );
-        List<ItemResponseDto> items = itemPage.getContent()
-                .stream()
-                .map((item) ->
-                {
-                    String itemLocationName;
-                    try {
-                        itemLocationName = item.getItemLocation().getVillageArea().getVillageName();
-                    } catch (NullPointerException e){
-                        itemLocationName = "";
-                    }
+    public PageResponseDto<?> getAllItems(Pageable pageable, String keyword) {
+        if (keyword == null) {
+            Page<Item> itemPage = itemRepository.findAll(pageable);
+            PageMetaData pageMetaData = new PageMetaData(
+                    itemPage.getNumber(),
+                    itemPage.getSize(),
+                    (int) itemPage.getTotalElements(),
+                    itemPage.getTotalPages()
+            );
+            List<ItemResponseDto> items = itemPage.getContent()
+                    .stream()
+                    .map((item) ->
+                    {
+                        String itemLocationName;
+                        try {
+                            itemLocationName = item.getItemLocation().getVillageArea().getVillageName();
+                        } catch (NullPointerException e) {
+                            itemLocationName = "";
+                        }
 
-                    return ItemResponseDto.builder()
-                            .id(item.getId())
-                            .songName(item.getSong().getName())
-                            .artistName(item.getSong().getAlbum().getArtist().getName())
-                            .dropLocationName(itemLocationName)
-                            .userNickname(item.getUser().getNickname())
-                            .comment(item.getContent())
-                            .createdAt(item.getCreatedAt())
-                            .build();
-                }).toList();
+                        return ItemResponseDto.builder()
+                                .id(item.getId())
+                                .songName(item.getSong().getName())
+                                .artistName(item.getSong().getAlbum().getArtist().getName())
+                                .dropLocationName(itemLocationName)
+                                .userNickname(item.getUser().getNickname())
+                                .comment(item.getContent())
+                                .createdAt(item.getCreatedAt())
+                                .build();
+                    }).toList();
 
 
-        return new PageResponseDto<>(items, pageMetaData);
+            return new PageResponseDto<>(items, pageMetaData);
+
+        } else {
+            Page<Item> itemPage = itemRepository.findAll(pageable, keyword);
+            PageMetaData pageMetaData = new PageMetaData(
+                    itemPage.getNumber(),
+                    itemPage.getSize(),
+                    (int) itemPage.getTotalElements(),
+                    itemPage.getTotalPages()
+            );
+            List<ItemResponseDto> items = itemPage.getContent()
+                    .stream()
+                    .map((item) ->
+                    {
+                        String itemLocationName;
+                        try {
+                            itemLocationName = item.getItemLocation().getVillageArea().getVillageName();
+                        } catch (NullPointerException e) {
+                            itemLocationName = "";
+                        }
+
+                        return ItemResponseDto.builder()
+                                .id(item.getId())
+                                .songName(item.getSong().getName())
+                                .artistName(item.getSong().getAlbum().getArtist().getName())
+                                .dropLocationName(itemLocationName)
+                                .userNickname(item.getUser().getNickname())
+                                .comment(item.getContent())
+                                .createdAt(item.getCreatedAt())
+                                .build();
+                    }).toList();
+
+
+            return new PageResponseDto<>(items, pageMetaData);
+
+        }
+
     }
 
     @Transactional
