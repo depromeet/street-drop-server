@@ -32,6 +32,7 @@ public class WebSecurityConfig {
                 .and().csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/users/**").authenticated()
+                .requestMatchers("/v2/users/**").authenticated()
                 .requestMatchers("/items/**").authenticated()
                 .requestMatchers("/pop-up/**").authenticated()
                 .requestMatchers(HttpMethod.POST, "notifications/tokens").authenticated()

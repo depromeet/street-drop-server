@@ -3,9 +3,7 @@ package com.depromeet.domains.user.service;
 import com.depromeet.common.dto.InfiniteScrollMetaResponseDto;
 import com.depromeet.common.dto.PaginationResponseDto;
 import com.depromeet.domains.item.dao.ItemDao;
-import com.depromeet.domains.item.dto.response.ItemGroupByDateResponseDto;
-import com.depromeet.domains.item.dto.response.ItemGroupResponseDto;
-import com.depromeet.domains.item.dto.response.ItemLocationResponseDto;
+import com.depromeet.domains.item.dto.response.*;
 import com.depromeet.domains.item.repository.ItemLikeRepository;
 import com.depromeet.domains.item.repository.ItemLocationRepository;
 import com.depromeet.domains.item.repository.ItemRepository;
@@ -57,6 +55,31 @@ public class UserItemService {
         return new PaginationResponseDto<>(itemGroupByDateResponseDto, meta);
     }
 
+
+    @Transactional(readOnly = true)
+    public PaginationResponseDto<?, ?> getDropItemsV2(User user, long nextCursor, ItemOrderType orderType, String state, String city) {
+        List<ItemDao> itemList = getItemList(user, nextCursor, orderType, state, city);
+        List<ItemGroupByDateResponseV2Dto> itemGroupByDateResponseDto = itemList
+                .stream()
+                .map(ItemDao::getWeekAgo)
+                .distinct()
+                .map(value -> {
+                    List<ItemGroupResponseV2Dto> itemGroupResponseDtoList = itemList.stream()
+                            .filter(itemDao -> itemDao.getWeekAgo() == value)
+                            .map(itemDao -> itemDaotoItemGroupResponseV2Dto(user, itemDao))
+                            .toList();
+                    return new ItemGroupByDateResponseV2Dto(getWeeksAgo(value), itemGroupResponseDtoList);
+                })
+                .toList();
+
+        var meta = InfiniteScrollMetaResponseDto
+                .builder()
+                .totalCount(itemList.size())
+                .nextCursor(-1).build();
+
+        return new PaginationResponseDto<>(itemGroupByDateResponseDto, meta);
+    }
+
     private List<ItemDao> getItemList(User user, long nextCursor, ItemOrderType orderType, String state, String city) {
         if (state == null) {
             return itemRepository.findByUserId(user.getId(), nextCursor, orderType);
@@ -95,6 +118,28 @@ public class UserItemService {
                 .content(itemDao.getContent())
                 .createdAt(itemDao.getCreatedAt())
                 .itemLikeCount(itemDao.getItemCount())
+                .build();
+    }
+
+
+    private ItemGroupResponseV2Dto itemDaotoItemGroupResponseV2Dto(User user, ItemDao itemDao) {
+        return ItemGroupResponseV2Dto
+                .builder()
+                .itemId(itemDao.getItemId())
+                .user(new UserResponseDto(user))
+                .location(new ItemLocationResponseDto(itemDao.getLocationName()))
+                .music(
+                        MusicResponseDto.builder()
+                                .title(itemDao.getSongName())
+                                .artist(itemDao.getArtistName())
+                                .albumImage(itemDao.getAlbumThumbnail())
+                                .genre(List.of())
+                                .build()
+                )
+                .content(itemDao.getContent())
+                .createdAt(itemDao.getCreatedAt())
+                .itemLikeCount(itemDao.getItemCount())
+                .isLiked(itemDao.isLiked())
                 .build();
     }
 
