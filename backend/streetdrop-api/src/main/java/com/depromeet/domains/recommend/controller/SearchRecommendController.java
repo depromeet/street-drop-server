@@ -1,7 +1,7 @@
 package com.depromeet.domains.recommend.controller;
 
 import com.depromeet.common.dto.ResponseDto;
-import com.depromeet.domains.recommend.dto.response.RecommendResponseDto;
+import com.depromeet.domains.recommend.dto.response.SearchRecommendResponseDto;
 import com.depromeet.domains.recommend.dto.response.SearchTermRecommendResponseDto;
 import com.depromeet.domains.recommend.service.SearchRecommendService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,7 +29,7 @@ public class SearchRecommendController {
 
     @Operation(summary = "검색어 추천 v2")
     @GetMapping("/v2/search-term/recommend")
-    public ResponseEntity<RecommendResponseDto> recommendSearchTerm2() {
+    public ResponseEntity<SearchRecommendResponseDto> recommendSearchTerm2() {
         var response = searchRecommendService.recommendSearchSongs();
         return ResponseDto.ok(response);
     }

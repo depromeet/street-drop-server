@@ -9,7 +9,7 @@ import com.depromeet.domains.music.dto.response.MusicResponseDto;
 import com.depromeet.domains.music.event.CreateSongGenreEvent;
 import com.depromeet.domains.music.song.repository.SongRepository;
 import com.depromeet.domains.recommend.dto.response.MusicInfoResponseDto;
-import com.depromeet.domains.recommend.dto.response.RecommendCategoryDto;
+import com.depromeet.domains.recommend.dto.response.SearchRecommendCategoryDto;
 import com.depromeet.domains.recommend.constant.RecommendType;
 import com.depromeet.music.album.Album;
 import com.depromeet.music.album.AlbumCover;
@@ -125,11 +125,11 @@ public class MusicService {
 	}
 
 	@Transactional(readOnly = true)
-	public RecommendCategoryDto getRecentMusic(RecommendType recommendType) {
+	public SearchRecommendCategoryDto getRecentMusic(RecommendType recommendType) {
 		var recentSongs = songRepository.findRecentSongs(recommendType.getLimit());
 		List<MusicInfoResponseDto> musicInfoResponseDtos = recentSongs.stream()
 				.map(MusicInfoResponseDto::ofSong)
 				.toList();
-		return RecommendCategoryDto.ofMusicInfoResponseDto(recommendType, musicInfoResponseDtos);
+		return SearchRecommendCategoryDto.ofMusicInfoResponseDto(recommendType, musicInfoResponseDtos);
 	}
 }

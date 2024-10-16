@@ -37,8 +37,8 @@ public class SearchRecommendService {
         return new SearchTermRecommendResponseDto(description, termList);
     }
 
-    public RecommendResponseDto recommendSearchSongs() {
-        return new RecommendResponseDto(
+    public SearchRecommendResponseDto recommendSearchSongs() {
+        return new SearchRecommendResponseDto(
                 List.of(
                         appleMusicService.getCategoryChart(RecommendType.POPULAR_CHART_SONG),
                         musicService.getRecentMusic(RecommendType.RECENT_SONGS),
