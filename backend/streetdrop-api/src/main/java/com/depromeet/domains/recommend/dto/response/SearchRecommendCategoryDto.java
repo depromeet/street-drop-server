@@ -16,7 +16,7 @@ public class SearchRecommendCategoryDto {
     private String title;
     private String type;
     private String description;
-    private List<?> content;
+    private Object content;
     private boolean nextPage;
 
     public static SearchRecommendCategoryDto ofMusicInfoResponseDto(RecommendType recommendType, List<MusicInfoResponseDto> musicInfoResponseDto) {
@@ -24,13 +24,37 @@ public class SearchRecommendCategoryDto {
                 recommendType.getTitle(),
                 recommendType.getType(),
                 recommendType.getDescription(),
-                musicInfoResponseDto,
+                getContentTypeResponseDto(musicInfoResponseDto),
                 recommendType.isNextPage()
         );
     }
 
 
     public static SearchRecommendCategoryDto ofAppleMusicResponseDto(RecommendType recommendType, AppleMusicSongChartResponseDto appleMusicSongChartResponseDto) {
+        return new SearchRecommendCategoryDto(
+                recommendType.getTitle(),
+                recommendType.getType(),
+                recommendType.getDescription(),
+                getContentTypeResponseDto(appleMusicSongChartResponseDto),
+                recommendType.isNextPage()
+        );
+    }
+
+    public static SearchRecommendCategoryDto ofAppleMusicResponseDto(RecommendType recommendType, AppleMusicAlbumChartResponseDto appleMusicAlbumChartResponseDto) {
+        return new SearchRecommendCategoryDto(
+                recommendType.getTitle(),
+                recommendType.getType(),
+                recommendType.getDescription(),
+                getContentTypeResponseDto(appleMusicAlbumChartResponseDto),
+                recommendType.isNextPage()
+        );
+    }
+
+    private static ContentTypeResponseDto.BasicTypeResponseDto getContentTypeResponseDto(List<MusicInfoResponseDto> musicInfoResponseDto) {
+        return new ContentTypeResponseDto.BasicTypeResponseDto(musicInfoResponseDto);
+    }
+
+    private static ContentTypeResponseDto.BasicTypeResponseDto getContentTypeResponseDto(AppleMusicSongChartResponseDto appleMusicSongChartResponseDto) {
         List<MusicInfoResponseDto> musicInfoList = Optional.ofNullable(appleMusicSongChartResponseDto.results.songs)
                 .filter(songs -> !songs.isEmpty())
                 .map(songs -> songs.get(0).data.stream()
@@ -38,11 +62,11 @@ public class SearchRecommendCategoryDto {
                         .toList()
                 )
                 .orElse(Collections.emptyList());
-        return new SearchRecommendCategoryDto(recommendType.getTitle(), recommendType.getType(), recommendType.getDescription(),
-                musicInfoList, recommendType.isNextPage());
+        return new ContentTypeResponseDto.BasicTypeResponseDto(musicInfoList);
     }
 
-    public static SearchRecommendCategoryDto ofAppleMusicResponseDto(RecommendType recommendType, AppleMusicAlbumChartResponseDto appleMusicAlbumChartResponseDto) {
+
+    private static ContentTypeResponseDto.KeywordTypeResponseDto getContentTypeResponseDto(AppleMusicAlbumChartResponseDto appleMusicAlbumChartResponseDto) {
         List<ArtistInfoResponseDto> artistInfoList =
                 Optional.ofNullable(appleMusicAlbumChartResponseDto.results.albums)
                         .filter(albums -> !albums.isEmpty())
@@ -51,7 +75,6 @@ public class SearchRecommendCategoryDto {
                                 .toList()
                         )
                         .orElse(Collections.emptyList());
-        return new SearchRecommendCategoryDto(recommendType.getTitle(), recommendType.getType(), recommendType.getDescription(),
-                artistInfoList, recommendType.isNextPage());
+        return new ContentTypeResponseDto.KeywordTypeResponseDto(artistInfoList);
     }
 }
