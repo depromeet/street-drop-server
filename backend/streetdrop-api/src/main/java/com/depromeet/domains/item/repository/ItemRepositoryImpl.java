@@ -3,9 +3,11 @@ package com.depromeet.domains.item.repository;
 import com.depromeet.domains.item.dao.ItemDao;
 import com.depromeet.domains.user.dto.request.ItemOrderType;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.DateExpression;
 import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -23,6 +25,7 @@ import static com.depromeet.music.album.QAlbumCover.albumCover;
 import static com.depromeet.music.artist.QArtist.artist;
 import static com.depromeet.music.song.QSong.song;
 import static com.querydsl.core.types.dsl.Expressions.currentDate;
+import static com.querydsl.jpa.JPAExpressions.select;
 
 @Repository
 @RequiredArgsConstructor
@@ -37,6 +40,11 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
         DateExpression<Date> currentWeekExpr = currentDate();
         DateTimePath<LocalDateTime> createdAtExpr = item.createdAt;
 
+        var isLikedSubQuery = JPAExpressions.select(itemLike.id)
+                .from(itemLike)
+                .where(itemLike.item.id.eq(item.id)
+                        .and(itemLike.user.id.eq(userId)));
+
         var query = queryFactory.select(
                         Projections.constructor(
                                 ItemDao.class,
@@ -49,7 +57,8 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
                                 album.name.as("albumName"),
                                 artist.name.as("artistName"),
                                 albumCover.albumThumbnail.as("albumThumbnail"),
-                                itemLike.count().as("itemCount")
+                                itemLike.count().as("itemCount"),
+                                isLikedSubQuery.exists().as("isLiked")
                         )
                 ).from(item)
                 .join(itemLocation).on(item.id.eq(itemLocation.item.id))
@@ -89,7 +98,8 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
                                 album.name.as("albumName"),
                                 artist.name.as("artistName"),
                                 albumCover.albumThumbnail.as("albumThumbnail"),
-                                itemLike.count().as("itemCount")
+                                itemLike.count().as("itemCount"),
+                                itemLike.user.id.eq(userId).as("isLiked")
                         )
                 ).from(item)
                 .join(itemLocation).on(item.id.eq(itemLocation.item.id))
@@ -131,7 +141,8 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
                                 album.name.as("albumName"),
                                 artist.name.as("artistName"),
                                 albumCover.albumThumbnail.as("albumThumbnail"),
-                                itemLike.count().as("itemCount")
+                                itemLike.count().as("itemCount"),
+                                itemLike.user.id.eq(userId).as("isLiked")
                         )
                 ).from(item)
                 .join(itemLocation).on(item.id.eq(itemLocation.item.id))

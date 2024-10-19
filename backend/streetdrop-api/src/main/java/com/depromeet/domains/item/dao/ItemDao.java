@@ -20,4 +20,5 @@ public class ItemDao {
     private String artistName;
     private String albumThumbnail;
     private Long itemCount;
+    private boolean isLiked;
 }
