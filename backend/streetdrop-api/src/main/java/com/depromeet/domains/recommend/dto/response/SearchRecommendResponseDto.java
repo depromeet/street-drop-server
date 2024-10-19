@@ -7,6 +7,6 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class RecommendResponseDto {
-    private List<RecommendCategoryDto> data;
+public class SearchRecommendResponseDto {
+    private List<SearchRecommendCategoryDto> data;
 }
