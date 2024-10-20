@@ -34,6 +34,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/users/**").authenticated()
                 .requestMatchers("/items/**").authenticated()
                 .requestMatchers("/pop-up/**").authenticated()
+                .requestMatchers("/post-recommend/**").authenticated()
                 .requestMatchers(HttpMethod.POST, "notifications/tokens").authenticated()
                 .anyRequest().permitAll()
                 .and().exceptionHandling()

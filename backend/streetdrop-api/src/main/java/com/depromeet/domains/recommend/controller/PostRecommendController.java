@@ -3,6 +3,8 @@ package com.depromeet.domains.recommend.controller;
 import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.domains.recommend.dto.response.PostRecommendSentenceResponseDto;
 import com.depromeet.domains.recommend.service.PostRecommendService;
+import com.depromeet.security.annotation.ReqUser;
+import com.depromeet.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +23,10 @@ public class PostRecommendController {
 
     @Operation(summary = "홈 화면 드랍 유도 - 무작위 문장 추천")
     @GetMapping("/post-recommend/random-sentence")
-    public ResponseEntity<PostRecommendSentenceResponseDto> getRandomPhrase() {
-        var response = postRecommendService.getOneRandomSentence();
+    public ResponseEntity<PostRecommendSentenceResponseDto> getRandomPhrase(
+            @ReqUser User user
+    ) {
+        var response = postRecommendService.getOneRandomSentence(user);
         return ResponseDto.ok(response);
     }
 
