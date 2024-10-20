@@ -19,7 +19,6 @@ public class MemoryUserTimestampRepository implements UserTimestampRepository{
 
     @Override
     public Boolean isSent(Long userId) {
-        System.out.println(">> " + store);
         return Optional.ofNullable(store.get(userId))
                 .map(readTime -> !readTime.isBefore(LocalDateTime.now().minusDays(1)))
                 .orElse(false);
