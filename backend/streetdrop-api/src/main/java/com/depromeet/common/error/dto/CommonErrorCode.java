@@ -30,7 +30,8 @@ public enum CommonErrorCode implements ErrorCodeInterface {
 	 */
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON_INTERNAL_SERVER_ERROR", "Internal Server Error", "An unexpected error occurred"),
 	NOT_IMPLEMENTED(HttpStatus.NOT_IMPLEMENTED, "COMMON_NOT_IMPLEMENTED", "Not Implemented", "The server does not support the functionality required to fulfill the request."),
-	UNSUPPORTED_TYPE(HttpStatus.BAD_REQUEST, "COMMON_UNSUPPORTED_TYPE", "Unsupported Type", "The type specified is not supported.");
+	UNSUPPORTED_TYPE(HttpStatus.BAD_REQUEST, "COMMON_UNSUPPORTED_TYPE", "Unsupported Type", "The type specified is not supported."),
+	SENTENCES_NOT_FOUND(HttpStatus.NOT_FOUND, "COMMON_SENTENCES_NOT_FOUND", "Sentences Not Found", "No sentences available in the database");
 
 	private final HttpStatus status;
 	private final String errorResponseCode;
