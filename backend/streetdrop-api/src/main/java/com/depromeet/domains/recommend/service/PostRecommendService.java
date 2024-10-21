@@ -5,7 +5,7 @@ import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.recommend.dto.response.PostRecommendSentenceResponseDto;
 import com.depromeet.domains.recommend.provider.RandomProvider;
 import com.depromeet.domains.recommend.repository.PostRecommendSentenceRepository;
-import com.depromeet.domains.recommend.repository.UserReadRepository;
+import com.depromeet.domains.recommend.repository.UserRecommendSendHistoryRepository;
 import com.depromeet.recommend.post.PostRecommendSentence;
 import com.depromeet.user.User;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +16,14 @@ import org.springframework.stereotype.Service;
 public class PostRecommendService {
 
     private final PostRecommendSentenceRepository postRecommendSentenceRepository;
-    private final UserReadRepository userReadRepository;
+    private final UserRecommendSendHistoryRepository userRecommendSendHistoryRepository;
 
     public PostRecommendSentenceResponseDto getOneRandomSentence(User user) {
-        if (userReadRepository.isSent(user.getId())) {
+        if (userRecommendSendHistoryRepository.isSent(user.getId())) {
             return PostRecommendSentenceResponseDto.empty();
         }
         String randomSentence = getRandomSentence();
-        userReadRepository.save(user.getId());
+        userRecommendSendHistoryRepository.save(user.getId());
         return new PostRecommendSentenceResponseDto(randomSentence);
     }
 

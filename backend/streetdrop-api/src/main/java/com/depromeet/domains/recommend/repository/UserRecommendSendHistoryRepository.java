@@ -1,6 +1,6 @@
 package com.depromeet.domains.recommend.repository;
 
-public interface UserReadRepository {
+public interface UserRecommendSendHistoryRepository {
     void save(Long userId);
     Boolean isSent(Long userId);
 }
