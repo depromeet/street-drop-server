@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-public class MemoryUserTimestampRepository implements UserTimestampRepository{
+public class MemoryUserReadRepository implements UserReadRepository {
 
     private static Map<Long, LocalDateTime> store = new HashMap<>();
 

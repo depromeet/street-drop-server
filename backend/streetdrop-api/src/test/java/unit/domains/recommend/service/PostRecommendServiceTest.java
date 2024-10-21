@@ -2,7 +2,7 @@ package unit.domains.recommend.service;
 
 import com.depromeet.common.error.exception.internal.NotFoundException;
 import com.depromeet.domains.recommend.repository.PostRecommendSentenceRepository;
-import com.depromeet.domains.recommend.repository.UserTimestampRepository;
+import com.depromeet.domains.recommend.repository.UserReadRepository;
 import com.depromeet.domains.recommend.service.PostRecommendService;
 import com.depromeet.recommend.post.PostRecommendSentence;
 import com.depromeet.user.User;
@@ -33,7 +33,7 @@ public class PostRecommendServiceTest {
     private PostRecommendSentenceRepository postRecommendSentenceRepository;
 
     @Mock
-    private UserTimestampRepository userTimestampRepository;
+    private UserReadRepository userReadRepository;
 
     User user;
 
@@ -54,7 +54,7 @@ public class PostRecommendServiceTest {
             @DisplayName("이미 추천 문장을 받은 사용자인 경우")
             @Test
             void getOneRandomSentenceSuccess1() {
-                given(userTimestampRepository.isSent(user.getId())).willReturn(true);
+                given(userReadRepository.isSent(user.getId())).willReturn(true);
                 var result = postRecommendService.getOneRandomSentence(user);
 
                 assertThat(result.sentence()).isNull();
@@ -70,7 +70,7 @@ public class PostRecommendServiceTest {
                 );
 
                 given(postRecommendSentenceRepository.findAll()).willReturn(sentences);
-                given(userTimestampRepository.isSent(user.getId())).willReturn(false);
+                given(userReadRepository.isSent(user.getId())).willReturn(false);
                 var result = postRecommendService.getOneRandomSentence(user);
 
                 assertThat(result).isNotNull();
@@ -88,7 +88,7 @@ public class PostRecommendServiceTest {
             @DisplayName("저장소에 추천 문장이 없는 경우")
             @Test
             void getOneRandomSentenceFail() {
-                given(userTimestampRepository.isSent(user.getId())).willReturn(false);
+                given(userReadRepository.isSent(user.getId())).willReturn(false);
                 given(postRecommendSentenceRepository.findAll()).willReturn(List.of());
 
                 assertThatThrownBy(() -> postRecommendService.getOneRandomSentence(user))
