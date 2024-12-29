@@ -52,7 +52,7 @@ public class UserItemController {
     }
 
     @Operation(summary = "사용자가 드랍한 아이템 지역 별 개수 조회")
-    @ApiResponse(responseCode = "200", description = "사용자가 드랍한 아이템 지역 별 개수 조회 성공")
+    @ApiResponse(responseCode = "200", description = "사용자가 드랍한 아이템 지역별 개수 조회 성공")
     @GetMapping("/drop/count/all-locations")
     public ResponseEntity<UserItemCountGroupByLocationDto> countUserItemsGroupByStates(
             @ReqUser User user
@@ -98,7 +98,7 @@ public class UserItemController {
     }
 
     @Operation(summary = "사용자가 찜한 아이템 지역 별 개수 조회")
-    @ApiResponse(responseCode = "200", description = "사용자가 찜한 아이템 지역 별 개수 조회 성공")
+    @ApiResponse(responseCode = "200", description = "사용자가 찜한 아이템 지역별 개수 조회 성공")
     @GetMapping("/like/count/all-locations")
     public ResponseEntity<UserItemCountGroupByLocationDto> countLikedItemsGroupByStates(
             @ReqUser User user
