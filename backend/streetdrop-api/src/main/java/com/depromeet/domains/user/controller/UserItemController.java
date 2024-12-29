@@ -3,6 +3,7 @@ package com.depromeet.domains.user.controller;
 import com.depromeet.common.dto.PaginationResponseDto;
 import com.depromeet.common.dto.ResponseDto;
 import com.depromeet.domains.user.dto.request.ItemOrderType;
+import com.depromeet.domains.user.dto.response.UserItemCountGroupByLocationDto;
 import com.depromeet.domains.user.dto.response.UserItemLocationCountDto;
 import com.depromeet.domains.user.dto.response.UserPoiResponseDto;
 import com.depromeet.domains.user.service.UserItemService;
@@ -50,6 +51,28 @@ public class UserItemController {
         return ResponseDto.ok(response);
     }
 
+    @Operation(summary = "사용자가 드랍한 아이템 지역 별 개수 조회")
+    @ApiResponse(responseCode = "200", description = "사용자가 드랍한 아이템 지역별 개수 조회 성공")
+    @GetMapping("/drop/count/all-locations")
+    public ResponseEntity<UserItemCountGroupByLocationDto> countUserItemsGroupByStates(
+            @ReqUser User user
+    ) {
+        var response = userItemService.countUserItemsGroupByLocation(user);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "사용자가 드랍한 아이템 개수 조회")
+    @ApiResponse(responseCode = "200", description = "사용자가 드랍한 아이템 개수 조회 성공")
+    @GetMapping("/drop/count")
+    public ResponseEntity<UserItemLocationCountDto> countUserItemsByLocation(
+            @ReqUser User user,
+            @RequestParam(value = "state", required = false) String state,
+            @RequestParam(value = "city", required = false) String city
+    ) {
+        var response = userItemService.countUserItemsByLocation(user, state, city);
+        return ResponseEntity.ok(response);
+    }
+
     @Operation(summary = "사용자가 찜한 아이템 조회")
     @ApiResponse(responseCode = "200", description = "사용자가 찜한 아이템 조회 성공")
     @GetMapping("/like")
@@ -74,15 +97,25 @@ public class UserItemController {
         return ResponseDto.ok(response);
     }
 
-    @Operation(summary = "사용자가 드랍한 아이템 개수 조회")
-    @ApiResponse(responseCode = "200", description = "사용자가 드랍한 아이템 개수 조회 성공")
-    @GetMapping("/drop/count")
-    public ResponseEntity<UserItemLocationCountDto> countItemsByLocation(
+    @Operation(summary = "사용자가 찜한 아이템 지역 별 개수 조회")
+    @ApiResponse(responseCode = "200", description = "사용자가 찜한 아이템 지역별 개수 조회 성공")
+    @GetMapping("/like/count/all-locations")
+    public ResponseEntity<UserItemCountGroupByLocationDto> countLikedItemsGroupByStates(
+            @ReqUser User user
+    ) {
+        var response = userItemService.countLikedItemsGroupByLocation(user);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "사용자가 찜한 아이템 개수 조회")
+    @ApiResponse(responseCode = "200", description = "사용자가 찜한 아이템 개수 조회 성공")
+    @GetMapping("/like/count")
+    public ResponseEntity<UserItemLocationCountDto> countUserLikedItemsByLocation(
             @ReqUser User user,
             @RequestParam(value = "state", required = false) String state,
             @RequestParam(value = "city", required = false) String city
     ) {
-        var response = userItemService.countItemsByLocation(user, state, city);
+        var response = userItemService.countLikedItemsByLocation(user, state, city);
         return ResponseEntity.ok(response);
     }
 

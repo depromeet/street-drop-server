@@ -183,7 +183,7 @@ class UserItemServiceTest {
             ReflectionTestUtils.setField(user, "id", 1L);
             when(itemLocationRepository.countItemsByCity(user.getId(), city)).thenReturn(2L);
 
-            var result = userItemService.countItemsByLocation(user, state, city);
+            var result = userItemService.countUserItemsByLocation(user, state, city);
             var expected = new UserItemLocationCountDto(2L, state, city);
 
             assertThat(result).isEqualTo(expected);
@@ -198,7 +198,7 @@ class UserItemServiceTest {
             ReflectionTestUtils.setField(user, "id", 1L);
             when(itemLocationRepository.countItemsByState(user.getId(), state)).thenReturn(2L);
 
-            var result = userItemService.countItemsByLocation(user, state, city);
+            var result = userItemService.countUserItemsByLocation(user, state, city);
             var expected = new UserItemLocationCountDto(2L, state, null);
 
             assertThat(result).isEqualTo(expected);
@@ -213,7 +213,7 @@ class UserItemServiceTest {
             ReflectionTestUtils.setField(user, "id", 1L);
             when(itemLocationRepository.countItems(user.getId())).thenReturn(2L);
 
-            var result = userItemService.countItemsByLocation(user, state, city);
+            var result = userItemService.countUserItemsByLocation(user, state, city);
             var expected = new UserItemLocationCountDto(2L, null, null);
 
             assertThat(result).isEqualTo(expected);

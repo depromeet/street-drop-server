@@ -1,8 +1,11 @@
 package com.depromeet.domains.item.repository;
 
+import com.depromeet.domains.item.dao.ItemLocationCountDao;
 import com.depromeet.domains.item.dao.ItemPointDao;
 import com.depromeet.domains.user.dao.UserItemPointDao;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Point;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static com.depromeet.area.state.QStateArea.stateArea;
 import static com.depromeet.area.village.QVillageArea.villageArea;
 import static com.depromeet.external.querydsl.mysql.spatial.MySqlSpatialFunction.mySqlDistanceSphereFunction;
 import static com.depromeet.item.QItem.item;
@@ -63,15 +67,22 @@ public class ItemLocationRepositoryImpl implements QueryDslItemLocationRepositor
     }
 
     @Override
-    public Long countItemsByCity(Long userId, String city) {
-        return queryFactory
-                .select(itemLocation.count())
-                .from(itemLocation)
-                .join(item).on(itemLocation.item.id.eq(item.id))
-                .join(villageArea).on(itemLocation.villageArea.id.eq(villageArea.id))
-                .where(item.user.id.eq(userId))
-                .where(villageArea.cityArea.cityName.eq(city))
-                .fetchFirst();
+    public List<ItemLocationCountDao> countItemsGroupByState(Long userId) {
+        return queryFactory.select(
+                Projections.fields(
+                        ItemLocationCountDao.class,
+                        stateArea.stateName.as("locationName"),
+                        ExpressionUtils.as(
+                                JPAExpressions.select(itemLocation.count())
+                                        .from(itemLocation)
+                                        .join(item).on(itemLocation.item.id.eq(item.id))
+                                        .join(villageArea).on(itemLocation.villageArea.id.eq(villageArea.id))
+                                        .where(item.user.id.eq(userId))
+                                        .where(villageArea.cityArea.stateArea.id.eq(stateArea.id))
+                                , "count")
+                ))
+                .from(stateArea)
+                .fetch();
     }
 
     @Override
@@ -83,6 +94,18 @@ public class ItemLocationRepositoryImpl implements QueryDslItemLocationRepositor
                 .join(villageArea).on(itemLocation.villageArea.id.eq(villageArea.id))
                 .where(item.user.id.eq(userId))
                 .where(villageArea.cityArea.stateArea.stateName.eq(state))
+                .fetchFirst();
+    }
+
+    @Override
+    public Long countItemsByCity(Long userId, String city) {
+        return queryFactory
+                .select(itemLocation.count())
+                .from(itemLocation)
+                .join(item).on(itemLocation.item.id.eq(item.id))
+                .join(villageArea).on(itemLocation.villageArea.id.eq(villageArea.id))
+                .where(item.user.id.eq(userId))
+                .where(villageArea.cityArea.cityName.eq(city))
                 .fetchFirst();
     }
 

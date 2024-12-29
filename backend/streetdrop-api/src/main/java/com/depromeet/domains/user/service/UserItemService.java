@@ -10,6 +10,7 @@ import com.depromeet.domains.item.repository.ItemRepository;
 import com.depromeet.domains.item.service.ItemLikeService;
 import com.depromeet.domains.music.dto.response.MusicResponseDto;
 import com.depromeet.domains.user.dto.request.ItemOrderType;
+import com.depromeet.domains.user.dto.response.UserItemCountGroupByLocationDto;
 import com.depromeet.domains.user.dto.response.UserItemLocationCountDto;
 import com.depromeet.domains.user.dto.response.UserPoiResponseDto;
 import com.depromeet.domains.user.dto.response.UserResponseDto;
@@ -54,7 +55,6 @@ public class UserItemService {
 
         return new PaginationResponseDto<>(itemGroupByDateResponseDto, meta);
     }
-
 
     @Transactional(readOnly = true)
     public PaginationResponseDto<?, ?> getDropItemsV2(User user, long nextCursor, ItemOrderType orderType, String state, String city) {
@@ -121,7 +121,6 @@ public class UserItemService {
                 .build();
     }
 
-
     private ItemGroupResponseV2Dto itemDaotoItemGroupResponseV2Dto(User user, ItemDao itemDao) {
         return ItemGroupResponseV2Dto
                 .builder()
@@ -143,6 +142,29 @@ public class UserItemService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
+    public UserItemCountGroupByLocationDto countUserItemsGroupByLocation(User user) {
+        var list = itemLocationRepository.countItemsGroupByState(user.getId()).stream()
+                .map(itemLocationCountDao -> new UserItemLocationCountDto(itemLocationCountDao.getCount(), itemLocationCountDao.getLocationName(), null))
+                .toList();
+        return new UserItemCountGroupByLocationDto(list);
+    }
+
+    @Transactional(readOnly = true)
+    public UserItemLocationCountDto countUserItemsByLocation(User user, String state, String city) {
+        Long count = 0L;
+        if (state == null) {
+            count = itemLocationRepository.countItems(user.getId());
+        }
+        else if (city == null) {
+            count = itemLocationRepository.countItemsByState(user.getId(), state);
+        }
+        else {
+            count = itemLocationRepository.countItemsByCity(user.getId(), city);
+        }
+        return new UserItemLocationCountDto(count, state, city);
+    }
+
 
     @Transactional(readOnly = true)
     public PaginationResponseDto<?, ?> getLikedItems(User user, long nextCursor, ItemOrderType itemOrderType, String state, String city) {
@@ -158,17 +180,26 @@ public class UserItemService {
         return new UserPoiResponseDto(userPoiDtoList);
     }
 
+
     @Transactional(readOnly = true)
-    public UserItemLocationCountDto countItemsByLocation(User user, String state, String city) {
+    public UserItemCountGroupByLocationDto countLikedItemsGroupByLocation(User user) {
+        var list = itemLikeRepository.countItemsGroupByState(user.getId()).stream()
+                .map(itemLocationCountDao -> new UserItemLocationCountDto(itemLocationCountDao.getCount(), itemLocationCountDao.getLocationName(), null))
+                .toList();
+        return new UserItemCountGroupByLocationDto(list);
+    }
+
+    @Transactional(readOnly = true)
+    public UserItemLocationCountDto countLikedItemsByLocation(User user, String state, String city) {
         Long count = 0L;
         if (state == null) {
-            count = itemLocationRepository.countItems(user.getId());
+            count = itemLikeRepository.countItems(user.getId());
         }
         else if (city == null) {
-            count = itemLocationRepository.countItemsByState(user.getId(), state);
+            count = itemLikeRepository.countItemsByState(user.getId(), state);
         }
         else {
-            count = itemLocationRepository.countItemsByCity(user.getId(), city);
+            count = itemLikeRepository.countItemsByCity(user.getId(), city);
         }
         return new UserItemLocationCountDto(count, state, city);
     }
