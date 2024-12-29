@@ -10,8 +10,6 @@ import java.util.Optional;
 @Repository
 public interface ItemLikeRepository extends JpaRepository<ItemLike, Long>, QueryDslItemLikeRepository {
     Optional<ItemLike> findByItemIdAndUser(Long itemId, User user);
-
     boolean existsByUserIdAndItemId(Long userId, Long itemId);
-
     int countByItemId(Long itemId);
 }

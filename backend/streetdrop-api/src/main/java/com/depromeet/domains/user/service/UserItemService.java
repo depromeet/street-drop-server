@@ -180,4 +180,28 @@ public class UserItemService {
         return new UserPoiResponseDto(userPoiDtoList);
     }
 
+
+    @Transactional(readOnly = true)
+    public UserItemCountGroupByLocationDto countLikedItemsGroupByLocation(User user) {
+        var list = itemLikeRepository.countItemsGroupByState(user.getId()).stream()
+                .map(itemLocationCountDao -> new UserItemLocationCountDto(itemLocationCountDao.getCount(), itemLocationCountDao.getLocationName(), null))
+                .toList();
+        return new UserItemCountGroupByLocationDto(list);
+    }
+
+    @Transactional(readOnly = true)
+    public UserItemLocationCountDto countLikedItemsByLocation(User user, String state, String city) {
+        Long count = 0L;
+        if (state == null) {
+            count = itemLikeRepository.countItems(user.getId());
+        }
+        else if (city == null) {
+            count = itemLikeRepository.countItemsByState(user.getId(), state);
+        }
+        else {
+            count = itemLikeRepository.countItemsByCity(user.getId(), city);
+        }
+        return new UserItemLocationCountDto(count, state, city);
+    }
+
 }

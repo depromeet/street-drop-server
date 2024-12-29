@@ -1,14 +1,17 @@
 package com.depromeet.domains.item.repository;
 
+import com.depromeet.domains.item.dao.ItemLocationCountDao;
 import com.depromeet.domains.item.dao.UserItemLikeDao;
 import com.depromeet.domains.user.dao.UserItemPointDao;
 import com.depromeet.domains.user.dto.request.ItemOrderType;
 import com.depromeet.item.QItemLike;
 import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.DateExpression;
 import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import static com.depromeet.area.state.QStateArea.stateArea;
 import static com.depromeet.area.village.QVillageArea.villageArea;
 import static com.depromeet.item.QItem.item;
 import static com.depromeet.item.QItemLike.itemLike;
@@ -179,6 +183,62 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
         orderBy(orderType, query);
 
         return query.fetch();
+    }
+
+    @Override
+    public List<ItemLocationCountDao> countItemsGroupByState(Long userId) {
+        return queryFactory.select(
+                        Projections.fields(
+                                ItemLocationCountDao.class,
+                                stateArea.stateName.as("locationName"),
+                                ExpressionUtils.as(
+                                        JPAExpressions.select(itemLike.count())
+                                                .from(itemLike)
+                                                .join(item).on(item.id.eq(itemLike.item.id))
+                                                .join(itemLocation).on(item.id.eq(itemLocation.item.id))
+                                                .join(villageArea).on(itemLocation.villageArea.id.eq(villageArea.id))
+                                                .where(itemLike.user.id.eq(userId))
+                                                .where(villageArea.cityArea.stateArea.id.eq(stateArea.id))
+                                        , "count")
+                        ))
+                .from(stateArea)
+                .fetch();
+    }
+
+    @Override
+    public Long countItemsByState(Long userId, String state) {
+        return queryFactory
+                .select(itemLike.count())
+                .from(itemLike)
+                .join(item).on(item.id.eq(itemLike.item.id))
+                .join(itemLocation).on(item.id.eq(itemLocation.item.id))
+                .join(villageArea).on(itemLocation.villageArea.id.eq(villageArea.id))
+                .where(itemLike.user.id.eq(userId))
+                .where(villageArea.cityArea.stateArea.stateName.eq(state))
+                .fetchFirst();
+    }
+
+    @Override
+    public Long countItemsByCity(Long userId, String city) {
+        return queryFactory
+                .select(itemLike.count())
+                .from(itemLike)
+                .join(item).on(item.id.eq(itemLike.item.id))
+                .join(itemLocation).on(item.id.eq(itemLocation.item.id))
+                .join(villageArea).on(itemLocation.villageArea.id.eq(villageArea.id))
+                .where(itemLike.user.id.eq(userId))
+                .where(villageArea.cityArea.cityName.eq(city))
+                .fetchFirst();
+    }
+
+    @Override
+    public Long countItems(Long userId) {
+        return queryFactory
+                .select(itemLike.count())
+                .from(itemLike)
+                .join(item).on(item.id.eq(itemLike.item.id))
+                .where(itemLike.user.id.eq(userId))
+                .fetchFirst();
     }
 
     private void orderBy(ItemOrderType orderType, JPAQuery<UserItemLikeDao> query) {

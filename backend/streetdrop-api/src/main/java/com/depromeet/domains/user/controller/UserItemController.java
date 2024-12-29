@@ -97,4 +97,26 @@ public class UserItemController {
         return ResponseDto.ok(response);
     }
 
+    @Operation(summary = "사용자가 찜한 아이템 지역 별 개수 조회")
+    @ApiResponse(responseCode = "200", description = "사용자가 찜한 아이템 지역 별 개수 조회 성공")
+    @GetMapping("/like/count/all-locations")
+    public ResponseEntity<UserItemCountGroupByLocationDto> countLikedItemsGroupByStates(
+            @ReqUser User user
+    ) {
+        var response = userItemService.countLikedItemsGroupByLocation(user);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "사용자가 찜한 아이템 개수 조회")
+    @ApiResponse(responseCode = "200", description = "사용자가 찜한 아이템 개수 조회 성공")
+    @GetMapping("/like/count")
+    public ResponseEntity<UserItemLocationCountDto> countUserLikedItemsByLocation(
+            @ReqUser User user,
+            @RequestParam(value = "state", required = false) String state,
+            @RequestParam(value = "city", required = false) String city
+    ) {
+        var response = userItemService.countLikedItemsByLocation(user, state, city);
+        return ResponseEntity.ok(response);
+    }
+
 }
