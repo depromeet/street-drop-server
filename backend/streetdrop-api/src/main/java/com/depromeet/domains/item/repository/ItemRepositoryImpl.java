@@ -3,11 +3,11 @@ package com.depromeet.domains.item.repository;
 import com.depromeet.domains.item.dao.ItemDao;
 import com.depromeet.domains.user.dto.request.ItemOrderType;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.DateExpression;
 import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -25,7 +25,6 @@ import static com.depromeet.music.album.QAlbumCover.albumCover;
 import static com.depromeet.music.artist.QArtist.artist;
 import static com.depromeet.music.song.QSong.song;
 import static com.querydsl.core.types.dsl.Expressions.currentDate;
-import static com.querydsl.jpa.JPAExpressions.select;
 
 @Repository
 @RequiredArgsConstructor
@@ -36,7 +35,6 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
 
     @Override
     public List<ItemDao> findByUserId(Long userId, long lastCursor, ItemOrderType orderType) {
-
         DateExpression<Date> currentWeekExpr = currentDate();
         DateTimePath<LocalDateTime> createdAtExpr = item.createdAt;
 
@@ -70,19 +68,13 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
                 .where(item.user.id.eq(userId))
                 .groupBy(item.id, item.content, item.createdAt, itemLocation.name, song.name, album.name, artist.name, albumCover.albumThumbnail);
 
-
-        query = switch (orderType) {
-            case RECENT -> query.orderBy(item.createdAt.desc());
-            case OLDEST -> query.orderBy(item.createdAt.asc());
-            case MOST_LIKED -> query.orderBy(itemLike.count().desc());
-        };
+        orderBy(orderType, query);
 
         return query.fetch();
     }
 
     @Override
     public List<ItemDao> findByUserIdAndState(Long userId, long lastCursor, ItemOrderType orderType, String state) {
-
         DateExpression<Date> currentWeekExpr = currentDate();
         DateTimePath<LocalDateTime> createdAtExpr = item.createdAt;
 
@@ -113,19 +105,13 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
                 .where(villageArea.cityArea.stateArea.stateName.eq(state))
                 .groupBy(item.id, item.content, item.createdAt, itemLocation.name, song.name, album.name, artist.name, albumCover.albumThumbnail);
 
-
-        query = switch (orderType) {
-            case RECENT -> query.orderBy(item.createdAt.desc());
-            case OLDEST -> query.orderBy(item.createdAt.asc());
-            case MOST_LIKED -> query.orderBy(itemLike.count().desc());
-        };
+        orderBy(orderType, query);
 
         return query.fetch();
     }
 
     @Override
     public List<ItemDao> findByUserIdAndCity(Long userId, long lastCursor, ItemOrderType orderType, String city) {
-
         DateExpression<Date> currentWeekExpr = currentDate();
         DateTimePath<LocalDateTime> createdAtExpr = item.createdAt;
 
@@ -156,13 +142,17 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
                 .where(villageArea.cityArea.cityName.eq(city))
                 .groupBy(item.id, item.content, item.createdAt, itemLocation.name, song.name, album.name, artist.name, albumCover.albumThumbnail);
 
-
-        query = switch (orderType) {
-            case RECENT -> query.orderBy(item.createdAt.desc());
-            case OLDEST -> query.orderBy(item.createdAt.asc());
-            case MOST_LIKED -> query.orderBy(itemLike.count().desc());
-        };
+        orderBy(orderType, query);
 
         return query.fetch();
     }
+
+    private void orderBy(ItemOrderType orderType, JPAQuery<ItemDao> query) {
+        switch (orderType) {
+            case RECENT -> query.orderBy(item.createdAt.desc());
+            case OLDEST -> query.orderBy(item.createdAt.asc());
+            case MOST_LIKED -> query.orderBy(itemLike.count().desc());
+        }
+    }
+
 }
