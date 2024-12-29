@@ -9,6 +9,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.DateExpression;
 import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -35,9 +36,26 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
 
     private final JPAQueryFactory queryFactory;
 
+    public List<UserItemPointDao> findUserLikedItemsPoints(Long userId) {
+        return queryFactory.select(
+                        Projections.fields(
+                                UserItemPointDao.class,
+                                itemLocation.point,
+                                item.id,
+                                albumCover.albumThumbnail
+                        ))
+                .from(itemLike)
+                .join(itemLike.item, item)
+                .on(itemLike.item.id.eq(item.id))
+                .join(item.itemLocation, itemLocation)
+                .on(item.itemLocation.id.eq(itemLocation.id))
+                .join(itemLocation.item.albumCover, albumCover)
+                .on(item.albumCover.id.eq(albumCover.id))
+                .where(itemLike.user.id.eq(userId))
+                .fetch();
+    }
 
-    public List<UserItemLikeDao> findByUserId(Long userId, Long lastCursor, ItemOrderType itemOrderType) {
-
+    public List<UserItemLikeDao> findByUserId(Long userId, Long lastCursor, ItemOrderType orderType) {
         DateExpression<Date> currentWeekExpr = currentDate();
         DateTimePath<LocalDateTime> createdAtExpr = itemLike.createdAt;
         QItemLike innerItemLike = new QItemLike("innerItemLike");
@@ -49,7 +67,7 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
         var query = queryFactory.select(
                         Projections.constructor(
                                 UserItemLikeDao.class,
-                                itemOrderType == ItemOrderType.MOST_LIKED ?  Expressions.constant(1): createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
+                                orderType == ItemOrderType.MOST_LIKED ?  Expressions.constant(1): createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
                                 item.id,
                                 item.content,
                                 itemLike.createdAt,
@@ -72,38 +90,13 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
                 .join(user).on(user.eq(item.user))
                 .where(itemLike.user.id.eq(userId));
 
-
-        query = switch (itemOrderType) {
-            case RECENT -> query.orderBy(itemLike.createdAt.desc());
-            case OLDEST -> query.orderBy(itemLike.createdAt.asc());
-            case MOST_LIKED -> query.orderBy(Expressions.numberTemplate(Long.class, "({0})", likeCountExpr).desc());
-        };
+        orderBy(orderType, query);
 
         return query.fetch();
     }
 
-
-    public List<UserItemPointDao> findUserLikedItemsPoints(Long userId) {
-        return queryFactory.select(
-                        Projections.fields(
-                                UserItemPointDao.class,
-                                itemLocation.point,
-                                item.id,
-                                albumCover.albumThumbnail
-                        ))
-                .from(itemLike)
-                .join(itemLike.item, item)
-                .on(itemLike.item.id.eq(item.id))
-                .join(item.itemLocation, itemLocation)
-                .on(item.itemLocation.id.eq(itemLocation.id))
-                .join(itemLocation.item.albumCover, albumCover)
-                .on(item.albumCover.id.eq(albumCover.id))
-                .where(itemLike.user.id.eq(userId))
-                .fetch();
-    }
-
     @Override
-    public List<UserItemLikeDao> findByUserIdAndState(Long userId, Long lastCursor, ItemOrderType itemOrderType, String state) {
+    public List<UserItemLikeDao> findByUserIdAndState(Long userId, Long lastCursor, ItemOrderType orderType, String state) {
         DateExpression<Date> currentWeekExpr = currentDate();
         DateTimePath<LocalDateTime> createdAtExpr = itemLike.createdAt;
         QItemLike innerItemLike = new QItemLike("innerItemLike");
@@ -115,7 +108,7 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
         var query = queryFactory.select(
                         Projections.constructor(
                                 UserItemLikeDao.class,
-                                itemOrderType == ItemOrderType.MOST_LIKED ?  Expressions.constant(1):createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
+                                orderType == ItemOrderType.MOST_LIKED ?  Expressions.constant(1):createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
                                 item.id,
                                 item.content,
                                 itemLike.createdAt,
@@ -140,20 +133,13 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
                 .where(itemLike.user.id.eq(userId))
                 .where(villageArea.cityArea.stateArea.stateName.eq(state));
 
-
-        query = switch (itemOrderType) {
-            case RECENT -> query.orderBy(itemLike.createdAt.desc());
-            case OLDEST -> query.orderBy(itemLike.createdAt.asc());
-            case MOST_LIKED -> query.orderBy(Expressions.numberTemplate(Long.class, "({0})", likeCountExpr).desc());
-        };
+        orderBy(orderType, query);
 
         return query.fetch();
     }
 
-
-
     @Override
-    public List<UserItemLikeDao> findByUserIdAndCity(Long userId, Long lastCursor, ItemOrderType itemOrderType, String city) {
+    public List<UserItemLikeDao> findByUserIdAndCity(Long userId, Long lastCursor, ItemOrderType orderType, String city) {
         DateExpression<Date> currentWeekExpr = currentDate();
         DateTimePath<LocalDateTime> createdAtExpr = itemLike.createdAt;
         QItemLike innerItemLike = new QItemLike("innerItemLike");
@@ -165,7 +151,7 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
         var query = queryFactory.select(
                         Projections.constructor(
                                 UserItemLikeDao.class,
-                                itemOrderType == ItemOrderType.MOST_LIKED ?  Expressions.constant(1): createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
+                                orderType == ItemOrderType.MOST_LIKED ?  Expressions.constant(1): createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
                                 item.id,
                                 item.content,
                                 itemLike.createdAt,
@@ -190,14 +176,17 @@ public class ItemLikeRepositoryImpl implements QueryDslItemLikeRepository {
                 .where(itemLike.user.id.eq(userId))
                 .where(villageArea.cityArea.cityName.eq(city));
 
-
-        query = switch (itemOrderType) {
-            case RECENT -> query.orderBy(itemLike.createdAt.desc());
-            case OLDEST -> query.orderBy(itemLike.createdAt.asc());
-            case MOST_LIKED -> query.orderBy(Expressions.numberTemplate(Long.class, "({0})", likeCountExpr).desc());
-        };
+        orderBy(orderType, query);
 
         return query.fetch();
+    }
+
+    private void orderBy(ItemOrderType orderType, JPAQuery<UserItemLikeDao> query) {
+        switch (orderType) {
+            case RECENT -> query.orderBy(item.createdAt.desc());
+            case OLDEST -> query.orderBy(item.createdAt.asc());
+            case MOST_LIKED -> query.orderBy(itemLike.count().desc());
+        }
     }
 
 }
