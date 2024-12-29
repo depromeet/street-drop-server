@@ -30,7 +30,6 @@ import static com.querydsl.core.types.dsl.Expressions.currentDate;
 @RequiredArgsConstructor
 public class ItemRepositoryImpl implements QueryDslItemRepository {
 
-
     private final JPAQueryFactory queryFactory;
 
     @Override
@@ -41,7 +40,7 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
         var isLikedSubQuery = JPAExpressions.select(itemLike.id)
                 .from(itemLike)
                 .where(itemLike.item.id.eq(item.id)
-                        .and(itemLike.user.id.eq(userId)));
+                .and(itemLike.user.id.eq(userId)));
 
         var query = queryFactory.select(
                         Projections.constructor(
@@ -78,10 +77,15 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
         DateExpression<Date> currentWeekExpr = currentDate();
         DateTimePath<LocalDateTime> createdAtExpr = item.createdAt;
 
+        var isLikedSubQuery = JPAExpressions.select(itemLike.id)
+                .from(itemLike)
+                .where(itemLike.item.id.eq(item.id)
+                        .and(itemLike.user.id.eq(userId)));
+
         var query = queryFactory.select(
                         Projections.constructor(
                                 ItemDao.class,
-                                orderType == ItemOrderType.MOST_LIKED ?  Expressions.constant(1): createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
+                                orderType == ItemOrderType.MOST_LIKED ? Expressions.constant(1) : createdAtExpr.week().subtract(currentWeekExpr.week()).abs().as("weekAgo"),
                                 item.id,
                                 item.content,
                                 item.createdAt,
@@ -91,7 +95,7 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
                                 artist.name.as("artistName"),
                                 albumCover.albumThumbnail.as("albumThumbnail"),
                                 itemLike.count().as("itemCount"),
-                                itemLike.user.id.eq(userId).as("isLiked")
+                                isLikedSubQuery.exists().as("isLiked")
                         )
                 ).from(item)
                 .join(itemLocation).on(item.id.eq(itemLocation.item.id))
@@ -115,6 +119,11 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
         DateExpression<Date> currentWeekExpr = currentDate();
         DateTimePath<LocalDateTime> createdAtExpr = item.createdAt;
 
+        var isLikedSubQuery = JPAExpressions.select(itemLike.id)
+                .from(itemLike)
+                .where(itemLike.item.id.eq(item.id)
+                .and(itemLike.user.id.eq(userId)));
+
         var query = queryFactory.select(
                         Projections.constructor(
                                 ItemDao.class,
@@ -128,7 +137,7 @@ public class ItemRepositoryImpl implements QueryDslItemRepository {
                                 artist.name.as("artistName"),
                                 albumCover.albumThumbnail.as("albumThumbnail"),
                                 itemLike.count().as("itemCount"),
-                                itemLike.user.id.eq(userId).as("isLiked")
+                                isLikedSubQuery.exists().as("isLiked")
                         )
                 ).from(item)
                 .join(itemLocation).on(item.id.eq(itemLocation.item.id))
