@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react"
-import {Button, Drawer, Modal, Table} from 'antd';
+import {Button, Col, Drawer, Modal, Row, Table} from 'antd';
 import BasicLayout from "../../layout/BasicLayout";
 import ItemApi from "../../api/domain/item/ItemApi";
 import ItemDetailPage from "../../components/items/ItemDetailPage";
 import {InitialPagination} from "../../constant/PaginationConstant";
+import Search from "antd/es/input/Search";
+
 
 function ItemListPage() {
     const [data, setData] = useState([]);
@@ -21,6 +23,12 @@ function ItemListPage() {
         setOpenDrawer(false);
         await fetchData()
     };
+
+
+    const onSearch = async (value) => {
+        const response = await ItemApi.getItemsByKeyword(tableParams.pagination.current - 1, tableParams.pagination.pageSize, value);
+        setData(response.data['data']);
+    }
 
 
     const showDrawer = (itemId) => {
@@ -127,6 +135,18 @@ function ItemListPage() {
             <BasicLayout>
                 <h3 style={{marginBottom: '10px'}}>아이템 전체 조회</h3>
                 <p style={{color: 'gray'}}>아이템을 전체 조회할 수 있습니다.</p>
+
+
+                <Row>
+                    <Col span={14}>
+                    </Col>
+
+                    <Col span={10}>
+                        <Search placeholder="검색어를 입력하세요" onSearch={onSearch} enterButton/>
+                    </Col>
+
+                </Row>
+
                 <Table
                     style={{marginTop: '20px'}}
                     columns={columns}

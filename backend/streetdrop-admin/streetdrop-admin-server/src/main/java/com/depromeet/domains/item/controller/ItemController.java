@@ -18,9 +18,10 @@ public class ItemController {
     @GetMapping
     public ResponseEntity<?> getAllItems(
             @PageableDefault(size = 20, page = 0, sort = "createdAt",
-                    direction = Sort.Direction.DESC) Pageable pageable
+                    direction = Sort.Direction.DESC) Pageable pageable,
+            @RequestParam(value = "keyword", required = false) String keyword
     ) {
-        var response = itemService.getAllItems(pageable);
+        var response = itemService.getAllItems(pageable, keyword);
         return ResponseDto.ok(response);
     }
 

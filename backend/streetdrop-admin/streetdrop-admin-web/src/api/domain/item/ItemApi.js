@@ -14,6 +14,15 @@ const ItemApi = {
     },
     deleteItem: (itemId) => {
         return axiosAuthInstance.delete('/items/' + itemId)
+    },
+    getItemsByKeyword : (page, size, keyword) => {
+        return axiosAuthInstance.get('/items', {
+            params: {
+                page: page,
+                size: size,
+                keyword: keyword
+            }
+        })
     }
 }
 export default ItemApi;
