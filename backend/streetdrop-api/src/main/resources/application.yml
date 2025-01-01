@@ -17,3 +17,66 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 20
+  jpa:
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+  cache:
+    type: redis
+    redis:
+      cache-null-values: true
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      timeout: 30
+swagger:
+  server-url: ${SWAGGER_SERVER_URL}
+springdoc:
+  swagger-ui:
+    enabled: false
+    path: /swagger
+slack:
+  token: ${slack.token}
+  monitoring-channel: error
+  report-channel: report
+cloud:
+  aws:
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY}
+      secretKey: ${AWS_SECRET_KEY}
+    s3:
+      bucket: ${AWS_BUCKET_NAME}
+      region:
+        auto: false
+        static: ${AWS_REGION}
+      stack:
+        auto: false
+notification:
+  noti-server-url: ${NOTI_SERVER_URL}
+discord:
+  webhook:
+    alert:
+      claim:
+        url: ${WEBHOOK_CLAIM_URL}
+        report-channel: claim
+      block:
+        url: ${WEBHOOK_BLOCK_URL}
+        report-channel: block
+apple:
+  music:
+    api:
+      key: ${APPLE_MUSIC_API_KEY}
+      base-url: ${APPLE_MUSIC_BASE_URL}
+      get-catalog-charts-url: ${APPLE_MUSIC_GET_CATALOG_CHARTS_URL}
